@@ -245,9 +245,13 @@ h1 em{font-style:normal;color:var(--g);text-shadow:0 0 50px rgba(0,255,65,.3);}
 
 .contact-wrap{
   display:grid;
-  grid-template-columns:1.08fr 1fr;
-  gap:4.2rem;
+  grid-template-columns:minmax(0,1.18fr) minmax(360px,.82fr);
+  gap:3.2rem;
   align-items:start;
+}
+
+.contact-wrap > *{
+  min-width:0;
 }
 
 .contact-kicker{
@@ -271,12 +275,12 @@ h1 em{font-style:normal;color:var(--g);text-shadow:0 0 50px rgba(0,255,65,.3);}
 
 .contact-title{
   font-family:'Syne',sans-serif;
-  font-size:clamp(2.7rem,5.6vw,5rem);
+  font-size:clamp(2.6rem,4.8vw,4.35rem);
   font-weight:800;
-  line-height:1.02;
+  line-height:.98;
   letter-spacing:-.045em;
-  max-width:760px;
-  margin-bottom:2.2rem;
+  max-width:700px;
+  margin-bottom:1.85rem;
 }
 
 .contact-title em{
@@ -285,11 +289,11 @@ h1 em{font-style:normal;color:var(--g);text-shadow:0 0 50px rgba(0,255,65,.3);}
 }
 
 .contact-sub{
-  max-width:620px;
+  max-width:560px;
   color:#8ca090;
-  font-size:1rem;
-  line-height:1.82;
-  margin-bottom:2.2rem;
+  font-size:.98rem;
+  line-height:1.78;
+  margin-bottom:2rem;
 }
 
 .contact-side{
@@ -417,11 +421,11 @@ h1 em{font-style:normal;color:var(--g);text-shadow:0 0 50px rgba(0,255,65,.3);}
   border:none;
   background:linear-gradient(135deg,var(--g),#00ef57);
   color:#031003;
-  padding:1.18rem 1.5rem;
+  padding:1.08rem 1.2rem;
   font-family:'Syne',sans-serif;
-  font-size:1rem;
+  font-size:.88rem;
   font-weight:800;
-  letter-spacing:.16em;
+  letter-spacing:.11em;
   text-transform:uppercase;
   cursor:pointer;
   transition:transform .2s,box-shadow .2s,opacity .2s;
