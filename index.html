@@ -6,6 +6,7 @@
 <title>Dataseed — Data Driven</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet">
 <style>
 :root{
   --bg:#050e06;
@@ -20,6 +21,44 @@
   --sub:#7aaa84;
   --muted:#3d6645;
   --r:16px;
+  --chat--color-primary:var(--g);
+  --chat--color-primary-shade-50:#00ea3c;
+  --chat--color-primary-shade-100:#00cc33;
+  --chat--color-secondary:#0a160d;
+  --chat--color-secondary-shade-50:#0d1f11;
+  --chat--color-white:#dff5e3;
+  --chat--color-light:#0b160d;
+  --chat--color-light-shade-50:#102014;
+  --chat--color-light-shade-100:#17301d;
+  --chat--color-medium:#3d6645;
+  --chat--color-dark:#050e06;
+  --chat--color-disabled:#58745d;
+  --chat--color-typing:#7aaa84;
+  --chat--spacing:1rem;
+  --chat--border-radius:18px;
+  --chat--transition-duration:.2s;
+  --chat--window--width:min(420px,calc(100vw - 2rem));
+  --chat--window--height:min(680px,calc(100vh - 2rem));
+  --chat--header--background:linear-gradient(135deg,rgba(0,255,65,.18),rgba(0,255,65,.08) 58%,rgba(5,14,6,.98));
+  --chat--header--color:var(--text);
+  --chat--header--border-top:1px solid rgba(0,255,65,.24);
+  --chat--header--padding:1.15rem 1.2rem .95rem;
+  --chat--heading--font-size:1rem;
+  --chat--subtitle--font-size:.82rem;
+  --chat--textarea--height:56px;
+  --chat--message--font-size:.92rem;
+  --chat--message--padding:1rem 1.05rem;
+  --chat--message--border-radius:16px;
+  --chat--message-line-height:1.6;
+  --chat--toggle--background:linear-gradient(135deg,var(--g),#00cc33);
+  --chat--toggle--hover--background:linear-gradient(135deg,#13ff51,#00e43a);
+  --chat--toggle--active--background:#00cc33;
+  --chat--toggle--color:#031003;
+  --chat--toggle--size:68px;
+  --chat--toggle--box-shadow:0 18px 42px rgba(0,255,65,.28);
+  --chat--body--background:linear-gradient(180deg,rgba(7,18,9,.98),rgba(5,14,6,.98));
+  --chat--footer--background:rgba(5,14,6,.94);
+  --chat--footer--color:var(--muted);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -213,6 +252,75 @@ footer{border-top:1px solid rgba(0,255,65,.08);padding:2rem 3rem;display:flex;ju
 .fl{display:flex;gap:2rem;}
 .fl a,footer p{color:var(--muted);font-size:.76rem;text-decoration:none;transition:color .2s;font-weight:400;}
 .fl a:hover{color:var(--g);}
+
+#n8n-chat{
+  position:relative;
+  z-index:120;
+}
+
+#n8n-chat .n8n-chat{
+  --chat--window--border:1px solid rgba(0,255,65,.16);
+  --chat--window--box-shadow:0 24px 80px rgba(0,0,0,.45);
+}
+
+#n8n-chat .n8n-chat .chat-window{
+  backdrop-filter:blur(18px);
+}
+
+#n8n-chat .n8n-chat .chat-header{
+  box-shadow:inset 0 -1px 0 rgba(0,255,65,.12);
+}
+
+#n8n-chat .n8n-chat .chat-header h1,
+#n8n-chat .n8n-chat .chat-header p{
+  font-family:'Inter',sans-serif;
+}
+
+#n8n-chat .n8n-chat .chat-body{
+  background:
+    radial-gradient(circle at top right,rgba(0,255,65,.08),transparent 28%),
+    linear-gradient(180deg,rgba(7,18,9,.98),rgba(5,14,6,.98));
+}
+
+#n8n-chat .n8n-chat .chat-message-from-bot .chat-message{
+  background:rgba(0,255,65,.07);
+  border:1px solid rgba(0,255,65,.14);
+  color:var(--text);
+}
+
+#n8n-chat .n8n-chat .chat-message-from-user .chat-message{
+  background:linear-gradient(135deg,var(--g),#00cc33);
+  color:#031003;
+  box-shadow:0 10px 28px rgba(0,255,65,.2);
+}
+
+#n8n-chat .n8n-chat .chat-footer{
+  border-top:1px solid rgba(0,255,65,.08);
+}
+
+#n8n-chat .n8n-chat textarea{
+  background:rgba(0,255,65,.04);
+  border:1px solid rgba(0,255,65,.14);
+  color:var(--text);
+}
+
+#n8n-chat .n8n-chat textarea::placeholder{
+  color:var(--sub);
+}
+
+#n8n-chat .n8n-chat textarea:focus{
+  outline:none;
+  border-color:rgba(0,255,65,.28);
+  box-shadow:0 0 0 3px rgba(0,255,65,.09);
+}
+
+#n8n-chat .n8n-chat button{
+  font-family:'Inter',sans-serif;
+}
+
+#n8n-chat .n8n-chat .chat-toggle{
+  border:1px solid rgba(0,255,65,.22);
+}
 
 @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
@@ -456,6 +564,8 @@ footer{border-top:1px solid rgba(0,255,65,.08);padding:2rem 3rem;display:flex;ju
   <p>©2024 Dataseed · Santiago, Chile</p>
 </footer>
 
+<div id="n8n-chat"></div>
+
 <script>
 const cv=document.getElementById('bgc'),cx=cv.getContext('2d');
 function rs(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
@@ -481,6 +591,39 @@ function draw(){
   t+=1/60;requestAnimationFrame(draw);
 }
 draw();
+</script>
+<script type="module">
+import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+createChat({
+  webhookUrl: 'https://smartialab.app.n8n.cloud/webhook/24821250-e34a-4346-95dc-0830aa16246d/chat',
+  webhookConfig: {
+    method: 'POST',
+    headers: {}
+  },
+  target: '#n8n-chat',
+  mode: 'window',
+  chatInputKey: 'chatInput',
+  chatSessionKey: 'sessionId',
+  loadPreviousSession: true,
+  metadata: {},
+  showWelcomeScreen: false,
+  defaultLanguage: 'es',
+  initialMessages: [
+    'Hola 👋',
+    'Soy Nathan de Dataseed. ¿Cómo te puedo ayudar hoy?'
+  ],
+  i18n: {
+    es: {
+      title: 'Hola 👋',
+      subtitle: 'Inicia una conversación. Estamos para ayudarte.',
+      footer: '',
+      getStarted: 'Nueva conversación',
+      inputPlaceholder: 'Escribe tu consulta...'
+    }
+  },
+  enableStreaming: false
+});
 </script>
 </body>
 </html>
