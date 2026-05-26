@@ -438,6 +438,87 @@ h1 em{font-style:normal;color:var(--g);text-shadow:0 0 50px rgba(0,255,65,.3);}
   box-shadow:0 22px 42px rgba(0,255,65,.24);
 }
 
+.prod-header{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:3rem;flex-wrap:wrap;}
+.prod-header-right{font-size:.82rem;color:var(--muted);max-width:320px;line-height:1.7;}
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:3.5rem;}
+.prod-card{border-radius:var(--r);border:1px solid rgba(0,255,65,.14);background:rgba(0,255,65,.025);overflow:hidden;display:flex;flex-direction:column;}
+.prod-card.featured{border-color:rgba(0,255,65,.38);background:rgba(0,255,65,.04);}
+.prod-card.coming{border-color:rgba(0,255,65,.07);background:rgba(0,255,65,.01);opacity:.75;}
+.prod-card-head{padding:2rem 2rem 1.4rem;border-bottom:1px solid rgba(0,255,65,.08);}
+.prod-badge-row{display:flex;align-items:center;gap:.6rem;margin-bottom:1.2rem;}
+.prod-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .9rem;border-radius:100px;}
+.prod-badge.live{background:rgba(0,255,65,.12);border:1px solid rgba(0,255,65,.3);color:var(--g);}
+.prod-badge.live::before{content:'';width:5px;height:5px;background:var(--g);border-radius:50%;}
+.prod-badge.soon{background:rgba(0,255,65,.04);border:1px solid rgba(0,255,65,.12);color:var(--muted);}
+.prod-badge.soon::before{content:'';width:5px;height:5px;background:var(--muted);border-radius:50%;}
+.prod-num{font-size:.62rem;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;}
+.prod-name{font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:.6rem;}
+.prod-tagline{font-size:.82rem;color:var(--g2);font-weight:500;margin-bottom:.9rem;}
+.prod-desc{font-size:.82rem;color:var(--sub);line-height:1.8;}
+.prod-features{display:flex;flex-direction:column;gap:.5rem;padding:1.4rem 2rem;border-bottom:1px solid rgba(0,255,65,.08);}
+.prod-feat{display:flex;align-items:flex-start;gap:.7rem;font-size:.8rem;color:var(--sub);line-height:1.5;}
+.prod-feat::before{content:'';width:5px;height:5px;min-width:5px;background:var(--g);border-radius:50%;margin-top:.4rem;}
+.prod-feat b{color:var(--text);font-weight:600;}
+.prod-card-foot{padding:1.4rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:auto;}
+.prod-cta{background:var(--g);color:#030a03;padding:.6rem 1.4rem;border-radius:100px;font-size:.78rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:opacity .2s;}
+.prod-cta:hover{opacity:.85;}
+.prod-cta-ghost{color:var(--muted);font-size:.75rem;padding:.6rem 1.4rem;border:1px solid rgba(0,255,65,.1);border-radius:100px;text-decoration:none;transition:color .2s,border-color .2s;}
+.prod-cta-ghost:hover{color:var(--g);border-color:rgba(0,255,65,.3);}
+.prod-stack{display:flex;gap:.4rem;flex-wrap:wrap;}
+.prod-stag{background:rgba(0,255,65,.05);border:1px solid rgba(0,255,65,.1);border-radius:6px;padding:.2rem .7rem;font-size:.62rem;color:var(--muted);font-weight:500;}
+.demo-shell{border:1px solid rgba(0,255,65,.2);border-radius:20px;overflow:hidden;background:#030903;}
+.demo-topbar{background:rgba(0,255,65,.05);border-bottom:1px solid rgba(0,255,65,.1);padding:14px 22px;display:flex;align-items:center;justify-content:space-between;}
+.demo-brand{display:flex;align-items:center;gap:9px;}
+.demo-seed{width:28px;height:28px;background:var(--g);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;color:#030a03;font-family:'Syne',sans-serif;}
+.demo-name{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:800;color:var(--text);}
+.demo-sub{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+.demo-live{display:flex;align-items:center;gap:5px;font-size:.7rem;font-weight:600;color:#2a8a3a;letter-spacing:.04em;}
+.demo-dot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.demo-sources{display:flex;gap:6px;padding:9px 22px;border-bottom:1px solid rgba(0,255,65,.08);flex-wrap:wrap;background:#030903;}
+.demo-src-lbl{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#1a3d1a;align-self:center;margin-right:2px;}
+.demo-chip{display:flex;align-items:center;gap:4px;padding:3px 10px;border-radius:50px;font-size:.68rem;font-weight:700;cursor:pointer;border:1px solid #0d260d;color:#1e4a1e;background:transparent;transition:all .18s;font-family:'Inter',sans-serif;}
+.demo-chip.on{border-color:var(--g);color:var(--g);background:rgba(0,255,65,.06);}
+.demo-chip-dot{width:4px;height:4px;border-radius:50%;background:#0d260d;transition:background .18s;}
+.demo-chip.on .demo-chip-dot{background:var(--g);}
+.demo-body{display:grid;grid-template-columns:185px 1fr;}
+.demo-sidebar{background:#020802;border-right:1px solid rgba(0,255,65,.07);padding:12px 0;}
+.demo-cat{font-size:.58rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#1a3d1a;padding:0 14px;margin:10px 0 4px;}
+.demo-cat:first-child{margin-top:0;}
+.demo-q{padding:7px 14px;font-size:.72rem;line-height:1.45;color:#1e4a1e;cursor:pointer;border-left:2px solid transparent;transition:all .14s;font-family:'Inter',sans-serif;}
+.demo-q:hover,.demo-q.sel{color:#7ab87a;background:rgba(0,255,65,.04);border-left-color:var(--g);}
+.demo-chat{display:flex;flex-direction:column;}
+.demo-messages{padding:18px 20px;display:flex;flex-direction:column;gap:14px;min-height:300px;max-height:380px;overflow-y:auto;}
+.demo-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:7px;flex:1;padding:48px 20px;}
+.demo-empty-icon{font-size:1.8rem;opacity:.25;}
+.demo-empty-t{font-size:.8rem;font-weight:700;color:#2a5c2a;}
+.demo-empty-s{font-size:.7rem;color:#1a3d1a;line-height:1.6;max-width:210px;}
+.demo-msg{display:flex;flex-direction:column;gap:3px;}
+.demo-lbl{font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;}
+.demo-lbl.u{color:#1e4a1e;}.demo-lbl.a{color:var(--g);}
+.demo-bubble{font-size:.8rem;line-height:1.75;color:#7ab87a;}
+.demo-bubble.u{color:#2a5c2a;font-style:italic;}
+.demo-bubble table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.72rem;}
+.demo-bubble th{padding:5px 8px;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1e4a1e;border-bottom:1px solid rgba(0,255,65,.08);text-align:left;}
+.demo-bubble td{padding:5px 8px;border-bottom:1px solid rgba(0,255,65,.04);color:#5a8a5a;}
+.demo-bubble td:first-child{color:#c8e8c8;font-weight:600;}
+.demo-hl{color:var(--g);font-weight:800;}
+.demo-insight{background:rgba(0,255,65,.04);border-left:2px solid var(--g);border-radius:0 6px 6px 0;padding:8px 12px;margin-top:8px;font-size:.75rem;color:#2a5c2a;line-height:1.6;}
+.demo-insight b{color:#7ab87a;font-weight:700;}
+.demo-tag{display:inline-block;background:rgba(0,255,65,.06);border:1px solid rgba(0,255,65,.14);color:#2a8a3a;font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:4px;margin:0 2px;}
+.demo-typing{display:flex;gap:4px;align-items:center;padding:2px 0;}
+.demo-typing span{width:5px;height:5px;border-radius:50%;background:#0d260d;animation:tb .9s infinite;}
+.demo-typing span:nth-child(2){animation-delay:.15s;}
+.demo-typing span:nth-child(3){animation-delay:.3s;}
+@keyframes tb{0%,80%,100%{transform:translateY(0);background:#0d260d;}40%{transform:translateY(-5px);background:var(--g);}}
+.demo-input-row{border-top:1px solid rgba(0,255,65,.07);padding:11px 16px;display:flex;gap:7px;background:#020802;}
+.demo-input{flex:1;background:rgba(0,255,65,.03);border:1px solid rgba(0,255,65,.08);border-radius:8px;padding:9px 13px;font-size:.78rem;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .18s;}
+.demo-input::placeholder{color:#1a3d1a;}
+.demo-input:focus{border-color:rgba(0,255,65,.2);}
+.demo-send{background:var(--g);border:none;border-radius:8px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem;transition:opacity .15s;color:#030a03;font-family:'Inter',sans-serif;font-weight:900;}
+.demo-send:hover{opacity:.8;}
+@media(max-width:900px){.prod-grid{grid-template-columns:1fr;}.demo-body{grid-template-columns:1fr;}.demo-sidebar{display:none;}}
+
 /* FAQ */
 #faq{
   padding:2rem 0 5rem;
@@ -792,6 +873,7 @@ footer::before{
   <ul>
     <li><a href="#services">Servicios</a></li>
     <li><a href="#how">Cómo funciona</a></li>
+    <li><a href="#products" class="nav-active">Productos</a></li>
     <li><a href="#types">Analítica</a></li>
     <li><a href="#cta">Contacto</a></li>
   </ul>
@@ -802,8 +884,8 @@ footer::before{
 <section id="hero">
   <div class="ticker-wrap">
     <div class="ticker">
-      <span>Consultoría BI</span><span>Procesamiento de Datos</span><span>Analítica Predictiva</span><span>Tableros Ejecutivos</span><span>KPI Management</span><span>Machine Learning</span><span>Estudios de Mercado</span><span>Analítica Cognitiva</span><span>Data Pipelines</span><span>Power BI</span><span>Visualización de Datos</span><span>Automatización</span>
-      <span>Consultoría BI</span><span>Procesamiento de Datos</span><span>Analítica Predictiva</span><span>Tableros Ejecutivos</span><span>KPI Management</span><span>Machine Learning</span><span>Estudios de Mercado</span><span>Analítica Cognitiva</span><span>Data Pipelines</span><span>Power BI</span><span>Visualización de Datos</span><span>Automatización</span>
+      <span>Consultoría BI</span><span>Procesamiento de Datos</span><span>Analítica Predictiva</span><span>Tableros Ejecutivos</span><span>KPI Management</span><span>Machine Learning</span><span>Estudios de Mercado</span><span>Analítica Cognitiva</span><span>Data Pipelines</span><span>Power BI</span><span>Visualización de Datos</span><span>Agent Engine</span><span>Automatización</span>
+      <span>Consultoría BI</span><span>Procesamiento de Datos</span><span>Analítica Predictiva</span><span>Tableros Ejecutivos</span><span>KPI Management</span><span>Machine Learning</span><span>Estudios de Mercado</span><span>Analítica Cognitiva</span><span>Data Pipelines</span><span>Power BI</span><span>Visualización de Datos</span><span>Agent Engine</span><span>Automatización</span>
     </div>
   </div>
   <div class="pill hero-pill">Inteligencia de Negocios · Chile · LATAM</div>
@@ -811,6 +893,7 @@ footer::before{
   <p class="hero-sub">Organizamos, procesamos y analizamos la información de tu empresa para que decidas con claridad, velocidad y confianza.</p>
   <div class="hero-btns">
     <a href="#services" class="btn-p">Explorar servicios →</a>
+    <a href="#products" class="btn-o">Ver productos →</a>
   </div>
   <div class="hero-strip">
     <div class="hf gc"><span class="hf-icon">📊</span><div class="hf-title">BI y tableros</div><p class="hf-desc">KPIs ejecutivos y visibilidad real del negocio en tiempo real.</p></div>
@@ -981,6 +1064,134 @@ footer::before{
   </div>
 </section>
 
+<!-- PRODUCTOS -->
+<section id="products" style="padding:5rem 0;border-top:1px solid rgba(0,255,65,.08);">
+  <div class="inner">
+    <div class="prod-header">
+      <div class="prod-header-left">
+        <div class="pill" style="margin-bottom:1.2rem;">● Productos</div>
+        <h2 class="sec-title" style="margin-bottom:0">Software que construimos<br>para escalar tu data.</h2>
+      </div>
+      <div class="prod-header-right">Más allá de la consultoría, desarrollamos productos propios que automatizan el acceso a tus datos empresariales.</div>
+    </div>
+    <div class="prod-grid">
+
+      <!-- PRODUCT 1 — LIVE -->
+      <div class="prod-card featured">
+        <div class="prod-card-head">
+          <div class="prod-badge-row">
+            <span class="prod-badge live">En vivo</span>
+            <span class="prod-num">Producto 01</span>
+          </div>
+          <div class="prod-name">Dataseed<br>Agent Engine</div>
+          <div class="prod-tagline">Consulta tu ERP en lenguaje natural</div>
+          <p class="prod-desc">Conecta SAP, SAS, Oracle o cualquier sistema legado y obtén respuestas precisas desde tus datos de negocio — sin SQL, sin dashboards programados, sin intermediarios técnicos.</p>
+        </div>
+        <div class="prod-features">
+          <div class="prod-feat"><b>Lenguaje natural:</b> pregunta como hablarías con un analista experto.</div>
+          <div class="prod-feat"><b>Cero ETL:</b> consulta en origen, sin mover datos a otro sistema.</div>
+          <div class="prod-feat"><b>Memoria de negocio:</b> aprende tu modelo de datos y reglas contables.</div>
+          <div class="prod-feat"><b>Auditable:</b> cada respuesta muestra fuente, período y lógica aplicada.</div>
+          <div class="prod-feat"><b>Setup en días:</b> conectores nativos SAP RFC, SAS REST, Oracle JDBC, Salesforce API.</div>
+        </div>
+        <div class="prod-card-foot">
+          <div class="prod-stack">
+            <span class="prod-stag">n8n</span><span class="prod-stag">FastAPI</span><span class="prod-stag">Supabase</span><span class="prod-stag">Claude API</span><span class="prod-stag">Redis</span>
+          </div>
+          <a href="#prod-demo" class="prod-cta">Probar demo →</a>
+        </div>
+      </div>
+
+      <!-- PRODUCT 2 — COMING SOON -->
+      <div class="prod-card coming">
+        <div class="prod-card-head">
+          <div class="prod-badge-row">
+            <span class="prod-badge soon">Próximamente</span>
+            <span class="prod-num">Producto 02</span>
+          </div>
+          <div class="prod-name" style="color:var(--muted);">Dataseed<br>Forecasting</div>
+          <div class="prod-tagline" style="color:var(--muted);">Predicción automática de KPIs</div>
+          <p class="prod-desc" style="color:var(--muted);">Modelos predictivos entrenados sobre tus datos históricos de ERP para anticipar ventas, stock, flujo de caja y rotación — con alertas proactivas antes de que los problemas aparezcan.</p>
+        </div>
+        <div class="prod-features">
+          <div class="prod-feat" style="color:var(--muted);"><b style="color:var(--muted)">Forecasting de ventas</b> con horizontes de 7, 30 y 90 días.</div>
+          <div class="prod-feat" style="color:var(--muted);"><b style="color:var(--muted)">Alertas de stock</b> predictivas antes de quiebre.</div>
+          <div class="prod-feat" style="color:var(--muted);"><b style="color:var(--muted)">Flujo de caja</b> proyectado desde datos reales de facturación.</div>
+          <div class="prod-feat" style="color:var(--muted);"><b style="color:var(--muted)">Explicabilidad:</b> cada predicción muestra los factores clave.</div>
+          <div class="prod-feat" style="color:var(--muted);"><b style="color:var(--muted)">Sin data scientists:</b> setup guiado en menos de una semana.</div>
+        </div>
+        <div class="prod-card-foot">
+          <div class="prod-stack">
+            <span class="prod-stag">Prophet</span><span class="prod-stag">dbt</span><span class="prod-stag">BigQuery</span><span class="prod-stag">FastAPI</span>
+          </div>
+          <a href="#cta" class="prod-cta-ghost">Quiero acceso anticipado →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DEMO INLINE -->
+<section id="prod-demo" style="padding:0 0 5rem;position:relative;z-index:2;">
+  <div class="inner">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.8rem;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <div class="pill" style="margin-bottom:.8rem;">● Demo interactiva — Producto 01</div>
+        <h2 class="sec-title" style="margin-bottom:.4rem;">Probalo ahora mismo.</h2>
+        <p style="font-size:.85rem;color:var(--sub);">Datos reales de ejemplo. Respuestas generadas por IA. Sin registro, sin instalación.</p>
+      </div>
+      <a href="#cta" class="btn-p" style="white-space:nowrap;">Implementar en mi empresa →</a>
+    </div>
+    <div class="demo-shell">
+      <div class="demo-topbar">
+        <div class="demo-brand">
+          <div class="demo-seed">DS</div>
+          <div>
+            <div class="demo-name">Dataseed Agent Engine</div>
+            <div class="demo-sub">Conectado a fuentes empresariales</div>
+          </div>
+        </div>
+        <div class="demo-live"><span class="demo-dot"></span>Agente activo · IA en tiempo real</div>
+      </div>
+      <div class="demo-sources">
+        <span class="demo-src-lbl">Fuentes</span>
+        <div class="demo-chip on" onclick="tcChip(this)"><span class="demo-chip-dot"></span>SAP ERP</div>
+        <div class="demo-chip on" onclick="tcChip(this)"><span class="demo-chip-dot"></span>SAS Analytics</div>
+        <div class="demo-chip on" onclick="tcChip(this)"><span class="demo-chip-dot"></span>Oracle CRM</div>
+        <div class="demo-chip" onclick="tcChip(this)"><span class="demo-chip-dot"></span>Salesforce</div>
+        <div class="demo-chip" onclick="tcChip(this)"><span class="demo-chip-dot"></span>Legacy CSV</div>
+      </div>
+      <div class="demo-body">
+        <div class="demo-sidebar">
+          <div class="demo-cat">Finanzas</div>
+          <div class="demo-q" onclick="pickQ(this)">Margen bruto Q3 vs Q2 por línea</div>
+          <div class="demo-q" onclick="pickQ(this)">CxC vencidas más de 60 días</div>
+          <div class="demo-cat">Logística</div>
+          <div class="demo-q" onclick="pickQ(this)">Stock crítico este mes</div>
+          <div class="demo-q" onclick="pickQ(this)">Top 5 proveedores por entrega</div>
+          <div class="demo-cat">Ventas</div>
+          <div class="demo-q" onclick="pickQ(this)">Clientes con mayor crecimiento YoY</div>
+          <div class="demo-q" onclick="pickQ(this)">Pipeline comercial del trimestre</div>
+        </div>
+        <div class="demo-chat">
+          <div class="demo-messages" id="dmsgs">
+            <div class="demo-empty" id="dempty">
+              <div class="demo-empty-icon">◈</div>
+              <div class="demo-empty-t">Consultá tus datos empresariales</div>
+              <div class="demo-empty-s">Elegí una pregunta del panel o escribí la tuya. El agente consulta tus fuentes ERP en tiempo real.</div>
+            </div>
+          </div>
+          <div class="demo-input-row">
+            <input class="demo-input" id="dinp" type="text" placeholder="Hacé una pregunta sobre tus datos..." onkeydown="if(event.key==='Enter')dSend()"/>
+            <button class="demo-send" onclick="dSend()" aria-label="Enviar">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section id="faq">
   <div class="inner">
@@ -1133,13 +1344,11 @@ footer::before{
         </ul>
       </div>
       <div>
-        <div class="footer-col-title">Stack</div>
+        <div class="footer-col-title">Productos</div>
         <ul class="footer-links">
-          <li><a href="#how">Airbyte</a></li>
-          <li><a href="#how">dbt</a></li>
-          <li><a href="#how">n8n</a></li>
-          <li><a href="#how">BigQuery</a></li>
-          <li><a href="#how">Snowflake</a></li>
+          <li><a href="#products">Agent Engine</a></li>
+          <li><a href="#products">Forecasting</a></li>
+          <li><a href="#prod-demo">Demo en vivo</a></li>
         </ul>
       </div>
       <div>
@@ -1237,6 +1446,29 @@ createChat({
   },
   enableStreaming: true
 });
+</script>
+<script>
+const DSYS=`Eres el agente de datos de Dataseed Agent Engine (dataseed.cl). Respondes consultas empresariales en lenguaje natural. Eres conciso y ejecutivo.
+
+DATOS DISPONIBLES — empresa manufacturera latinoamericana:
+SAP ERP Q2/Q3 2025: Línea Electrónica Q2 $4.2M 38% margen | Q3 $4.8M 41%. Línea Industrial Q2 $6.1M 29% | Q3 $5.7M 27%. Línea Consumo Q2 $2.3M 44% | Q3 $2.9M 46%. CxC vencidas: Aceros Norte $187k(74d) · Distribuidora Sur $94k(91d) · Retail Andino $61k(68d).
+Oracle WMS: Stock crítico SKU-4421 Sensor 12uds(mín50) · SKU-8803 Motor 3uds(mín30) · SKU-2201 Panel 0uds(mín10). Proveedores: Provetech 18.4d · Componentes SA 14.1d · TechParts 11.2d · Electro Import 9.8d · FastSupply 7.3d.
+Salesforce CRM: Crecimiento YoY MegaRetail +67% · Constructora Andina +44% · MineroSur +38%. Pipeline Q4: 24 oportunidades · $8.3M total · $3.1M ponderado.
+
+FORMATO — solo HTML, sin markdown:
+Números clave: <span class="demo-hl">valor</span>
+Tablas: <table><thead><tr><th>Col</th></tr></thead><tbody><tr><td>dato</td></tr></tbody></table>
+Fuente: <span class="demo-tag">SAP ERP</span>
+Siempre terminar con: <div class="demo-insight"><b>Insight:</b> texto ejecutivo.</div>
+Máximo 160 palabras.`;
+
+let dHist=[],dBusy=false;
+function tcChip(el){el.classList.toggle('on');el.querySelector('.demo-chip-dot').style.background=el.classList.contains('on')?'var(--g)':'#0d260d';}
+function pickQ(el){document.querySelectorAll('.demo-q').forEach(q=>q.classList.remove('sel'));el.classList.add('sel');document.getElementById('dinp').value=el.textContent.trim();dSend();}
+function dSend(){if(dBusy)return;const inp=document.getElementById('dinp');const q=inp.value.trim();if(!q)return;inp.value='';document.getElementById('dempty')?.remove();dAppend('u',q,true);dHist.push({role:'user',content:q});dTyping();dBusy=true;dAsk();}
+function dAppend(role,html,plain){const box=document.getElementById('dmsgs');const d=document.createElement('div');d.className='demo-msg';d.innerHTML=`<div class="demo-lbl ${role}">${role==='u'?'Tú':'Agente Dataseed'}</div><div class="demo-bubble ${role}">${plain?html.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):html}</div>`;box.appendChild(d);box.scrollTop=box.scrollHeight;}
+function dTyping(){const box=document.getElementById('dmsgs');const d=document.createElement('div');d.className='demo-msg';d.id='dtyping';d.innerHTML='<div class="demo-lbl a">Agente Dataseed</div><div class="demo-typing"><span></span><span></span><span></span></div>';box.appendChild(d);box.scrollTop=box.scrollHeight;}
+async function dAsk(){try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system:DSYS,messages:dHist})});const data=await r.json();const reply=data.content?.find(b=>b.type==='text')?.text||'Sin respuesta.';dHist.push({role:'assistant',content:reply});document.getElementById('dtyping')?.remove();dAppend('a',reply,false);}catch(e){document.getElementById('dtyping')?.remove();dAppend('a','<span style="color:#1e4a1e">Error de conexión.</span>',false);}dBusy=false;}
 </script>
 </body>
 </html>
