@@ -100,29 +100,11 @@
 
 ## 6. Instrucciones de Restauración
 
-### Si el VPS falla o se recrea:
+Para una reconstrucción completa paso a paso, ver el archivo compañero:
 
-1. **Instalar Hermes Agent:**
-   ```bash
-   curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
-   ```
+**→ `RESTORE_GUIDE.md`** — Guía detallada de reconstrucción con instrucciones para "yo con amnesia", incluyendo los pasos donde el usuario debe intervenir. No contiene información sensible.
 
-2. **Restaurar skills:**
-   - Los skills personalizados están en `/opt/data/skills/`
-   - El skill `whatsapp-group-etiquette` contiene la lógica de grupos
-   - Reinstalar skills del hub según la lista de arriba
-
-3. **Restaurar Google Workspace:**
-   - Copiar `google_client_secret.json` a `/opt/data/`
-   - Ejecutar el flujo OAuth de nuevo (el token no se puede respaldar por seguridad)
-   - `python3 setup.py --client-secret /path/to/client_secret.json`
-   - `python3 setup.py --auth-url` → abrir URL → autorizar → pegar código
-
-4. **Restaurar cron jobs:**
-   - El backup diario se recrea automáticamente al restaurar este archivo
-
-5. **Verificar conexión GitHub:**
-   - `git clone https://$HERMES_TOKEN@github.com/ZeroSentinels/data_seed.git /tmp/test && rm -rf /tmp/test`
+### Resumen rápido:
 
 ---
 
