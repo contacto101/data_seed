@@ -1,10 +1,10 @@
-# Hermes Agent - Backup de Configuración
+# Demeter - Backup de Configuración
 
 **Generado:** 2026-05-28 09:00 UTC / 2026-05-28 05:00 AM Chile (UTC-4)
 **Host:** cb522682de09
 **Sistema:** Linux 6.8.0-111-generic x86_64
 **Uptime:** 4 días, 2:03
-**Modelo actual:** openrouter/owl-alpha
+**Modelo actual:** proveedor OpenRouter (ID exacto omitido para evitar confusión con identidad del agente)
 **Config version:** 23
 
 ---
@@ -95,7 +95,7 @@
 
 | ID | Nombre | Schedule (UTC) | Schedule (Chile UTC-4) | Estado | Última ejecución | Detalles |
 |----|--------|---------------|----------------------|--------|-----------------|----------|
-| 8b29cf53ca6c | Hermes Daily Backup | 0 9 * * * | 05:00 AM | ✅ scheduled | N/A | Backup de configuración a repo. Próximo: 2026-05-29 09:00 UTC. Toolsets: terminal, file, cronjob |
+| 8b29cf53ca6c | Demeter Daily Backup | 0 9 * * * | 05:00 AM | ✅ scheduled | N/A | Backup de configuración a repo. Próximo: 2026-05-29 09:00 UTC. Toolsets: terminal, file, cronjob |
 | f6254c8c4821 | Growth Engine — Reporte Matutino | 30 11 * * * | 07:30 AM | ✅ scheduled | N/A | Reporte matutino con funnel, métricas, backlog. Próximo: 2026-05-28 11:30 UTC |
 | 4ab827188183 | Growth Engine — Reporte Vespertino | 30 23 * * * | 19:30 PM | ✅ scheduled | N/A | Reporte vespertino con productividad del día y plan siguiente. Próximo: 2026-05-28 23:30 UTC |
 | d1a0c5131f4b | Growth Engine — Auto Backlog Updater | 0 */4 * * * | Cada 4 horas | ✅ scheduled — último OK | 2026-05-28 08:08 UTC | Actualiza TASK_BACKLOG.md marcando tareas completadas. 2 ejecuciones previas. Próximo: 2026-05-28 12:00 UTC |
@@ -219,12 +219,12 @@ Para una reconstrucción completa paso a paso, ver el archivo compañero:
 - LSP habilitado (lsp.enabled: true)
 
 ### Cambios en jobs existentes:
-- **Hermes Daily Backup (8b29cf53ca6c):** Schedule cambiado de `0 5 * * *` a `0 9 * * *` (de 5AM UTC a 9AM UTC = 5AM Chile)
+- **Demeter Daily Backup (8b29cf53ca6c):** Schedule cambiado de `0 5 * * *` a `0 9 * * *` (de 5AM UTC a 9AM UTC = 5AM Chile)
 
 ### Tarea completada:
 - C-001: Framework Growth Marketing & ventas v1 — Completado 2026-05-28
 
 ---
 
-*Backup automático generado por Hermes Agent - Diario a las 09:00 UTC (05:00 AM Chile, UTC-4)*
+*Backup automático generado por Demeter - Diario a las 09:00 UTC (05:00 AM Chile, UTC-4)*
 *Backup #2 — 2026-05-28*

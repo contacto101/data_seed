@@ -1,17 +1,17 @@
 #!/bin/bash
-# Script de reconstrucción de Hermes Agent
+# Script de reconstrucción de Demeter
 # Generado: 2026-05-27
 # Uso: bash restore.sh
 
-echo "=== Hermes Agent Restore Script ==="
+echo "=== Demeter Restore Script ==="
 echo ""
 
 # 1. Verificar Hermes instalado
 if ! command -v hermes &> /dev/null; then
-    echo "[1/5] Instalando Hermes Agent..."
+    echo "[1/5] Instalando runtime base del agente..."
     curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
 else
-    echo "[1/5] Hermes Agent ya instalado ✓"
+    echo "[1/5] Runtime base ya instalado ✓"
 fi
 
 # 2. Verificar skills
