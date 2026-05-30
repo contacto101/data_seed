@@ -1,4 +1,4 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js';
 import {
   getAuth,
   setPersistence,
@@ -13,14 +13,29 @@ import {
   updateProfile,
   onAuthStateChanged,
   signOut
-} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+} from 'https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js';
 
 const config = window.DS_FIREBASE_CONFIG;
 const options = Object.assign({
   redirectAfterLogin: 'dashboard.html',
   redirectAfterLogout: 'login.html',
-  requireEmailVerification: false
+  requireEmailVerification: false,
+  allowedEmailDomains: [],
+  enabledProviders: ['google', 'password']
 }, window.DS_AUTH_OPTIONS || {});
+
+function getRedirectTarget() {
+  const fallback = options.redirectAfterLogin || 'dashboard.html';
+  try {
+    const next = new URLSearchParams(window.location.search).get('next');
+    if (!next) return fallback;
+    const url = new URL(next, window.location.origin);
+    if (url.origin !== window.location.origin) return fallback;
+    return url.pathname.replace(/^\//, '') + url.search + url.hash;
+  } catch (_) {
+    return fallback;
+  }
+}
 
 function track(event, payload = {}) {
   if (window.DataseedTrack) window.DataseedTrack(event, payload);
@@ -60,6 +75,20 @@ if (!hasValidConfig()) {
   const google = document.querySelector('[data-auth-oauth="google"]');
   const microsoft = document.querySelector('[data-auth-oauth="microsoft"]');
   const logout = document.querySelector('[data-auth-action="logout"]');
+
+  const enabledProviders = Array.isArray(options.enabledProviders) ? options.enabledProviders : ['google', 'password'];
+  document.querySelectorAll('[data-auth-oauth]').forEach((button) => {
+    const provider = button.dataset.authOauth;
+    const enabled = enabledProviders.includes(provider);
+    button.hidden = !enabled;
+    button.disabled = !enabled;
+  });
+  const emailPanelToggle = document.querySelector('[data-toggle-email-auth]');
+  const emailPanel = document.getElementById('email-auth-panel');
+  if (!enabledProviders.includes('password')) {
+    if (emailPanelToggle) emailPanelToggle.hidden = true;
+    if (emailPanel) emailPanel.hidden = true;
+  }
 
   async function enforceAllowedDomain(user) {
     const allowed = Array.isArray(options.allowedEmailDomains) ? options.allowedEmailDomains.filter(Boolean) : [];
@@ -101,7 +130,7 @@ if (!hasValidConfig()) {
       }
       if (!(await enforceAllowedDomain(result.user))) return;
       status('Acceso correcto. Redirigiendo…', 'ok');
-      window.location.href = options.redirectAfterLogin;
+      window.location.href = getRedirectTarget();
     } catch (error) {
       console.warn('[Dataseed Auth]', error);
       track('auth_error', { code: error.code || 'unknown', auth_mode: mode });
@@ -141,7 +170,7 @@ if (!hasValidConfig()) {
       track('auth_login_success', { method: providerName, email_domain: result.user.email?.split('@')[1] || '' });
       if (!(await enforceAllowedDomain(result.user))) return;
       status('Acceso correcto. Redirigiendo…', 'ok');
-      window.location.href = options.redirectAfterLogin;
+      window.location.href = getRedirectTarget();
     } catch (error) {
       console.warn('[Dataseed OAuth]', error);
       track('auth_error', { code: error.code || 'unknown', method: providerName });
@@ -156,12 +185,13 @@ if (!hasValidConfig()) {
   });
 
   if (document.body.dataset.requireAuth === 'true') {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (!user) {
         track('auth_guard_redirect', { from: location.pathname });
         window.location.href = 'login.html?next=' + encodeURIComponent(location.pathname);
         return;
       }
+      if (!(await enforceAllowedDomain(user))) return;
       document.documentElement.classList.add('auth-ready');
       document.querySelectorAll('[data-user-email]').forEach(el => el.textContent = user.email || 'Usuario');
       document.querySelectorAll('[data-user-name]').forEach(el => el.textContent = user.displayName || user.email || 'Usuario');

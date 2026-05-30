@@ -1,8 +1,8 @@
 # Sistema de Login / Autenticación — DataSeed.cl
 
 **Decisión optimizada para GCP:** Firebase Authentication como implementación inicial, con **Google Login corporativo como acceso principal**, y ruta natural a Google Cloud Identity Platform cuando se requiera multi-tenant, SLA/compliance avanzado o controles enterprise.  
-**Estado:** integración frontend GCP/Firebase lista; falta crear proyecto/config real en Google Cloud/Firebase Console.  
-**Fuentes verificadas:** documentación oficial Firebase Authentication, Firebase Web Setup e Identity Platform de Google Cloud.
+**Estado:** integración frontend GCP/Firebase lista y endurecida; falta acceso admin/autenticación Firebase CLI para crear/configurar el proyecto real en Google Cloud/Firebase Console.  
+**Fuentes verificadas:** documentación oficial Firebase Authentication, Firebase CLI y Firebase Web SDK; versión web SDK validada contra `firebase@12.14.0` publicada en npm.
 
 ---
 
@@ -59,6 +59,19 @@ Usuario del grupo/equipo → Continuar con Google → validar dominio @dataseed.
 ---
 
 ## 3. Cómo activar auth real
+
+### Estado de ejecución actual
+
+Se intentó avanzar por CLI con `firebase-tools@15.19.0`, pero el entorno del agente no tiene sesión Firebase/GCP autenticada con permisos de administración de proyecto. El OAuth de Google Workspace disponible sirve para Gmail/Drive/Calendar/Docs/Sheets, no para crear proyectos Firebase ni habilitar Authentication.
+
+Resultado verificado:
+
+```text
+firebase-tools 15.19.0 disponible vía npx
+firebase projects:list → Failed to authenticate, have you run firebase login?
+```
+
+Por eso el cierre real requiere que un admin Firebase/GCP entregue la configuración Web App o autorice Firebase CLI en el VPS.
 
 ### Paso 1 — Crear proyecto en GCP/Firebase
 
@@ -128,11 +141,14 @@ login.html → Firebase Auth → dashboard.html
 
 Funciones reales ya integradas:
 
+- Firebase Web SDK `12.14.0` desde módulos oficiales `gstatic`.
 - `createUserWithEmailAndPassword`
 - `signInWithEmailAndPassword`
 - `sendPasswordResetEmail`
 - `signOut`
 - `onAuthStateChanged`
+- Redirección segura con `next` solo para rutas del mismo origen.
+- Habilitación/deshabilitación de proveedores desde `enabledProviders`.
 
 ### OAuth
 
@@ -148,9 +164,12 @@ Proveedores integrados:
 ### Dashboard protegido
 
 ```text
-Usuario sin sesión → dashboard.html → redirect a login.html
-Usuario con sesión → dashboard.html visible
+Usuario sin sesión → dashboard.html → redirect a login.html?next=dashboard.html
+Usuario con sesión y dominio permitido → dashboard.html visible
+Usuario con sesión pero dominio no permitido → signOut + aviso de restricción
 ```
+
+En modo preview sin `js/firebase-config.js`, el dashboard muestra aviso de configuración pendiente y no crea sesión real.
 
 ---
 
@@ -282,7 +301,9 @@ En Firebase/Firestore esto se representa como colecciones:
 
 El login ya está implementado a nivel frontend y preparado para GCP/Firebase. La decisión recomendada es correcta para el stack: rápida, nativa de Google Cloud y escalable hacia Identity Platform.
 
-Falta únicamente crear/configurar el proyecto Firebase real y publicar `js/firebase-config.js` con los datos del proyecto.
+Se completaron las tareas que sí dependen del repo: SDK actualizado, Google Login principal, allowlist de dominio, `next` seguro, proveedores configurables y dashboard protegido cuando existe configuración real.
+
+Falta únicamente que un admin Firebase/GCP cree o autorice el proyecto real y publique `js/firebase-config.js` con la configuración Web App oficial. El entorno actual no tiene sesión Firebase CLI ni scopes GCP para hacerlo automáticamente.
 
 ---
 

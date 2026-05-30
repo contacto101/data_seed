@@ -51,12 +51,14 @@
     const recover = e.target.closest('[data-auth-action="recover"]');
     if (recover) {
       e.preventDefault();
+      if (window.DataseedAuth?.ready) return;
       const email = document.getElementById('email')?.value || '';
       setStatus('Flujo de recuperación preparado. Falta conectar endpoint del proveedor auth.', 'warn');
       track('auth_recover_click', {email_domain: email.split('@')[1] || ''});
     }
     const oauth = e.target.closest('[data-auth-oauth]');
     if (oauth) {
+      if (window.DataseedAuth?.ready) return;
       setStatus('OAuth ' + oauth.dataset.authOauth + ' preparado. Falta conectar proveedor auth.', 'warn');
       track('auth_oauth_click', {provider: oauth.dataset.authOauth});
     }
