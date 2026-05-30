@@ -893,8 +893,8 @@ footer::before{
   <h1>Tu data trabaja.<br>Tu negocio <em>crece</em>.</h1>
   <p class="hero-sub">Transformamos datos en crecimiento real para tu negocio. Consultoría BI, data engineering e inteligencia artificial para empresas que deciden con evidencia.</p>
   <div class="hero-btns">
-    <a href="#services" class="btn-p">Explorar servicios →</a>
-    <a href="#products" class="btn-o">Ver productos →</a>
+    <a href="#services" class="btn-p" data-track="hero_services">Explorar servicios →</a>
+    <a href="commercial-version.html" class="btn-o" data-track="hero_commercial_offer">Ver oferta comercial →</a>
   </div>
   <div class="hero-strip">
     <div class="hf gc"><span class="hf-icon">📊</span><div class="hf-title">BI y tableros</div><p class="hf-desc">KPIs ejecutivos y visibilidad real del negocio en tiempo real.</p></div>
@@ -1125,7 +1125,7 @@ footer::before{
           <div class="prod-stack">
             <span class="prod-stag">ChileCompra API</span><span class="prod-stag">FastAPI</span><span class="prod-stag">Supabase</span><span class="prod-stag">Claude API</span>
           </div>
-          <a href="#cta" class="prod-cta">Quiero acceso anticipado →</a>
+          <a href="publica-ai.html" class="prod-cta" data-track="publica_ai_product_card">Quiero acceso anticipado →</a>
         </div>
       </div>
 
@@ -1350,7 +1350,8 @@ footer::before{
         <div class="footer-col-title">Productos</div>
         <ul class="footer-links">
           <li><a href="#products">Agent Engine</a></li>
-          <li><a href="#products">Pública by Dataseed</a></li>
+          <li><a href="publica-ai.html">Pública by Dataseed</a></li>
+          <li><a href="sales-deck.html">Sales deck</a></li>
           <li><a href="#prod-demo">Demo en vivo</a></li>
         </ul>
       </div>
@@ -1417,6 +1418,9 @@ document.querySelectorAll('.faq-trigger').forEach((trigger) => {
   });
 });
 </script>
+<script src="js/analytics-events.js"></script>
+<script src="js/ab-testing.js"></script>
+<script src="js/hubspot-form-adapter.js"></script>
 <script type="module">
 import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 

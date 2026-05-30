@@ -1,0 +1,67 @@
+[
+  {
+    "id": "PUB-001",
+    "titulo": "Servicio de desarrollo e integración de plataforma de datos",
+    "comprador": "Municipalidad de Providencia",
+    "cierre": "2026-06-12",
+    "monto": "$85M CLP",
+    "vertical": "Tecnología y software",
+    "region": "Metropolitana",
+    "match": "Alta coincidencia con data engineering, integración y automatización",
+    "dificultad": "Media",
+    "recomendacion": "Postular",
+    "link": "https://www.mercadopublico.cl/"
+  },
+  {
+    "id": "PUB-002",
+    "titulo": "Implementación de tableros de gestión y analítica institucional",
+    "comprador": "Servicio de Salud Regional",
+    "cierre": "2026-06-18",
+    "monto": "$42M CLP",
+    "vertical": "Salud y gestión pública",
+    "region": "Valparaíso",
+    "match": "Demanda explícita de BI, KPI y reportería ejecutiva",
+    "dificultad": "Media",
+    "recomendacion": "Revisar bases",
+    "link": "https://www.mercadopublico.cl/"
+  },
+  {
+    "id": "PUB-003",
+    "titulo": "Automatización de procesos administrativos y soporte documental",
+    "comprador": "Gobierno Regional",
+    "cierre": "2026-06-20",
+    "monto": "No informado",
+    "vertical": "Servicios profesionales",
+    "region": "Biobío",
+    "match": "Buen fit para automatización n8n + gestión documental",
+    "dificultad": "Baja",
+    "recomendacion": "Postular",
+    "link": "https://www.mercadopublico.cl/"
+  },
+  {
+    "id": "PUB-004",
+    "titulo": "Mantención y evolución de sistema CRM institucional",
+    "comprador": "Corporación de Fomento",
+    "cierre": "2026-06-25",
+    "monto": "$120M CLP",
+    "vertical": "Tecnología y software",
+    "region": "Metropolitana",
+    "match": "HubSpot/CRM intelligence y automatización comercial aplican directamente",
+    "dificultad": "Alta",
+    "recomendacion": "Revisar requisitos",
+    "link": "https://www.mercadopublico.cl/"
+  },
+  {
+    "id": "PUB-005",
+    "titulo": "Consultoría para estrategia de datos e interoperabilidad",
+    "comprador": "Ministerio sectorial",
+    "cierre": "2026-07-02",
+    "monto": "$65M CLP",
+    "vertical": "Consultoría y datos",
+    "region": "Nacional",
+    "match": "Alineado con diagnóstico, arquitectura y roadmap de datos",
+    "dificultad": "Media",
+    "recomendacion": "Postular",
+    "link": "https://www.mercadopublico.cl/"
+  }
+]
