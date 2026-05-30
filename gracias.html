@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale-1.0">
+<title>¡Mensaje enviado! — Dataseed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/brand.css">
+<style>
+  /* Page-specific overrides for thank-you */
+  body{background:var(--cloud-white);}
+  .thank-you-nav{background:#fff;border-bottom:1px solid var(--slate-light);padding:0.9rem 3rem;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:100;box-shadow:var(--shadow-1);}
+  .thank-you-nav .logo{display:flex;align-items:center;gap:0.65rem;text-decoration:none;}
+  .thank-you-nav .logo img{height:32px;}
+  .thank-you-nav .logo-t{font-family:'Inter',sans-serif;font-weight:700;font-size:1rem;color:var(--deep-navy);}
+  .thank-you-nav .back-link{font-size:0.85rem;color:var(--slate);text-decoration:none;font-weight:500;transition:color 0.2s;}
+  .thank-you-nav .back-link:hover{color:var(--seed-green);}
+</style>
+</head>
+<body>
+
+<nav class="thank-you-nav">
+  <a href="/" class="logo">
+    <img src="dataseed_logo.png" alt="Dataseed" onerror="this.style.display='none'">
+    <span class="logo-t">Dataseed</span>
+  </a>
+  <a href="/" class="back-link">← Volver al inicio</a>
+</nav>
+
+<div class="thank-you-wrap">
+  <div class="thank-you-card">
+    <span class="thank-you-icon">✓</span>
+    <h1 class="thank-you-title">¡Mensaje recibido!</h1>
+    <p class="thank-you-text">
+      Gracias por contactarnos. Hemos recibido tu solicitud y nuestro equipo la revisará a la brevedad.
+    </p>
+    <div class="thank-you-details">
+      <p><strong>Próximos pasos:</strong></p>
+      <p>• Te responderemos en un plazo máximo de <strong>48 horas hábiles</strong>.</p>
+      <p>• Revisaremos tu infraestructura actual y te propondremos una arquitectura inicial sin costo.</p>
+      <p>• Si incluiste sistemas (SAP, Oracle, etc.), prepararemos ejemplos relevantes para tu industria.</p>
+    </div>
+    <p class="thank-you-text" style="font-size:0.9rem;">
+      Mientras tanto, puedes explorar nuestros servicios o agendar directamente una reunión de diagnóstico.
+    </p>
+    <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+      <a href="/#services" class="btn-primary">Ver servicios</a>
+      <a href="https://calendly.com/dataseed/30min" target="_blank" class="btn-secondary">Agendar diagnóstico →</a>
+    </div>
+  </div>
+</div>
+
+<footer style="padding:2rem 3rem 1.5rem;">
+  <div class="footer-bottom" style="border-top:1px solid var(--slate-light);padding-top:1rem;display:flex;justify-content:space-between;align-items:center;">
+    <p style="color:var(--slate);font-size:0.8rem;">©2026 Dataseed · Data Driven Infrastructure</p>
+    <a href="mailto:contacto@dataseed.cl" style="color:var(--slate);font-size:0.8rem;text-decoration:none;">contacto@dataseed.cl</a>
+  </div>
+</footer>
+
+</body>
+</html>
