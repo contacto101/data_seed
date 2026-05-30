@@ -861,6 +861,124 @@ footer::before{
 </style>
 <link rel="stylesheet" href="css/brand.css">
 </head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0];j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-XXXXXX');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<script>
+// Data layer initialization
+window.dataLayer = window.dataLayer || [];
+
+// Function to push events to dataLayer
+function trackEvent(eventName, eventData = {}) {
+    window.dataLayer.push({
+        'event': eventName,
+        ...eventData,
+        'timestamp': new Date().toISOString()
+    });
+}
+
+// Track page views
+trackEvent('page_view', {
+    'page_path': window.location.pathname,
+    'page_title': document.title
+});
+
+// Track form submissions
+document.addEventListener('submit', function(e) {
+    if (e.target.matches('form')) {
+        const formId = e.target.id || 'unknown';
+        trackEvent('form_submit', {
+            'form_id': formId,
+            'form_url': window.location.href
+        });
+    }
+});
+
+// Track clicks on key elements (CTAs, buttons)
+document.addEventListener('click', function(e) {
+    const target = e.target;
+    // Track CTA clicks
+    if (target.matches('.cta, .btn, [data-cta]')) {
+        trackEvent('cta_click', {
+            'cta_text': target.innerText.trim(),
+            'cta_url': target.href || '',
+            'element_type': target.tagName.toLowerCase()
+        });
+    }
+    
+    // Track navigation clicks
+    if (target.matches('nav a, .menu-link, .nav-link')) {
+        trackEvent('navigation_click', {
+            'nav_text': target.innerText.trim(),
+            'nav_url': target.href
+        });
+    }
+});
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0];j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-XXXXXX');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<script>
+// Data layer initialization
+window.dataLayer = window.dataLayer || [];
+
+// Function to push events to dataLayer
+function trackEvent(eventName, eventData = {}) {
+    window.dataLayer.push({
+        'event': eventName,
+        ...eventData,
+        'timestamp': new Date().toISOString()
+    });
+}
+
+// Track page views
+trackEvent('page_view', {
+    'page_path': window.location.pathname,
+    'page_title': document.title
+});
+
+// Track form submissions
+document.addEventListener('submit', function(e) {
+    if (e.target.matches('form')) {
+        const formId = e.target.id || 'unknown';
+        trackEvent('form_submit', {
+            'form_id': formId,
+            'form_url': window.location.href
+        });
+    }
+});
+
+// Track clicks on key elements (CTAs, buttons)
+document.addEventListener('click', function(e) {
+    const target = e.target;
+    // Track CTA clicks
+    if (target.matches('.cta, .btn, [data-cta]')) {
+        trackEvent('cta_click', {
+            'cta_text': target.innerText.trim(),
+            'cta_url': target.href || '',
+            'element_type': target.tagName.toLowerCase()
+        });
+    }
+    
+    // Track navigation clicks
+    if (target.matches('nav a, .menu-link, .nav-link')) {
+        trackEvent('navigation_click', {
+            'nav_text': target.innerText.trim(),
+            'nav_url': target.href
+        });
+    }
+});
+</script>
 <body>
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
@@ -876,6 +994,7 @@ footer::before{
     <li><a href="#how">Cómo funciona</a></li>
     <li><a href="#products" class="nav-active">Productos</a></li>
     <li><a href="#types">Analítica</a></li>
+    <li><a href="login.html">Acceso</a></li>
     <li><a href="#cta">Contacto</a></li>
   </ul>
   <a href="https://calendly.com/dataseed/30min" target="_blank" class="nav-cta">Reservar diagnóstico</a>
@@ -1351,6 +1470,7 @@ footer::before{
         <ul class="footer-links">
           <li><a href="#products">Agent Engine</a></li>
           <li><a href="publica-ai.html">Pública by Dataseed</a></li>
+          <li><a href="login.html">Acceso clientes</a></li>
           <li><a href="sales-deck.html">Sales deck</a></li>
           <li><a href="#prod-demo">Demo en vivo</a></li>
         </ul>
