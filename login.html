@@ -21,6 +21,7 @@
   .auth-proof{display:grid;gap:.7rem;color:rgba(255,255,255,.72);font-size:.9rem}.auth-proof b{color:#fff}.auth-main{display:flex;align-items:center;justify-content:center;padding:clamp(1.25rem,4vw,4rem)}
   .auth-card{width:min(100%,480px);background:#fff;border:1px solid var(--slate-light);border-radius:28px;box-shadow:0 24px 70px rgba(27,45,69,.12);padding:clamp(1.5rem,4vw,2.5rem)}.auth-card h2{font-size:2rem;letter-spacing:-.04em;margin-bottom:.5rem}.auth-card>p{margin-bottom:1.5rem}.tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--deep-navy-light);border-radius:999px;padding:.25rem;margin-bottom:1.4rem}.tab{border:0;border-radius:999px;background:transparent;padding:.75rem 1rem;font:700 .88rem Inter,sans-serif;color:var(--slate);cursor:pointer}.tab.active{background:#fff;color:var(--seed-green);box-shadow:var(--shadow-1)}
   .auth-form{display:grid;gap:1rem}.field{display:grid;gap:.42rem}.field label{font:800 .72rem Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}.field input{width:100%;border:1px solid var(--slate-light);border-radius:15px;padding:.95rem 1rem;font:inherit;color:var(--deep-navy);background:#fff}.field input:focus{outline:3px solid rgba(59,130,246,.14);border-color:var(--data-blue)}.field small{color:var(--slate);font-size:.78rem}.row{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}.check{display:flex;align-items:center;gap:.5rem;color:var(--slate);font-size:.88rem}.auth-submit{width:100%;justify-content:center;border:0;margin-top:.2rem}.divider{display:flex;align-items:center;gap:1rem;margin:1.35rem 0;color:var(--slate);font-size:.82rem}.divider::before,.divider::after{content:"";height:1px;background:var(--slate-light);flex:1}.oauth{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}.oauth button{border:1px solid var(--slate-light);border-radius:14px;background:#fff;padding:.85rem 1rem;font:700 .85rem Inter,sans-serif;color:var(--deep-navy);cursor:pointer}.oauth button:hover{border-color:var(--seed-green);color:var(--seed-green)}.notice{margin-top:1.3rem;border:1px solid rgba(229,161,0,.25);background:rgba(229,161,0,.08);border-radius:16px;padding:1rem;color:#7A5200;font-size:.88rem;line-height:1.55}.status{display:none;margin-top:1rem;border-radius:16px;padding:1rem;font-weight:700}.status.ok{display:block;background:#DCFCE7;color:#166534}.status.warn{display:block;background:#FEF3C7;color:#92400E}.hidden{display:none!important}.back{display:inline-flex;margin-top:1.25rem;color:var(--slate);font-weight:700;text-decoration:none}.back:hover{color:var(--seed-green)}
+  .google-primary{width:100%;border:0!important;background:var(--seed-green)!important;color:#fff!important;border-radius:16px!important;padding:1rem 1.2rem!important;font:800 .95rem Inter,sans-serif!important;box-shadow:var(--shadow-3);display:flex;align-items:center;justify-content:center;gap:.55rem}.google-primary:hover{background:var(--seed-green-hover)!important;color:#fff!important}.google-primary::before{content:'G';display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#fff;color:var(--seed-green);font-weight:900}.email-toggle{border:0;background:transparent;color:var(--data-blue);font:800 .85rem Inter,sans-serif;cursor:pointer;margin:.2rem auto 0;display:block}.email-toggle:hover{color:var(--seed-green)}
   @media(max-width:900px){.auth-shell{grid-template-columns:1fr}.auth-side{min-height:48vh}.auth-main{align-items:start}.auth-kpis{grid-template-columns:1fr}.oauth{grid-template-columns:1fr}}
 </style>
 </head>
@@ -47,13 +48,17 @@
   </section>
   <section class="auth-main" aria-label="Formulario de acceso">
     <div class="auth-card">
-      <h2>Entrar a Dataseed</h2>
-      <p>Acceso para clientes, pilotos y reportes privados.</p>
-      <div class="tabs" role="tablist" aria-label="Tipo de acceso">
-        <button class="tab active" id="tab-login" type="button" role="tab" aria-selected="true" data-auth-tab="login">Ingresar</button>
-        <button class="tab" id="tab-register" type="button" role="tab" aria-selected="false" data-auth-tab="register">Crear acceso</button>
-      </div>
-      <form id="auth-form" class="auth-form" data-auth-mode="login" novalidate>
+      <h2>Entrar con Google</h2>
+      <p>Usa tu correo corporativo DataSeed para acceder a reportes, oportunidades y paneles privados.</p>
+      <button class="google-primary" type="button" data-auth-oauth="google" data-track="auth_google_primary">Continuar con Google corporativo</button>
+      <button class="email-toggle" type="button" data-toggle-email-auth>Usar email y contraseña</button>
+      <div id="email-auth-panel" hidden>
+        <div class="divider">email/password</div>
+        <div class="tabs" role="tablist" aria-label="Tipo de acceso">
+          <button class="tab active" id="tab-login" type="button" role="tab" aria-selected="true" data-auth-tab="login">Ingresar</button>
+          <button class="tab" id="tab-register" type="button" role="tab" aria-selected="false" data-auth-tab="register">Crear acceso</button>
+        </div>
+        <form id="auth-form" class="auth-form" data-auth-mode="login" novalidate>
         <div class="field">
           <label for="email">Email de trabajo</label>
           <input id="email" name="email" type="email" autocomplete="email" placeholder="nombre@empresa.cl" required>
@@ -72,11 +77,12 @@
           <a href="#" data-auth-action="recover">Recuperar acceso</a>
         </div>
         <button class="btn-primary auth-submit" type="submit" data-track="auth_submit">Ingresar</button>
-      </form>
-      <div class="divider">o continuar con</div>
+        </form>
+      </div>
+      <div class="divider">acceso alternativo</div>
       <div class="oauth">
-        <button type="button" data-auth-oauth="google" data-track="auth_google">Google</button>
         <button type="button" data-auth-oauth="microsoft" data-track="auth_microsoft">Microsoft</button>
+        <button type="button" data-auth-action="recover" data-track="auth_recover">Recuperar acceso</button>
       </div>
       <div id="auth-status" class="status" role="status" aria-live="polite"></div>
       <div class="notice">

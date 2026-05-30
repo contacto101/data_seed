@@ -20,5 +20,9 @@ window.DS_AUTH_OPTIONS = {
   redirectAfterLogin: "dashboard.html",
   redirectAfterLogout: "login.html",
   requireEmailVerification: false,
-  enabledProviders: ["password", "google", "microsoft"]
+  // Si se deja vacío, acepta cualquier Google Account autorizado por Firebase.
+  // Recomendado para Dataseed: ["dataseed.cl"]
+  allowedEmailDomains: ["dataseed.cl"],
+  primaryProvider: "google",
+  enabledProviders: ["google", "password", "microsoft"]
 };

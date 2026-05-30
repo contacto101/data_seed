@@ -61,6 +61,17 @@ if (!hasValidConfig()) {
   const microsoft = document.querySelector('[data-auth-oauth="microsoft"]');
   const logout = document.querySelector('[data-auth-action="logout"]');
 
+  async function enforceAllowedDomain(user) {
+    const allowed = Array.isArray(options.allowedEmailDomains) ? options.allowedEmailDomains.filter(Boolean) : [];
+    if (!allowed.length) return true;
+    const domain = (user.email || '').split('@')[1] || '';
+    if (allowed.includes(domain)) return true;
+    await signOut(auth);
+    track('auth_domain_rejected', { email_domain: domain, allowed_domains: allowed.join(',') });
+    status('Este acceso está restringido a correos corporativos autorizados: ' + allowed.join(', '), 'warn');
+    return false;
+  }
+
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const fd = new FormData(form);
@@ -88,6 +99,7 @@ if (!hasValidConfig()) {
         result = await signInWithEmailAndPassword(auth, email, password);
         track('auth_login_success', { method: 'password', email_domain: email.split('@')[1] || '' });
       }
+      if (!(await enforceAllowedDomain(result.user))) return;
       status('Acceso correcto. Redirigiendo…', 'ok');
       window.location.href = options.redirectAfterLogin;
     } catch (error) {
@@ -127,6 +139,7 @@ if (!hasValidConfig()) {
     try {
       const result = await signInWithPopup(auth, provider);
       track('auth_login_success', { method: providerName, email_domain: result.user.email?.split('@')[1] || '' });
+      if (!(await enforceAllowedDomain(result.user))) return;
       status('Acceso correcto. Redirigiendo…', 'ok');
       window.location.href = options.redirectAfterLogin;
     } catch (error) {

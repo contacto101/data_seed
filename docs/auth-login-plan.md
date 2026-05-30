@@ -1,6 +1,6 @@
 # Sistema de Login / Autenticación — DataSeed.cl
 
-**Decisión optimizada para GCP:** Firebase Authentication como implementación inicial, con ruta natural a Google Cloud Identity Platform cuando se requiera multi-tenant, SLA/compliance avanzado o controles enterprise.  
+**Decisión optimizada para GCP:** Firebase Authentication como implementación inicial, con **Google Login corporativo como acceso principal**, y ruta natural a Google Cloud Identity Platform cuando se requiera multi-tenant, SLA/compliance avanzado o controles enterprise.  
 **Estado:** integración frontend GCP/Firebase lista; falta crear proyecto/config real en Google Cloud/Firebase Console.  
 **Fuentes verificadas:** documentación oficial Firebase Authentication, Firebase Web Setup e Identity Platform de Google Cloud.
 
@@ -11,8 +11,15 @@
 ### Selección
 
 ```text
+Google Login corporativo como método principal
 Firebase Auth + Firebase Web SDK
 → Upgrade futuro opcional: Google Cloud Identity Platform
+```
+
+La experiencia principal queda así:
+
+```text
+Usuario del grupo/equipo → Continuar con Google → validar dominio @dataseed.cl → dashboard.html
 ```
 
 ### Por qué es la mejor opción para GCP
@@ -45,7 +52,7 @@ Firebase Auth + Firebase Web SDK
 | `login.html` | UI de acceso/registro |
 | `dashboard.html` | Dashboard privado V1 protegido por auth |
 | `js/auth-ui.js` | UX local: tabs, validación, estados |
-| `js/gcp-firebase-auth.js` | Integración Firebase Auth real |
+| `js/gcp-firebase-auth.js` | Integración Firebase Auth real, Google Login y validación opcional de dominio corporativo |
 | `js/firebase-config.example.js` | Plantilla de configuración Firebase |
 | `index.html` | Links hacia acceso clientes |
 

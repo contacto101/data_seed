@@ -5,6 +5,8 @@
   const tabs = document.querySelectorAll('[data-auth-tab]');
   const submit = form?.querySelector('[type="submit"]');
   const password = document.getElementById('password');
+  const emailPanel = document.getElementById('email-auth-panel');
+  const emailToggle = document.querySelector('[data-toggle-email-auth]');
 
   function track(event, payload){
     if (window.DataseedTrack) window.DataseedTrack(event, payload || {});
@@ -36,6 +38,14 @@
   }
 
   tabs.forEach(tab => tab.addEventListener('click', () => setMode(tab.dataset.authTab)));
+
+  emailToggle?.addEventListener('click', function(){
+    if (!emailPanel) return;
+    const willOpen = emailPanel.hidden;
+    emailPanel.hidden = !willOpen;
+    emailToggle.textContent = willOpen ? 'Ocultar email y contraseña' : 'Usar email y contraseña';
+    track('auth_email_panel_toggle', {open: willOpen});
+  });
 
   document.addEventListener('click', function(e){
     const recover = e.target.closest('[data-auth-action="recover"]');
