@@ -1,88 +1,218 @@
 # Sistema de Login / Autenticación — DataSeed.cl
 
-**Estado:** V1 frontend implementado. Backend/proveedor auth pendiente de decisión.  
-**Archivos implementados:**
-
-- `login.html` — interfaz de acceso/registro.
-- `js/auth-ui.js` — lógica frontend de tabs, validación, eventos y placeholders OAuth.
-- `index.html` — links de navegación y footer hacia `login.html`.
+**Decisión optimizada para GCP:** Firebase Authentication como implementación inicial, con ruta natural a Google Cloud Identity Platform cuando se requiera multi-tenant, SLA/compliance avanzado o controles enterprise.  
+**Estado:** integración frontend GCP/Firebase lista; falta crear proyecto/config real en Google Cloud/Firebase Console.  
+**Fuentes verificadas:** documentación oficial Firebase Authentication, Firebase Web Setup e Identity Platform de Google Cloud.
 
 ---
 
-## 1. Objetivo del login
+## 1. Opción seleccionada
 
-El login no debe ser “una cuenta por tener cuenta”. Debe habilitar valor de producto.
+### Selección
 
-Uso recomendado para V1:
+```text
+Firebase Auth + Firebase Web SDK
+→ Upgrade futuro opcional: Google Cloud Identity Platform
+```
 
-1. Acceso a reportes personalizados de Pública AI.
-2. Historial de oportunidades entregadas.
-3. Radar por empresa/rubro/keywords.
-4. Descarga de reportes privados.
-5. Futura conexión con CRM/pagos.
+### Por qué es la mejor opción para GCP
 
----
+| Criterio | Resultado |
+|---|---|
+| Compatibilidad GCP | Nativa: Firebase vive sobre Google Cloud |
+| Velocidad MVP | Alta: SDK web directo, sin backend propio |
+| OAuth Google/Microsoft | Soportado vía proveedores auth |
+| Hosting estático | Compatible con sitio HTML actual |
+| Escalabilidad | Puede evolucionar a Identity Platform |
+| Seguridad | Auth gestionado; reglas por dominio/proveedor |
+| Futuro dashboard | Compatible con Firestore, Cloud Functions, BigQuery |
 
-## 2. Alcance implementado ahora
+### Descartado por ahora
 
-### Incluido
-
-- Página `login.html` con diseño corporativo DataSeed.
-- Tabs: ingresar / crear acceso.
-- Campos: email de trabajo, nombre para registro, contraseña.
-- Botones OAuth: Google y Microsoft.
-- Validación frontend básica.
-- Eventos analytics vía `DataseedTrack` / `dataLayer`:
-  - `auth_mode_change`
-  - `auth_recover_click`
-  - `auth_oauth_click`
-  - `auth_validation_error`
-  - `auth_frontend_validated`
-- Link desde navegación principal.
-- Link desde footer.
-- Página marcada `noindex,nofollow` por seguridad mientras no esté productiva.
-
-### No incluido todavía
-
-- Creación real de usuarios.
-- Persistencia de sesión.
-- Recuperación real de contraseña.
-- OAuth real con Google/Microsoft.
-- Dashboard privado.
-- Base de datos de usuarios.
-- Roles/permisos.
+| Opción | Razón |
+|---|---|
+| Supabase Auth | Muy bueno, pero no optimiza GCP nativo |
+| Clerk | Excelente UX, pero añade SaaS externo fuera de GCP |
+| Auth0 | Robusto, pero más caro/complejo para MVP |
+| Backend propio | No conviene antes de validar producto |
 
 ---
 
-## 3. Arquitectura recomendada
+## 2. Archivos implementados
 
-### Fase 1 — Auth gestionado + sitio estático
-
-Recomendación: usar un proveedor administrado.
-
-Opciones viables:
-
-| Opción | Ventaja | Riesgo / tradeoff | Recomendación |
-|---|---|---|---|
-| Supabase Auth | Open source, Postgres, rápido para dashboard futuro | Requiere configurar proyecto y RLS | Muy recomendada |
-| Clerk | Muy rápido, excelente UX, OAuth simple | Dependencia SaaS, pricing escala | Recomendado si se prioriza velocidad |
-| Auth0 | Enterprise, robusto, compliance | Más complejo/caro | Útil para clientes enterprise |
-| Firebase Auth | Simple, barato, Google ecosystem | Modelo NoSQL si se usa Firestore | Bueno para MVP rápido |
-
-**Recomendación inicial:** Supabase Auth si DataSeed quiere tener dashboard/data propia; Clerk si quiere velocidad máxima de implementación.
+| Archivo | Función |
+|---|---|
+| `login.html` | UI de acceso/registro |
+| `dashboard.html` | Dashboard privado V1 protegido por auth |
+| `js/auth-ui.js` | UX local: tabs, validación, estados |
+| `js/gcp-firebase-auth.js` | Integración Firebase Auth real |
+| `js/firebase-config.example.js` | Plantilla de configuración Firebase |
+| `index.html` | Links hacia acceso clientes |
 
 ---
 
-## 4. Modelo de datos mínimo
+## 3. Cómo activar auth real
+
+### Paso 1 — Crear proyecto en GCP/Firebase
+
+1. Ir a Firebase Console.
+2. Crear proyecto o vincular proyecto GCP existente.
+3. Registrar una Web App.
+4. Copiar la configuración Web SDK.
+
+### Paso 2 — Crear `js/firebase-config.js`
+
+Copiar:
+
+```bash
+cp js/firebase-config.example.js js/firebase-config.js
+```
+
+Editar con la configuración real:
+
+```js
+window.DS_FIREBASE_CONFIG = {
+  apiKey: "...",
+  authDomain: "dataseed-xxxxx.firebaseapp.com",
+  projectId: "dataseed-xxxxx",
+  storageBucket: "dataseed-xxxxx.appspot.com",
+  messagingSenderId: "...",
+  appId: "..."
+};
+```
+
+Nota: esta configuración Web no es un secreto. No incluir nunca service account keys ni credenciales privadas en el repo.
+
+### Paso 3 — Activar proveedores
+
+En Firebase Authentication → Sign-in method:
+
+- Email/password.
+- Google.
+- Microsoft, si se requiere acceso corporativo Microsoft 365.
+
+### Paso 4 — Authorized domains
+
+Agregar dominios reales:
+
+- `dataseed.cl`
+- `www.dataseed.cl`
+- dominio temporal de preview si se usa
+- dominio Firebase Hosting si aplica
+
+### Paso 5 — Probar flujo
+
+1. Abrir `login.html`.
+2. Crear usuario con email/password.
+3. Confirmar redirección a `dashboard.html`.
+4. Cerrar sesión.
+5. Probar recuperación de contraseña.
+6. Probar Google OAuth.
+
+---
+
+## 4. Flujos implementados
+
+### Email/password
+
+```text
+login.html → Firebase Auth → dashboard.html
+```
+
+Funciones reales ya integradas:
+
+- `createUserWithEmailAndPassword`
+- `signInWithEmailAndPassword`
+- `sendPasswordResetEmail`
+- `signOut`
+- `onAuthStateChanged`
+
+### OAuth
+
+```text
+login.html → popup Google/Microsoft → Firebase Auth → dashboard.html
+```
+
+Proveedores integrados:
+
+- `GoogleAuthProvider`
+- `OAuthProvider('microsoft.com')`
+
+### Dashboard protegido
+
+```text
+Usuario sin sesión → dashboard.html → redirect a login.html
+Usuario con sesión → dashboard.html visible
+```
+
+---
+
+## 5. Eventos analytics implementados
+
+| Evento | Propósito |
+|---|---|
+| `auth_gcp_config_missing` | Detectar que falta configuración Firebase |
+| `auth_gcp_ready` | Confirmar integración activa |
+| `auth_mode_change` | Cambio login/register |
+| `auth_register_success` | Registro exitoso |
+| `auth_login_success` | Login exitoso |
+| `auth_error` | Error de proveedor o credenciales |
+| `auth_recover_sent` | Recuperación enviada |
+| `auth_oauth_click` | Click en proveedor OAuth |
+| `auth_guard_redirect` | Dashboard redirige por falta de sesión |
+| `auth_guard_ok` | Usuario autenticado accede |
+| `auth_logout` | Cierre de sesión |
+
+---
+
+## 6. Modelo futuro recomendado en GCP
+
+### MVP
+
+```text
+Firebase Auth
+Static HTML dashboard
+Reportes demo/privados manuales
+```
+
+### V1 Producto
+
+```text
+Firebase Auth
+Firestore: accounts, profiles, reports
+Cloud Functions: generación de reportes / webhooks
+Cloud Storage: PDFs privados
+```
+
+### V2 Data/AI
+
+```text
+BigQuery: licitaciones / oportunidades / histórico
+Cloud Run: API de Pública AI
+Vertex AI / Gemini: resúmenes, scoring, agente IA
+Firestore: metadata de usuario/cuenta
+```
+
+### Enterprise
+
+```text
+Google Cloud Identity Platform
+Multi-tenancy
+SAML/OIDC corporativo
+Cloud Armor / IAM / audit logs
+```
+
+---
+
+## 7. Modelo de datos recomendado
 
 ```sql
 profiles
-- id uuid primary key references auth.users(id)
+- id uuid primary key
+- firebase_uid text unique not null
 - email text not null
 - name text
-- company text
-- role text default 'client'
-- created_at timestamp default now()
+- created_at timestamp
 
 accounts
 - id uuid primary key
@@ -90,120 +220,63 @@ accounts
 - website text
 - industry text
 - region text
-- created_at timestamp default now()
+- created_at timestamp
 
 account_members
-- account_id uuid references accounts(id)
-- user_id uuid references profiles(id)
-- role text check (role in ('owner','admin','viewer'))
+- account_id uuid
+- firebase_uid text
+- role text -- owner/admin/viewer
 
 reports
 - id uuid primary key
-- account_id uuid references accounts(id)
+- account_id uuid
 - title text
 - type text -- publica_ai, diagnostic, monthly_report
 - file_url text
-- status text -- draft, published, archived
-- created_at timestamp default now()
+- status text -- draft/published/archived
+- created_at timestamp
 ```
 
----
-
-## 5. Flujos de usuario
-
-### Login
+En Firebase/Firestore esto se representa como colecciones:
 
 ```text
-Usuario → login.html → proveedor auth → sesión → dashboard/reportes
-```
-
-### Registro
-
-```text
-Usuario → crear acceso → proveedor auth → perfil → completar empresa → dashboard vacío/con sample
-```
-
-### Pública AI
-
-```text
-Lead formulario → HubSpot/CRM → reporte demo → crear acceso → reporte privado → trial/pago
+/users/{uid}
+/accounts/{accountId}
+/accounts/{accountId}/members/{uid}
+/accounts/{accountId}/reports/{reportId}
 ```
 
 ---
 
-## 6. Eventos de analytics requeridos
+## 8. Seguridad mínima
 
-| Evento | Cuándo se dispara | Propósito |
-|---|---|---|
-| `auth_page_view` | Al cargar login | Medir visitas a acceso |
-| `auth_mode_change` | Cambio login/register | Intención de registro |
-| `auth_frontend_validated` | Form válido frontend | Intento serio de login/registro |
-| `auth_success` | Login real exitoso | Conversión auth |
-| `auth_error` | Error proveedor | Diagnóstico |
-| `auth_oauth_click` | Click Google/Microsoft | Preferencia OAuth |
-| `auth_recover_click` | Recuperar acceso | Fricción |
-
-Actualmente están implementados los eventos frontend posibles sin proveedor real.
+- No subir service accounts al repo.
+- Configurar Authorized domains.
+- Activar App Check cuando haya backend/API.
+- Reglas Firestore: usuarios solo leen cuentas donde son miembros.
+- Reportes privados en Storage con reglas por cuenta.
+- Para clientes enterprise: migrar a Identity Platform + SAML/OIDC.
 
 ---
 
-## 7. Roadmap de implementación
+## 9. Pendientes para cerrar T-021
 
-### Sprint 1 — Frontend Auth Shell ✅
-
-- [x] Crear `login.html`.
-- [x] Crear `js/auth-ui.js`.
-- [x] Enlazar desde home.
-- [x] Eventos frontend.
-
-### Sprint 2 — Proveedor Auth
-
-- [ ] Elegir proveedor: Supabase / Clerk / Auth0 / Firebase.
-- [ ] Crear proyecto/app.
-- [ ] Configurar dominios autorizados.
-- [ ] Configurar OAuth Google/Microsoft.
-- [ ] Reemplazar placeholders por SDK real.
-- [ ] Crear callback y logout.
-
-### Sprint 3 — Dashboard mínimo
-
-- [ ] Crear `dashboard.html` o app separada.
-- [ ] Proteger ruta con sesión.
-- [ ] Mostrar reportes demo/privados.
-- [ ] Mostrar perfil empresa.
-- [ ] Agregar logout.
-
-### Sprint 4 — Roles + reportes privados
-
-- [ ] Modelo `accounts`.
-- [ ] Miembros por cuenta.
-- [ ] Reportes por cuenta.
-- [ ] Permisos owner/admin/viewer.
+| Pendiente | Quién lo habilita |
+|---|---|
+| Crear proyecto Firebase/GCP | Equipo con acceso GCP |
+| Copiar config real a `js/firebase-config.js` | Equipo/Agente con datos del proyecto |
+| Activar Email/password + Google + Microsoft | Admin Firebase |
+| Agregar dominios autorizados | Admin Firebase |
+| Probar en dominio real | Agente después de deploy |
 
 ---
 
-## 8. Decisiones pendientes del equipo
+## 10. Resumen ejecutivo
 
-Para completar autenticación real se necesita decidir:
+El login ya está implementado a nivel frontend y preparado para GCP/Firebase. La decisión recomendada es correcta para el stack: rápida, nativa de Google Cloud y escalable hacia Identity Platform.
 
-1. Proveedor auth preferido.
-2. Si el dashboard será estático + proveedor externo o app separada.
-3. Dominio final autorizado: `dataseed.cl`, `www.dataseed.cl`, subdominio tipo `app.dataseed.cl`.
-4. OAuth requerido: Google, Microsoft, ambos o solo email/password.
-5. Nivel de compliance inicial: básico MVP vs enterprise.
+Falta únicamente crear/configurar el proyecto Firebase real y publicar `js/firebase-config.js` con los datos del proyecto.
 
 ---
 
-## 9. Recomendación ejecutiva
-
-Para mantener velocidad y no sobredimensionar:
-
-```text
-login.html actual → Supabase Auth → dashboard.html simple → reportes Pública AI por cuenta
-```
-
-Esto permite validar producto sin construir backend complejo desde cero.
-
----
-
-*Documento operativo — DataSeed.cl — Autenticación V1*
+*Documento operativo — DataSeed.cl — Autenticación GCP/Firebase V1*

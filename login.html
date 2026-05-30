@@ -80,13 +80,15 @@
       </div>
       <div id="auth-status" class="status" role="status" aria-live="polite"></div>
       <div class="notice">
-        <strong>Nota técnica:</strong> esta pantalla es la capa frontend V1. Falta conectar el proveedor final (recomendado: Supabase Auth, Clerk/Auth0 o Firebase Auth según backend y compliance).
+        <strong>GCP Auth:</strong> interfaz conectable a Firebase Auth / Google Identity Platform. Si `js/firebase-config.js` existe, usa autenticación real; si no existe, opera en modo preview.
       </div>
       <a class="back" href="index.html">← Volver a Dataseed</a>
     </div>
   </section>
 </main>
 <script src="js/analytics-events.js"></script>
+<script src="js/firebase-config.js"></script>
 <script src="js/auth-ui.js"></script>
+<script type="module" src="js/gcp-firebase-auth.js"></script>
 </body>
 </html>
