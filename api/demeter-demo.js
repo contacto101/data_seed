@@ -69,6 +69,44 @@ function fallbackReply(problem, message, history) {
   return 'Perfecto. Para diagnosticar datos necesito ubicar fuentes, calidad y uso de negocio.<br><br>¿Los datos están principalmente en ERP/CRM, planillas, bases SQL, APIs o mezclados entre varios sistemas?';
 }
 
+async function callDemeterApi(payload) {
+  const apiBase = String(process.env.HERMES_API_BASE_URL || '').replace(/\/$/, '');
+  const apiKey = process.env.HERMES_API_KEY || '';
+  if (!apiBase || !apiKey) return null;
+
+  const messages = [
+    { role: 'system', content: payload.system },
+    ...payload.history,
+    { role: 'user', content: payload.message }
+  ];
+
+  const response = await fetch(`${apiBase}/v1/chat/completions`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: process.env.HERMES_API_MODEL || 'hermes-agent',
+      messages,
+      temperature: 0.2,
+      stream: false
+    })
+  });
+
+  const text = await response.text();
+  let data = {};
+  try { data = JSON.parse(text); } catch (_) { data = {}; }
+
+  if (!response.ok) {
+    const error = new Error('demeter_api_error');
+    error.status = response.status;
+    throw error;
+  }
+
+  return safeString(data.choices?.[0]?.message?.content || data.reply || data.response || text, 4000);
+}
+
 async function callDemeterWebhook(payload) {
   const webhookUrl = process.env.HERMES_DEMO_WEBHOOK_URL || '';
   if (!webhookUrl) return null;
@@ -122,13 +160,13 @@ module.exports = async function handler(req, res) {
       }
     };
 
-    const webhookReply = await callDemeterWebhook(payload);
-    const reply = webhookReply || fallbackReply(problem, message, history);
+    const demeterReply = await callDemeterApi(payload) || await callDemeterWebhook(payload);
+    const reply = demeterReply || fallbackReply(problem, message, history);
 
     return sendJson(res, 200, {
       ok: true,
       sessionId,
-      connected: Boolean(webhookReply),
+      connected: Boolean(demeterReply),
       reply
     });
   } catch (error) {
