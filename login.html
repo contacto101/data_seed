@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acceso — Dataseed</title>
+<meta name="description" content="Acceso de usuarios a reportes, oportunidades y paneles privados de Dataseed.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/brand.css">
+<style>
+  body{min-height:100vh;background:linear-gradient(135deg,#F8FAFC 0%,#EEF2F6 48%,#F8FAFC 100%);}
+  .auth-shell{min-height:100vh;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(420px,.95fr);}
+  .auth-side{padding:clamp(2rem,5vw,5rem);background:linear-gradient(135deg,#1B2D45 0%,#153024 100%);color:#fff;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;}
+  .auth-side::before{content:"";position:absolute;inset:auto -20% -30% auto;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(103,178,111,.28),transparent 68%);filter:blur(6px)}
+  .auth-side::after{content:"";position:absolute;inset:-20% auto auto -20%;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,.16),transparent 68%);filter:blur(8px)}
+  .auth-brand,.auth-copy,.auth-proof{position:relative;z-index:1}.auth-brand{display:inline-flex;align-items:center;gap:.8rem;color:#fff;text-decoration:none}.auth-brand img{height:42px;filter:brightness(0) invert(1)}.auth-brand strong{font-family:Inter,sans-serif;font-size:1.1rem}.auth-brand span{display:block;font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+  .auth-copy h1{font-family:Inter,sans-serif;color:#fff;font-size:clamp(2.4rem,5vw,4.8rem);line-height:.98;letter-spacing:-.06em;margin:3rem 0 1.1rem}.auth-copy p{color:rgba(255,255,255,.76);max-width:620px;font-size:1.05rem;line-height:1.75}.auth-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem;margin-top:2rem}.auth-kpi{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);border-radius:18px;padding:1rem}.auth-kpi strong{display:block;font-family:Inter,sans-serif;font-size:1.45rem;color:#9BE7B0}.auth-kpi span{font-size:.78rem;color:rgba(255,255,255,.68)}
+  .auth-proof{display:grid;gap:.7rem;color:rgba(255,255,255,.72);font-size:.9rem}.auth-proof b{color:#fff}.auth-main{display:flex;align-items:center;justify-content:center;padding:clamp(1.25rem,4vw,4rem)}
+  .auth-card{width:min(100%,480px);background:#fff;border:1px solid var(--slate-light);border-radius:28px;box-shadow:0 24px 70px rgba(27,45,69,.12);padding:clamp(1.5rem,4vw,2.5rem)}.auth-card h2{font-size:2rem;letter-spacing:-.04em;margin-bottom:.5rem}.auth-card>p{margin-bottom:1.5rem}.tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--deep-navy-light);border-radius:999px;padding:.25rem;margin-bottom:1.4rem}.tab{border:0;border-radius:999px;background:transparent;padding:.75rem 1rem;font:700 .88rem Inter,sans-serif;color:var(--slate);cursor:pointer}.tab.active{background:#fff;color:var(--seed-green);box-shadow:var(--shadow-1)}
+  .auth-form{display:grid;gap:1rem}.field{display:grid;gap:.42rem}.field label{font:800 .72rem Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}.field input{width:100%;border:1px solid var(--slate-light);border-radius:15px;padding:.95rem 1rem;font:inherit;color:var(--deep-navy);background:#fff}.field input:focus{outline:3px solid rgba(59,130,246,.14);border-color:var(--data-blue)}.field small{color:var(--slate);font-size:.78rem}.row{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}.check{display:flex;align-items:center;gap:.5rem;color:var(--slate);font-size:.88rem}.auth-submit{width:100%;justify-content:center;border:0;margin-top:.2rem}.divider{display:flex;align-items:center;gap:1rem;margin:1.35rem 0;color:var(--slate);font-size:.82rem}.divider::before,.divider::after{content:"";height:1px;background:var(--slate-light);flex:1}.oauth{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}.oauth button{border:1px solid var(--slate-light);border-radius:14px;background:#fff;padding:.85rem 1rem;font:700 .85rem Inter,sans-serif;color:var(--deep-navy);cursor:pointer}.oauth button:hover{border-color:var(--seed-green);color:var(--seed-green)}.notice{margin-top:1.3rem;border:1px solid rgba(229,161,0,.25);background:rgba(229,161,0,.08);border-radius:16px;padding:1rem;color:#7A5200;font-size:.88rem;line-height:1.55}.status{display:none;margin-top:1rem;border-radius:16px;padding:1rem;font-weight:700}.status.ok{display:block;background:#DCFCE7;color:#166534}.status.warn{display:block;background:#FEF3C7;color:#92400E}.hidden{display:none!important}.back{display:inline-flex;margin-top:1.25rem;color:var(--slate);font-weight:700;text-decoration:none}.back:hover{color:var(--seed-green)}
+  .google-primary{width:100%;border:0!important;background:var(--seed-green)!important;color:#fff!important;border-radius:16px!important;padding:1rem 1.2rem!important;font:800 .95rem Inter,sans-serif!important;box-shadow:var(--shadow-3);display:flex;align-items:center;justify-content:center;gap:.55rem}.google-primary:hover{background:var(--seed-green-hover)!important;color:#fff!important}.google-primary::before{content:'G';display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#fff;color:var(--seed-green);font-weight:900}.email-toggle{border:0;background:transparent;color:var(--data-blue);font:800 .85rem Inter,sans-serif;cursor:pointer;margin:.2rem auto 0;display:block}.email-toggle:hover{color:var(--seed-green)}
+  @media(max-width:900px){.auth-shell{grid-template-columns:1fr}.auth-side{min-height:48vh}.auth-main{align-items:start}.auth-kpis{grid-template-columns:1fr}.oauth{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="auth-shell">
+  <section class="auth-side" aria-label="Contexto de acceso Dataseed">
+    <a class="auth-brand" href="index.html" data-track="auth_logo_home">
+      <img src="dataseed_logo_black.png" alt="Dataseed">
+      <div><strong>Dataseed</strong><span>Data Driven</span></div>
+    </a>
+    <div class="auth-copy">
+      <h1>Acceso privado para decisiones con datos.</h1>
+      <p>Centraliza reportes, oportunidades públicas, diagnósticos y próximos pasos comerciales en un espacio seguro para cada cliente.</p>
+      <div class="auth-kpis" aria-label="Métricas de producto">
+        <div class="auth-kpi"><strong>&lt;48h</strong><span>primer insight objetivo</span></div>
+        <div class="auth-kpi"><strong>1</strong><span>fuente de verdad por cuenta</span></div>
+        <div class="auth-kpi"><strong>IA</strong><span>para priorizar oportunidades</span></div>
+      </div>
+    </div>
+    <div class="auth-proof">
+      <span><b>Fase actual:</b> interfaz lista para conectar proveedor de autenticación.</span>
+      <span><b>Uso V1:</b> acceso a reportes personalizados y radar de oportunidades.</span>
+    </div>
+  </section>
+  <section class="auth-main" aria-label="Formulario de acceso">
+    <div class="auth-card">
+      <h2>Entrar con Google</h2>
+      <p>Usa tu correo corporativo DataSeed para acceder a reportes, oportunidades y paneles privados.</p>
+      <button class="google-primary" type="button" data-auth-oauth="google" data-track="auth_google_primary">Continuar con Google corporativo</button>
+      <button class="email-toggle" type="button" data-toggle-email-auth>Usar email y contraseña</button>
+      <div id="email-auth-panel" hidden>
+        <div class="divider">email/password</div>
+        <div class="tabs" role="tablist" aria-label="Tipo de acceso">
+          <button class="tab active" id="tab-login" type="button" role="tab" aria-selected="true" data-auth-tab="login">Ingresar</button>
+          <button class="tab" id="tab-register" type="button" role="tab" aria-selected="false" data-auth-tab="register">Crear acceso</button>
+        </div>
+        <form id="auth-form" class="auth-form" data-auth-mode="login" novalidate>
+        <div class="field">
+          <label for="email">Email de trabajo</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="nombre@empresa.cl" required>
+        </div>
+        <div class="field" id="name-field" hidden>
+          <label for="name">Nombre</label>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="Nombre y apellido">
+        </div>
+        <div class="field">
+          <label for="password">Contraseña</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••" minlength="8" required>
+          <small id="password-help">Mínimo 8 caracteres. En producción se valida en el proveedor auth.</small>
+        </div>
+        <div class="row">
+          <label class="check"><input type="checkbox" name="remember" value="1"> Mantener sesión</label>
+          <a href="#" data-auth-action="recover">Recuperar acceso</a>
+        </div>
+        <button class="btn-primary auth-submit" type="submit" data-track="auth_submit">Ingresar</button>
+        </form>
+      </div>
+      <div class="divider">acceso alternativo</div>
+      <div class="oauth">
+        <button type="button" data-auth-oauth="microsoft" data-track="auth_microsoft">Microsoft</button>
+        <button type="button" data-auth-action="recover" data-track="auth_recover">Recuperar acceso</button>
+      </div>
+      <div id="auth-status" class="status" role="status" aria-live="polite"></div>
+      <div class="notice">
+        <strong>GCP Auth:</strong> interfaz conectable a Firebase Auth / Google Identity Platform. Si `js/firebase-config.js` existe, usa autenticación real; si no existe, opera en modo preview.
+      </div>
+      <a class="back" href="index.html">← Volver a Dataseed</a>
+    </div>
+  </section>
+</main>
+<script src="js/analytics-events.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/auth-ui.js"></script>
+<script type="module" src="js/gcp-firebase-auth.js"></script>
+</body>
+</html>
