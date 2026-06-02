@@ -45,7 +45,8 @@ Usuario Google @dataseed.cl
   - token Firebase válido y no revocado;
   - email verificado;
   - dominio exacto `dataseed.cl`;
-  - provider `google.com`.
+  - provider `google.com`;
+  - email en allowlist de reportes, por defecto `contacto@dataseed.cl` (`REPORT_ALLOWED_EMAILS` permite ampliar la lista sin cambiar código).
 - Headers de producción para portal privado:
   - `Cache-Control: no-store`;
   - `Content-Security-Policy`;

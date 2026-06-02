@@ -11,7 +11,7 @@ Aprobar el paso a producción del branch `agent-landing-updates` cuando estén c
 ## Qué cambia para el equipo
 
 - El equipo entra por `dataseed.cl/login.html` con Google corporativo.
-- Solo cuentas verificadas `@dataseed.cl` pueden acceder al reporte.
+- Solo `contacto@dataseed.cl` queda autorizado por defecto para el reporte; la allowlist puede ampliarse con `REPORT_ALLOWED_EMAILS` en producción.
 - `reports.html` muestra el dashboard visual del reporte diario.
 - El dato del reporte se entrega desde `/api/reports/demeter-daily`, no desde un archivo público.
 
@@ -24,8 +24,9 @@ Aprobar el paso a producción del branch `agent-landing-updates` cuando estén c
 2. Restricción server-side
    - Token válido y no revocado.
    - Email verificado.
-   - Dominio exacto `dataseed.cl`.
-   - Provider `google.com`.
+   - dominio exacto `dataseed.cl`.
+   - provider `google.com`.
+   - email en allowlist, por defecto `contacto@dataseed.cl`.
 
 3. Sanitización de reporte
    - No se expone `rawMarkdown`.
@@ -106,13 +107,13 @@ curl -i https://dataseed.cl/api/reports/demeter-daily
 
 Esperado: `401 unauthorized`.
 
-2. Usuario Google externo:
+2. Usuario Google externo o no autorizado:
 
 ```text
-Login externo → no ve reporte → 403/aviso de permiso.
+Login externo/no allowlist → no ve reporte → 403/aviso de permiso.
 ```
 
-3. Usuario Google `@dataseed.cl` verificado:
+3. Usuario Google `contacto@dataseed.cl` verificado:
 
 ```text
 Login → reports.html → reporte carga desde backend autenticado.

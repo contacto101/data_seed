@@ -8,6 +8,7 @@ if (!getApps().length) initializeApp();
 
 const ALLOWED_DOMAIN = 'dataseed.cl';
 const ALLOWED_PROVIDER = 'google.com';
+const DEFAULT_ALLOWED_EMAILS = 'contacto@dataseed.cl';
 const REPORT_DOC = 'privateReports/demeterDailyLatest';
 
 function sendJson(res, status, payload) {
@@ -30,6 +31,13 @@ function extractToken(req) {
   const header = req.get('Authorization') || '';
   const match = header.match(/^Bearer\s+(.+)$/i);
   return match ? match[1] : '';
+}
+
+function allowedEmails() {
+  return String(process.env.REPORT_ALLOWED_EMAILS || DEFAULT_ALLOWED_EMAILS)
+    .split(',')
+    .map((email) => email.trim().toLowerCase())
+    .filter(Boolean);
 }
 
 async function authenticate(req) {
@@ -61,6 +69,12 @@ async function authenticate(req) {
   }
   if (domain !== ALLOWED_DOMAIN) {
     const error = new Error('domain_not_allowed');
+    error.status = 403;
+    throw error;
+  }
+  const emailAllowlist = allowedEmails();
+  if (emailAllowlist.length && !emailAllowlist.includes(email)) {
+    const error = new Error('email_not_allowed');
     error.status = 403;
     throw error;
   }

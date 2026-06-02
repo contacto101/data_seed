@@ -15,7 +15,7 @@ import {
   signOut
 } from 'https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js';
 
-const config = window.DS_FIREBASE_CONFIG;
+let config = window.DS_FIREBASE_CONFIG;
 const options = Object.assign({
   redirectAfterLogin: 'dashboard.html',
   redirectAfterLogout: 'login.html',
@@ -56,6 +56,25 @@ function hasValidConfig() {
   return config && config.apiKey && !String(config.apiKey).startsWith('REPLACE_') && config.projectId && !String(config.projectId).startsWith('REPLACE_');
 }
 
+async function loadHostedConfig() {
+  if (hasValidConfig()) return;
+  try {
+    const response = await fetch('/__/firebase/init.json', { cache: 'no-store' });
+    if (!response.ok) return;
+    const hostedConfig = await response.json();
+    if (hostedConfig && hostedConfig.apiKey && hostedConfig.projectId) {
+      config = hostedConfig;
+      window.DS_FIREBASE_CONFIG = hostedConfig;
+      track('auth_hosted_config_loaded', { project_id: hostedConfig.projectId });
+    }
+  } catch (error) {
+    console.warn('[Dataseed Auth Config]', error);
+  }
+}
+
+(async function bootDataseedAuth() {
+  await loadHostedConfig();
+
 if (!hasValidConfig()) {
   window.DataseedAuth = {
     ready: false,
@@ -63,7 +82,7 @@ if (!hasValidConfig()) {
     message: 'Firebase config no encontrada. Crear js/firebase-config.js a partir de js/firebase-config.example.js.'
   };
   track('auth_gcp_config_missing');
-  status('Modo preview: falta js/firebase-config.js con la configuración Firebase/GCP.', 'warn');
+  status('Modo preview: falta configuración Firebase/GCP. En Firebase Hosting se intenta cargar /__/firebase/init.json automáticamente.', 'warn');
 } else {
   const app = initializeApp(config);
   const auth = getAuth(app);
@@ -206,3 +225,4 @@ if (!hasValidConfig()) {
     });
   }
 }
+})();
