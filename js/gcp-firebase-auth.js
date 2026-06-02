@@ -195,6 +195,7 @@ if (!hasValidConfig()) {
       document.documentElement.classList.add('auth-ready');
       document.querySelectorAll('[data-user-email]').forEach(el => el.textContent = user.email || 'Usuario');
       document.querySelectorAll('[data-user-name]').forEach(el => el.textContent = user.displayName || user.email || 'Usuario');
+      window.dispatchEvent(new CustomEvent('dataseed:auth-ready', { detail: { email: user.email || '', name: user.displayName || '' } }));
       track('auth_guard_ok', { email_domain: user.email?.split('@')[1] || '' });
     });
   }

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporte diario — Dataseed</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/brand.css">
+<style>
+body{background:#F8FAFC;color:var(--deep-navy)}
+.report-layout{min-height:100vh;display:grid;grid-template-columns:280px 1fr}.sidebar{background:#1B2D45;color:#fff;padding:1.5rem;display:flex;flex-direction:column;gap:2rem}.brand{display:flex;align-items:center;gap:.75rem;color:#fff;text-decoration:none}.brand img{height:36px;filter:brightness(0) invert(1)}.brand strong{font-family:Inter,sans-serif}.nav-list{display:grid;gap:.4rem}.nav-list a{color:rgba(255,255,255,.72);text-decoration:none;padding:.8rem 1rem;border-radius:14px;font-weight:700}.nav-list a.active,.nav-list a:hover{background:rgba(255,255,255,.08);color:#fff}.btn-logout{border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;border-radius:999px;padding:.75rem 1rem;font-weight:800;cursor:pointer}.main{padding:2rem clamp(1rem,4vw,3rem)}.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:1rem;align-items:stretch;margin-bottom:1rem}.panel{background:#fff;border:1px solid var(--slate-light);border-radius:24px;padding:1.4rem;box-shadow:var(--shadow-1)}.hero h1{font-size:clamp(2.1rem,4vw,3.6rem);letter-spacing:-.055em;line-height:1;margin:.4rem 0}.eyebrow{display:inline-flex;align-items:center;gap:.5rem;border-radius:999px;background:var(--seed-green-light);color:var(--seed-green);padding:.4rem .7rem;font:800 .72rem Inter,sans-serif;text-transform:uppercase;letter-spacing:.08em}.muted{color:var(--slate)}.health{display:flex;align-items:center;gap:.8rem}.health-dot{width:16px;height:16px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 7px rgba(34,197,94,.12)}.health.warn .health-dot{background:#F59E0B;box-shadow:0 0 0 7px rgba(245,158,11,.15)}.metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin:1rem 0}.metric-card{background:#fff;border:1px solid var(--slate-light);border-radius:22px;padding:1.1rem;box-shadow:var(--shadow-1)}.metric-card span{display:block;color:var(--slate);font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}.metric-card strong{display:block;margin-top:.4rem;font:800 clamp(1.3rem,2vw,2rem) Inter,sans-serif;color:var(--seed-green)}.section-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.55fr);gap:1rem}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:.8rem;border-bottom:1px solid var(--slate-light);vertical-align:top}.table th{font:800 .72rem Inter,sans-serif;color:var(--slate);text-transform:uppercase;letter-spacing:.08em}.file-list{display:grid;gap:.55rem;max-height:420px;overflow:auto;padding-right:.25rem}.file-item{font:500 .78rem JetBrains Mono,monospace;background:#F8FAFC;border:1px solid var(--slate-light);border-radius:12px;padding:.65rem;color:#334155;word-break:break-all}.summary-list{display:grid;gap:.55rem;margin:1rem 0 0;padding:0;list-style:none}.summary-list li{border-left:4px solid var(--seed-green);background:#F8FAFC;border-radius:10px;padding:.7rem .8rem}.raw{white-space:pre-wrap;font:500 .78rem/1.6 JetBrains Mono,monospace;background:#0F172A;color:#E2E8F0;border-radius:18px;padding:1rem;overflow:auto;max-height:520px}.status{display:none;margin-top:1rem;border-radius:16px;padding:1rem;font-weight:700}.status.warn{display:block;background:#FEF3C7;color:#92400E}.status.ok{display:block;background:#DCFCE7;color:#166534}.portal-note{font-size:.86rem;color:rgba(255,255,255,.68);line-height:1.55;margin-top:auto}.hidden{display:none!important}@media(max-width:980px){.report-layout{grid-template-columns:1fr}.hero,.section-grid,.metric-grid{grid-template-columns:1fr}.sidebar{position:relative}.portal-note{margin-top:0}}
+</style>
+</head>
+<body data-require-auth="true">
+<div class="report-layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html"><img src="dataseed_logo_black.png" alt="Dataseed"><strong>Dataseed</strong></a>
+    <nav class="nav-list" aria-label="Dashboard">
+      <a href="dashboard.html">Resumen</a>
+      <a class="active" href="reports.html">Reporte diario</a>
+      <a href="publica-ai.html">Pública AI</a>
+      <a href="lead-magnets/publica-ai-guia.html">Guía Pública AI</a>
+      <a href="sales-deck.html">Sales deck</a>
+    </nav>
+    <button class="btn-logout" type="button" data-auth-action="logout">Cerrar sesión</button>
+    <p class="portal-note">Acceso restringido por Firebase Auth a cuentas Google con dominio corporativo autorizado.</p>
+  </aside>
+  <main class="main">
+    <section class="hero">
+      <article class="panel">
+        <span class="eyebrow">Operación diaria</span>
+        <h1>Reporte diario Demeter</h1>
+        <p class="muted">Vista ejecutiva del estado operativo, actividad del día, archivos relevantes y resumen para el equipo DataSeed.</p>
+        <p class="muted">Usuario: <strong data-user-email>validando sesión…</strong></p>
+      </article>
+      <article class="panel">
+        <div id="health-card" class="health">
+          <span class="health-dot" aria-hidden="true"></span>
+          <div>
+            <strong id="health-title">Validando acceso…</strong>
+            <p id="health-summary" class="muted">El reporte se carga solo después de confirmar usuario autorizado.</p>
+          </div>
+        </div>
+        <ul id="executive-summary" class="summary-list"></ul>
+      </article>
+    </section>
+
+    <section class="metric-grid" aria-label="Métricas clave">
+      <article class="metric-card"><span>Fecha reporte</span><strong id="report-date">—</strong></article>
+      <article class="metric-card"><span>Disco</span><strong id="metric-disk">—</strong></article>
+      <article class="metric-card"><span>Memoria</span><strong id="metric-memory">—</strong></article>
+      <article class="metric-card"><span>Archivos modificados</span><strong id="metric-files">—</strong></article>
+    </section>
+
+    <section class="section-grid">
+      <article class="panel">
+        <h2>Sistema</h2>
+        <table class="table" id="system-table"><thead><tr><th>Métrica</th><th>Valor</th></tr></thead><tbody></tbody></table>
+      </article>
+      <article class="panel">
+        <h2>Actividad del día</h2>
+        <table class="table" id="activity-table"><thead><tr><th>Métrica</th><th>Valor</th></tr></thead><tbody></tbody></table>
+      </article>
+    </section>
+
+    <section class="section-grid" style="margin-top:1rem">
+      <article class="panel">
+        <h2>Registro de actividad</h2>
+        <p class="muted">Archivos y registros detectados por el monitor diario. No muestra contenidos privados, solo rutas operativas.</p>
+        <div class="file-list" id="file-list"></div>
+      </article>
+      <article class="panel">
+        <h2>Metadata</h2>
+        <table class="table"><tbody>
+          <tr><th>Host</th><td id="meta-host">—</td></tr>
+          <tr><th>Modelo</th><td id="meta-model">—</td></tr>
+          <tr><th>Generado</th><td id="meta-generated">—</td></tr>
+          <tr><th>Fuente</th><td id="meta-source">—</td></tr>
+        </tbody></table>
+      </article>
+    </section>
+
+    <section class="panel" style="margin-top:1rem">
+      <h2>Reporte técnico completo</h2>
+      <pre id="raw-report" class="raw">Esperando autenticación…</pre>
+      <div id="dashboard-status" class="status" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+</div>
+<script src="js/analytics-events.js"></script>
+<script src="js/firebase-config.js"></script>
+<script type="module" src="js/gcp-firebase-auth.js"></script>
+<script>
+(function(){
+  const $ = (id) => document.getElementById(id);
+  const status = (message, type='warn') => {
+    const box = $('dashboard-status');
+    if (!box) return;
+    box.textContent = message;
+    box.className = 'status ' + type;
+  };
+  const setTable = (id, data) => {
+    const tbody = document.querySelector('#' + id + ' tbody');
+    if (!tbody) return;
+    tbody.innerHTML = Object.entries(data || {}).map(([k,v]) => `<tr><td>${escapeHtml(k)}</td><td>${escapeHtml(v)}</td></tr>`).join('');
+  };
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  const shortDate = (value) => String(value || '—').replace(/:\d{2} UTC$/, ' UTC');
+  async function loadReport() {
+    try {
+      const response = await fetch('data/demeter-daily-report.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      const report = await response.json();
+      $('report-date').textContent = shortDate(report.date);
+      $('metric-disk').textContent = report.system?.Disco || '—';
+      $('metric-memory').textContent = report.system?.Memoria || '—';
+      $('metric-files').textContent = report.activity?.['Archivos modificados hoy'] || report.changedFiles?.length || '—';
+      $('meta-host').textContent = report.host || '—';
+      $('meta-model').textContent = report.model || '—';
+      $('meta-generated').textContent = report.generatedAt || '—';
+      $('meta-source').textContent = report.sourceFile || '—';
+      setTable('system-table', report.system);
+      setTable('activity-table', report.activity);
+      const healthCard = $('health-card');
+      if (report.health?.status === 'warn') healthCard.classList.add('warn');
+      $('health-title').textContent = report.health?.status === 'warn' ? 'Requiere atención' : 'Operación estable';
+      $('health-summary').textContent = report.health?.summary || 'Sin observaciones.';
+      $('executive-summary').innerHTML = (report.executiveSummary || []).map(item => `<li>${escapeHtml(item)}</li>`).join('');
+      $('file-list').innerHTML = (report.changedFiles || []).map(item => `<div class="file-item">${escapeHtml(item)}</div>`).join('') || '<p class="muted">Sin actividad registrada.</p>';
+      $('raw-report').textContent = report.rawMarkdown || 'Sin reporte técnico.';
+      status('Reporte diario cargado correctamente.', 'ok');
+      if (window.DataseedTrack) window.DataseedTrack('daily_report_view', { report_date: report.date || '' });
+    } catch (error) {
+      console.warn('[Dataseed Report]', error);
+      $('raw-report').textContent = 'No se pudo cargar el reporte diario.';
+      status('No se pudo cargar data/demeter-daily-report.json. Verificar generación diaria.', 'warn');
+    }
+  }
+  window.addEventListener('dataseed:auth-ready', loadReport, { once: true });
+  setTimeout(() => {
+    if (!window.DataseedAuth?.ready) status('Modo preview: falta configuración Firebase/GCP. El reporte queda dentro del portal cuando el login real esté activo.', 'warn');
+  }, 1200);
+})();
+</script>
+</body>
+</html>

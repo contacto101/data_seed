@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-02T11:44:02.152713+00:00",
+  "sourceFile": "/opt/data/reports/report_2026-06-02.md",
+  "title": "Reporte diario Demeter",
+  "date": "2026-06-02 11:30:24 UTC",
+  "host": "abc7b14a4f3c",
+  "model": "openrouter/demeter-alpha",
+  "system": {
+    "Uptime": "up 1 week, 2 days, 4 hours, 32 minutes",
+    "Load Average": "0.00, 0.01, 0.00",
+    "Memoria": "3.2Gi / 7.8Gi",
+    "Disco": "17G/96G (17%)",
+    "Procesos activos": "61"
+  },
+  "activity": {
+    "Archivos modificados hoy": "16",
+    "Reportes generados hoy": "0",
+    "Entradas de log hoy": "0",
+    "Reportes totales históricos": "5"
+  },
+  "changedFiles": [
+    "/opt/data/workspace/watchdogs/demeter_watchdog_state.json",
+    "/opt/data/whatsapp/session/session-63192575254718_1.0.json",
+    "/opt/data/whatsapp/session/creds.json",
+    "/opt/data/whatsapp/session/session-104544402972808_1.0.json",
+    "/opt/data/whatsapp/session/device-list-63192575254718.json",
+    "/opt/data/whatsapp/session/device-list-104544402972808.json",
+    "/opt/data/whatsapp/session/session-104544402972808_1.7.json",
+    "/opt/data/logs/gateway.log",
+    "/opt/data/logs/errors.log",
+    "/opt/data/logs/agent.log",
+    "/opt/data/.local/share/tirith/log.jsonl",
+    "/opt/data/.local/share/tirith/last_trigger.json",
+    "/opt/data/reports/report_2026-06-02.md",
+    "/opt/data/channel_directory.json",
+    "/opt/data/state.db-wal",
+    "/opt/data/state.db-shm",
+    "/opt/data/state.db",
+    "/opt/data/cron/output/83438a129f08/2026-06-02_11-27-18.md",
+    "/opt/data/cron/output/564c07cb2978/2026-06-02_11-26-16.md",
+    "/opt/data/cron/jobs.json",
+    "/opt/data/cron/.tick.lock"
+  ],
+  "executiveSummary": [
+    "Estado: ACTIVO",
+    "Última ejecución: 2026-06-02 11:30:24 UTC",
+    "Directorio de trabajo: /opt/hermes",
+    "Datos de proyecto: /opt/data"
+  ],
+  "health": {
+    "status": "ok",
+    "summary": "Operación estable según métricas del reporte",
+    "disk": "17G/96G (17%)",
+    "memory": "3.2Gi / 7.8Gi"
+  },
+  "rawMarkdown": "# 📊 DEMETER DAILY ACTIVITY REPORT\n\n**Fecha:** 2026-06-02 11:30:24 UTC\n**Host:** abc7b14a4f3c\n**Model:** openrouter/demeter-alpha\n\n---\n\n## 🖥 SISTEMA\n\n| Métrica | Valor |\n|---|---|\n| Uptime | up 1 week, 2 days, 4 hours, 32 minutes |\n| Load Average | 0.00, 0.01, 0.00 |\n| Memoria | 3.2Gi / 7.8Gi |\n| Disco | 17G/96G (17%) |\n| Procesos activos | 61 |\n\n---\n\n## 📈 ACTIVIDAD DEL DÍA\n\n| Métrica | Valor |\n|---|---|\n| Archivos modificados hoy | 16 |\n| Reportes generados hoy | 0 |\n| Entradas de log hoy | 0 |\n| Reportes totales históricos | 5 |\n\n---\n\n## 📋 REGISTRO DE ACTIVIDAD\n\n```\n/opt/data/workspace/watchdogs/demeter_watchdog_state.json\n/opt/data/whatsapp/session/session-63192575254718_1.0.json\n/opt/data/whatsapp/session/creds.json\n/opt/data/whatsapp/session/session-104544402972808_1.0.json\n/opt/data/whatsapp/session/device-list-63192575254718.json\n/opt/data/whatsapp/session/device-list-104544402972808.json\n/opt/data/whatsapp/session/session-104544402972808_1.7.json\n/opt/data/logs/gateway.log\n/opt/data/logs/errors.log\n/opt/data/logs/agent.log\n/opt/data/.local/share/tirith/log.jsonl\n/opt/data/.local/share/tirith/last_trigger.json\n/opt/data/reports/report_2026-06-02.md\n/opt/data/channel_directory.json\n/opt/data/state.db-wal\n/opt/data/state.db-shm\n/opt/data/state.db\n/opt/data/cron/output/83438a129f08/2026-06-02_11-27-18.md\n/opt/data/cron/output/564c07cb2978/2026-06-02_11-26-16.md\n/opt/data/cron/jobs.json\n/opt/data/cron/.tick.lock\n```\n\n---\n\n## ⚡ RESUMEN EJECUTIVO\n\n- **Estado:** ACTIVO\n- **Última ejecución:** 2026-06-02 11:30:24 UTC\n- **Directorio de trabajo:** /opt/hermes\n- **Datos de proyecto:** /opt/data\n\n---\n\n*Generado automáticamente por Demeter Activity Monitor*\n"
+}
