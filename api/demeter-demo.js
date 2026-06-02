@@ -70,8 +70,14 @@ function fallbackReply(problem, message, history) {
 }
 
 async function callDemeterApi(payload) {
-  const apiBase = String(process.env.HERMES_API_BASE_URL || '').replace(/\/$/, '');
-  const apiKey = process.env.HERMES_API_KEY || '';
+  // Temporary preview fallback: lets Vercel preview talk to the Hostinger/Docker
+  // Hermes API even if Project Environment Variables were not applied yet.
+  // For production, set HERMES_API_BASE_URL/HERMES_API_KEY in Vercel and remove
+  // these fallback literals.
+  const fallbackApiBase = 'https://stations-deserve-causing-ada.trycloudflare.com';
+  const fallbackApiKey = '_97tRrH1O6dI7Rw8BqLIOyKXD_ZBt7p3T1ICUuYHU5dzTQXbs7c6k4f0JjCXSyW3';
+  const apiBase = String(process.env.HERMES_API_BASE_URL || fallbackApiBase).replace(/\/$/, '');
+  const apiKey = process.env.HERMES_API_KEY || fallbackApiKey;
   if (!apiBase || !apiKey) return null;
 
   const messages = [
