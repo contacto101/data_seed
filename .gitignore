@@ -1,0 +1,24 @@
+# Runtime/local secrets
+.env
+.env.*
+js/firebase-config.js
+*secret*.json
+*token*.json
+auth.json
+creds.json
+google_token.json
+google_client_secret.json
+
+# Private/generated reports must never be published as static assets
+data/*.json
+/opt/data/private-reports/
+
+# Local backups and dependencies
+*.bak
+*.bak2
+node_modules/
+functions/node_modules/
+
+# Python caches
+__pycache__/
+*.pyc

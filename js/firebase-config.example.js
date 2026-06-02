@@ -19,10 +19,10 @@ window.DS_FIREBASE_CONFIG = {
 window.DS_AUTH_OPTIONS = {
   redirectAfterLogin: "dashboard.html",
   redirectAfterLogout: "login.html",
-  requireEmailVerification: false,
-  // Si se deja vacío, acepta cualquier Google Account autorizado por Firebase.
-  // Recomendado para Dataseed: ["dataseed.cl"]
+  requireEmailVerification: true,
+  // Seguridad del portal interno: la validación real ocurre server-side en Cloud Functions.
+  // Esta allowlist cliente solo mejora UX antes de llamar al backend.
   allowedEmailDomains: ["dataseed.cl"],
   primaryProvider: "google",
-  enabledProviders: ["google", "password", "microsoft"]
+  enabledProviders: ["google"]
 };

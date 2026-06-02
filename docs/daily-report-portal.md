@@ -2,71 +2,96 @@
 
 ## Objetivo
 
-Mostrar el reporte diario de Demeter en una interfaz visual dentro del área privada de `dataseed.cl`, usando identidad corporativa DataSeed y acceso restringido a cuentas autorizadas del dominio `dataseed.cl`.
+Mostrar el reporte diario de Demeter dentro del área privada de `dataseed.cl`, con identidad corporativa DataSeed y acceso real restringido a cuentas Google verificadas del dominio `dataseed.cl`.
+
+## Cambio de seguridad aplicado
+
+La versión inicial cargaba `data/demeter-daily-report.json` como asset estático. Eso no era suficiente para producción porque un archivo estático puede descargarse directamente aunque la página `reports.html` esté detrás de login.
+
+La versión segura elimina ese JSON del deploy público y cambia el flujo a backend autenticado:
+
+```text
+Usuario Google @dataseed.cl
+→ login.html / Firebase Auth
+→ reports.html espera dataseed:auth-ready
+→ cliente obtiene Firebase ID token
+→ fetch('/api/reports/demeter-daily', Authorization: Bearer <token>)
+→ Cloud Function valida token + email_verified + dominio dataseed.cl + provider google.com
+→ Function lee reporte desde Firestore privado
+→ devuelve payload sanitizado con Cache-Control: no-store
+```
 
 ## Componentes implementados
 
 | Componente | Función |
 |---|---|
-| `reports.html` | Interfaz visual privada del reporte diario dentro del dashboard |
-| `data/demeter-daily-report.json` | Último reporte diario exportado como JSON estático |
-| `scripts/export-demeter-daily-report.py` | Exporta `/opt/data/reports/report_*.md` al JSON consumido por el portal |
-| `js/gcp-firebase-auth.js` | Emite evento `dataseed:auth-ready` después de validar sesión y dominio |
-| `dashboard.html` | Agrega navegación y acceso al reporte diario |
-| Cron `d5d651ec2a4d` | Publica el reporte diario todos los días a las 23:45 UTC en branch `agent-landing-updates` |
+| `reports.html` | Interfaz visual privada; ya no carga JSON estático, consume `/api/reports/demeter-daily` con Bearer token |
+| `firebase.json` | Configura Firebase Hosting, rewrite a Cloud Function y headers de seguridad/no-cache |
+| `functions/index.js` | Cloud Function `getDemeterDailyReport` con validación server-side del Firebase ID token |
+| `functions/package.json` | Dependencias Firebase Admin/Functions actuales |
+| `scripts/export-demeter-daily-report.py` | Exporta reporte sanitizado a `/opt/data/private-reports/demeter-daily-report.json` |
+| `scripts/upload-demeter-report-firestore.py` | Sube el reporte sanitizado a Firestore cuando existan credenciales Firebase Admin |
+| `/opt/data/scripts/dataseed_daily_report_secure_sync.sh` | Script de cron: genera reporte privado y sincroniza Firestore si está configurado |
+| `.gitignore` | Bloquea publicación accidental de `data/*.json`, secrets, tokens, backups y config real Firebase |
+| `js/gcp-firebase-auth.js` | Mantiene guard frontend y exige verificación de email cuando `requireEmailVerification` está activo |
 
-## Flujo de acceso
+## Seguridad aplicada
 
-```text
-Usuario Google corporativo → login.html → Firebase Auth → validación dominio dataseed.cl → reports.html → carga data/demeter-daily-report.json
-```
+- No se publica `data/demeter-daily-report.json`.
+- No se expone `rawMarkdown`.
+- No se exponen rutas absolutas `/opt/data`, host interno, `creds.json`, sesiones, DB state ni tokens.
+- La autorización real ocurre en backend, no en JavaScript cliente.
+- El backend exige:
+  - token Firebase válido y no revocado;
+  - email verificado;
+  - dominio exacto `dataseed.cl`;
+  - provider `google.com`.
+- Headers de producción para portal privado:
+  - `Cache-Control: no-store`;
+  - `Content-Security-Policy`;
+  - `Referrer-Policy`;
+  - `X-Content-Type-Options`.
 
-La carga del reporte se retrasa hasta que `gcp-firebase-auth.js` confirma un usuario autenticado y dispara:
+## Estado de producción
 
-```js
-window.dispatchEvent(new CustomEvent('dataseed:auth-ready', ...))
-```
+Listo para aprobación técnica, pero no desplegado a `main`.
 
-## Seguridad
+Bloqueos reales antes de producción:
 
-Estado actual: protección frontend con Firebase Auth y allowlist de dominio.
+1. Configurar proyecto Firebase real y `js/firebase-config.js`.
+2. Activar Google provider en Firebase Auth.
+3. Agregar authorized domains: `dataseed.cl` y `www.dataseed.cl`.
+4. Habilitar Cloud Firestore.
+5. Configurar credenciales Firebase Admin/ADC para que el cron suba el reporte privado.
+6. Instalar dependencias Functions y desplegar Hosting + Functions con Firebase CLI autenticado.
 
-Para seguridad fuerte de datos privados, el siguiente paso debe ser mover el reporte desde JSON estático público a una de estas opciones:
+## Validación local realizada
 
-1. Firebase Hosting + Cloud Functions que valide ID token antes de servir el JSON.
-2. Firestore con reglas por dominio/usuario.
-3. Cloud Storage con reglas Firebase Auth.
+- `python3 scripts/export-demeter-daily-report.py --output /opt/data/private-reports/demeter-daily-report.json` OK.
+- `python3 -m json.tool /opt/data/private-reports/demeter-daily-report.json` OK.
+- Payload sanitizado verificado: sin `/opt/data`, `/opt/hermes`, `creds.json`, `session-`, `state.db` ni `rawMarkdown`.
+- `node --check js/gcp-firebase-auth.js` OK.
+- `node --check functions/index.js` OK y `require('./functions/index.js')` carga correctamente.
+- `npm --prefix functions audit --omit=dev` OK: 0 vulnerabilidades después de usar dependencias actuales y override seguro de `uuid`.
+- `python3 scripts/upload-demeter-report-firestore.py` no falla si todavía no hay credenciales; queda silencioso antes de producción.
 
-Mientras el sitio sea estático, `reports.html` está dentro del login, pero un asset estático como `data/demeter-daily-report.json` no tiene control de acceso server-side propio si alguien conoce la URL exacta. Por eso el JSON solo debe contener resumen operativo no sensible.
+## Validación esperada con Firebase real
 
-## Actualización diaria
-
-Script local usado por cron:
+Sin sesión:
 
 ```bash
-/opt/data/scripts/dataseed_daily_report_publish.sh
+curl -i https://dataseed.cl/api/reports/demeter-daily
+# Esperado: 401 unauthorized
 ```
 
-Características:
+Con cuenta externa:
 
-- Lee el último `/opt/data/reports/report_*.md`.
-- Regenera `data/demeter-daily-report.json`.
-- Commit/push solo si cambió el JSON.
-- Mantiene salida silenciosa si todo sale bien.
-- Publica al branch `agent-landing-updates` para no tocar `main` sin autorización.
+```text
+Login Google no @dataseed.cl → 403 forbidden / sin reporte
+```
 
-## Dependencias para quedar live en dataseed.cl
+Con cuenta `@dataseed.cl` verificada:
 
-1. Merge/deploy aprobado desde `agent-landing-updates` hacia `main` o configurar deploy del branch.
-2. Firebase real configurado (`js/firebase-config.js`).
-3. Google provider activo en Firebase Auth.
-4. Authorized domains: `dataseed.cl` y `www.dataseed.cl`.
-5. `allowedEmailDomains: ["dataseed.cl"]`.
-
-## Verificación realizada
-
-- `python3 scripts/export-demeter-daily-report.py` genera JSON válido.
-- `python3 -m json.tool data/demeter-daily-report.json` OK.
-- `node --check js/gcp-firebase-auth.js` OK.
-- `reports.html` carga visualmente con métricas, tablas, metadata, registro de actividad y reporte técnico completo.
-- La navegación desde `dashboard.html` incluye `Reporte diario`.
+```text
+Login Google → reports.html → carga métricas desde /api/reports/demeter-daily
+```

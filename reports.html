@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reporte diario — Dataseed</title>
+<title>Reporte diario — DataSeed</title>
 <meta name="robots" content="noindex,nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@ body{background:#F8FAFC;color:var(--deep-navy)}
 <body data-require-auth="true">
 <div class="report-layout">
   <aside class="sidebar">
-    <a class="brand" href="index.html"><img src="dataseed_logo_black.png" alt="Dataseed"><strong>Dataseed</strong></a>
+    <a class="brand" href="index.html"><img src="dataseed_logo_black.png" alt="DataSeed"><strong>DataSeed</strong></a>
     <nav class="nav-list" aria-label="Dashboard">
       <a href="dashboard.html">Resumen</a>
       <a class="active" href="reports.html">Reporte diario</a>
@@ -111,32 +111,50 @@ body{background:#F8FAFC;color:var(--deep-navy)}
   const shortDate = (value) => String(value || '—').replace(/:\d{2} UTC$/, ' UTC');
   async function loadReport() {
     try {
-      const response = await fetch('data/demeter-daily-report.json', { cache: 'no-store' });
-      if (!response.ok) throw new Error('HTTP ' + response.status);
+      status('Sesión validada. Cargando reporte seguro…', 'ok');
+      const user = window.DataseedAuth?.auth?.currentUser;
+      if (!user) throw new Error('NO_AUTH_USER');
+      const token = await user.getIdToken();
+      const response = await fetch('/api/reports/demeter-daily', {
+        method: 'GET',
+        cache: 'no-store',
+        headers: { Authorization: 'Bearer ' + token }
+      });
+      if (!response.ok) {
+        const error = new Error('HTTP ' + response.status);
+        error.status = response.status;
+        throw error;
+      }
       const report = await response.json();
       $('report-date').textContent = shortDate(report.date);
       $('metric-disk').textContent = report.system?.Disco || '—';
       $('metric-memory').textContent = report.system?.Memoria || '—';
       $('metric-files').textContent = report.activity?.['Archivos modificados hoy'] || report.changedFiles?.length || '—';
-      $('meta-host').textContent = report.host || '—';
-      $('meta-model').textContent = report.model || '—';
+      $('meta-host').textContent = 'Backend seguro';
+      $('meta-model').textContent = 'Demeter';
       $('meta-generated').textContent = report.generatedAt || '—';
-      $('meta-source').textContent = report.sourceFile || '—';
+      $('meta-source').textContent = 'Firestore privado · /api/reports/demeter-daily';
       setTable('system-table', report.system);
       setTable('activity-table', report.activity);
       const healthCard = $('health-card');
-      if (report.health?.status === 'warn') healthCard.classList.add('warn');
+      healthCard.classList.toggle('warn', report.health?.status === 'warn');
       $('health-title').textContent = report.health?.status === 'warn' ? 'Requiere atención' : 'Operación estable';
       $('health-summary').textContent = report.health?.summary || 'Sin observaciones.';
       $('executive-summary').innerHTML = (report.executiveSummary || []).map(item => `<li>${escapeHtml(item)}</li>`).join('');
       $('file-list').innerHTML = (report.changedFiles || []).map(item => `<div class="file-item">${escapeHtml(item)}</div>`).join('') || '<p class="muted">Sin actividad registrada.</p>';
-      $('raw-report').textContent = report.rawMarkdown || 'Sin reporte técnico.';
-      status('Reporte diario cargado correctamente.', 'ok');
+      $('raw-report').textContent = (report.technicalSummary || []).join('\n') || 'Reporte sanitizado cargado desde backend autenticado.';
+      status('Reporte diario cargado correctamente desde backend autenticado.', 'ok');
       if (window.DataseedTrack) window.DataseedTrack('daily_report_view', { report_date: report.date || '' });
     } catch (error) {
       console.warn('[Dataseed Report]', error);
-      $('raw-report').textContent = 'No se pudo cargar el reporte diario.';
-      status('No se pudo cargar data/demeter-daily-report.json. Verificar generación diaria.', 'warn');
+      const messages = {
+        401: 'Sesión expirada o token inválido. Vuelve a iniciar sesión.',
+        403: 'Tu cuenta no tiene permiso para este reporte. Solo cuentas Google verificadas @dataseed.cl.',
+        404: 'Aún no hay reporte diario disponible en el backend privado.',
+        500: 'Error interno al cargar el reporte seguro.'
+      };
+      $('raw-report').textContent = 'No se pudo cargar el reporte diario seguro.';
+      status(messages[error.status] || 'No se pudo cargar /api/reports/demeter-daily. Revisa conexión o configuración Firebase.', 'warn');
     }
   }
   window.addEventListener('dataseed:auth-ready', loadReport, { once: true });

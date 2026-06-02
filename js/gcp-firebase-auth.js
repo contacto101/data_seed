@@ -91,6 +91,12 @@ if (!hasValidConfig()) {
   }
 
   async function enforceAllowedDomain(user) {
+    if (options.requireEmailVerification && !user.emailVerified) {
+      await signOut(auth);
+      track('auth_email_unverified', { email_domain: user.email?.split('@')[1] || '' });
+      status('Verifica tu correo corporativo antes de entrar al portal privado.', 'warn');
+      return false;
+    }
     const allowed = Array.isArray(options.allowedEmailDomains) ? options.allowedEmailDomains.filter(Boolean) : [];
     if (!allowed.length) return true;
     const domain = (user.email || '').split('@')[1] || '';
