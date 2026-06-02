@@ -1259,7 +1259,7 @@ document.addEventListener('click', function(e) {
       <div>
         <div class="pill" style="margin-bottom:.8rem;">● Demo interactiva — Producto 01</div>
         <h2 class="sec-title" style="margin-bottom:.4rem;">Probalo ahora mismo.</h2>
-        <p style="font-size:.85rem;color:var(--sub);">Datos reales de ejemplo. Respuestas generadas por IA. Sin registro, sin instalación.</p>
+        <p style="font-size:.85rem;color:var(--sub);">Demo guiada con Demeter. Elige un problema, responde preguntas breves y recibe un mini diagnóstico.</p>
       </div>
       <a href="#cta" class="btn-p" style="white-space:nowrap;">Implementar en mi empresa →</a>
     </div>
@@ -1284,22 +1284,22 @@ document.addEventListener('click', function(e) {
       </div>
       <div class="demo-body">
         <div class="demo-sidebar">
-          <div class="demo-cat">Finanzas</div>
-          <div class="demo-q" onclick="pickQ(this)">Margen bruto Q3 vs Q2 por línea</div>
-          <div class="demo-q" onclick="pickQ(this)">CxC vencidas más de 60 días</div>
-          <div class="demo-cat">Logística</div>
-          <div class="demo-q" onclick="pickQ(this)">Stock crítico este mes</div>
-          <div class="demo-q" onclick="pickQ(this)">Top 5 proveedores por entrega</div>
-          <div class="demo-cat">Ventas</div>
-          <div class="demo-q" onclick="pickQ(this)">Clientes con mayor crecimiento YoY</div>
-          <div class="demo-q" onclick="pickQ(this)">Pipeline comercial del trimestre</div>
+          <div class="demo-cat">Elige tu problema</div>
+          <div class="demo-q sel" data-problem="reportes" onclick="pickProblem(this)">Reportes manuales o atrasados</div>
+          <div class="demo-q" data-problem="hubspot" onclick="pickProblem(this)">HubSpot / CRM sin visibilidad</div>
+          <div class="demo-q" data-problem="automatizacion" onclick="pickProblem(this)">Automatización de procesos</div>
+          <div class="demo-q" data-problem="datos" onclick="pickProblem(this)">Datos dispersos o poco confiables</div>
+          <div class="demo-cat">Prompts rápidos</div>
+          <div class="demo-q" onclick="pickQ(this)">Quiero un diagnóstico rápido</div>
+          <div class="demo-q" onclick="pickQ(this)">¿Qué datos necesitas para evaluar mi caso?</div>
+          <div class="demo-q" onclick="pickQ(this)">Quiero agendar una reunión</div>
         </div>
         <div class="demo-chat">
           <div class="demo-messages" id="dmsgs">
             <div class="demo-empty" id="dempty">
               <div class="demo-empty-icon">◈</div>
-              <div class="demo-empty-t">Consultá tus datos empresariales</div>
-              <div class="demo-empty-s">Elegí una pregunta del panel o escribí la tuya. El agente consulta tus fuentes ERP en tiempo real.</div>
+              <div class="demo-empty-t">Demo guiada con Demeter</div>
+              <div class="demo-empty-s">Elige reportes, HubSpot, automatización o datos. Demeter hará preguntas, generará un mini diagnóstico y podrá dejar el lead calificado.</div>
             </div>
           </div>
           <div class="demo-input-row">
@@ -1575,27 +1575,22 @@ createChat({
 });
 </script>
 <script>
-const DSYS=`Eres el agente de datos de Dataseed Agent Engine (dataseed.cl). Respondes consultas empresariales en lenguaje natural. Eres conciso y ejecutivo.
-
-DATOS DISPONIBLES — empresa manufacturera latinoamericana:
-SAP ERP Q2/Q3 2025: Línea Electrónica Q2 $4.2M 38% margen | Q3 $4.8M 41%. Línea Industrial Q2 $6.1M 29% | Q3 $5.7M 27%. Línea Consumo Q2 $2.3M 44% | Q3 $2.9M 46%. CxC vencidas: Aceros Norte $187k(74d) · Distribuidora Sur $94k(91d) · Retail Andino $61k(68d).
-Oracle WMS: Stock crítico SKU-4421 Sensor 12uds(mín50) · SKU-8803 Motor 3uds(mín30) · SKU-2201 Panel 0uds(mín10). Proveedores: Provetech 18.4d · Componentes SA 14.1d · TechParts 11.2d · Electro Import 9.8d · FastSupply 7.3d.
-Salesforce CRM: Crecimiento YoY MegaRetail +67% · Constructora Andina +44% · MineroSur +38%. Pipeline Q4: 24 oportunidades · $8.3M total · $3.1M ponderado.
-
-FORMATO — solo HTML, sin markdown:
-Números clave: <span class="demo-hl">valor</span>
-Tablas: <table><thead><tr><th>Col</th></tr></thead><tbody><tr><td>dato</td></tr></tbody></table>
-Fuente: <span class="demo-tag">SAP ERP</span>
-Siempre terminar con: <div class="demo-insight"><b>Insight:</b> texto ejecutivo.</div>
-Máximo 160 palabras.`;
-
-let dHist=[],dBusy=false;
+const DEMO_PROBLEM_LABELS={
+  reportes:'Reportes manuales o atrasados',
+  hubspot:'HubSpot / CRM sin visibilidad',
+  automatizacion:'Automatización de procesos',
+  datos:'Datos dispersos o poco confiables'
+};
+let dHist=[],dBusy=false,dProblem='reportes';
+let dSessionId=localStorage.getItem('dataseedDemoSessionId');
+if(!dSessionId){dSessionId=`demo_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;localStorage.setItem('dataseedDemoSessionId',dSessionId);}
 function tcChip(el){el.classList.toggle('on');el.querySelector('.demo-chip-dot').style.background=el.classList.contains('on')?'var(--g)':'#CBD5E1';}
+function pickProblem(el){document.querySelectorAll('.demo-q[data-problem]').forEach(q=>q.classList.remove('sel'));el.classList.add('sel');dProblem=el.dataset.problem||'datos';document.getElementById('dinp').value=`Quiero revisar un problema de ${DEMO_PROBLEM_LABELS[dProblem]}. Hazme las preguntas para diagnosticarlo.`;dSend();}
 function pickQ(el){document.querySelectorAll('.demo-q').forEach(q=>q.classList.remove('sel'));el.classList.add('sel');document.getElementById('dinp').value=el.textContent.trim();dSend();}
-function dSend(){if(dBusy)return;const inp=document.getElementById('dinp');const q=inp.value.trim();if(!q)return;inp.value='';document.getElementById('dempty')?.remove();dAppend('u',q,true);dHist.push({role:'user',content:q});dTyping();dBusy=true;dAsk();}
-function dAppend(role,html,plain){const box=document.getElementById('dmsgs');const d=document.createElement('div');d.className='demo-msg';d.innerHTML=`<div class="demo-lbl ${role}">${role==='u'?'Tú':'Agente Dataseed'}</div><div class="demo-bubble ${role}">${plain?html.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):html}</div>`;box.appendChild(d);box.scrollTop=box.scrollHeight;}
-function dTyping(){const box=document.getElementById('dmsgs');const d=document.createElement('div');d.className='demo-msg';d.id='dtyping';d.innerHTML='<div class="demo-lbl a">Agente Dataseed</div><div class="demo-typing"><span></span><span></span><span></span></div>';box.appendChild(d);box.scrollTop=box.scrollHeight;}
-async function dAsk(){try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system:DSYS,messages:dHist})});const data=await r.json();const reply=data.content?.find(b=>b.type==='text')?.text||'Sin respuesta.';dHist.push({role:'assistant',content:reply});document.getElementById('dtyping')?.remove();dAppend('a',reply,false);}catch(e){document.getElementById('dtyping')?.remove();dAppend('a','<span style="color:#64748B">Error de conexión.</span>',false);}dBusy=false;}
+function dSend(){if(dBusy)return;const inp=document.getElementById('dinp');const q=inp.value.trim();if(!q)return;inp.value='';document.getElementById('dempty')?.remove();dAppend('u',q,true);dHist.push({role:'user',content:q});dTyping();dBusy=true;dAsk(q);}
+function dAppend(role,html,plain){const box=document.getElementById('dmsgs');const d=document.createElement('div');d.className='demo-msg';d.innerHTML=`<div class="demo-lbl ${role}">${role==='u'?'Tú':'Demeter'}</div><div class="demo-bubble ${role}">${plain?html.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):html}</div>`;box.appendChild(d);box.scrollTop=box.scrollHeight;}
+function dTyping(){const box=document.getElementById('dmsgs');const d=document.createElement('div');d.className='demo-msg';d.id='dtyping';d.innerHTML='<div class="demo-lbl a">Demeter</div><div class="demo-typing"><span></span><span></span><span></span></div>';box.appendChild(d);box.scrollTop=box.scrollHeight;}
+async function dAsk(message){try{const r=await fetch('/api/demeter-demo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:dSessionId,problem:dProblem,message,history:dHist.slice(-10)})});const data=await r.json();const reply=data.reply||'La demo no está disponible en este momento.';if(data.sessionId){dSessionId=data.sessionId;localStorage.setItem('dataseedDemoSessionId',dSessionId);}dHist.push({role:'assistant',content:reply.replace(/<[^>]+>/g,' ')});document.getElementById('dtyping')?.remove();dAppend('a',reply,false);}catch(e){document.getElementById('dtyping')?.remove();dAppend('a','<span style="color:#64748B">Demeter no está conectada en este momento. Deja tu nombre, empresa y email corporativo para coordinar una demo.</span>',false);}dBusy=false;}
 </script>
 
 <script>
