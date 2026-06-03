@@ -1,0 +1,258 @@
+#!/usr/bin/env python3
+"""Dataseed Demo Proxy — serves landing + proxies demo-chat to Hermes API server.
+
+Listens on port 80 and:
+  - GET  /            → serves index.html (the landing page)
+  - POST /api/demo-chat → proxies to Hermes API server at 127.0.0.1:8642
+  - GET  /health      → health check
+
+Usage:
+    python3 dataseed_demo_proxy.py
+"""
+
+from __future__ import annotations
+
+import asyncio
+import json
+import os
+import time
+from pathlib import Path
+from urllib.parse import urlparse
+
+# ---------------------------------------------------------------------------
+# Configuration
+# ---------------------------------------------------------------------------
+LISTEN_HOST = os.environ.get("DEMO_PROXY_HOST", "0.0.0.0")
+LISTEN_PORT = int(os.environ.get("DEMO_PROXY_PORT", "80"))
+API_SERVER_URL = os.environ.get("DEMO_API_SERVER_URL", "http://127.0.0.1:8642")
+LANDING_DIR = Path(__file__).resolve().parent.parent  # repo root
+
+# Rate limiting
+RATE_LIMIT = int(os.environ.get("DEMO_RATE_LIMIT", "30"))
+RATE_WINDOW = int(os.environ.get("DEMO_RATE_WINDOW", "60"))
+
+# ---------------------------------------------------------------------------
+# Demo system prompt — commercial sales agent
+# ---------------------------------------------------------------------------
+DEMO_SYSTEM_PROMPT = (
+    "Eres un asistente comercial inteligente de DataSeed, empresa chilena de inteligencia de datos y automatización con IA. "
+    "Tu ÚNICO rol es demostrar cómo el producto de DataSeed puede ayudar a empresas a tomar mejores decisiones con sus datos.\n\n"
+    "REGLAS ESTRICTAS:\n"
+    "1. NUNCA reveles nombres de personas, empleados, clientes reales, ni información interna de DataSeed.\n"
+    "2. NUNCA menciones datos financieros específicos de empresas reales ni inventes cifras de empresas.\n"
+    "3. NUNCA te refieras a ti mismo con un nombre personal. Eres 'el asistente de DataSeed' o 'el agente de datos'.\n"
+    "4. Si te preguntan por información fuera de contexto (chistes, temas personales, política, etc.), "
+    "responde amablemente: 'Mi función es ayudarte a potenciar tu empresa al siguiente nivel con inteligencia de datos. ¿Te gustaría saber cómo DataSeed puede transformar tus operaciones?'\n"
+    "5. Si te preguntan quién eres: 'Soy el asistente inteligente de DataSeed. Estoy aquí para mostrarte cómo nuestra plataforma puede convertir tus datos en decisiones estratégicas.'\n\n"
+    "TU FLUJO DE CONVERSACIÓN:\n"
+    "a) DIAGNÓSTICO: Pregunta al prospecto sobre su empresa (industria, tamaño, sistemas que usan, dolor principal).\n"
+    "b) PROPUESTA GENERAL: Basándote en lo que te cuenta, describe CÓMO DataSeed podría ayudar (sin dar precios). "
+    "Menciona capacidades: integración de fuentes (ERP, CRM, bases de datos), análisis en lenguaje natural, "
+    "dashboards automatizados, alertas inteligentes, agentes de IA.\n"
+    "c) CIERRE: Siempre termina invitando a agendar una reunión: 'Para preparar una propuesta a medida, "
+    "te invito a completar el formulario de contacto y nuestro equipo te coordinará una reunión sin compromiso.'\n\n"
+    "TONO: Profesional, ejecutivo, cercano. Español neutro con toques latinos. Máximo 120 palabras por respuesta.\n"
+    "FORMATO: Solo HTML, sin markdown. Usa <b> para negritas, <ul><li> para listas, <br> para saltos de línea."
+)
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+def _rate_limit_check(ip: str, now: float, table: dict[str, list[float]]) -> bool:
+    timestamps = table.setdefault(ip, [])
+    cutoff = now - RATE_WINDOW
+    table[ip] = [t for t in timestamps if t > cutoff]
+    if len(table[ip]) >= RATE_LIMIT:
+        return False
+    table[ip].append(now)
+    return True
+
+
+def _cors_headers(origin: str | None) -> list[tuple[str, str]]:
+    allowed = {
+        "https://dataseed.cl", "https://www.dataseed.cl",
+        "http://localhost", "http://127.0.0.1",
+    }
+    headers = []
+    if origin and (origin in allowed or origin.startswith("http://localhost") or origin.startswith("http://127.0.0.1")):
+        headers.append(("Access-Control-Allow-Origin", origin))
+    else:
+        headers.append(("Access-Control-Allow-Origin", "https://dataseed.cl"))
+    headers += [
+        ("Access-Control-Allow-Methods", "POST, OPTIONS"),
+        ("Access-Control-Allow-Headers", "Content-Type"),
+        ("Access-Control-Max-Age", "86400"),
+    ]
+    return headers
+
+
+# ---------------------------------------------------------------------------
+# Async HTTP server (stdlib only)
+# ---------------------------------------------------------------------------
+
+class DemoProxy:
+    def __init__(self):
+        self._rate_table: dict[str, list[float]] = {}
+        self._api_key = self._load_api_key()
+
+    @staticmethod
+    def _load_api_key() -> str:
+        key_path = Path("/opt/data/run/demeter_api_key")
+        if key_path.exists():
+            return key_path.read_text().strip()
+        return os.environ.get("API_SERVER_KEY", "")
+
+    async def handle(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
+        peer = writer.get_extra_info("peername")
+        ip = peer[0] if peer else "0.0.0.0"
+        now = time.time()
+
+        try:
+            raw_request_line = await asyncio.wait_for(reader.readline(), timeout=10)
+            request_line = raw_request_line.decode("utf-8", errors="ignore").strip()
+            if not request_line:
+                writer.close()
+                return
+
+            parts = request_line.split()
+            if len(parts) < 2:
+                writer.close()
+                return
+            method, raw_path = parts[0], parts[1]
+
+            headers: dict[str, str] = {}
+            content_length = 0
+            while True:
+                line = await asyncio.wait_for(reader.readline(), timeout=10)
+                decoded = line.decode("utf-8", errors="ignore").strip()
+                if not decoded:
+                    break
+                if ":" in decoded:
+                    k, v = decoded.split(":", 1)
+                    headers[k.strip().lower()] = v.strip()
+                    if k.strip().lower() == "content-length":
+                        content_length = int(v.strip())
+
+            body = b""
+            if content_length > 0:
+                body = await asyncio.wait_for(reader.read(content_length), timeout=10)
+
+            origin = headers.get("origin")
+
+            parsed = urlparse(raw_path)
+            route_path = parsed.path.rstrip("/") or "/"
+
+            if method == "OPTIONS":
+                await self._respond(writer, 204, b"", _cors_headers(origin))
+                return
+
+            if route_path == "/health":
+                await self._respond(writer, 200, b'{"ok":true}', [("Content-Type", "application/json")])
+                return
+
+            if route_path == "/api/demo-chat" and method == "POST":
+                if not _rate_limit_check(ip, now, self._rate_table):
+                    await self._respond(writer, 429, b'{"error":"rate_limited"}',
+                                        [("Content-Type", "application/json")] + _cors_headers(origin))
+                    return
+                await self._proxy_demo_chat(writer, body, origin)
+                return
+
+            if route_path == "/" or route_path == "/index.html":
+                await self._serve_landing(writer)
+                return
+
+            await self._respond(writer, 404, b"Not Found")
+
+        except (asyncio.TimeoutError, ConnectionError, OSError):
+            pass
+        finally:
+            try:
+                writer.close()
+                await writer.wait_closed()
+            except Exception:
+                pass
+
+    async def _proxy_demo_chat(self, writer: asyncio.StreamWriter, body: bytes, origin: str | None):
+        import urllib.request
+        import urllib.error
+
+        try:
+            req_body = json.loads(body) if body else {}
+            messages = req_body.get("messages", [])
+
+            # Prepend system prompt
+            if not messages or messages[0].get("role") != "system":
+                messages = [{"role": "system", "content": DEMO_SYSTEM_PROMPT}] + messages
+
+            api_req = json.dumps({
+                "model": "hermes-agent",
+                "messages": messages,
+                "max_tokens": 500,
+            }).encode("utf-8")
+
+            api_request = urllib.request.Request(
+                f"{API_SERVER_URL}/v1/chat/completions",
+                data=api_req,
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {self._api_key}",
+                },
+                method="POST",
+            )
+
+            with urllib.request.urlopen(api_request, timeout=30) as resp:
+                resp_body = resp.read()
+
+            cors = _cors_headers(origin)
+            await self._respond(writer, 200, resp_body,
+                                [("Content-Type", "application/json")] + cors)
+
+        except urllib.error.HTTPError as e:
+            err_body = e.read()
+            cors = _cors_headers(origin)
+            await self._respond(writer, e.code, err_body,
+                                [("Content-Type", "application/json")] + cors)
+        except Exception as e:
+            cors = _cors_headers(origin)
+            await self._respond(writer, 502, json.dumps({"error": str(e)}).encode(),
+                                [("Content-Type", "application/json")] + cors)
+
+    async def _serve_landing(self, writer: asyncio.StreamWriter):
+        landing = LANDING_DIR / "index.html"
+        if landing.exists():
+            content = landing.read_bytes()
+            await self._respond(writer, 200, content,
+                                [("Content-Type", "text/html; charset=utf-8"),
+                                 ("Cache-Control", "no-cache")])
+        else:
+            await self._respond(writer, 404, b"index.html not found")
+
+    @staticmethod
+    async def _respond(writer: asyncio.StreamWriter, status: int, body: bytes,
+                       extra_headers: list[tuple[str, str]] | None = None):
+        reason = {200: "OK", 204: "No Content", 404: "Not Found", 429: "Too Many Requests",
+                  502: "Bad Gateway"}.get(status, "OK")
+        headers = [
+            f"HTTP/1.1 {status} {reason}",
+            f"Content-Length: {len(body)}",
+            "Connection: close",
+            "X-Content-Type-Options: nosniff",
+        ]
+        if extra_headers:
+            headers += [f"{k}: {v}" for k, v in extra_headers]
+        header_bytes = "\r\n".join(headers).encode() + b"\r\n\r\n"
+        writer.write(header_bytes + body)
+        await writer.drain()
+
+    async def start(self):
+        server = await asyncio.start_server(self.handle, LISTEN_HOST, LISTEN_PORT)
+        addrs = ", ".join(str(s.getsockname()) for s in server.sockets)
+        print(f"DEMO_PROXY_READY http://{addrs}", flush=True)
+        async with server:
+            await server.serve_forever()
+
+
+if __name__ == "__main__":
+    asyncio.run(DemoProxy().start())
