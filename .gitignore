@@ -10,3 +10,7 @@ docs/auth-users-seed.csv
 .DS_Store
 node_modules/
 .vercel/
+
+# Local backup artifacts
+*.bak
+*.bak2
