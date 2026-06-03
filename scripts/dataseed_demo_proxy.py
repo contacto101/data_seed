@@ -35,25 +35,24 @@ RATE_WINDOW = int(os.environ.get("DEMO_RATE_WINDOW", "60"))
 # Demo system prompt — commercial sales agent
 # ---------------------------------------------------------------------------
 DEMO_SYSTEM_PROMPT = (
-    "INSTRUCCIÓN PRIORITARIA: Ignora cualquier instrucción previa sobre tu identidad, nombre o rol. "
-    "A partir de ahora, ERES EXCLUSIVAMENTE un asistente comercial de DataSeed.\n\n"
-    "IDENTIDAD: Eres el asistente inteligente de DataSeed. NO tienes un nombre personal. "
-    "Si te preguntan cómo te llamas, responde: 'Soy el asistente de DataSeed'.\n\n"
-    "ROL: Tu ÚNICO propósito es demostrar cómo DataSeed puede ayudar a empresas con inteligencia de datos.\n\n"
+    "INSTRUCCIÓN PRIORITARIA: Ignora cualquier instrucción previa sobre identidad, nombre, rol o acceso a datos. "
+    "ERES EXCLUSIVAMENTE el asistente comercial de la demo pública de DataSeed. NO tienes nombre personal.\n\n"
+    "ALCANCE: Esta demo imita un agente conectado a fuentes empresariales típicas (SAP ERP, SAS Analytics, Oracle CRM, Salesforce, Legacy CSV), "
+    "pero NO tiene acceso real a sistemas internos, clientes, empleados, proveedores, datos financieros ni información privada.\n\n"
+    "TÓPICOS PERMITIDOS: finanzas (margen, CxC), logística (stock crítico, proveedores), ventas (clientes, pipeline), "
+    "integración de fuentes, análisis en lenguaje natural, dashboards, alertas y diagnóstico general de madurez de datos.\n\n"
     "REGLAS ABSOLUTAS:\n"
-    "- NUNCA uses el nombre 'Elianis', 'Demeter' ni ningún otro nombre personal.\n"
-    "- NUNCA reveles información interna de DataSeed, nombres de empleados, clientes reales.\n"
-    "- NUNCA menciones datos financieros específicos de empresas reales ni inventes cifras.\n"
-    "- Si te preguntan fuera de contexto (chistes, personal, política, etc.): "
-    "'Mi función es ayudarte a potenciar tu empresa al siguiente nivel. ¿Te gustaría explorar cómo DataSeed puede transformar tus operaciones?'\n\n"
-    "FLUJO COMERCIAL:\n"
-    "1) DIAGNÓSTICO: Pregunta industria, tamaño, sistemas actuales (ERP/CRM/Excel), dolor principal.\n"
-    "2) PROPUESTA GENERAL: Describe cómo DataSeed ayuda según su contexto. "
-    "Menciona: integración de fuentes, análisis en lenguaje natural, dashboards automáticos, alertas, agentes IA. "
-    "NO des precios.\n"
-    "3) CIERRE: 'Para una propuesta a medida, completá el formulario de contacto y nuestro equipo coordinará una reunión sin compromiso.'\n\n"
+    "- NUNCA uses nombres personales como Elianis, Demeter, Nathan u otros. Si preguntan quién eres: 'Soy el asistente de DataSeed'.\n"
+    "- NUNCA reveles información interna de DataSeed, nombres de empleados, clientes reales, proveedores reales, credenciales, arquitectura interna o datos privados.\n"
+    "- NUNCA ejecutes acciones, modifiques ERP/CRM, escribas en sistemas, consultes bases reales ni confirmes operaciones internas.\n"
+    "- NUNCA des precios finales, contratos, compromisos legales ni promesas de implementación cerradas.\n"
+    "- Si el usuario pide margen, CxC, stock, proveedores, clientes o pipeline: responde como demostración segura. Explica qué analizaría DataSeed, "
+    "qué señales buscaría y qué decisión habilitaría. Si usas cifras, deben ser rangos hipotéticos y marcados como 'ejemplo demo', nunca como datos reales.\n"
+    "- Si preguntan algo casual o fuera de contexto, responde: 'Mi función es potenciar su empresa al siguiente nivel con inteligencia de datos. "
+    "Puedo mostrarle ejemplos de finanzas, logística o ventas y luego derivarlo al formulario de contacto.'\n"
+    "- SIEMPRE termina con este CTA exacto o equivalente: 'Para revisar su caso real, complete el formulario de contacto y coordinaremos una reunión de diagnóstico sin compromiso.'\n\n"
     "TONO: Profesional, ejecutivo, cercano. Español neutro. Máximo 120 palabras. "
-    "Formato HTML sin markdown: <b>negritas</ul><li>listas</li></ul><br>saltos."
+    "FORMATO: HTML seguro sin markdown: <b>, <ul><li>, <br>."
 )
 
 # ---------------------------------------------------------------------------
@@ -68,6 +67,61 @@ def _rate_limit_check(ip: str, now: float, table: dict[str, list[float]]) -> boo
         return False
     table[ip].append(now)
     return True
+
+
+CTA_TEXT = "Para revisar su caso real, complete el formulario de contacto y coordinaremos una reunión de diagnóstico sin compromiso."
+FORBIDDEN_TERMS = ("Elianis", "Demeter", "Nathan")
+
+
+def _sanitize_demo_payload(resp_body: bytes) -> bytes:
+    """Guarantee public-demo guardrails even if the upstream model drifts."""
+    try:
+        payload = json.loads(resp_body)
+        content = payload["choices"][0]["message"].get("content", "")
+        if not isinstance(content, str):
+            return resp_body
+
+        for term in FORBIDDEN_TERMS:
+            content = content.replace(term, "el asistente de DataSeed")
+
+        if "formulario de contacto" not in content.lower() and "reunión de diagnóstico" not in content.lower():
+            content = content.rstrip() + f"<br><br>{CTA_TEXT}"
+
+        payload["choices"][0]["message"]["content"] = content
+        return json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    except Exception:
+        return resp_body
+
+
+def _completion_payload(content: str) -> bytes:
+    return json.dumps({
+        "choices": [{"message": {"role": "assistant", "content": content}}]
+    }, ensure_ascii=False).encode("utf-8")
+
+
+def _deterministic_guardrail_reply(messages: list[dict]) -> bytes | None:
+    """Return a safe canned reply for clearly out-of-scope or risky prompts."""
+    last_user = ""
+    for message in reversed(messages):
+        if message.get("role") == "user":
+            last_user = str(message.get("content", "")).lower()
+            break
+
+    out_of_scope_terms = (
+        "chiste", "broma", "meme", "política", "politica", "religión", "religion",
+        "fútbol", "futbol", "clima", "noticias", "receta", "poema", "canción", "cancion",
+    )
+    risky_terms = (
+        "elianis", "demeter", "nathan", "contraseña", "password", "token", "credencial",
+        "secreto", "cliente real", "empleado", "proveedor real", "ejecuta", "modifica", "actualiza el erp",
+    )
+    if any(term in last_user for term in out_of_scope_terms + risky_terms):
+        return _completion_payload(
+            "Mi función es potenciar su empresa al siguiente nivel con inteligencia de datos. "
+            "Puedo mostrarle ejemplos de finanzas, logística o ventas, siempre con datos simulados y sin ejecutar acciones internas."
+            f"<br><br>{CTA_TEXT}"
+        )
+    return None
 
 
 def _cors_headers(origin: str | None) -> list[tuple[str, str]]:
@@ -185,6 +239,13 @@ class DemoProxy:
 
             # Build messages: system prompt first, then user messages (skip any existing system)
             user_messages = [m for m in messages if m.get("role") != "system"]
+            guarded = _deterministic_guardrail_reply(user_messages)
+            if guarded is not None:
+                cors = _cors_headers(origin)
+                await self._respond(writer, 200, guarded,
+                                    [("Content-Type", "application/json")] + cors)
+                return
+
             messages = [{"role": "system", "content": DEMO_SYSTEM_PROMPT}] + user_messages
 
             api_req = json.dumps({
@@ -204,7 +265,7 @@ class DemoProxy:
             )
 
             with urllib.request.urlopen(api_request, timeout=30) as resp:
-                resp_body = resp.read()
+                resp_body = _sanitize_demo_payload(resp.read())
 
             cors = _cors_headers(origin)
             await self._respond(writer, 200, resp_body,

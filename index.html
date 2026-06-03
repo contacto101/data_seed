@@ -1155,30 +1155,31 @@ footer::before{
         <div class="demo-live"><span class="demo-dot"></span>Agente activo · IA en tiempo real</div>
       </div>
       <div class="demo-sources">
-        <span class="demo-src-lbl">Capacidades</span>
-        <div class="demo-chip on" onclick="tcChip(this)"><span class="demo-chip-dot"></span>Integración ERP/CRM</div>
-        <div class="demo-chip on" onclick="tcChip(this)"><span class="demo-chip-dot"></span>Análisis en lenguaje natural</div>
-        <div class="demo-chip on" onclick="tcChip(this)"><span class="demo-chip-dot"></span>Dashboards automáticos</div>
-        <div class="demo-chip" onclick="tcChip(this)"><span class="demo-chip-dot"></span>Alertas inteligentes</div>
-        <div class="demo-chip" onclick="tcChip(this)"><span class="demo-chip-dot"></span>Agentes IA</div>
+        <span class="demo-src-lbl">Fuentes demo</span>
+        <div class="demo-chip on" onclick="tcChip(this)"><span class="demo-chip-dot"></span>SAP ERP</div>
+        <div class="demo-chip on" onclick="tcChip(this)"><span class="demo-chip-dot"></span>SAS Analytics</div>
+        <div class="demo-chip on" onclick="tcChip(this)"><span class="demo-chip-dot"></span>Oracle CRM</div>
+        <div class="demo-chip" onclick="tcChip(this)"><span class="demo-chip-dot"></span>Salesforce</div>
+        <div class="demo-chip" onclick="tcChip(this)"><span class="demo-chip-dot"></span>Legacy CSV</div>
       </div>
       <div class="demo-body">
         <div class="demo-sidebar">
-          <div class="demo-cat">Diagnóstico</div>
-          <div class="demo-q" onclick="pickQ(this)">¿Qué industria es su empresa y cuántos empleados tienen?</div>
-          <div class="demo-q" onclick="pickQ(this)">¿Qué sistemas usan hoy? (ERP, CRM, Excel, etc.)</div>
-          <div class="demo-q" onclick="pickQ(this)">¿Cuál es su mayor dolor con los datos hoy?</div>
-          <div class="demo-cat">Propuesta</div>
-          <div class="demo-q" onclick="pickQ(this)">¿Cómo podría DataSeed ayudarnos a tomar mejores decisiones?</div>
-          <div class="demo-q" onclick="pickQ(this)">¿Cuánto tiempo toma implementar una solución así?</div>
-          <div class="demo-q" onclick="pickQ(this)">Quiero agendar una reunión con el equipo</div>
+          <div class="demo-cat">Finanzas</div>
+          <div class="demo-q" onclick="pickQ(this)">Margen bruto Q3 vs Q2 por línea</div>
+          <div class="demo-q" onclick="pickQ(this)">CxC vencidas más de 60 días</div>
+          <div class="demo-cat">Logística</div>
+          <div class="demo-q" onclick="pickQ(this)">Stock crítico este mes</div>
+          <div class="demo-q" onclick="pickQ(this)">Top 5 proveedores por entrega</div>
+          <div class="demo-cat">Ventas</div>
+          <div class="demo-q" onclick="pickQ(this)">Clientes con mayor crecimiento YoY</div>
+          <div class="demo-q" onclick="pickQ(this)">Pipeline comercial del trimestre</div>
         </div>
         <div class="demo-chat">
           <div class="demo-messages" id="dmsgs">
             <div class="demo-empty" id="dempty">
               <div class="demo-empty-icon">◈</div>
               <div class="demo-empty-t">Demo interactiva — DataSeed Agent Engine</div>
-              <div class="demo-empty-s">Elegí una pregunta o escribí la tuya. Este agente muestra cómo DataSeed puede potenciar tu empresa con inteligencia de datos.</div>
+              <div class="demo-empty-s">Elegí una consulta de finanzas, logística o ventas. La demo muestra cómo operaría el producto con datos simulados y seguros.</div>
             </div>
           </div>
           <div class="demo-input-row">
@@ -1432,12 +1433,12 @@ createChat({
   defaultLanguage: 'es',
   initialMessages: [
     'Hola 👋',
-    'Soy Nathan de Dataseed. ¿Cómo te puedo ayudar hoy?'
+    'Soy el asistente de DataSeed. ¿Qué proceso de datos quieres mejorar hoy?'
   ],
   i18n: {
     es: {
       title: 'Hola 👋',
-      subtitle: 'Inicia una conversación. Estamos para ayudarte.',
+      subtitle: 'Inicia una conversación. Te orientamos hacia una reunión de diagnóstico.',
       footer: '',
       getStarted: 'Nueva conversación',
       inputPlaceholder: 'Escribe tu consulta...'
@@ -1447,22 +1448,26 @@ createChat({
 });
 </script>
 <script>
-const DSYS=`Eres un asistente comercial inteligente de DataSeed, empresa chilena de inteligencia de datos y automatización con IA. Tu ÚNICO rol es demostrar cómo el producto de DataSeed puede ayudar a empresas a tomar mejores decisiones con sus datos.
+const DSYS=`Eres el asistente comercial de la demo pública de DataSeed. La demo imita un agente conectado a fuentes empresariales típicas como SAP ERP, SAS Analytics, Oracle CRM, Salesforce y archivos CSV heredados, pero NO tiene acceso real a sistemas internos ni datos privados.
+
+ALCANCE DE LA DEMO:
+- Responde solo sobre los tópicos visibles de la demo: finanzas, logística, ventas, integración de fuentes, análisis en lenguaje natural, dashboards, alertas y diagnóstico general de madurez de datos.
+- Cuando el usuario pregunte por margen, CxC, stock, proveedores, clientes o pipeline, entrega una respuesta demostrativa: explica qué analizaría DataSeed, qué señales buscaría y qué decisión habilitaría. Usa ejemplos genéricos o rangos hipotéticos claramente marcados como "ejemplo demo"; nunca presentes datos como reales.
+- No ejecutes acciones, no prometas cambios en ERP/CRM, no escribas en sistemas, no consultes bases reales y no confirmes operaciones internas.
 
 REGLAS ESTRICTAS:
-1. NUNCA reveles nombres de personas, empleados, clientes reales, ni información interna de DataSeed.
-2. NUNCA menciones datos financieros específicos de empresas reales ni inventes cifras de empresas.
-3. NUNCA te refieras a ti mismo con un nombre personal. Eres "el asistente de DataSeed" o "el agente de datos".
-4. Si te preguntan por información fuera de contexto (chistes, temas personales, política, etc.), responde amablemente: "Mi función es ayudarte a potenciar tu empresa al siguiente nivel con inteligencia de datos. ¿Te gustaría saber cómo DataSeed puede transformar tus operaciones?"
-5. Si te preguntan quién eres: "Soy el asistente inteligente de DataSeed. Estoy aquí para mostrarte cómo nuestra plataforma puede convertir tus datos en decisiones estratégicas."
+1. NUNCA reveles nombres de personas, empleados, clientes reales, proveedores reales, credenciales, arquitectura interna ni información privada de DataSeed.
+2. NUNCA uses nombres personales para ti ni para el usuario. Eres "el asistente de DataSeed".
+3. NUNCA inventes datos reales de una empresa. Si necesitas ilustrar, di explícitamente "en una demo" o "como ejemplo".
+4. Si preguntan algo casual o fuera de contexto, responde: "Mi función es potenciar su empresa al siguiente nivel con inteligencia de datos. Puedo mostrarle ejemplos de finanzas, logística o ventas y luego derivarlo al formulario de contacto."
+5. Si piden acciones internas, integraciones reales, modificaciones de sistemas, precios finales, contratos o datos sensibles, rechaza de forma breve y ofrece una reunión de diagnóstico.
+6. SIEMPRE cierra con CTA: "Para revisar su caso real, complete el formulario de contacto y coordinaremos una reunión de diagnóstico sin compromiso."
 
-TU FLUJO DE CONVERSACIÓN:
-a) DIAGNÓSTICO: Pregunta al prospecto sobre su empresa (industria, tamaño, sistemas que usan, dolor principal).
-b) PROPUESTA GENERAL: Basándote en lo que te cuenta, describe CÓMO DataSeed podría ayudar (sin dar precios). Menciona capacidades: integración de fuentes (ERP, CRM, bases de datos), análisis en lenguaje natural, dashboards automatizados, alertas inteligentes, agentes de IA.
-c) CIERRE: Siempre termina invitando a agendar una reunión: "Para preparar una propuesta a medida, te invito a completar el formulario de contacto y nuestro equipo te coordinará una reunión sin compromiso."
-
-TONO: Profesional, ejecutivo, cercano. Español neutro con toques latinos. Máximo 120 palabras por respuesta.
-FORMATO: Solo HTML, sin markdown. Usa <b> para negritas, <ul><li> para listas, <br> para saltos de línea.`;
+FORMATO DE RESPUESTA:
+- Español profesional, ejecutivo y cercano.
+- Máximo 120 palabras.
+- HTML seguro, sin markdown: usa <b>, <ul><li> y <br>.
+- Debe terminar siempre con el CTA de contacto.`;
 
 let dHist=[],dBusy=false;
 function tcChip(el){el.classList.toggle('on');el.querySelector('.demo-chip-dot').style.background=el.classList.contains('on')?'var(--g)':'#0d260d';}
