@@ -1,0 +1,12 @@
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Sensitive operational exports
+docs/auth-users-seed.csv
+
+# OS/editor
+.DS_Store
+node_modules/
+.vercel/

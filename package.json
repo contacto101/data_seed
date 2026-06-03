@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "test": "node tests/publica-api.test.js",
+    "validate:publica": "npm test"
+  },
+  "devDependencies": {}
+}
