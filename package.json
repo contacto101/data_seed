@@ -1,0 +1,22 @@
+{
+  "name": "data-seed",
+  "version": "1.0.0",
+  "description": "Dataseed — Data Driven website with Vercel Speed Insights",
+  "scripts": {
+    "test": "echo \"No tests specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/contacto101/data_seed.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/contacto101/data_seed/issues"
+  },
+  "homepage": "https://github.com/contacto101/data_seed#readme",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}
