@@ -23,12 +23,26 @@ module.exports = async function handler(request, response) {
   const hermesBaseUrl = process.env.DEMETER_API_SERVER_URL || process.env.HERMES_API_SERVER_URL;
   const apiKey = process.env.DEMETER_API_KEY || process.env.API_SERVER_KEY || process.env.HERMES_API_KEY;
 
+  const payload = request.body || {};
+
   if (!hermesBaseUrl || !apiKey) {
-    sendJson(response, 500, { error: 'missing_hermes_environment' });
+    const previewProxyUrl = process.env.DEMETER_PROXY_URL || 'https://advanced-isp-went-natural.trycloudflare.com/api/demo-chat';
+    try {
+      const previewResponse = await fetch(previewProxyUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: payload.messages || [] })
+      });
+      const previewText = await previewResponse.text();
+      response.status(previewResponse.status).setHeader('Content-Type', 'application/json');
+      response.setHeader('Access-Control-Allow-Origin', '*');
+      response.end(previewText);
+    } catch (_error) {
+      sendJson(response, 502, { error: 'preview_demeter_proxy_unreachable' });
+    }
     return;
   }
 
-  const payload = request.body || {};
   const messages = Array.isArray(payload.messages)
     ? payload.messages.filter((message) => ['user', 'assistant'].includes(message.role))
     : [];
