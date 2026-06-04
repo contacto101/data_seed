@@ -210,7 +210,7 @@ async function renderOpsDashboard() {
         ${state.opsInventoryError ? `<div class="auth-guard-banner">Snapshot no encontrado: ${escapeHtml(state.opsInventoryError)}.</div>` : ''}
         <div class="ops-actions">
           <button class="new-session-btn" type="button" id="refresh-ops">Recargar snapshot</button>
-          <button class="quick-prompt" type="button" data-ops-question="Dame un inventario actualizado de skills habilitadas, tools disponibles, conectores y plataformas API/MCP conectadas. Incluye riesgos o faltantes críticos.">Consultar a Demeter</button>
+          <button class="quick-prompt" type="button" data-ops-question="Responde breve: inventario operativo actual de Demeter con skills, tools, conectores API, plataformas y MCP; marca faltantes críticos.">Consultar a Demeter</button>
           <button class="quick-prompt" type="button" data-ops-question="Genera comandos terminal seguros para actualizar el inventario operativo de la consola DataSeed sin exponer secretos.">Comandos terminal</button>
         </div>
       </div>
