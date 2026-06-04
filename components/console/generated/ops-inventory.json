@@ -1,0 +1,885 @@
+{
+  "generatedAt": "2026-06-04T17:47:20.706Z",
+  "source": "docker-filesystem-env-snapshot",
+  "command": "npm run generate:ops-inventory",
+  "scannedPaths": [
+    "/opt/data/.env",
+    "/proc/1/environ",
+    "/opt/data/google_token.json",
+    "/opt/data/google_client_secret.json",
+    "/opt/data/hubspot-oauth",
+    "/opt/data/auth.json",
+    "/opt/data/home/.claude.json",
+    "/opt/data/bin",
+    "/opt/data/data_seed/js",
+    "/opt/data/google-cloud-sdk"
+  ],
+  "envKeysDetected": [
+    "GEMINI_API_KEY",
+    "GITHUB_TOKEN",
+    "GOOGLE_API_KEY",
+    "HOSTINGERAPI",
+    "HUBSPOT_CLIENT_ID",
+    "HUBSPOT_CLIENT_SECRET",
+    "OPENROUTER_API_KEY",
+    "WHATSAPP_ALLOWED_USERS",
+    "WHATSAPP_ENABLED",
+    "WHATSAPP_MODE"
+  ],
+  "tools": [
+    {
+      "name": "web",
+      "enabled": true,
+      "description": "Web Search & Scraping",
+      "source": "built-in"
+    },
+    {
+      "name": "browser",
+      "enabled": true,
+      "description": "Browser Automation",
+      "source": "built-in"
+    },
+    {
+      "name": "terminal",
+      "enabled": true,
+      "description": "Terminal & Processes",
+      "source": "built-in"
+    },
+    {
+      "name": "file",
+      "enabled": true,
+      "description": "File Operations",
+      "source": "built-in"
+    },
+    {
+      "name": "code_execution",
+      "enabled": true,
+      "description": "Code Execution",
+      "source": "built-in"
+    },
+    {
+      "name": "vision",
+      "enabled": true,
+      "description": "Vision / Image Analysis",
+      "source": "built-in"
+    },
+    {
+      "name": "video",
+      "enabled": false,
+      "description": "Video Analysis",
+      "source": "built-in"
+    },
+    {
+      "name": "image_gen",
+      "enabled": true,
+      "description": "Image Generation",
+      "source": "built-in"
+    },
+    {
+      "name": "video_gen",
+      "enabled": false,
+      "description": "Video Generation",
+      "source": "built-in"
+    },
+    {
+      "name": "x_search",
+      "enabled": false,
+      "description": "X (Twitter) Search",
+      "source": "built-in"
+    },
+    {
+      "name": "moa",
+      "enabled": false,
+      "description": "Mixture of Agents",
+      "source": "built-in"
+    },
+    {
+      "name": "tts",
+      "enabled": true,
+      "description": "Text-to-Speech",
+      "source": "built-in"
+    },
+    {
+      "name": "skills",
+      "enabled": true,
+      "description": "Skills",
+      "source": "built-in"
+    },
+    {
+      "name": "todo",
+      "enabled": true,
+      "description": "Task Planning",
+      "source": "built-in"
+    },
+    {
+      "name": "memory",
+      "enabled": true,
+      "description": "Memory",
+      "source": "built-in"
+    },
+    {
+      "name": "context_engine",
+      "enabled": false,
+      "description": "Context Engine",
+      "source": "built-in"
+    },
+    {
+      "name": "session_search",
+      "enabled": true,
+      "description": "Session Search",
+      "source": "built-in"
+    },
+    {
+      "name": "clarify",
+      "enabled": true,
+      "description": "Clarifying Questions",
+      "source": "built-in"
+    },
+    {
+      "name": "delegation",
+      "enabled": true,
+      "description": "Task Delegation",
+      "source": "built-in"
+    },
+    {
+      "name": "cronjob",
+      "enabled": true,
+      "description": "Cron Jobs",
+      "source": "built-in"
+    },
+    {
+      "name": "messaging",
+      "enabled": true,
+      "description": "Cross-Platform Messaging",
+      "source": "built-in"
+    },
+    {
+      "name": "homeassistant",
+      "enabled": false,
+      "description": "Home Assistant",
+      "source": "built-in"
+    },
+    {
+      "name": "spotify",
+      "enabled": false,
+      "description": "Spotify",
+      "source": "built-in"
+    },
+    {
+      "name": "yuanbao",
+      "enabled": false,
+      "description": "Yuanbao",
+      "source": "built-in"
+    },
+    {
+      "name": "computer_use",
+      "enabled": true,
+      "description": "Computer Use (macOS)",
+      "source": "built-in"
+    },
+    {
+      "name": "google_meet",
+      "enabled": true,
+      "description": "Google Meet",
+      "source": "plugin"
+    }
+  ],
+  "skills": [
+    {
+      "name": "apple-notes",
+      "enabled": true,
+      "description": "Manage Apple Notes via memo CLI: create, search, edit.",
+      "category": "apple"
+    },
+    {
+      "name": "apple-reminders",
+      "enabled": true,
+      "description": "Apple Reminders via remindctl: add, list, complete.",
+      "category": "apple"
+    },
+    {
+      "name": "findmy",
+      "enabled": true,
+      "description": "Track Apple devices/AirTags via FindMy.app on macOS.",
+      "category": "apple"
+    },
+    {
+      "name": "imessage",
+      "enabled": true,
+      "description": "Send and receive iMessages/SMS via the imsg CLI on macOS.",
+      "category": "apple"
+    },
+    {
+      "name": "macos-computer-use",
+      "enabled": true,
+      "description": "|",
+      "category": "apple"
+    },
+    {
+      "name": "claude-code",
+      "enabled": true,
+      "description": "Delegate coding to Claude Code CLI (features, PRs).",
+      "category": "autonomous-ai-agents"
+    },
+    {
+      "name": "codex",
+      "enabled": true,
+      "description": "Delegate coding to OpenAI Codex CLI (features, PRs).",
+      "category": "autonomous-ai-agents"
+    },
+    {
+      "name": "hermes-agent",
+      "enabled": true,
+      "description": "Configure, extend, or contribute to Hermes Agent.",
+      "category": "autonomous-ai-agents"
+    },
+    {
+      "name": "kanban-codex-lane",
+      "enabled": true,
+      "description": "Use when a Hermes Kanban worker wants to run Codex CLI as an isolated implementation lane while Hermes keeps ownership of task lifecycle, reconciliation, testing, and handoff.",
+      "category": "autonomous-ai-agents"
+    },
+    {
+      "name": "opencode",
+      "enabled": true,
+      "description": "Delegate coding to OpenCode CLI (features, PR review).",
+      "category": "autonomous-ai-agents"
+    },
+    {
+      "name": "subscription-cli-ai-workers",
+      "enabled": true,
+      "description": "Orchestrate subscription-authenticated AI CLIs (Claude Code, Gemini CLI) as external workers instead of direct per-token API providers.",
+      "category": "autonomous-ai-agents"
+    },
+    {
+      "name": "business-strategy-delivery",
+      "enabled": true,
+      "description": "Produce strategic business deliverables — growth frameworks, funnel models, brand books, UX specs, pricing strategy, go-to-market plans — at PhD-analyst rigor with investor-grade quality. Triggered when the user asks for business/strategy/marketing/sales/funnel/pricing/brand/UX deliverables.",
+      "category": "root"
+    },
+    {
+      "name": "architecture-diagram",
+      "enabled": true,
+      "description": "Dark-themed SVG architecture/cloud/infra diagrams as HTML.",
+      "category": "creative"
+    },
+    {
+      "name": "ascii-art",
+      "enabled": true,
+      "description": "ASCII art: pyfiglet, cowsay, boxes, image-to-ascii.",
+      "category": "creative"
+    },
+    {
+      "name": "ascii-video",
+      "enabled": true,
+      "description": "ASCII video: convert video/audio to colored ASCII MP4/GIF.",
+      "category": "creative"
+    },
+    {
+      "name": "baoyu-article-illustrator",
+      "enabled": true,
+      "description": "Article illustrations: type × style × palette consistency.",
+      "category": "creative"
+    },
+    {
+      "name": "baoyu-comic",
+      "enabled": true,
+      "description": "Knowledge comics (知识漫画): educational, biography, tutorial.",
+      "category": "creative"
+    },
+    {
+      "name": "baoyu-infographic",
+      "enabled": true,
+      "description": "Infographics: 21 layouts x 21 styles (信息图, 可视化).",
+      "category": "creative"
+    },
+    {
+      "name": "claude-design",
+      "enabled": true,
+      "description": "Design one-off HTML artifacts (landing, deck, prototype).",
+      "category": "creative"
+    },
+    {
+      "name": "comfyui",
+      "enabled": true,
+      "description": "Generate images, video, and audio with ComfyUI — install, launch, manage nodes/models, run workflows with parameter injection. Uses the official comfy-cli for lifecycle and direct REST/WebSocket API for execution.",
+      "category": "creative"
+    },
+    {
+      "name": "ideation",
+      "enabled": true,
+      "description": "Generate project ideas via creative constraints.",
+      "category": "creative"
+    },
+    {
+      "name": "design-md",
+      "enabled": true,
+      "description": "Author/validate/export Google's DESIGN.md token spec files.",
+      "category": "creative"
+    },
+    {
+      "name": "excalidraw",
+      "enabled": true,
+      "description": "Hand-drawn Excalidraw JSON diagrams (arch, flow, seq).",
+      "category": "creative"
+    },
+    {
+      "name": "humanizer",
+      "enabled": true,
+      "description": "Humanize text: strip AI-isms and add real voice.",
+      "category": "creative"
+    },
+    {
+      "name": "manim-video",
+      "enabled": true,
+      "description": "Manim CE animations: 3Blue1Brown math/algo videos.",
+      "category": "creative"
+    },
+    {
+      "name": "p5js",
+      "enabled": true,
+      "description": "p5.js sketches: gen art, shaders, interactive, 3D.",
+      "category": "creative"
+    },
+    {
+      "name": "pixel-art",
+      "enabled": true,
+      "description": "Pixel art w/ era palettes (NES, Game Boy, PICO-8).",
+      "category": "creative"
+    },
+    {
+      "name": "popular-web-designs",
+      "enabled": true,
+      "description": "54 real design systems (Stripe, Linear, Vercel) as HTML/CSS.",
+      "category": "creative"
+    },
+    {
+      "name": "pretext",
+      "enabled": true,
+      "description": "Use when building creative browser demos with @chenglou/pretext — DOM-free text layout for ASCII art, typographic flow around obstacles, text-as-geometry games, kinetic typography, and text-powered generative art. Produces single-file HTML demos by default.",
+      "category": "creative"
+    },
+    {
+      "name": "sketch",
+      "enabled": true,
+      "description": "Throwaway HTML mockups: 2-3 design variants to compare.",
+      "category": "creative"
+    },
+    {
+      "name": "songwriting-and-ai-music",
+      "enabled": true,
+      "description": "Songwriting craft and Suno AI music prompts.",
+      "category": "creative"
+    },
+    {
+      "name": "touchdesigner-mcp",
+      "enabled": true,
+      "description": "Control a running TouchDesigner instance via twozero MCP — create operators, set parameters, wire connections, execute Python, build real-time visuals. 36 native tools.",
+      "category": "creative"
+    },
+    {
+      "name": "jupyter-live-kernel",
+      "enabled": true,
+      "description": "Iterative Python via live Jupyter kernel (hamelnb).",
+      "category": "data-science"
+    },
+    {
+      "name": "dataseed-ops",
+      "enabled": true,
+      "description": "Operaciones y mantenimiento de DataSeed/Demeter: diagnóstico de cron jobs, scripts de reporte, sincronización con Firestore, resolución de problemas de infraestructura en el VPS, y cableado end-to-end de la 'Demo en vivo' del landing.",
+      "category": "root"
+    },
+    {
+      "name": "agent-cost-optimization",
+      "enabled": true,
+      "description": "Optimize recurring/autonomous agent costs with model routing, script-only watchdogs, token-minimal prompts, and license-aware delegation.",
+      "category": "devops"
+    },
+    {
+      "name": "dataseed-agent-factory-operations",
+      "enabled": true,
+      "description": "Operar Demeter como fábrica autogestionada de agentes para productos DataSeed: orquestación, especialistas, Kanban, Cron, delegación, Claude Code, Hostinger/Vercel/GitHub y gates de seguridad.",
+      "category": "devops"
+    },
+    {
+      "name": "google-cloud-firebase-ops",
+      "enabled": true,
+      "description": "Operate Google Cloud/Firebase from headless VPS/container sessions: gcloud install, ADC/auth, Firebase Hosting/Functions deploy, Firestore report sync, and verification.",
+      "category": "devops"
+    },
+    {
+      "name": "kanban-orchestrator",
+      "enabled": true,
+      "description": "Decomposition playbook + anti-temptation rules for an orchestrator profile routing work through Kanban. The",
+      "category": "devops"
+    },
+    {
+      "name": "kanban-worker",
+      "enabled": true,
+      "description": "Pitfalls, examples, and edge cases for Hermes Kanban workers. The lifecycle itself is auto-injected into every worker's system prompt as KANBAN_GUIDANCE (from agent/prompt_builder.py); this skill is what you load when you want deeper detail on specific scenarios.",
+      "category": "devops"
+    },
+    {
+      "name": "webhook-subscriptions",
+      "enabled": true,
+      "description": "Webhook subscriptions: event-driven agent runs.",
+      "category": "devops"
+    },
+    {
+      "name": "dogfood",
+      "enabled": true,
+      "description": "Exploratory QA of web apps: find bugs, evidence, reports.",
+      "category": "root"
+    },
+    {
+      "name": "whatsapp-group-etiquette",
+      "enabled": true,
+      "description": "Reglas de comunicación en grupos de WhatsApp: solo responder cuando se llame al bot. Configuración require_mention. Flujo de trabajo del agente con repos Git para landing pages.",
+      "category": "root"
+    },
+    {
+      "name": "yuanbao",
+      "enabled": true,
+      "description": "Yuanbao (元宝) groups: @mention users, query info/members.",
+      "category": "root"
+    }
+  ],
+  "connectors": [
+    {
+      "name": "HubSpot CRM OAuth",
+      "enabled": true,
+      "connected": true,
+      "type": "OAuth API",
+      "description": "portal=40198216 · scopes=43 · health OK · client_id=presente · client_secret=presente",
+      "evidence": "/opt/data/hubspot-oauth/tokens.json, /opt/data/scripts/dataseed_hubspot_adapter.py, /proc/1/environ"
+    },
+    {
+      "name": "Google Workspace OAuth",
+      "enabled": true,
+      "connected": true,
+      "type": "OAuth API",
+      "description": "Gmail, Calendar, Drive, Docs, Sheets, Contacts · scopes=8 · token=válido",
+      "evidence": "/opt/data/google_token.json, /opt/data/google_client_secret.json"
+    },
+    {
+      "name": "Google Cloud SDK / Firebase",
+      "enabled": true,
+      "connected": true,
+      "type": "CLI/API",
+      "description": "Google Cloud SDK 571.0.0 · Firebase scaffold=sin config real · GOOGLE_API_KEY=presente",
+      "evidence": "/opt/data/google-cloud-sdk, /opt/data/data_seed/js/firebase-config.js, /opt/data/.env"
+    },
+    {
+      "name": "Google Gemini / AI Studio",
+      "enabled": true,
+      "connected": true,
+      "type": "LLM API/CLI",
+      "description": "GEMINI_API_KEY=presente · GOOGLE_API_KEY=presente · gemini CLI=presente",
+      "evidence": "/opt/data/.env, /opt/data/.npm-global/bin/gemini"
+    },
+    {
+      "name": "Claude Code CLI",
+      "enabled": true,
+      "connected": true,
+      "type": "CLI OAuth",
+      "description": "2.1.160 (Claude Code) · oauthAccount=presente · projects=1",
+      "evidence": "/usr/local/bin/claude, /opt/data/home/.claude.json"
+    },
+    {
+      "name": "OpenAI Codex OAuth",
+      "enabled": true,
+      "connected": true,
+      "type": "OAuth LLM provider",
+      "description": "active_provider=openai-codex · credential_pool=gemini, openrouter, openai-codex",
+      "evidence": "/opt/data/auth.json"
+    },
+    {
+      "name": "OpenRouter",
+      "enabled": true,
+      "connected": true,
+      "type": "LLM API",
+      "description": "OPENROUTER_API_KEY=presente · fuente=/opt/data/.env, /proc/1/environ",
+      "evidence": "/opt/data/.env, /proc/1/environ"
+    },
+    {
+      "name": "GitHub API",
+      "enabled": true,
+      "connected": true,
+      "type": "REST/Git API",
+      "description": "GITHUB_TOKEN=presente en entorno gateway · gh CLI=no instalado",
+      "evidence": "/proc/1/environ, repo git remotes"
+    },
+    {
+      "name": "Hostinger API / MCP binaries",
+      "enabled": true,
+      "connected": true,
+      "type": "Hosting API/MCP",
+      "description": "HOSTINGERAPI=presente · MCP binaries=presentes · Hermes MCP=no configurado",
+      "evidence": "/proc/1/environ, /opt/data/bin/hostinger-*-mcp"
+    },
+    {
+      "name": "WhatsApp Gateway",
+      "enabled": true,
+      "connected": true,
+      "type": "Messaging platform API/session",
+      "description": "WHATSAPP_ENABLED=presente · session_dir=presente",
+      "evidence": "/opt/data/.env, /opt/data/whatsapp"
+    },
+    {
+      "name": "Supabase",
+      "enabled": false,
+      "connected": false,
+      "type": "Frontend/API config",
+      "description": "scaffold presente; credenciales reales no configuradas",
+      "evidence": "/opt/data/data_seed/js/supabase-config.js"
+    },
+    {
+      "name": "Vercel",
+      "enabled": false,
+      "connected": false,
+      "type": "Deploy platform API",
+      "description": "vercel CLI=no instalado · VERCEL_TOKEN=faltante",
+      "evidence": "Vercel preview deployment + env survey"
+    },
+    {
+      "name": "OpenRouter",
+      "enabled": true,
+      "configured": true,
+      "description": "[redacted]"
+    },
+    {
+      "name": "OpenAI",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "Google / Gemini",
+      "enabled": true,
+      "configured": true,
+      "description": "[redacted]"
+    },
+    {
+      "name": "DeepSeek",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "xAI / Grok",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "NVIDIA NIM",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "Z.AI / GLM",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "Kimi",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "StepFun Step Plan",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "MiniMax",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "MiniMax-CN",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "Firecrawl",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "Tavily",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "Browser Use",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "Browserbase",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "FAL",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "ElevenLabs",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "GitHub",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "Anthropic",
+      "enabled": false,
+      "configured": false,
+      "description": "no configurado"
+    },
+    {
+      "name": "Nous Portal",
+      "enabled": false,
+      "configured": false,
+      "description": "not logged in (run: hermes auth add nous --type oauth)"
+    },
+    {
+      "name": "OpenAI Codex",
+      "enabled": true,
+      "configured": true,
+      "description": "logged in"
+    },
+    {
+      "name": "Qwen OAuth",
+      "enabled": false,
+      "configured": false,
+      "description": "not logged in (run: qwen auth qwen-oauth)"
+    },
+    {
+      "name": "MiniMax OAuth",
+      "enabled": false,
+      "configured": false,
+      "description": "not logged in (run: hermes auth add minimax-oauth)"
+    },
+    {
+      "name": "xAI OAuth",
+      "enabled": false,
+      "configured": false,
+      "description": "not logged in (run: hermes auth add xai-oauth)"
+    }
+  ],
+  "apiPlatforms": [
+    {
+      "name": "HubSpot CRM OAuth",
+      "enabled": true,
+      "connected": true,
+      "type": "OAuth API",
+      "description": "portal=40198216 · scopes=43 · health OK · client_id=presente · client_secret=presente",
+      "evidence": "/opt/data/hubspot-oauth/tokens.json, /opt/data/scripts/dataseed_hubspot_adapter.py, /proc/1/environ"
+    },
+    {
+      "name": "Google Workspace OAuth",
+      "enabled": true,
+      "connected": true,
+      "type": "OAuth API",
+      "description": "Gmail, Calendar, Drive, Docs, Sheets, Contacts · scopes=8 · token=válido",
+      "evidence": "/opt/data/google_token.json, /opt/data/google_client_secret.json"
+    },
+    {
+      "name": "Google Cloud SDK / Firebase",
+      "enabled": true,
+      "connected": true,
+      "type": "CLI/API",
+      "description": "Google Cloud SDK 571.0.0 · Firebase scaffold=sin config real · GOOGLE_API_KEY=presente",
+      "evidence": "/opt/data/google-cloud-sdk, /opt/data/data_seed/js/firebase-config.js, /opt/data/.env"
+    },
+    {
+      "name": "Google Gemini / AI Studio",
+      "enabled": true,
+      "connected": true,
+      "type": "LLM API/CLI",
+      "description": "GEMINI_API_KEY=presente · GOOGLE_API_KEY=presente · gemini CLI=presente",
+      "evidence": "/opt/data/.env, /opt/data/.npm-global/bin/gemini"
+    },
+    {
+      "name": "Claude Code CLI",
+      "enabled": true,
+      "connected": true,
+      "type": "CLI OAuth",
+      "description": "2.1.160 (Claude Code) · oauthAccount=presente · projects=1",
+      "evidence": "/usr/local/bin/claude, /opt/data/home/.claude.json"
+    },
+    {
+      "name": "OpenAI Codex OAuth",
+      "enabled": true,
+      "connected": true,
+      "type": "OAuth LLM provider",
+      "description": "active_provider=openai-codex · credential_pool=gemini, openrouter, openai-codex",
+      "evidence": "/opt/data/auth.json"
+    },
+    {
+      "name": "OpenRouter",
+      "enabled": true,
+      "connected": true,
+      "type": "LLM API",
+      "description": "OPENROUTER_API_KEY=presente · fuente=/opt/data/.env, /proc/1/environ",
+      "evidence": "/opt/data/.env, /proc/1/environ"
+    },
+    {
+      "name": "GitHub API",
+      "enabled": true,
+      "connected": true,
+      "type": "REST/Git API",
+      "description": "GITHUB_TOKEN=presente en entorno gateway · gh CLI=no instalado",
+      "evidence": "/proc/1/environ, repo git remotes"
+    },
+    {
+      "name": "Hostinger API / MCP binaries",
+      "enabled": true,
+      "connected": true,
+      "type": "Hosting API/MCP",
+      "description": "HOSTINGERAPI=presente · MCP binaries=presentes · Hermes MCP=no configurado",
+      "evidence": "/proc/1/environ, /opt/data/bin/hostinger-*-mcp"
+    },
+    {
+      "name": "WhatsApp Gateway",
+      "enabled": true,
+      "connected": true,
+      "type": "Messaging platform API/session",
+      "description": "WHATSAPP_ENABLED=presente · session_dir=presente",
+      "evidence": "/opt/data/.env, /opt/data/whatsapp"
+    },
+    {
+      "name": "Supabase",
+      "enabled": false,
+      "connected": false,
+      "type": "Frontend/API config",
+      "description": "scaffold presente; credenciales reales no configuradas",
+      "evidence": "/opt/data/data_seed/js/supabase-config.js"
+    },
+    {
+      "name": "Vercel",
+      "enabled": false,
+      "connected": false,
+      "type": "Deploy platform API",
+      "description": "vercel CLI=no instalado · VERCEL_TOKEN=faltante",
+      "evidence": "Vercel preview deployment + env survey"
+    }
+  ],
+  "platforms": [
+    {
+      "name": "Telegram",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "Discord",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "WhatsApp",
+      "enabled": true,
+      "configured": true,
+      "description": "configured"
+    },
+    {
+      "name": "Signal",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "Slack",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "Email",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "SMS",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "DingTalk",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "Feishu",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "WeCom",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "WeCom Callback",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "Weixin",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "BlueBubbles",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "QQBot",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    },
+    {
+      "name": "Yuanbao",
+      "enabled": false,
+      "configured": false,
+      "description": "not configured"
+    }
+  ],
+  "mcpServers": [],
+  "notes": [
+    "Snapshot ampliado: encuesta /opt/data/.env, /proc/1/environ y ficheros OAuth/config relevantes del contenedor; nunca serializa valores de tokens o secretos.",
+    "HubSpot, Google Workspace, Claude Code, Codex, OpenRouter, GitHub, Hostinger, WhatsApp, Supabase y Vercel se reportan como plataformas API cuando hay evidencia en fichero/entorno/CLI.",
+    "Para refrescar el dashboard desde terminal: npm run generate:ops-inventory && npm run check."
+  ]
+}
