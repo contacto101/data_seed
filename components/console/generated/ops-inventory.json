@@ -1,7 +1,31 @@
 {
-  "generatedAt": "2026-06-04T17:16:37.619Z",
-  "source": "hermes-cli-snapshot",
+  "generatedAt": "2026-06-04T17:47:20.706Z",
+  "source": "docker-filesystem-env-snapshot",
   "command": "npm run generate:ops-inventory",
+  "scannedPaths": [
+    "/opt/data/.env",
+    "/proc/1/environ",
+    "/opt/data/google_token.json",
+    "/opt/data/google_client_secret.json",
+    "/opt/data/hubspot-oauth",
+    "/opt/data/auth.json",
+    "/opt/data/home/.claude.json",
+    "/opt/data/bin",
+    "/opt/data/data_seed/js",
+    "/opt/data/google-cloud-sdk"
+  ],
+  "envKeysDetected": [
+    "GEMINI_API_KEY",
+    "GITHUB_TOKEN",
+    "GOOGLE_API_KEY",
+    "HOSTINGERAPI",
+    "HUBSPOT_CLIENT_ID",
+    "HUBSPOT_CLIENT_SECRET",
+    "OPENROUTER_API_KEY",
+    "WHATSAPP_ALLOWED_USERS",
+    "WHATSAPP_ENABLED",
+    "WHATSAPP_MODE"
+  ],
   "tools": [
     {
       "name": "web",
@@ -354,10 +378,52 @@
       "category": "creative"
     },
     {
+      "name": "jupyter-live-kernel",
+      "enabled": true,
+      "description": "Iterative Python via live Jupyter kernel (hamelnb).",
+      "category": "data-science"
+    },
+    {
       "name": "dataseed-ops",
       "enabled": true,
       "description": "Operaciones y mantenimiento de DataSeed/Demeter: diagnóstico de cron jobs, scripts de reporte, sincronización con Firestore, resolución de problemas de infraestructura en el VPS, y cableado end-to-end de la 'Demo en vivo' del landing.",
       "category": "root"
+    },
+    {
+      "name": "agent-cost-optimization",
+      "enabled": true,
+      "description": "Optimize recurring/autonomous agent costs with model routing, script-only watchdogs, token-minimal prompts, and license-aware delegation.",
+      "category": "devops"
+    },
+    {
+      "name": "dataseed-agent-factory-operations",
+      "enabled": true,
+      "description": "Operar Demeter como fábrica autogestionada de agentes para productos DataSeed: orquestación, especialistas, Kanban, Cron, delegación, Claude Code, Hostinger/Vercel/GitHub y gates de seguridad.",
+      "category": "devops"
+    },
+    {
+      "name": "google-cloud-firebase-ops",
+      "enabled": true,
+      "description": "Operate Google Cloud/Firebase from headless VPS/container sessions: gcloud install, ADC/auth, Firebase Hosting/Functions deploy, Firestore report sync, and verification.",
+      "category": "devops"
+    },
+    {
+      "name": "kanban-orchestrator",
+      "enabled": true,
+      "description": "Decomposition playbook + anti-temptation rules for an orchestrator profile routing work through Kanban. The",
+      "category": "devops"
+    },
+    {
+      "name": "kanban-worker",
+      "enabled": true,
+      "description": "Pitfalls, examples, and edge cases for Hermes Kanban workers. The lifecycle itself is auto-injected into every worker's system prompt as KANBAN_GUIDANCE (from agent/prompt_builder.py); this skill is what you load when you want deeper detail on specific scenarios.",
+      "category": "devops"
+    },
+    {
+      "name": "webhook-subscriptions",
+      "enabled": true,
+      "description": "Webhook subscriptions: event-driven agent runs.",
+      "category": "devops"
     },
     {
       "name": "dogfood",
@@ -379,6 +445,102 @@
     }
   ],
   "connectors": [
+    {
+      "name": "HubSpot CRM OAuth",
+      "enabled": true,
+      "connected": true,
+      "type": "OAuth API",
+      "description": "portal=40198216 · scopes=43 · health OK · client_id=presente · client_secret=presente",
+      "evidence": "/opt/data/hubspot-oauth/tokens.json, /opt/data/scripts/dataseed_hubspot_adapter.py, /proc/1/environ"
+    },
+    {
+      "name": "Google Workspace OAuth",
+      "enabled": true,
+      "connected": true,
+      "type": "OAuth API",
+      "description": "Gmail, Calendar, Drive, Docs, Sheets, Contacts · scopes=8 · token=válido",
+      "evidence": "/opt/data/google_token.json, /opt/data/google_client_secret.json"
+    },
+    {
+      "name": "Google Cloud SDK / Firebase",
+      "enabled": true,
+      "connected": true,
+      "type": "CLI/API",
+      "description": "Google Cloud SDK 571.0.0 · Firebase scaffold=sin config real · GOOGLE_API_KEY=presente",
+      "evidence": "/opt/data/google-cloud-sdk, /opt/data/data_seed/js/firebase-config.js, /opt/data/.env"
+    },
+    {
+      "name": "Google Gemini / AI Studio",
+      "enabled": true,
+      "connected": true,
+      "type": "LLM API/CLI",
+      "description": "GEMINI_API_KEY=presente · GOOGLE_API_KEY=presente · gemini CLI=presente",
+      "evidence": "/opt/data/.env, /opt/data/.npm-global/bin/gemini"
+    },
+    {
+      "name": "Claude Code CLI",
+      "enabled": true,
+      "connected": true,
+      "type": "CLI OAuth",
+      "description": "2.1.160 (Claude Code) · oauthAccount=presente · projects=1",
+      "evidence": "/usr/local/bin/claude, /opt/data/home/.claude.json"
+    },
+    {
+      "name": "OpenAI Codex OAuth",
+      "enabled": true,
+      "connected": true,
+      "type": "OAuth LLM provider",
+      "description": "active_provider=openai-codex · credential_pool=gemini, openrouter, openai-codex",
+      "evidence": "/opt/data/auth.json"
+    },
+    {
+      "name": "OpenRouter",
+      "enabled": true,
+      "connected": true,
+      "type": "LLM API",
+      "description": "OPENROUTER_API_KEY=presente · fuente=/opt/data/.env, /proc/1/environ",
+      "evidence": "/opt/data/.env, /proc/1/environ"
+    },
+    {
+      "name": "GitHub API",
+      "enabled": true,
+      "connected": true,
+      "type": "REST/Git API",
+      "description": "GITHUB_TOKEN=presente en entorno gateway · gh CLI=no instalado",
+      "evidence": "/proc/1/environ, repo git remotes"
+    },
+    {
+      "name": "Hostinger API / MCP binaries",
+      "enabled": true,
+      "connected": true,
+      "type": "Hosting API/MCP",
+      "description": "HOSTINGERAPI=presente · MCP binaries=presentes · Hermes MCP=no configurado",
+      "evidence": "/proc/1/environ, /opt/data/bin/hostinger-*-mcp"
+    },
+    {
+      "name": "WhatsApp Gateway",
+      "enabled": true,
+      "connected": true,
+      "type": "Messaging platform API/session",
+      "description": "WHATSAPP_ENABLED=presente · session_dir=presente",
+      "evidence": "/opt/data/.env, /opt/data/whatsapp"
+    },
+    {
+      "name": "Supabase",
+      "enabled": false,
+      "connected": false,
+      "type": "Frontend/API config",
+      "description": "scaffold presente; credenciales reales no configuradas",
+      "evidence": "/opt/data/data_seed/js/supabase-config.js"
+    },
+    {
+      "name": "Vercel",
+      "enabled": false,
+      "connected": false,
+      "type": "Deploy platform API",
+      "description": "vercel CLI=no instalado · VERCEL_TOKEN=faltante",
+      "evidence": "Vercel preview deployment + env survey"
+    },
     {
       "name": "OpenRouter",
       "enabled": true,
@@ -524,6 +686,104 @@
       "description": "not logged in (run: hermes auth add xai-oauth)"
     }
   ],
+  "apiPlatforms": [
+    {
+      "name": "HubSpot CRM OAuth",
+      "enabled": true,
+      "connected": true,
+      "type": "OAuth API",
+      "description": "portal=40198216 · scopes=43 · health OK · client_id=presente · client_secret=presente",
+      "evidence": "/opt/data/hubspot-oauth/tokens.json, /opt/data/scripts/dataseed_hubspot_adapter.py, /proc/1/environ"
+    },
+    {
+      "name": "Google Workspace OAuth",
+      "enabled": true,
+      "connected": true,
+      "type": "OAuth API",
+      "description": "Gmail, Calendar, Drive, Docs, Sheets, Contacts · scopes=8 · token=válido",
+      "evidence": "/opt/data/google_token.json, /opt/data/google_client_secret.json"
+    },
+    {
+      "name": "Google Cloud SDK / Firebase",
+      "enabled": true,
+      "connected": true,
+      "type": "CLI/API",
+      "description": "Google Cloud SDK 571.0.0 · Firebase scaffold=sin config real · GOOGLE_API_KEY=presente",
+      "evidence": "/opt/data/google-cloud-sdk, /opt/data/data_seed/js/firebase-config.js, /opt/data/.env"
+    },
+    {
+      "name": "Google Gemini / AI Studio",
+      "enabled": true,
+      "connected": true,
+      "type": "LLM API/CLI",
+      "description": "GEMINI_API_KEY=presente · GOOGLE_API_KEY=presente · gemini CLI=presente",
+      "evidence": "/opt/data/.env, /opt/data/.npm-global/bin/gemini"
+    },
+    {
+      "name": "Claude Code CLI",
+      "enabled": true,
+      "connected": true,
+      "type": "CLI OAuth",
+      "description": "2.1.160 (Claude Code) · oauthAccount=presente · projects=1",
+      "evidence": "/usr/local/bin/claude, /opt/data/home/.claude.json"
+    },
+    {
+      "name": "OpenAI Codex OAuth",
+      "enabled": true,
+      "connected": true,
+      "type": "OAuth LLM provider",
+      "description": "active_provider=openai-codex · credential_pool=gemini, openrouter, openai-codex",
+      "evidence": "/opt/data/auth.json"
+    },
+    {
+      "name": "OpenRouter",
+      "enabled": true,
+      "connected": true,
+      "type": "LLM API",
+      "description": "OPENROUTER_API_KEY=presente · fuente=/opt/data/.env, /proc/1/environ",
+      "evidence": "/opt/data/.env, /proc/1/environ"
+    },
+    {
+      "name": "GitHub API",
+      "enabled": true,
+      "connected": true,
+      "type": "REST/Git API",
+      "description": "GITHUB_TOKEN=presente en entorno gateway · gh CLI=no instalado",
+      "evidence": "/proc/1/environ, repo git remotes"
+    },
+    {
+      "name": "Hostinger API / MCP binaries",
+      "enabled": true,
+      "connected": true,
+      "type": "Hosting API/MCP",
+      "description": "HOSTINGERAPI=presente · MCP binaries=presentes · Hermes MCP=no configurado",
+      "evidence": "/proc/1/environ, /opt/data/bin/hostinger-*-mcp"
+    },
+    {
+      "name": "WhatsApp Gateway",
+      "enabled": true,
+      "connected": true,
+      "type": "Messaging platform API/session",
+      "description": "WHATSAPP_ENABLED=presente · session_dir=presente",
+      "evidence": "/opt/data/.env, /opt/data/whatsapp"
+    },
+    {
+      "name": "Supabase",
+      "enabled": false,
+      "connected": false,
+      "type": "Frontend/API config",
+      "description": "scaffold presente; credenciales reales no configuradas",
+      "evidence": "/opt/data/data_seed/js/supabase-config.js"
+    },
+    {
+      "name": "Vercel",
+      "enabled": false,
+      "connected": false,
+      "type": "Deploy platform API",
+      "description": "vercel CLI=no instalado · VERCEL_TOKEN=faltante",
+      "evidence": "Vercel preview deployment + env survey"
+    }
+  ],
   "platforms": [
     {
       "name": "Telegram",
@@ -618,8 +878,8 @@
   ],
   "mcpServers": [],
   "notes": [
-    "No se almacenan secretos: tokens y keys se reportan solo como estado configurado/no configurado.",
-    "Para refrescar el dashboard desde terminal: npm run generate:ops-inventory && npm run check.",
-    "Para diagnóstico razonado, usar el botón Consultar a Demeter desde el dashboard."
+    "Snapshot ampliado: encuesta /opt/data/.env, /proc/1/environ y ficheros OAuth/config relevantes del contenedor; nunca serializa valores de tokens o secretos.",
+    "HubSpot, Google Workspace, Claude Code, Codex, OpenRouter, GitHub, Hostinger, WhatsApp, Supabase y Vercel se reportan como plataformas API cuando hay evidencia en fichero/entorno/CLI.",
+    "Para refrescar el dashboard desde terminal: npm run generate:ops-inventory && npm run check."
   ]
 }

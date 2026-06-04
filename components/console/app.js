@@ -198,6 +198,7 @@ async function renderOpsDashboard() {
   const toolCounts = countByEnabled(inventory.tools);
   const skillCounts = countByEnabled(inventory.skills);
   const platformCounts = countByEnabled(inventory.platforms);
+  const apiPlatformCounts = countByEnabled(inventory.apiPlatforms || []);
   const connectorCounts = countByEnabled(inventory.connectors);
   const generatedAt = inventory.generatedAt ? formatTime(inventory.generatedAt) : 'sin fecha';
 
@@ -217,16 +218,18 @@ async function renderOpsDashboard() {
       <div class="ops-metrics">
         ${metricCard('Tools', String(toolCounts.enabled || 0), `${toolCounts.disabled || 0} deshabilitadas`)}
         ${metricCard('Skills', String(skillCounts.enabled || 0), `${skillCounts.disabled || 0} no cargadas/inhabilitadas`)}
+        ${metricCard('APIs', String(apiPlatformCounts.enabled || 0), `${apiPlatformCounts.disabled || 0} pendientes/revisar`)}
         ${metricCard('Conectores', String(connectorCounts.enabled || 0), `${connectorCounts.disabled || 0} pendientes`)}
-        ${metricCard('Plataformas', String(platformCounts.enabled || 0), `${platformCounts.disabled || 0} no configuradas`)}
-        ${metricCard('MCP', String(inventory.mcpServers?.length || 0), 'servidores configurados')}
+        ${metricCard('Gateway', String(platformCounts.enabled || 0), `${platformCounts.disabled || 0} no configuradas`)}
+        ${metricCard('MCP', String(inventory.mcpServers?.length || 0), 'servidores Hermes configurados')}
       </div>
       <div class="ops-grid">
+        <section class="ops-card"><h3>Plataformas API/CLI conectadas</h3>${renderOpsList(inventory.apiPlatforms || [], 'No hay plataformas API reportadas.')}</section>
         <section class="ops-card"><h3>Toolsets</h3>${renderOpsList(inventory.tools, 'No hay toolsets reportados.')}</section>
         <section class="ops-card"><h3>Skills principales</h3>${renderOpsList(inventory.skills, 'No hay skills reportadas.')}</section>
-        <section class="ops-card"><h3>Conectores API</h3>${renderOpsList(inventory.connectors, 'No hay conectores reportados.')}</section>
+        <section class="ops-card"><h3>Conectores y proveedores Hermes</h3>${renderOpsList(inventory.connectors, 'No hay conectores reportados.')}</section>
         <section class="ops-card"><h3>Plataformas Gateway</h3>${renderOpsList(inventory.platforms, 'No hay plataformas reportadas.')}</section>
-        <section class="ops-card"><h3>MCP</h3>${renderOpsList(inventory.mcpServers, 'Sin servidores MCP configurados.')}</section>
+        <section class="ops-card"><h3>MCP</h3>${renderOpsList(inventory.mcpServers, 'Sin servidores MCP configurados en Hermes.')}</section>
         <section class="ops-card"><h3>Notas operativas</h3>${renderOpsList((inventory.notes || []).map((note, index) => ({ name: `Nota ${index + 1}`, description: note, enabled: true })), 'Sin notas.')}</section>
       </div>
     </div>

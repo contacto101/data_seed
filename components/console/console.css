@@ -124,7 +124,7 @@ button{cursor:pointer;}
 .ops-hero p{max-width:880px;color:var(--sub);line-height:1.7;font-size:.9rem;}
 .ops-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
 .ops-actions .new-session-btn{width:auto;padding:0 16px;}
-.ops-metrics{display:grid;grid-template-columns:repeat(5,minmax(140px,1fr));gap:12px;}
+.ops-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
 .ops-metric{border:1px solid var(--line);border-radius:18px;background:rgba(0,255,65,.03);padding:16px;display:grid;gap:7px;}
 .ops-metric span{font-size:.62rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);font-weight:800;}
 .ops-metric strong{font-family:'Syne',sans-serif;font-size:1.8rem;color:var(--g);}
