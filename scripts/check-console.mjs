@@ -9,6 +9,7 @@ const required = [
   'components/console/use-demeter.js',
   'components/console/session-store.js',
   'components/console/runtime-config.example.js',
+  'api/demeter-chat.js',
   'scripts/dataseed_demo_proxy.py'
 ];
 
