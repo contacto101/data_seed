@@ -13,12 +13,13 @@
     var isAndroid=/Android/i.test(ua);
     root.dataset.platform=isIOS?'ios':(isAndroid?'android':'desktop');
     var saved=localStorage.getItem('dataseed-theme');
-    var prefersLight=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches;
-    root.dataset.theme=saved||(prefersLight?'light':'dark');
+    root.dataset.theme=saved||'dark';
   }catch(e){document.documentElement.dataset.theme='dark';}
 })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="dataseed_logo_black.png" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet">
 <style>
@@ -149,6 +150,9 @@ html[data-theme="light"] .theme-toggle .moon{display:none;}
 html[data-theme="light"] .theme-toggle .sun{display:inline;}
 
 section,div.ticker-wrap,div.stats-row{position:relative;z-index:2;}
+@supports(content-visibility:auto){
+  #services,#how,#types,#products,#prod-demo,#faq,#cta,footer{content-visibility:auto;contain-intrinsic-size:1px 900px;}
+}
 .inner{max-width:1160px;margin:0 auto;padding:0 3rem;}
 
 .pill{display:inline-flex;align-items:center;gap:.55rem;background:rgba(0,255,65,.06);border:1px solid rgba(0,255,65,.22);border-radius:100px;padding:.32rem 1rem;font-size:.7rem;font-weight:500;color:var(--g2);letter-spacing:.06em;}
@@ -995,7 +999,7 @@ html[data-platform="android"] .demo-input,html[data-platform="android"] .contact
 
 <nav>
   <a href="#" class="logo">
-    <img src="dataseed_logo_black.png" alt="Dataseed">
+    <img src="dataseed_logo_black.png" alt="Dataseed" width="40" height="40" decoding="async" fetchpriority="high">
     <div><span class="logo-t">Dataseed</span><span class="logo-s">Data Driven</span></div>
   </a>
   <ul>
@@ -1505,8 +1509,10 @@ function rs(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
 rs();window.addEventListener('resize',rs);
 const C=26,R=15,pts=[];
 for(let i=0;i<=C;i++)for(let j=0;j<=R;j++)pts.push({x:i/C,y:j/R,ph:Math.random()*Math.PI*2,sp:.4+Math.random()*.6});
-let t=0;
+let t=0,rafId=null;
+const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 function draw(){
+  if(document.hidden||reduceMotion){rafId=null;return;}
   cx.clearRect(0,0,cv.width,cv.height);
   const W=cv.width,H=cv.height;
   cx.strokeStyle='rgba(0,255,65,.042)';cx.lineWidth=.5;
@@ -1521,9 +1527,11 @@ function draw(){
   const g=cx.createLinearGradient(0,sy-70,0,sy+70);
   g.addColorStop(0,'transparent');g.addColorStop(.5,'rgba(0,255,65,0.018)');g.addColorStop(1,'transparent');
   cx.fillStyle=g;cx.fillRect(0,sy-70,W,140);
-  t+=1/60;requestAnimationFrame(draw);
+  t+=1/60;rafId=requestAnimationFrame(draw);
 }
-draw();
+function startBg(){if(!rafId&&!reduceMotion){rafId=requestAnimationFrame(draw);}}
+document.addEventListener('visibilitychange',startBg);
+startBg();
 </script>
 <script>
 document.querySelectorAll('.faq-trigger').forEach((trigger) => {
