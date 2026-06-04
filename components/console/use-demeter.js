@@ -1,13 +1,25 @@
+function normalizeReplyText(value) {
+  return String(value || '')
+    .replace(/<br\s*\/?\s*>/gi, '\n')
+    .replace(/<\/p>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .trim();
+}
+
 function parseDemeterReply(data) {
-  if (typeof data?.reply === 'string') return data.reply;
-  if (typeof data?.message === 'string') return data.message;
-  if (typeof data?.content === 'string') return data.content;
+  if (typeof data?.reply === 'string') return normalizeReplyText(data.reply);
+  if (typeof data?.message === 'string') return normalizeReplyText(data.message);
+  if (typeof data?.content === 'string') return normalizeReplyText(data.content);
   const choice = data?.choices?.[0]?.message?.content;
-  if (typeof choice === 'string') return choice;
+  if (typeof choice === 'string') return normalizeReplyText(choice);
   const textBlock = Array.isArray(data?.content)
     ? data.content.find((block) => block?.type === 'text')?.text
     : null;
-  if (typeof textBlock === 'string') return textBlock;
+  if (typeof textBlock === 'string') return normalizeReplyText(textBlock);
   return 'Demeter no entregó contenido en la respuesta.';
 }
 
