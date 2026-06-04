@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Dataseed Demo Proxy — serves landing + proxies demo-chat to Hermes API server.
+"""Dataseed Demo Proxy — serves landing, console assets and Hermes chat routes.
 
 Listens on port 80 and:
-  - GET  /            → serves index.html (the landing page)
-  - POST /api/demo-chat → proxies to Hermes API server at 127.0.0.1:8642
-  - GET  /health      → health check
+  - GET  /                  → serves index.html (the landing page)
+  - GET  /console.html      → serves internal operations console
+  - POST /api/demo-chat     → public demo proxy with guardrails
+  - POST /api/demeter-chat  → internal console proxy to Hermes API server
+  - GET  /health            → health check
 
 Usage:
     python3 dataseed_demo_proxy.py
@@ -214,8 +216,20 @@ class DemoProxy:
                 await self._proxy_demo_chat(writer, body, origin)
                 return
 
-            if route_path == "/" or route_path == "/index.html":
-                await self._serve_landing(writer)
+            if route_path == "/api/demeter-chat" and method == "POST":
+                if not _rate_limit_check(ip, now, self._rate_table):
+                    await self._respond(writer, 429, b'{"error":"rate_limited"}',
+                                        [("Content-Type", "application/json")] + _cors_headers(origin))
+                    return
+                await self._proxy_demeter_chat(writer, body, origin)
+                return
+
+            if method == "GET" and (route_path == "/" or route_path == "/index.html"):
+                await self._serve_file(writer, LANDING_DIR / "index.html")
+                return
+
+            if method == "GET":
+                await self._serve_static_path(writer, route_path)
                 return
 
             await self._respond(writer, 404, b"Not Found")
@@ -281,15 +295,70 @@ class DemoProxy:
             await self._respond(writer, 502, json.dumps({"error": str(e)}).encode(),
                                 [("Content-Type", "application/json")] + cors)
 
-    async def _serve_landing(self, writer: asyncio.StreamWriter):
-        landing = LANDING_DIR / "index.html"
-        if landing.exists():
-            content = landing.read_bytes()
-            await self._respond(writer, 200, content,
-                                [("Content-Type", "text/html; charset=utf-8"),
-                                 ("Cache-Control", "no-cache")])
-        else:
-            await self._respond(writer, 404, b"index.html not found")
+    async def _proxy_demeter_chat(self, writer: asyncio.StreamWriter, body: bytes, origin: str | None):
+        import urllib.request
+        import urllib.error
+
+        try:
+            req_body = json.loads(body) if body else {}
+            messages = [m for m in req_body.get("messages", []) if m.get("role") in {"user", "assistant"}]
+
+            api_req = json.dumps({
+                "model": os.environ.get("DEMETER_MODEL", "hermes-agent"),
+                "messages": messages,
+                "max_tokens": int(os.environ.get("DEMETER_MAX_TOKENS", "1200")),
+                "metadata": {
+                    "source": "dataseed-internal-agent-console",
+                    "sessionId": req_body.get("sessionId", ""),
+                },
+            }).encode("utf-8")
+
+            api_request = urllib.request.Request(
+                f"{API_SERVER_URL}/v1/chat/completions",
+                data=api_req,
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {self._api_key}",
+                },
+                method="POST",
+            )
+
+            with urllib.request.urlopen(api_request, timeout=60) as resp:
+                resp_body = resp.read()
+
+            await self._respond(writer, 200, resp_body,
+                                [("Content-Type", "application/json")] + _cors_headers(origin))
+        except urllib.error.HTTPError as e:
+            err_body = e.read()
+            await self._respond(writer, e.code, err_body,
+                                [("Content-Type", "application/json")] + _cors_headers(origin))
+        except Exception as e:
+            await self._respond(writer, 502, json.dumps({"error": str(e)}).encode(),
+                                [("Content-Type", "application/json")] + _cors_headers(origin))
+
+    async def _serve_static_path(self, writer: asyncio.StreamWriter, route_path: str):
+        safe_path = route_path.lstrip("/")
+        if ".." in Path(safe_path).parts:
+            await self._respond(writer, 404, b"Not Found")
+            return
+        target = LANDING_DIR / safe_path
+        await self._serve_file(writer, target)
+
+    async def _serve_file(self, writer: asyncio.StreamWriter, target: Path):
+        if not target.exists() or not target.is_file():
+            await self._respond(writer, 404, b"Not Found")
+            return
+        content_type = {
+            ".html": "text/html; charset=utf-8",
+            ".css": "text/css; charset=utf-8",
+            ".js": "text/javascript; charset=utf-8",
+            ".mjs": "text/javascript; charset=utf-8",
+            ".png": "image/png",
+            ".svg": "image/svg+xml",
+            ".txt": "text/plain; charset=utf-8",
+        }.get(target.suffix.lower(), "application/octet-stream")
+        await self._respond(writer, 200, target.read_bytes(),
+                            [("Content-Type", content_type), ("Cache-Control", "no-cache")])
 
     @staticmethod
     async def _respond(writer: asyncio.StreamWriter, status: int, body: bytes,

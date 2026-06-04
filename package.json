@@ -1,0 +1,10 @@
+{
+  "name": "dataseed-agent-console",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate:console-config": "node scripts/generate-console-config.mjs",
+    "check": "node scripts/check-console.mjs",
+    "serve": "python3 -m http.server 8080"
+  }
+}
