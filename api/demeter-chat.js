@@ -38,22 +38,34 @@ export default async function handler(request) {
     ? payload.messages.filter((message) => ['user', 'assistant'].includes(message.role))
     : [];
 
-  const upstream = await fetch(`${hermesBaseUrl.replace(/\/$/, '')}/v1/chat/completions`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      model: process.env.DEMETER_MODEL || 'hermes-agent',
-      messages,
-      max_tokens: Number(process.env.DEMETER_MAX_TOKENS || 1200),
-      metadata: {
-        source: 'dataseed-internal-agent-console',
-        sessionId: payload.sessionId || ''
-      }
-    })
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), Number(process.env.DEMETER_REQUEST_TIMEOUT_MS || 12000));
+
+  let upstream;
+  try {
+    upstream = await fetch(`${hermesBaseUrl.replace(/\/$/, '')}/v1/chat/completions`, {
+      method: 'POST',
+      signal: controller.signal,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: process.env.DEMETER_MODEL || 'hermes-agent',
+        messages,
+        max_tokens: Number(process.env.DEMETER_MAX_TOKENS || 1200),
+        metadata: {
+          source: 'dataseed-internal-agent-console',
+          sessionId: payload.sessionId || ''
+        }
+      })
+    });
+  } catch (error) {
+    const code = error.name === 'AbortError' ? 'hermes_upstream_timeout' : 'hermes_upstream_unreachable';
+    return jsonResponse(502, { error: code });
+  } finally {
+    clearTimeout(timeout);
+  }
 
   const text = await upstream.text();
   return new Response(text, {
