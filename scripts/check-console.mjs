@@ -19,7 +19,8 @@ for (const file of required) {
 const html = readFileSync('console.html', 'utf8');
 if (!html.includes('components/console/app.js')) throw new Error('console.html must load console app');
 if (html.includes('style="')) throw new Error('console.html contains inline style attributes');
-if (!html.includes('components/console/generated/runtime-config.js')) throw new Error('console.html must load generated env config');
+if (!html.includes('components/console/runtime-config.example.js')) throw new Error('console.html must load safe runtime defaults');
+if (!html.includes('components/console/generated/runtime-config.js')) throw new Error('console.html must load generated env override');
 
 const app = readFileSync('components/console/app.js', 'utf8');
 for (const token of ['Agent Monitor', 'Analytics', 'Logs', 'Users', 'Multi-Agent', 'useDemeter']) {
