@@ -2,14 +2,19 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Dataseed — Data Driven</title>
 <script>
 (function(){
   try{
+    var root=document.documentElement;
+    var ua=navigator.userAgent||navigator.vendor||'';
+    var isIOS=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+    var isAndroid=/Android/i.test(ua);
+    root.dataset.platform=isIOS?'ios':(isAndroid?'android':'desktop');
     var saved=localStorage.getItem('dataseed-theme');
     var prefersLight=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches;
-    document.documentElement.dataset.theme=saved||(prefersLight?'light':'dark');
+    root.dataset.theme=saved||(prefersLight?'light':'dark');
   }catch(e){document.documentElement.dataset.theme='dark';}
 })();
 </script>
@@ -910,6 +915,18 @@ html[data-theme="light"] .demo-chip-dot,html[data-theme="light"] .demo-typing sp
 html[data-theme="light"] .faq-item{border-bottom-color:rgba(0,143,44,.16);}
 html[data-theme="light"] footer{background:linear-gradient(180deg,rgba(244,251,245,.2),rgba(232,246,235,.92));border-top-color:rgba(0,143,44,.16);}
 
+html[data-platform="ios"],html[data-platform="android"]{text-size-adjust:100%;-webkit-text-size-adjust:100%;}
+html[data-platform="ios"] *{-webkit-tap-highlight-color:rgba(0,255,65,.12);}
+html[data-platform="android"] *{-webkit-tap-highlight-color:rgba(0,255,65,.10);}
+html[data-platform="ios"]{--chat--window--height:min(680px,calc(100svh - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)));}
+html[data-platform="android"]{--chat--window--height:min(680px,calc(100dvh - 2rem));}
+html[data-platform="ios"] nav{padding-left:calc(3rem + env(safe-area-inset-left));padding-right:calc(3rem + env(safe-area-inset-right));}
+html[data-platform="ios"] .demo-input,html[data-platform="ios"] .contact-input,html[data-platform="ios"] .contact-textarea,html[data-platform="ios"] #n8n-chat textarea{font-size:16px;}
+html[data-platform="ios"] .demo-input-row,html[data-platform="ios"] .contact-form{padding-bottom:max(11px,env(safe-area-inset-bottom));}
+html[data-platform="android"] body{min-height:100dvh;overscroll-behavior-y:none;}
+html[data-platform="android"] #hero{min-height:100dvh;}
+html[data-platform="android"] .demo-input,html[data-platform="android"] .contact-input,html[data-platform="android"] .contact-textarea{font-size:.9rem;}
+
 @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 @media(max-width:900px){
@@ -934,6 +951,40 @@ html[data-theme="light"] footer{background:linear-gradient(180deg,rgba(244,251,2
   .footer-copy{max-width:none;font-size:.96rem;}
   .footer-wordmark{font-size:1.7rem;margin-bottom:1.4rem;}
   .footer-bottom{flex-direction:column;align-items:flex-start;}
+}
+
+@media(max-width:600px){
+  nav{gap:.7rem;padding:.9rem 1rem;}
+  .logo img{height:34px;}
+  .logo-t{font-size:1rem;}
+  .logo-s{font-size:.46rem;letter-spacing:.28em;}
+  .nav-cta{padding:.52rem .95rem;font-size:.72rem;white-space:nowrap;}
+  .theme-toggle{width:36px;height:36px;flex:0 0 36px;}
+  #hero{padding-top:7.4rem;}
+  .hero-btns{gap:.7rem;}
+  .btn-p,.btn-o{width:100%;text-align:center;}
+  .demo-shell{border-radius:16px;}
+  .demo-topbar{align-items:flex-start;gap:.8rem;}
+  .demo-live{font-size:.62rem;white-space:nowrap;}
+  .demo-messages{min-height:260px;max-height:52svh;padding:16px;}
+  .demo-input-row{padding:10px 12px;}
+  .demo-send{width:42px;height:42px;}
+}
+@media(max-width:380px){
+  nav{padding:.85rem .8rem;gap:.45rem;}
+  .nav-cta{padding:.5rem .72rem;font-size:.66rem;}
+  .theme-toggle{width:34px;height:34px;flex-basis:34px;}
+}
+@media(max-width:600px) and (orientation:landscape){
+  nav{padding-top:.65rem;padding-bottom:.65rem;}
+  #hero{padding-top:5.8rem;min-height:auto;}
+  .demo-messages{max-height:46svh;}
+}
+@media(max-width:600px){
+  html[data-platform="ios"] nav{padding-left:calc(1rem + env(safe-area-inset-left));padding-right:calc(1rem + env(safe-area-inset-right));}
+  html[data-platform="ios"] #hero{padding-top:calc(7.4rem + env(safe-area-inset-top));}
+  html[data-platform="ios"] .demo-messages{max-height:50svh;}
+  html[data-platform="android"] .demo-messages{max-height:50dvh;}
 }
 </style>
 </head>
