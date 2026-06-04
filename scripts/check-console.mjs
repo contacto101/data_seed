@@ -9,8 +9,10 @@ const required = [
   'components/console/use-demeter.js',
   'components/console/session-store.js',
   'components/console/runtime-config.example.js',
+  'components/console/generated/ops-inventory.json',
   'api/demeter-chat.js',
-  'scripts/dataseed_demo_proxy.py'
+  'scripts/dataseed_demo_proxy.py',
+  'scripts/generate-ops-inventory.mjs'
 ];
 
 for (const file of required) {
@@ -24,7 +26,7 @@ if (!html.includes('components/console/runtime-config.example.js')) throw new Er
 if (!html.includes('components/console/generated/runtime-config.js')) throw new Error('console.html must load generated env override');
 
 const app = readFileSync('components/console/app.js', 'utf8');
-for (const token of ['Agent Monitor', 'Analytics', 'Logs', 'Users', 'Multi-Agent', 'useDemeter']) {
+for (const token of ['Agent Monitor', 'Analytics', 'Logs', 'Users', 'Multi-Agent', 'Ops Dashboard', 'useDemeter']) {
   if (!app.includes(token)) throw new Error(`Missing app token: ${token}`);
 }
 if (app.includes('console.log')) throw new Error('console.log left in app.js');

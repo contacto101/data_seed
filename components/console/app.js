@@ -5,6 +5,7 @@ const config = window.DATASEED_CONSOLE_CONFIG || {};
 const demeter = useDemeter(config);
 const modules = [
   { id: 'chat', icon: '●', label: 'Chat', status: 'active', description: 'Conversación directa con Demeter.' },
+  { id: 'ops-dashboard', icon: '⌁', label: 'Ops Dashboard', status: 'active', description: 'Inventario operativo de skills, tools, conectores y plataformas API/MCP.' },
   { id: 'monitor', icon: '◌', label: 'Agent Monitor', status: 'soon', description: 'Supervisión de estado, latencia, errores y disponibilidad del agente.' },
   { id: 'analytics', icon: '◇', label: 'Analytics', status: 'soon', description: 'Métricas operativas de conversaciones, uso y resultados.' },
   { id: 'logs', icon: '≡', label: 'Logs', status: 'soon', description: 'Búsqueda y revisión de eventos técnicos del backend Hermes.' },
@@ -16,7 +17,10 @@ const state = {
   route: 'chat',
   sessions: loadSessions(),
   currentSession: null,
-  busy: false
+  busy: false,
+  sidebarCollapsed: localStorage.getItem('dataseed-console-sidebar') === 'collapsed',
+  opsInventory: null,
+  opsInventoryError: ''
 };
 
 function escapeHtml(value) {
@@ -57,8 +61,11 @@ function ensureSession() {
 function renderShell() {
   const root = document.getElementById('console-root');
   root.innerHTML = `
-    <div class="console-app">
-      <aside class="console-sidebar">
+    <div class="console-app ${state.sidebarCollapsed ? 'sidebar-collapsed' : ''}">
+      <aside class="console-sidebar" aria-label="Menú principal ${state.sidebarCollapsed ? 'plegado' : 'expandido'}">
+        <button class="sidebar-toggle" type="button" id="sidebar-toggle" aria-label="${state.sidebarCollapsed ? 'Expandir menú hacia la derecha' : 'Plegar menú'}" aria-expanded="${!state.sidebarCollapsed}">
+          ${state.sidebarCollapsed ? '›' : '‹'}
+        </button>
         <div class="sidebar-brand">
           <img src="dataseed_logo_black.png" alt="Dataseed">
           <div class="brand-copy"><strong>Dataseed</strong><span>internal</span></div>
@@ -94,6 +101,13 @@ function renderShell() {
     </div>
   `;
 
+  document.getElementById('sidebar-toggle').addEventListener('click', () => {
+    state.sidebarCollapsed = !state.sidebarCollapsed;
+    localStorage.setItem('dataseed-console-sidebar', state.sidebarCollapsed ? 'collapsed' : 'expanded');
+    renderShell();
+    renderRoute();
+  });
+
   document.querySelectorAll('[data-route]').forEach((button) => {
     button.addEventListener('click', () => {
       state.route = button.dataset.route;
@@ -105,7 +119,132 @@ function renderShell() {
 
 function renderRoute() {
   if (state.route === 'chat') renderChat();
+  else if (state.route === 'ops-dashboard') renderOpsDashboard();
   else renderStub(state.route);
+}
+
+function countByEnabled(items = []) {
+  return items.reduce((acc, item) => {
+    const key = item.enabled ? 'enabled' : 'disabled';
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, { enabled: 0, disabled: 0 });
+}
+
+async function loadOpsInventory({ force = false } = {}) {
+  if (state.opsInventory && !force) return state.opsInventory;
+  try {
+    const response = await fetch('components/console/generated/ops-inventory.json', { cache: force ? 'reload' : 'default' });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    state.opsInventory = await response.json();
+    state.opsInventoryError = '';
+  } catch (error) {
+    state.opsInventory = {
+      generatedAt: new Date().toISOString(),
+      source: 'fallback-local',
+      tools: [],
+      skills: [],
+      connectors: [],
+      platforms: [],
+      mcpServers: [],
+      notes: ['Inventario generado no disponible. Ejecutar npm run generate:ops-inventory en el entorno Hermes antes de publicar.']
+    };
+    state.opsInventoryError = error.message;
+  }
+  return state.opsInventory;
+}
+
+function metricCard(label, value, detail) {
+  return `
+    <div class="ops-metric">
+      <span>${escapeHtml(label)}</span>
+      <strong>${escapeHtml(value)}</strong>
+      <small>${escapeHtml(detail)}</small>
+    </div>
+  `;
+}
+
+function statusPill(enabled) {
+  return `<span class="status-pill ${enabled ? 'is-on' : 'is-off'}">${enabled ? 'habilitado' : 'deshabilitado'}</span>`;
+}
+
+function renderOpsList(items, emptyText) {
+  if (!items?.length) return `<div class="ops-empty">${escapeHtml(emptyText)}</div>`;
+  return items.map((item) => `
+    <div class="ops-row">
+      <div>
+        <strong>${escapeHtml(item.name || item.id || 'sin nombre')}</strong>
+        <span>${escapeHtml(item.description || item.type || item.category || 'sin descripción')}</span>
+      </div>
+      ${statusPill(Boolean(item.enabled || item.connected || item.configured))}
+    </div>
+  `).join('');
+}
+
+async function renderOpsDashboard() {
+  const outlet = document.getElementById('route-outlet');
+  outlet.innerHTML = `
+    <div class="ops-dashboard">
+      <div class="ops-hero">
+        <span class="env-badge">Live inventory</span>
+        <h2>Dashboard operativo Demeter</h2>
+        <p>Vista funcional para revisar skills, toolsets, conectores y plataformas conectadas por API/MCP. El snapshot se actualiza por terminal y también puede consultarse directo a Demeter.</p>
+      </div>
+      <div class="ops-loading">Cargando inventario operativo…</div>
+    </div>
+  `;
+
+  const inventory = await loadOpsInventory();
+  const toolCounts = countByEnabled(inventory.tools);
+  const skillCounts = countByEnabled(inventory.skills);
+  const platformCounts = countByEnabled(inventory.platforms);
+  const connectorCounts = countByEnabled(inventory.connectors);
+  const generatedAt = inventory.generatedAt ? formatTime(inventory.generatedAt) : 'sin fecha';
+
+  outlet.innerHTML = `
+    <div class="ops-dashboard">
+      <div class="ops-hero">
+        <span class="env-badge">Live inventory</span>
+        <h2>Dashboard operativo Demeter</h2>
+        <p>Vista funcional para revisar skills, toolsets, conectores y plataformas conectadas por API/MCP. Última actualización: ${escapeHtml(generatedAt)}.</p>
+        ${state.opsInventoryError ? `<div class="auth-guard-banner">Snapshot no encontrado: ${escapeHtml(state.opsInventoryError)}.</div>` : ''}
+        <div class="ops-actions">
+          <button class="new-session-btn" type="button" id="refresh-ops">Recargar snapshot</button>
+          <button class="quick-prompt" type="button" data-ops-question="Dame un inventario actualizado de skills habilitadas, tools disponibles, conectores y plataformas API/MCP conectadas. Incluye riesgos o faltantes críticos.">Consultar a Demeter</button>
+          <button class="quick-prompt" type="button" data-ops-question="Genera comandos terminal seguros para actualizar el inventario operativo de la consola DataSeed sin exponer secretos.">Comandos terminal</button>
+        </div>
+      </div>
+      <div class="ops-metrics">
+        ${metricCard('Tools', String(toolCounts.enabled || 0), `${toolCounts.disabled || 0} deshabilitadas`)}
+        ${metricCard('Skills', String(skillCounts.enabled || 0), `${skillCounts.disabled || 0} no cargadas/inhabilitadas`)}
+        ${metricCard('Conectores', String(connectorCounts.enabled || 0), `${connectorCounts.disabled || 0} pendientes`)}
+        ${metricCard('Plataformas', String(platformCounts.enabled || 0), `${platformCounts.disabled || 0} no configuradas`)}
+        ${metricCard('MCP', String(inventory.mcpServers?.length || 0), 'servidores configurados')}
+      </div>
+      <div class="ops-grid">
+        <section class="ops-card"><h3>Toolsets</h3>${renderOpsList(inventory.tools, 'No hay toolsets reportados.')}</section>
+        <section class="ops-card"><h3>Skills principales</h3>${renderOpsList(inventory.skills, 'No hay skills reportadas.')}</section>
+        <section class="ops-card"><h3>Conectores API</h3>${renderOpsList(inventory.connectors, 'No hay conectores reportados.')}</section>
+        <section class="ops-card"><h3>Plataformas Gateway</h3>${renderOpsList(inventory.platforms, 'No hay plataformas reportadas.')}</section>
+        <section class="ops-card"><h3>MCP</h3>${renderOpsList(inventory.mcpServers, 'Sin servidores MCP configurados.')}</section>
+        <section class="ops-card"><h3>Notas operativas</h3>${renderOpsList((inventory.notes || []).map((note, index) => ({ name: `Nota ${index + 1}`, description: note, enabled: true })), 'Sin notas.')}</section>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('refresh-ops').addEventListener('click', async () => {
+    state.opsInventory = null;
+    await loadOpsInventory({ force: true });
+    renderOpsDashboard();
+  });
+  document.querySelectorAll('[data-ops-question]').forEach((button) => {
+    button.addEventListener('click', () => {
+      state.route = 'chat';
+      renderShell();
+      renderChat();
+      sendUserMessage(button.dataset.opsQuestion);
+    });
+  });
 }
 
 function renderStub(route) {
