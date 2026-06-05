@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+functions/node_modules/
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+
+# Logs and runtime artifacts
+*.log
+logs/
+.tmp/
+tmp/
+.DS_Store
+
+# Local backups / editor artifacts
+*.bak
+*.bak2
+*~
+*.swp
+*.swo
+
+# Sensitive local seed files
+# Keep real user/account seeds outside the repo. Commit only sanitized *.example.* files.
+docs/*seed*.csv
+!docs/*seed*.example.csv
