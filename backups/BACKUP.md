@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado: 2026-06-05 05:01:19 -04
-- Referencia UTC: 2026-06-05 09:01:19 UTC
+- Generado: 2026-06-06 05:02:25 -04
+- Referencia UTC: 2026-06-06 09:02:25 UTC
 - Alcance: configuración operativa no sensible del perfil activo y estado técnico relevante.
 - Política: credenciales, tokens, secretos OAuth, contraseñas, archivos `.env`, `google_token.json`, `google_client_secret.json`, `auth.json`, sesiones de mensajería y equivalentes quedan excluidos.
 - Restauración: consultar `backups/RESTORE_GUIDE.md` y ejecutar/validar `backups/restore.sh` según el entorno destino.
@@ -19,7 +19,7 @@ Los datos respaldados son semillas operativas: al ordenarse técnicamente sostie
 
 - Runtime técnico: Hermes Agent sobre `/opt/hermes`.
 - Modelo de sesión cron observado: provider `openai-codex`, model `gpt-5.5`.
-- Host observado: Linux 6.8.0-111-generic x86_64 GNU/Linux.
+- Host observado: Linux 6.8.0-111-generic x86_64.
 - Python observado: 3.13.5.
 - Workdir de ejecución cron observado: `/opt/data`.
 - Directorio persistente principal: `/opt/data`.
@@ -28,22 +28,22 @@ Los datos respaldados son semillas operativas: al ordenarse técnicamente sostie
 
 ## Estado operativo relevante
 
-- Disco `/opt/data`: 96G total, 18G usado, 79G disponible, 19% uso.
-- Memoria: 7.8Gi total, 2.5Gi usada, 5.2Gi disponible.
-- Gateway técnico: proceso `hermes gateway run` activo.
-- Bridge WhatsApp: proceso Node activo; sesión local excluida.
-- Servicio API Demeter: proceso Python activo.
-- Proxy/demo DataSeed: proceso Python activo.
-- Consola web runtime: proceso `ttyd` observado; credenciales y argumentos sensibles excluidos.
+- Disco `/opt/data`: 95.8Gi total, 17.7Gi usado, 78.1Gi disponible.
+- Memoria: 7.8Gi total, 5.2Gi disponible.
+- Gateway técnico: activo.
+- Bridge WhatsApp: activo; sesión local excluida.
+- Servicio API Demeter: activo.
+- Proxy/demo DataSeed: activo.
+- Consola web runtime: activa; credenciales y argumentos sensibles excluidos.
 - STT: no se detectó proceso dedicado activo; capacidad dependiente de configuración runtime.
 - TTS: no se detectó proceso dedicado activo; capacidad dependiente de configuración runtime.
 - Memoria runtime: `/opt/data/state.db` presente; contenidos no exportados.
-- Cachés de audio, imagen y documentos: presentes; contenidos excluidos.
+- Cachés de audio, imagen y documentos: contenidos excluidos.
 - Backups técnicos: `backups/BACKUP.md`, `backups/RESTORE_GUIDE.md` y `backups/restore.sh` presentes en repositorio.
 
 ## Toolsets habilitados
 
-Detectados por configuración de cron, sin incluir credenciales ni parámetros de entrega:
+Detectados por configuración de cron y sesión activa, sin incluir credenciales ni parámetros de entrega:
 
 - `terminal`
 - `file`
@@ -54,15 +54,16 @@ Toolsets base conocidos del runtime técnico, sujetos a disponibilidad efectiva 
 
 ## Cron jobs configurados y estado
 
-Fuente: `/opt/data/cron/jobs.json`, leído el 2026-06-05 09:01 UTC. Se omiten prompts completos, destinos de entrega, chat identifiers y datos de sesión.
+Fuente: `/opt/data/cron/jobs.json`, leído el 2026-06-06 09:02 UTC. Se omiten prompts completos, destinos de entrega, chat identifiers y datos de sesión.
 
 ```text
 8b29cf53ca6c [scheduled/enabled]
   Nombre: Demeter Daily Backup
   Schedule: 0 9 * * *
-  Next run UTC: 2026-06-06T09:00:00+00:00
-  Last run UTC: 2026-06-04T09:04:19.789257+00:00 / ok
+  Next run UTC: 2026-06-07T09:00:00+00:00
+  Last run UTC: 2026-06-05T09:03:52.915896+00:00 / ok
   Script: no
+  Mode: agent
   Skills: ninguno
   Toolsets: terminal, file, cronjob
   Workdir: no declarado
@@ -70,9 +71,10 @@ Fuente: `/opt/data/cron/jobs.json`, leído el 2026-06-05 09:01 UTC. Se omiten pr
 f6254c8c4821 [scheduled/enabled]
   Nombre: Growth Engine — Reporte Matutino 7:30 AM
   Schedule: 30 11 * * *
-  Next run UTC: 2026-06-05T11:30:00+00:00
-  Last run UTC: 2026-06-04T11:31:38.786874+00:00 / ok
+  Next run UTC: 2026-06-06T11:30:00+00:00
+  Last run UTC: 2026-06-05T11:31:56.389736+00:00 / ok
   Script: no
+  Mode: agent
   Skills: ninguno
   Toolsets: terminal, file, cronjob
   Workdir: no declarado
@@ -80,9 +82,10 @@ f6254c8c4821 [scheduled/enabled]
 4ab827188183 [scheduled/enabled]
   Nombre: Growth Engine — Reporte Vespertino 7:30 PM
   Schedule: 30 23 * * *
-  Next run UTC: 2026-06-05T23:30:00+00:00
-  Last run UTC: 2026-06-04T23:31:18.296370+00:00 / ok
+  Next run UTC: 2026-06-06T23:30:00+00:00
+  Last run UTC: 2026-06-05T23:31:31.818819+00:00 / ok
   Script: no
+  Mode: agent
   Skills: ninguno
   Toolsets: terminal, file, cronjob
   Workdir: no declarado
@@ -90,9 +93,10 @@ f6254c8c4821 [scheduled/enabled]
 d1a0c5131f4b [scheduled/enabled]
   Nombre: Growth Engine — Auto Backlog Updater
   Schedule: 0 */4 * * *
-  Next run UTC: 2026-06-05T12:00:00+00:00
-  Last run UTC: 2026-06-05T08:01:13.866449+00:00 / ok
+  Next run UTC: 2026-06-06T12:00:00+00:00
+  Last run UTC: 2026-06-06T08:00:38.999247+00:00 / ok
   Script: no
+  Mode: agent
   Skills: ninguno
   Toolsets: terminal, file
   Workdir: no declarado
@@ -100,8 +104,8 @@ d1a0c5131f4b [scheduled/enabled]
 83438a129f08 [scheduled/enabled]
   Nombre: Demeter Watchdog Silencioso 24/7
   Schedule: every 5m
-  Next run UTC: 2026-06-05T09:05:02.468574+00:00
-  Last run UTC: 2026-06-05T09:00:02.468574+00:00 / ok
+  Next run UTC: 2026-06-06T09:03:04.164154+00:00
+  Last run UTC: 2026-06-06T08:58:04.164154+00:00 / ok
   Script: demeter_watchdog.py
   Mode: no-agent
   Skills: ninguno
@@ -109,11 +113,12 @@ d1a0c5131f4b [scheduled/enabled]
   Workdir: no declarado
 
 564c07cb2978 [scheduled/enabled]
-  Nombre: Demeter Operadora 24/7 — Ciclo cada 30 min
+  Nombre: Demeter Operadora 24/7 — Reporte cada 2 horas
   Schedule: every 120m
-  Next run UTC: 2026-06-05T10:38:54.251125+00:00
-  Last run UTC: 2026-06-05T08:38:54.251125+00:00 / ok
+  Next run UTC: 2026-06-06T10:06:46.976701+00:00
+  Last run UTC: 2026-06-06T08:06:46.976701+00:00 / ok
   Script: no
+  Mode: agent
   Skills: markdown-backlog-maintenance
   Toolsets: terminal, file, web
   Workdir: /opt/data
@@ -121,8 +126,8 @@ d1a0c5131f4b [scheduled/enabled]
 d5d651ec2a4d [scheduled/enabled]
   Nombre: DataSeed Portal — Sincronizar reporte seguro Demeter
   Schedule: 45 23 * * *
-  Next run UTC: 2026-06-05T23:45:00+00:00
-  Last run UTC: 2026-06-04T23:45:24.288307+00:00 / ok
+  Next run UTC: 2026-06-06T23:45:00+00:00
+  Last run UTC: 2026-06-05T23:45:37.707362+00:00 / ok
   Script: dataseed_daily_report_secure_sync.sh
   Mode: no-agent
   Skills: ninguno
@@ -132,13 +137,14 @@ d5d651ec2a4d [scheduled/enabled]
 e7d1c6af71a4 [scheduled/enabled]
   Nombre: Rotate Demeter API Key Daily
   Schedule: 18 18 * * *
-  Next run UTC: 2026-06-05T18:18:00+00:00
-  Last run UTC: 2026-06-04T18:18:16.443727+00:00 / ok
+  Next run UTC: 2026-06-06T18:18:00+00:00
+  Last run UTC: 2026-06-05T18:18:56.786460+00:00 / ok
   Script: rotate_demeter_key.py
   Mode: no-agent
   Skills: ninguno
   Toolsets: por defecto/no declarado
   Workdir: /opt/data
+
 ```
 
 ## Skills instalados
@@ -255,17 +261,17 @@ Total detectado por directorios con `SKILL.md`: 109.
 - `whatsapp-group-etiquette`
 - `yuanbao`
 
-### `/opt/data/.hermes/skills` — 2
+### `/opt/data/home/.hermes/skills` — 2
 
 - `confidencialidad-productos-agente`
 - `demo-objetivo-limitado`
 
 ## Repositorios y backups
 
-- Repositorio operativo local detectado: `/opt/data/data_seed`.
-- Worktree/continuidad detectado: `/opt/data/data_seed_continuity`.
-- Repositorio temporal de backup para esta ejecución: `/tmp/data_seed_backup`.
-- Remote de backup: `https://github.com/ZeroSentinels/data_seed.git`.
+- `/opt/data/data_seed` -> `https://github.com/ZeroSentinels/data_seed.git`
+- `/opt/data/data_seed_continuity` -> `https://github.com/ZeroSentinels/data_seed.git`
+- `/opt/data/data_seed_internal_console` -> `https://github.com/ZeroSentinels/data_seed.git`
+- `/tmp/data_seed_backup` -> `https://github.com/ZeroSentinels/data_seed.git`
 - Archivo actualizado en esta ejecución: `backups/BACKUP.md`.
 - Archivos de restauración referenciados, sin sobrescritura en esta ejecución:
   - `backups/RESTORE_GUIDE.md`
