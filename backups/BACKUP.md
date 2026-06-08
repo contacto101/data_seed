@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado: 2026-06-07 05:03:22 -04
-- Referencia UTC: 2026-06-07 09:03:22 UTC
+- Generado: 2026-06-08 05:02:54 -04
+- Referencia UTC: 2026-06-08 09:02:54 UTC
 - Alcance: configuración operativa no sensible del perfil activo y estado técnico relevante.
 - Política: credenciales, tokens, secretos OAuth, contraseñas, archivos `.env`, `google_token.json`, `google_client_secret.json`, `auth.json`, sesiones de mensajería y equivalentes quedan excluidos.
 - Restauración: consultar `backups/RESTORE_GUIDE.md` y ejecutar/validar `backups/restore.sh` según el entorno destino.
@@ -24,20 +24,16 @@ Los datos respaldados son semillas operativas: al ordenarse técnicamente sostie
 - Workdir de ejecución cron observado: `/opt/data`.
 - Directorio persistente principal: `/opt/data`.
 - Redacción de secretos: obligatoria; configuración detallada sensible no se exporta.
-- Repositorio de backup clonado para esta ejecución: `/tmp/data_seed_backup` solicitado; clon operativo usado: `/tmp/data_seed_backup_public` por falta de token en entorno.
+- Repositorio de backup clonado para esta ejecución: `/tmp/data_seed_backup`.
 
 ## Estado operativo relevante
 
-- Disco `/opt/data`: 96G total, 18G usado, 79G disponible.
-- Memoria: 7.8Gi total, 5.2Gi disponible.
-- Gateway técnico: activo.
-- Bridge WhatsApp: activo; sesión local excluida.
-- Servicio API Demeter: activo.
-- Proxy/demo DataSeed: activo.
-- Consola web runtime: activa; credenciales y argumentos sensibles excluidos.
+- Disco `/opt/data`: 96G total, 19G usado, 78G disponible (20% uso).
+- Memoria: 7.8Gi total, 6.7Gi disponible.
+- Gateway técnico: activo (PID 11, ejecución manual, no como servicio de sistema).
 - STT: no se detectó proceso dedicado activo; capacidad dependiente de configuración runtime.
 - TTS: no se detectó proceso dedicado activo; capacidad dependiente de configuración runtime.
-- Memoria runtime: `/opt/data/state.db` presente; contenidos no exportados.
+- Memoria runtime: `/opt/data/state.db` presente (206.8 MB); contenidos no exportados.
 - Cachés de audio, imagen y documentos: contenidos excluidos.
 - Backups técnicos: `backups/BACKUP.md`, `backups/RESTORE_GUIDE.md` y `backups/restore.sh` presentes en repositorio.
 
@@ -54,222 +50,153 @@ Toolsets base conocidos del runtime técnico, sujetos a disponibilidad efectiva 
 
 ## Cron jobs configurados y estado
 
-Fuente: `/opt/data/cron/jobs.json`, leído el 2026-06-07 09:03 UTC. Se omiten prompts completos, destinos de entrega, chat identifiers y datos de sesión.
+Total: 8 jobs, todos activos. Última verificación: 2026-06-08 09:02 UTC.
 
 ```text
-8b29cf53ca6c [scheduled/enabled]
+8b29cf53ca6c [active]
   Nombre: Demeter Daily Backup
   Schedule: 0 9 * * *
-  Next run UTC: 2026-06-08T09:00:00+00:00
-  Last run UTC: 2026-06-06T09:03:07.184906+00:00 / ok
-  Script: no
+  Next run UTC: 2026-06-09T09:00:00+00:00
+  Last run UTC: 2026-06-07T09:03:53.810411+00:00 / ok
   Mode: agent
-  Skills: ninguno
-  Toolsets: por defecto/no declarado
-  Workdir: no declarado
 
-f6254c8c4821 [scheduled/enabled]
+f6254c8c4821 [active]
   Nombre: Growth Engine — Reporte Matutino 7:30 AM
   Schedule: 30 11 * * *
-  Next run UTC: 2026-06-07T11:30:00+00:00
-  Last run UTC: 2026-06-06T11:31:24.903883+00:00 / ok
-  Script: no
+  Next run UTC: 2026-06-08T11:30:00+00:00
+  Last run UTC: 2026-06-07T11:31:21.254535+00:00 / ok
   Mode: agent
-  Skills: ninguno
-  Toolsets: por defecto/no declarado
-  Workdir: no declarado
 
-4ab827188183 [scheduled/enabled]
+4ab827188183 [active]
   Nombre: Growth Engine — Reporte Vespertino 7:30 PM
   Schedule: 30 23 * * *
-  Next run UTC: 2026-06-07T23:30:00+00:00
-  Last run UTC: 2026-06-06T23:31:58.251396+00:00 / ok
-  Script: no
+  Next run UTC: 2026-06-08T23:30:00+00:00
+  Last run UTC: 2026-06-07T23:31:47.546831+00:00 / ok
   Mode: agent
-  Skills: ninguno
-  Toolsets: por defecto/no declarado
-  Workdir: no declarado
 
-d1a0c5131f4b [scheduled/enabled]
+d1a0c5131f4b [active]
   Nombre: Growth Engine — Auto Backlog Updater
   Schedule: 0 */4 * * *
-  Next run UTC: 2026-06-07T12:00:00+00:00
-  Last run UTC: 2026-06-07T08:01:17.665342+00:00 / ok
-  Script: no
+  Next run UTC: 2026-06-08T12:00:00+00:00
+  Last run UTC: 2026-06-08T08:01:53.376875+00:00 / ok
   Mode: agent
-  Skills: ninguno
-  Toolsets: por defecto/no declarado
-  Workdir: no declarado
 
-83438a129f08 [scheduled/enabled]
+83438a129f08 [active]
   Nombre: Demeter Watchdog Silencioso 24/7
   Schedule: every 5m
-  Next run UTC: 2026-06-07T09:05:35.800567+00:00
-  Last run UTC: 2026-06-07T09:00:35.800567+00:00 / ok
+  Next run UTC: 2026-06-08T09:02:24.520615+00:00
+  Last run UTC: 2026-06-08T08:57:24.520615+00:00 / ok
   Script: demeter_watchdog.py
   Mode: no-agent
-  Skills: ninguno
-  Toolsets: por defecto/no declarado
-  Workdir: no declarado
 
-564c07cb2978 [scheduled/enabled]
+564c07cb2978 [active]
   Nombre: Demeter Operadora 24/7 — Reporte cada 2 horas
   Schedule: every 120m
-  Next run UTC: 2026-06-07T10:28:24.854384+00:00
-  Last run UTC: 2026-06-07T08:28:24.854384+00:00 / ok
-  Script: no
-  Mode: agent
+  Next run UTC: 2026-06-08T10:51:21.370370+00:00
+  Last run UTC: 2026-06-08T08:51:21.370370+00:00 / ok
   Skills: markdown-backlog-maintenance
-  Toolsets: por defecto/no declarado
   Workdir: /opt/data
+  Mode: agent
 
-d5d651ec2a4d [scheduled/enabled]
+d5d651ec2a4d [active]
   Nombre: DataSeed Portal — Sincronizar reporte seguro Demeter
   Schedule: 45 23 * * *
-  Next run UTC: 2026-06-07T23:45:00+00:00
-  Last run UTC: 2026-06-06T23:45:02.732329+00:00 / ok
+  Next run UTC: 2026-06-08T23:45:00+00:00
+  Last run UTC: 2026-06-07T23:45:53.630132+00:00 / ok
   Script: dataseed_daily_report_secure_sync.sh
   Mode: no-agent
-  Skills: ninguno
-  Toolsets: por defecto/no declarado
   Workdir: /opt/data/data_seed
 
-e7d1c6af71a4 [scheduled/enabled]
+e7d1c6af71a4 [active]
   Nombre: Rotate Demeter API Key Daily
   Schedule: 18 18 * * *
-  Next run UTC: 2026-06-07T18:18:00+00:00
-  Last run UTC: 2026-06-06T18:18:55.283579+00:00 / ok
+  Next run UTC: 2026-06-08T18:18:00+00:00
+  Last run UTC: 2026-06-07T18:18:42.219536+00:00 / ok
   Script: rotate_demeter_key.py
   Mode: no-agent
-  Skills: ninguno
-  Toolsets: por defecto/no declarado
   Workdir: /opt/data
-
 ```
 
 ## Skills instalados
 
-Total detectado por directorios con `SKILL.md`: 109.
+Total detectado: 67 skills habilitados (0 hub-installed, 45 builtin, 22 local).
 
-### `/opt/data/skills` — 107
+### Skills locales (22)
 
-- `.archive/business-growth-strategy`
-- `.archive/static-site-lead-capture`
-- `apple/apple-notes`
-- `apple/apple-reminders`
-- `apple/findmy`
-- `apple/imessage`
-- `apple/macos-computer-use`
-- `autonomous-ai-agents/claude-code`
-- `autonomous-ai-agents/codex`
-- `autonomous-ai-agents/hermes-agent`
-- `autonomous-ai-agents/kanban-codex-lane`
-- `autonomous-ai-agents/opencode`
-- `autonomous-ai-agents/subscription-cli-ai-workers`
+- `agent-cost-optimization` (devops)
+- `agent-landing-manager` (software-development)
+- `apple-ecosystem-automation` (productivity)
+- `ascii-media-generation` (creative)
+- `autonomous-ai-worker-config` (autonomous-ai-agents)
+- `baoyu-visual-storytelling` (creative)
 - `business-strategy-delivery`
-- `creative/architecture-diagram`
-- `creative/ascii-art`
-- `creative/ascii-video`
-- `creative/baoyu-article-illustrator`
-- `creative/baoyu-comic`
-- `creative/baoyu-infographic`
-- `creative/claude-design`
-- `creative/comfyui`
-- `creative/creative-ideation`
-- `creative/design-md`
-- `creative/excalidraw`
-- `creative/humanizer`
-- `creative/manim-video`
-- `creative/p5js`
-- `creative/pixel-art`
-- `creative/popular-web-designs`
-- `creative/pretext`
-- `creative/sketch`
-- `creative/songwriting-and-ai-music`
-- `creative/touchdesigner-mcp`
-- `data-science/jupyter-live-kernel`
+- `creative-visual-artifacts` (creative)
+- `critical-context-checkpoint` (software-development)
+- `current-procedure-research` (research)
+- `dataseed-agent-factory-operations` (devops)
+- `dataseed-google-meet-scheduler` (messaging)
+- `dataseed-hubspot-control-plan` (productivity)
 - `dataseed-ops`
-- `devops/agent-cost-optimization`
-- `devops/dataseed-agent-factory-operations`
-- `devops/google-cloud-firebase-ops`
-- `devops/kanban-orchestrator`
-- `devops/kanban-worker`
-- `devops/webhook-subscriptions`
-- `dogfood`
-- `email/himalaya`
-- `gaming/minecraft-modpack-server`
-- `gaming/pokemon-player`
-- `github/codebase-inspection`
-- `github/github-auth`
-- `github/github-code-review`
-- `github/github-issues`
-- `github/github-pr-workflow`
-- `github/github-repo-management`
-- `mcp/native-mcp`
-- `media/gif-search`
-- `media/heartmula`
-- `media/songsee`
-- `media/spotify`
-- `media/youtube-content`
-- `mlops/cloud-ml-training-orchestration`
-- `mlops/evaluation/lm-evaluation-harness`
-- `mlops/evaluation/weights-and-biases`
-- `mlops/huggingface-hub`
-- `mlops/inference/llama-cpp`
-- `mlops/inference/obliteratus`
-- `mlops/inference/vllm`
-- `mlops/models/audiocraft`
-- `mlops/models/segment-anything`
-- `mlops/research/dspy`
-- `note-taking/obsidian`
-- `productivity/airtable`
-- `productivity/dataseed-hubspot-control-plan`
-- `productivity/google-workspace`
-- `productivity/linear`
-- `productivity/maps`
-- `productivity/markdown-backlog-maintenance`
-- `productivity/meeting-assistant-automation`
-- `productivity/nano-pdf`
-- `productivity/notion`
-- `productivity/ocr-and-documents`
-- `productivity/powerpoint`
-- `productivity/teams-meeting-pipeline`
-- `red-teaming/godmode`
-- `research/arxiv`
-- `research/blogwatcher`
-- `research/current-procedure-research`
-- `research/llm-wiki`
-- `research/polymarket`
-- `research/research-paper-writing`
-- `smart-home/openhue`
-- `social-media/xurl`
-- `software-development/agent-landing-manager`
-- `software-development/critical-context-checkpoint`
-- `software-development/debugging-hermes-tui-commands`
-- `software-development/hermes-agent-skill-authoring`
-- `software-development/hermes-s6-container-supervision`
-- `software-development/node-inspect-debugger`
-- `software-development/plan`
-- `software-development/python-debugpy`
-- `software-development/requesting-code-review`
-- `software-development/secret-safe-final-check`
-- `software-development/spike`
-- `software-development/subagent-driven-development`
-- `software-development/systematic-debugging`
-- `software-development/test-driven-development`
-- `software-development/writing-plans`
+- `github-operations` (github)
+- `google-cloud-firebase-ops` (devops)
+- `markdown-backlog-maintenance` (productivity)
+- `music-and-audio-production` (media)
+- `secret-safe-final-check` (software-development)
 - `whatsapp-group-etiquette`
+- `workspace-productivity-tools` (productivity)
+
+### Skills builtin (45)
+
+- `comfyui` (creative)
+- `dogfood`
+- `godmode` (red-teaming)
+- `hermes-agent` (autonomous-ai-agents)
+- `humanizer` (creative)
+- `ideation` (creative)
+- `kanban-orchestrator` (devops)
+- `kanban-worker` (devops)
+- `manim-video` (creative)
+- `touchdesigner-mcp` (creative)
+- `jupyter-live-kernel` (data-science)
+- `webhook-subscriptions` (devops)
+- `himalaya` (email)
+- `minecraft-modpack-server` (gaming)
+- `pokemon-player` (gaming)
+- `native-mcp` (mcp)
+- `gif-search` (media)
+- `spotify` (media)
+- `youtube-content` (media)
+- `dspy` (mlops)
+- `evaluating-llms-harness` (mlops)
+- `huggingface-hub` (mlops)
+- `llama-cpp` (mlops)
+- `obliteratus` (mlops)
+- `segment-anything-model` (mlops)
+- `serving-llms-vllm` (mlops)
+- `weights-and-biases` (mlops)
+- `google-workspace` (productivity)
+- `arxiv` (research)
+- `blogwatcher` (research)
+- `llm-wiki` (research)
+- `polymarket` (research)
+- `research-paper-writing` (research)
+- `openhue` (smart-home)
+- `xurl` (social-media)
+- `node-inspect-debugger` (software-development)
+- `plan` (software-development)
+- `python-debugpy` (software-development)
+- `requesting-code-review` (software-development)
+- `spike` (software-development)
+- `subagent-driven-development` (software-development)
+- `systematic-debugging` (software-development)
+- `test-driven-development` (software-development)
+- `writing-plans` (software-development)
 - `yuanbao`
-
-### `/opt/data/.hermes/skills` — 2
-
-- `confidencialidad-productos-agente`
-- `demo-objetivo-limitado`
 
 ## Repositorios y backups
 
 - `/opt/data/data_seed` -> `https://github.com/ZeroSentinels/data_seed.git`
-- `/tmp/data_seed_backup` -> clon temporal requerido por el procedimiento; en esta ejecución se usó clon equivalente sin token por ausencia de variable de entorno.
+- `/tmp/data_seed_backup` -> clon temporal usado para esta ejecución de backup.
 - Archivo actualizado en esta ejecución: `backups/BACKUP.md`.
 - Archivos de restauración referenciados, sin sobrescritura en esta ejecución:
   - `backups/RESTORE_GUIDE.md`
