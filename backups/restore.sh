@@ -1,46 +1,38 @@
-#!/bin/bash
-# Script de reconstrucción de Demeter
-# Generado: 2026-05-27
-# Uso: bash restore.sh
+#!/usr/bin/env bash
+set -euo pipefail
 
-echo "=== Demeter Restore Script ==="
-echo ""
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
 
-# 1. Verificar Hermes instalado
-if ! command -v hermes &> /dev/null; then
-    echo "[1/5] Instalando runtime base del agente..."
-    curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
-else
-    echo "[1/5] Runtime base ya instalado ✓"
+echo "[1/5] Repo"
+git status --short || true
+
+echo "[2/5] Checking that forbidden sensitive files are not tracked"
+FORBIDDEN_REGEX='(^|/)(\.env|\.git-credentials|auth\.json|google_token\.json|google_client_secret\.json|creds\.json|state\.db|state\.db-wal|state\.db-shm|response_store\.db|response_store\.db-wal|response_store\.db-shm)($|/)'
+if git ls-files | grep -E "$FORBIDDEN_REGEX" >/dev/null; then
+  echo "ERROR: forbidden sensitive/runtime file tracked in repo"
+  git ls-files | grep -E "$FORBIDDEN_REGEX"
+  exit 1
 fi
 
-# 2. Verificar skills
-echo "[2/5] Verifying skills directory..."
-ls /opt/data/skills/ 2>/dev/null && echo "Skills directory exists ✓" || echo "WARNING: Skills directory missing"
-
-# 3. Verificar Google Workspace
-echo "[3/5] Verifying Google Workspace..."
-if [ -f /opt/data/google_client_secret.json ]; then
-    echo "Client secret exists ✓"
-    echo "NOTE: Token OAuth must be re-authorized (cannot be backed up)"
-    echo "Run: python3 /opt/data/skills/productivity/google-workspace/scripts/setup.py --auth-url"
+echo "[3/5] Hermes availability"
+if [ -x /opt/hermes/.venv/bin/hermes ]; then
+  /opt/hermes/.venv/bin/hermes --version || true
+  /opt/hermes/.venv/bin/hermes config path || true
 else
-    echo "WARNING: google_client_secret.json not found"
+  echo "NOTE: /opt/hermes/.venv/bin/hermes not found. Install Hermes before full restore."
 fi
 
-# 4. Verificar GitHub
-echo "[4/5] Verifying GitHub access..."
-if [ -n "$HERMES_TOKEN" ]; then
-    echo "HERMES_TOKEN is set ✓"
-    git ls-remote https://$HERMES_TOKEN@github.com/ZeroSentinels/data_seed.git HEAD 2>/dev/null && echo "GitHub access OK ✓" || echo "WARNING: GitHub access failed"
+echo "[4/5] Cron visibility"
+if [ -x /opt/hermes/.venv/bin/hermes ]; then
+  /opt/hermes/.venv/bin/hermes cron list || true
 else
-    echo "WARNING: HERMES_TOKEN not set"
+  echo "NOTE: cannot list cron jobs without Hermes."
 fi
 
-# 5. Verificar cron
-echo "[5/5] Verifying cron jobs..."
-hermes cron list 2>/dev/null || echo "NOTE: Run 'hermes cron list' to check scheduled jobs"
+echo "[5/5] Backup files"
+test -f backups/BACKUP.md && echo "OK backups/BACKUP.md"
+test -f backups/RESTORE_GUIDE.md && echo "OK backups/RESTORE_GUIDE.md"
+test -f scripts/demeter_daily_backup.py && echo "OK scripts/demeter_daily_backup.py"
 
-echo ""
-echo "=== Restore check complete ==="
-echo "Review any WARNING messages above and fix manually."
+echo "Restore verification completed. Configure secrets manually; none are stored in this repo."
