@@ -1,9 +1,9 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-11 16:22:57 UTC
-- Generado America/Santiago: 2026-06-11 12:22:57 -04
+- Generado UTC: 2026-06-11 16:33:27 UTC
+- Generado America/Santiago: 2026-06-11 12:33:27 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
-- Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos.
+- Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
 
 Los datos respaldados son semillas operativas: identidad, configuración resumida, cron jobs sanitizados, skills instalados y scripts seguros de restauración.
@@ -84,6 +84,7 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `jupyter-live-kernel` (data-science/jupyter-live-kernel) — Iterative Python via live Jupyter kernel (hamelnb).
 - `kanban-orchestrator` (devops/kanban-orchestrator) — Decomposition playbook + anti-temptation rules for an orchestrator profile routing work through Kanban. The
 - `kanban-worker` (devops/kanban-worker) — Pitfalls, examples, and edge cases for Hermes Kanban workers. The lifecycle itself is auto-injected into every worker
+- `operational-recovery-backups` (devops/operational-recovery-backups) — Build and maintain safe operational recovery backups for Hermes/DataSeed: cron job reconstruction, non-secret GitHub snapshots, rollback docs, and script inclusion policies.
 - `whatsapp-gateway-config` (devops/whatsapp-gateway-config) — WhatsApp gateway configuration for Hermes Agent — require_mention, dm_policy, group_policy, allow_from, mention_patterns, group_sessions_per_user, and all platform-specific settings.
 - `dogfood` (dogfood) — Exploratory QA of web apps: find bugs, evidence, reports.
 - `himalaya` (email/himalaya) — Himalaya CLI: IMAP/SMTP email from terminal.
@@ -138,9 +139,9 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 No se copia el contenido de estos archivos; solo tamaño y huella para validación.
 
 - `config.yaml`: 14.3 KB, sha256 5bdbae3915003815
-- `memories/MEMORY.md`: 2.0 KB, sha256 c829913b809f1b67
+- `memories/MEMORY.md`: 1.8 KB, sha256 52659377451beaea
 - `memories/USER.md`: 1.0 KB, sha256 fda09d591b3c4def
-- `channel_directory.json`: 856.0 B, sha256 edf2831c57233c80
+- `channel_directory.json`: 856.0 B, sha256 496b5ad9e9888b64
 - `gateway_state.json`: 505.0 B, sha256 2dc631c41718fc32
 - `cron/jobs.json`: 1.4 KB, sha256 bb1a74fdb4607987
 
@@ -153,7 +154,11 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 
 ## Scripts de cron seguros incluidos
 
-- No hay scripts adicionales copiados. Scripts ausentes o no seguros quedan documentados solo por nombre.
+- No hay scripts adicionales copiados como copia dura.
+
+## Scripts/documentos pendientes de aprobación humana
+
+- Sin scripts pendientes de revisión.
 
 ## Exclusiones estrictas
 

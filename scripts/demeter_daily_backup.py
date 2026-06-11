@@ -43,7 +43,9 @@ ALLOWED_REPO_OUTPUTS = [
     "scripts/demeter_daily_backup.py",
 ]
 SAFE_CRON_SCRIPT_EXTENSIONS = {".py", ".sh", ".bash"}
+HARD_COPY_ALLOWLIST = HERMES_HOME / "backup_hardcopy_allowlist.txt"
 COPIED_CRON_SCRIPT_REPO_PATHS: list[str] = []
+CRON_SCRIPT_REVIEW_NOTES: list[str] = []
 
 # Values matching these patterns must not appear in generated backup files.
 SECRET_VALUE_PATTERNS = [
@@ -375,29 +377,79 @@ def repo_path_for_cron_script(source: Path) -> str:
 
 def copied_cron_scripts_summary() -> str:
     if not COPIED_CRON_SCRIPT_REPO_PATHS:
-        return "- No hay scripts adicionales copiados. Scripts ausentes o no seguros quedan documentados solo por nombre."
+        return "- No hay scripts adicionales copiados como copia dura."
     return "\n".join(f"- `{rel}`" for rel in COPIED_CRON_SCRIPT_REPO_PATHS)
 
 
-def copy_safe_cron_scripts() -> None:
-    """Copy existing non-sensitive cron scripts into scripts/cron/ for rollback.
+def cron_script_review_summary() -> str:
+    if not CRON_SCRIPT_REVIEW_NOTES:
+        return "- Sin scripts pendientes de revisión."
+    return "\n".join(CRON_SCRIPT_REVIEW_NOTES)
 
-    Only scripts under /opt/data/scripts are eligible. Secret-like literal values
-    fail the backup instead of being committed.
+
+def load_hardcopy_allowlist() -> set[str]:
+    """Load explicit human approvals for hard-copying cron scripts.
+
+    The file is intentionally local-only and not committed. One entry per line.
+    Accepted forms: basename, path relative to /opt/data/scripts, absolute path,
+    or destination repo path under scripts/cron/.
+    """
+    if not HARD_COPY_ALLOWLIST.exists():
+        return set()
+    entries: set[str] = set()
+    for raw in HARD_COPY_ALLOWLIST.read_text(encoding="utf-8", errors="ignore").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        entries.add(line)
+    return entries
+
+
+def is_approved_for_hardcopy(source: Path, repo_rel: str, allowlist: set[str]) -> bool:
+    try:
+        rel_to_scripts = str(source.relative_to((HERMES_HOME / "scripts").resolve()))
+    except ValueError:
+        rel_to_scripts = source.name
+    candidates = {source.name, rel_to_scripts, str(source), repo_rel}
+    return bool(candidates & allowlist)
+
+
+def copy_safe_cron_scripts() -> None:
+    """Copy explicitly approved, non-sensitive cron scripts into scripts/cron/.
+
+    If a script is not explicitly approved, it is documented as pending review
+    and not committed. This enforces the rule: when in doubt, ask the operator
+    before saving a hard copy in the backup branch.
     """
     COPIED_CRON_SCRIPT_REPO_PATHS.clear()
+    CRON_SCRIPT_REVIEW_NOTES.clear()
+    allowlist = load_hardcopy_allowlist()
     seen: set[Path] = set()
     for job in load_cron_jobs_from_disk():
         source = resolve_cron_script_path(job.get("script"))
-        if source is None or source in seen:
+        script_label = str(job.get("script") or "").strip()
+        if source is None:
+            if script_label:
+                CRON_SCRIPT_REVIEW_NOTES.append(f"- `{script_label}`: no copiado; ruta fuera de `/opt/data/scripts` o extensión no permitida. Requiere revisión humana si debe guardarse.")
+            continue
+        if source in seen:
             continue
         seen.add(source)
-        if source == SCRIPT_SOURCE or not source.exists() or not source.is_file():
+        if source == SCRIPT_SOURCE:
+            continue
+        repo_rel = repo_path_for_cron_script(source)
+        if not source.exists() or not source.is_file():
+            CRON_SCRIPT_REVIEW_NOTES.append(f"- `{script_label}`: no copiado; archivo no encontrado en runtime.")
+            continue
+        if not is_approved_for_hardcopy(source, repo_rel, allowlist):
+            CRON_SCRIPT_REVIEW_NOTES.append(f"- `{script_label}`: pendiente; existe pero NO se copia como copia dura sin aprobación explícita en `{HARD_COPY_ALLOWLIST}`.")
             continue
         text = source.read_text(encoding="utf-8", errors="ignore")
-        label = f"cron script {job.get('script')}"
-        assert_no_secret_values(label, text)
-        repo_rel = repo_path_for_cron_script(source)
+        try:
+            assert_no_secret_values(f"cron script {script_label}", text)
+        except RuntimeError as exc:
+            CRON_SCRIPT_REVIEW_NOTES.append(f"- `{script_label}`: BLOQUEADO; patrón sensible detectado. {sanitize_text(str(exc))}")
+            continue
         write_repo_file(repo_rel, text, executable=os.access(source, os.X_OK) or source.suffix in {".sh", ".bash"})
         if repo_rel not in COPIED_CRON_SCRIPT_REPO_PATHS:
             COPIED_CRON_SCRIPT_REPO_PATHS.append(repo_rel)
@@ -417,7 +469,7 @@ def build_backup_md() -> str:
 - Generado UTC: {utc.strftime('%Y-%m-%d %H:%M:%S %Z')}
 - Generado America/Santiago: {santiago_line}
 - Alcance: estado operativo no sensible para recuperación crítica.
-- Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos.
+- Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `{BRANCH}` en `{REPO_URL}`.
 
 Los datos respaldados son semillas operativas: identidad, configuración resumida, cron jobs sanitizados, skills instalados y scripts seguros de restauración.
@@ -460,6 +512,10 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 
 {copied_cron_scripts_summary()}
 
+## Scripts/documentos pendientes de aprobación humana
+
+{cron_script_review_summary()}
+
 ## Exclusiones estrictas
 
 No se exportan ni se copian:
@@ -491,6 +547,7 @@ Esta guía permite reconstruir el estado operativo no sensible de Demeter despu�
 - Los secretos nunca se restauran desde GitHub.
 - Las credenciales se reconfiguran manualmente desde fuentes autorizadas.
 - Los prompts completos de cron y los destinos de entrega no se guardan en este backup.
+- Los scripts/documentos adicionales solo se guardan como copia dura con aprobación explícita y escaneo básico de secretos. Si hay duda, no se copian; quedan listados como pendientes de revisión.
 
 ## Pasos de recuperación
 
@@ -550,7 +607,7 @@ bash backups/restore.sh
 - `backups/RESTORE_GUIDE.md`: esta guía.
 - `backups/restore.sh`: verificación segura post-restore.
 - `scripts/demeter_daily_backup.py`: rutina que genera el backup diario.
-- `scripts/cron/`: scripts referenciados por cron, solo si existen en `/opt/data/scripts`, tienen extensión segura (`.py`, `.sh`, `.bash`) y pasan escaneo básico de secretos.
+- `scripts/cron/`: scripts referenciados por cron, solo si existen en `/opt/data/scripts`, tienen extensión segura (`.py`, `.sh`, `.bash`), pasan escaneo básico de secretos y fueron aprobados explícitamente en `/opt/data/backup_hardcopy_allowlist.txt`.
 
 ## Nunca commitear
 

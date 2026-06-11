@@ -8,6 +8,7 @@ Esta guía permite reconstruir el estado operativo no sensible de Demeter despu�
 - Los secretos nunca se restauran desde GitHub.
 - Las credenciales se reconfiguran manualmente desde fuentes autorizadas.
 - Los prompts completos de cron y los destinos de entrega no se guardan en este backup.
+- Los scripts/documentos adicionales solo se guardan como copia dura con aprobación explícita y escaneo básico de secretos. Si hay duda, no se copian; quedan listados como pendientes de revisión.
 
 ## Pasos de recuperación
 
@@ -67,7 +68,7 @@ bash backups/restore.sh
 - `backups/RESTORE_GUIDE.md`: esta guía.
 - `backups/restore.sh`: verificación segura post-restore.
 - `scripts/demeter_daily_backup.py`: rutina que genera el backup diario.
-- `scripts/cron/`: scripts referenciados por cron, solo si existen en `/opt/data/scripts`, tienen extensión segura (`.py`, `.sh`, `.bash`) y pasan escaneo básico de secretos.
+- `scripts/cron/`: scripts referenciados por cron, solo si existen en `/opt/data/scripts`, tienen extensión segura (`.py`, `.sh`, `.bash`), pasan escaneo básico de secretos y fueron aprobados explícitamente en `/opt/data/backup_hardcopy_allowlist.txt`.
 
 ## Nunca commitear
 
