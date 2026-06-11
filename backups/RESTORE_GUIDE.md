@@ -67,6 +67,7 @@ bash backups/restore.sh
 - `backups/RESTORE_GUIDE.md`: esta guía.
 - `backups/restore.sh`: verificación segura post-restore.
 - `scripts/demeter_daily_backup.py`: rutina que genera el backup diario.
+- `scripts/cron/`: scripts referenciados por cron, solo si existen en `/opt/data/scripts`, tienen extensión segura (`.py`, `.sh`, `.bash`) y pasan escaneo básico de secretos.
 
 ## Nunca commitear
 

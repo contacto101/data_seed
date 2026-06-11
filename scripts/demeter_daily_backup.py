@@ -42,6 +42,8 @@ ALLOWED_REPO_OUTPUTS = [
     "backups/restore.sh",
     "scripts/demeter_daily_backup.py",
 ]
+SAFE_CRON_SCRIPT_EXTENSIONS = {".py", ".sh", ".bash"}
+COPIED_CRON_SCRIPT_REPO_PATHS: list[str] = []
 
 # Values matching these patterns must not appear in generated backup files.
 SECRET_VALUE_PATTERNS = [
@@ -333,6 +335,79 @@ def system_summary() -> str:
     return "\n".join(lines)
 
 
+def load_cron_jobs_from_disk() -> list[dict[str, Any]]:
+    jobs_file = HERMES_HOME / "cron" / "jobs.json"
+    if not jobs_file.exists():
+        return []
+    try:
+        data: Any = json.loads(jobs_file.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    jobs = data.get("jobs", data) if isinstance(data, dict) else data
+    return [job for job in jobs if isinstance(job, dict)] if isinstance(jobs, list) else []
+
+
+def resolve_cron_script_path(script_value: Any) -> Path | None:
+    text = str(script_value or "").strip()
+    if not text:
+        return None
+    raw = Path(text)
+    source = raw.resolve() if raw.is_absolute() else (HERMES_HOME / "scripts" / raw).resolve()
+    try:
+        source.relative_to((HERMES_HOME / "scripts").resolve())
+    except ValueError:
+        # Avoid copying arbitrary absolute paths into the recovery repo.
+        return None
+    if source.suffix not in SAFE_CRON_SCRIPT_EXTENSIONS:
+        return None
+    return source
+
+
+def repo_path_for_cron_script(source: Path) -> str:
+    rel = source.relative_to((HERMES_HOME / "scripts").resolve())
+    safe_parts: list[str] = []
+    for part in rel.parts:
+        if part in {"", ".", ".."} or "/" in part or "\\" in part:
+            raise RuntimeError(f"Unsafe cron script path component: {part!r}")
+        safe_parts.append(part)
+    return str(Path("scripts", "cron", *safe_parts))
+
+
+def copied_cron_scripts_summary() -> str:
+    if not COPIED_CRON_SCRIPT_REPO_PATHS:
+        return "- No hay scripts adicionales copiados. Scripts ausentes o no seguros quedan documentados solo por nombre."
+    return "\n".join(f"- `{rel}`" for rel in COPIED_CRON_SCRIPT_REPO_PATHS)
+
+
+def copy_safe_cron_scripts() -> None:
+    """Copy existing non-sensitive cron scripts into scripts/cron/ for rollback.
+
+    Only scripts under /opt/data/scripts are eligible. Secret-like literal values
+    fail the backup instead of being committed.
+    """
+    COPIED_CRON_SCRIPT_REPO_PATHS.clear()
+    seen: set[Path] = set()
+    for job in load_cron_jobs_from_disk():
+        source = resolve_cron_script_path(job.get("script"))
+        if source is None or source in seen:
+            continue
+        seen.add(source)
+        if source == SCRIPT_SOURCE or not source.exists() or not source.is_file():
+            continue
+        text = source.read_text(encoding="utf-8", errors="ignore")
+        label = f"cron script {job.get('script')}"
+        assert_no_secret_values(label, text)
+        repo_rel = repo_path_for_cron_script(source)
+        write_repo_file(repo_rel, text, executable=os.access(source, os.X_OK) or source.suffix in {".sh", ".bash"})
+        if repo_rel not in COPIED_CRON_SCRIPT_REPO_PATHS:
+            COPIED_CRON_SCRIPT_REPO_PATHS.append(repo_rel)
+
+
+def backup_outputs_summary() -> str:
+    outputs = [*ALLOWED_REPO_OUTPUTS, *COPIED_CRON_SCRIPT_REPO_PATHS]
+    return "\n".join(f"- `{p}`" for p in outputs)
+
+
 def build_backup_md() -> str:
     utc = now_utc()
     santiago = now_santiago()
@@ -379,7 +454,11 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 
 ## Archivos actualizados por este backup
 
-{chr(10).join(f'- `{p}`' for p in ALLOWED_REPO_OUTPUTS)}
+{backup_outputs_summary()}
+
+## Scripts de cron seguros incluidos
+
+{copied_cron_scripts_summary()}
 
 ## Exclusiones estrictas
 
@@ -471,6 +550,7 @@ bash backups/restore.sh
 - `backups/RESTORE_GUIDE.md`: esta guía.
 - `backups/restore.sh`: verificación segura post-restore.
 - `scripts/demeter_daily_backup.py`: rutina que genera el backup diario.
+- `scripts/cron/`: scripts referenciados por cron, solo si existen en `/opt/data/scripts`, tienen extensión segura (`.py`, `.sh`, `.bash`) y pasan escaneo básico de secretos.
 
 ## Nunca commitear
 
@@ -524,13 +604,28 @@ echo "[5/5] Backup files"
 test -f backups/BACKUP.md && echo "OK backups/BACKUP.md"
 test -f backups/RESTORE_GUIDE.md && echo "OK backups/RESTORE_GUIDE.md"
 test -f scripts/demeter_daily_backup.py && echo "OK scripts/demeter_daily_backup.py"
+if [ -d scripts/cron ]; then
+  echo "Cron scripts copied for rollback:"
+  find scripts/cron -type f | sort
+fi
 
 echo "Restore verification completed. Configure secrets manually; none are stored in this repo."
 """)
 
 
+def is_allowed_repo_output(rel: str) -> bool:
+    rel_path = Path(rel)
+    if rel in ALLOWED_REPO_OUTPUTS:
+        return True
+    if rel_path.is_absolute() or ".." in rel_path.parts:
+        return False
+    if not rel.startswith("scripts/cron/"):
+        return False
+    return rel_path.suffix in SAFE_CRON_SCRIPT_EXTENSIONS
+
+
 def write_repo_file(rel: str, content: str, executable: bool = False) -> None:
-    assert rel in ALLOWED_REPO_OUTPUTS, f"Refusing to write unexpected repo path: {rel}"
+    assert is_allowed_repo_output(rel), f"Refusing to write unexpected repo path: {rel}"
     assert_no_secret_values(rel, content)
     path = REPO_DIR / rel
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -549,6 +644,7 @@ def copy_self_to_repo() -> None:
 
 
 def update_repo_files() -> None:
+    copy_safe_cron_scripts()
     write_repo_file("backups/BACKUP.md", build_backup_md())
     write_repo_file("backups/RESTORE_GUIDE.md", build_restore_guide())
     write_repo_file("backups/restore.sh", build_restore_sh(), executable=True)
@@ -556,7 +652,8 @@ def update_repo_files() -> None:
 
 
 def commit_and_push() -> str:
-    run(["git", "add", *ALLOWED_REPO_OUTPUTS], cwd=REPO_DIR)
+    outputs = [*ALLOWED_REPO_OUTPUTS, *COPIED_CRON_SCRIPT_REPO_PATHS]
+    run(["git", "add", *outputs], cwd=REPO_DIR)
     diff = run(["git", "diff", "--cached", "--name-only"], cwd=REPO_DIR, check=False)
     if not diff.strip():
         current = run(["git", "rev-parse", "--short", "HEAD"], cwd=REPO_DIR)

@@ -34,5 +34,9 @@ echo "[5/5] Backup files"
 test -f backups/BACKUP.md && echo "OK backups/BACKUP.md"
 test -f backups/RESTORE_GUIDE.md && echo "OK backups/RESTORE_GUIDE.md"
 test -f scripts/demeter_daily_backup.py && echo "OK scripts/demeter_daily_backup.py"
+if [ -d scripts/cron ]; then
+  echo "Cron scripts copied for rollback:"
+  find scripts/cron -type f | sort
+fi
 
 echo "Restore verification completed. Configure secrets manually; none are stored in this repo."
