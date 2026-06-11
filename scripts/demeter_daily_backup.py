@@ -488,7 +488,7 @@ bash backups/restore.sh
 
 
 def build_restore_sh() -> str:
-    return sanitize_text("""#!/usr/bin/env bash
+    return sanitize_text(r"""#!/usr/bin/env bash
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
