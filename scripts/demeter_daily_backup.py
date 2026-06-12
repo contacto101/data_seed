@@ -59,6 +59,11 @@ ALLOWED_REPO_OUTPUTS = [
     "backups/RESTORE_GUIDE.md",
     "backups/restore.sh",
     "scripts/demeter_daily_backup.py",
+    "scripts/daily-operations.sh",
+    "scripts/daily-operations-wrapper.sh",
+    "graphify-out/GRAPH_REPORT.md",
+    "graphify-out/manifest.json",
+    "graphify-out/.graphify_labels.json",
 ]
 SAFE_CRON_SCRIPT_EXTENSIONS = {".py", ".sh", ".bash"}
 HARD_COPY_ALLOWLIST = HERMES_HOME / "backup_hardcopy_allowlist.txt"
@@ -571,6 +576,17 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 
 {key_files_summary()}
 
+## Grafo de conocimiento del proyecto (Graphify)
+
+El grafo de Graphify mapea las relaciones entre archivos, funciones y conceptos del proyecto.
+Se actualiza con `graphify update .` después de cambios importantes en el código.
+
+- Directorio del grafo: `graphify-out/`
+- Archivos incluidos en este backup: `GRAPH_REPORT.md`, `manifest.json`, `.graphify_labels.json`
+- Archivos grandes NO incluidos (regenerables): `graph.html`, `graph.json`
+- Para regenerar: `cd /opt/data/data_seed && graphify update .`
+- Reporte del grafo: `graphify-out/GRAPH_REPORT.md` (incluido en este backup)
+
 ## Archivos actualizados por este backup
 
 {backup_outputs_summary()}
@@ -791,6 +807,39 @@ def update_repo_files() -> None:
     write_repo_file("backups/RESTORE_GUIDE.md", build_restore_guide())
     write_repo_file("backups/restore.sh", build_restore_sh(), executable=True)
     copy_self_to_repo()
+    copy_graphify_outputs()
+    copy_new_scripts()
+
+
+def copy_graphify_outputs() -> None:
+    """Copy non-sensitive graphify output files to the backup repo."""
+    graphify_files = [
+        ("graphify-out/GRAPH_REPORT.md", False),
+        ("graphify-out/manifest.json", False),
+        ("graphify-out/.graphify_labels.json", False),
+    ]
+    for rel, executable in graphify_files:
+        source = TASK_TRACKING_REPO_DIR / rel
+        if not source.exists():
+            continue
+        text = source.read_text(encoding="utf-8", errors="ignore")
+        assert_no_secret_values(rel, text)
+        write_repo_file(rel, text, executable=executable)
+
+
+def copy_new_scripts() -> None:
+    """Copy the new daily-operations scripts to the backup repo."""
+    scripts = [
+        ("scripts/daily-operations.sh", True),
+        ("scripts/daily-operations-wrapper.sh", True),
+    ]
+    for rel, executable in scripts:
+        source = HERMES_HOME / rel
+        if not source.exists():
+            continue
+        text = source.read_text(encoding="utf-8", errors="ignore")
+        assert_no_secret_values(rel, text)
+        write_repo_file(rel, text, executable=executable)
 
 
 def commit_and_push() -> str:
