@@ -7,6 +7,8 @@ back to the same GitHub branch used for critical recovery.
 
 Safety policy:
 - Only writes markdown and safe helper scripts into the repository.
+- Task-log and daily-summary are referenced, not copied into the backup.
+- Only large completed cycles are copied into the backup task section.
 - Never copies .env, OAuth credentials, auth.json, WhatsApp sessions, databases,
   logs, caches, or user attachments.
 - Cron prompts and delivery targets are intentionally excluded.
@@ -31,13 +33,29 @@ except Exception:  # pragma: no cover
 
 HERMES_HOME = Path(os.environ.get("HERMES_HOME", "/opt/data")).resolve()
 REPO_URL = os.environ.get("DATASEED_BACKUP_REPO", "https://github.com/contacto101/data_seed.git")
-REPO_DIR = Path(os.environ.get("DATASEED_REPO_DIR", str(HERMES_HOME / "data_seed"))).resolve()
+# Use a dedicated clone for the backup job. The live /opt/data/data_seed
+# worktree is used by normal DataSeed tasks (including task-log commits) and
+# may be on a feature branch with local changes; switching it to main from cron
+# can fail or disrupt active work.
+REPO_DIR = Path(os.environ.get("DATASEED_REPO_DIR", str(HERMES_HOME / "data_seed_daily_backup"))).resolve()
 BRANCH = os.environ.get("DATASEED_BACKUP_BRANCH", "main")
 HERMES_BIN = Path(os.environ.get("HERMES_BIN", "/opt/hermes/.venv/bin/hermes"))
 SCRIPT_SOURCE = Path(__file__).resolve()
+TASK_TRACKING_REPO_DIR = Path(os.environ.get("DATASEED_TASK_TRACKING_REPO_DIR", str(HERMES_HOME / "data_seed"))).resolve()
+TASK_TRACKING_BRANCH = os.environ.get("DATASEED_TASK_TRACKING_BRANCH", "feat/task-tracking-system")
+TASK_LOG_REPO_REL = "task-log.md"
+DAILY_SUMMARY_REPO_REL = "daily-summary.md"
+COMPLETED_CYCLES_REPO_REL = "backups/COMPLETED_CYCLES.md"
+COMPLETED_CYCLES_SOURCE = Path(
+    os.environ.get(
+        "DATASEED_COMPLETED_CYCLES_SOURCE",
+        str(TASK_TRACKING_REPO_DIR / COMPLETED_CYCLES_REPO_REL),
+    )
+).resolve()
 
 ALLOWED_REPO_OUTPUTS = [
     "backups/BACKUP.md",
+    COMPLETED_CYCLES_REPO_REL,
     "backups/RESTORE_GUIDE.md",
     "backups/restore.sh",
     "scripts/demeter_daily_backup.py",
@@ -319,6 +337,49 @@ def key_files_summary() -> str:
     return "\n".join(lines)
 
 
+def task_tracking_reference_summary() -> str:
+    summary_path = TASK_TRACKING_REPO_DIR / DAILY_SUMMARY_REPO_REL
+    task_log_path = TASK_TRACKING_REPO_DIR / TASK_LOG_REPO_REL
+    completed_cycles_path = TASK_TRACKING_REPO_DIR / COMPLETED_CYCLES_REPO_REL
+    rows = [
+        "- El `task-log.md` es volátil: se actualiza durante el día y se limpia a las 04:30 AM America/Santiago.",
+        "- El `daily-summary.md` conserva el resumen diario y debe consultarse para tareas diarias, pendientes y bloqueos.",
+        "- El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.",
+        "- Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.",
+        f"- Repo/branch de tracking: `{TASK_TRACKING_REPO_DIR}` / `{TASK_TRACKING_BRANCH}`.",
+        f"- Daily summary: `{DAILY_SUMMARY_REPO_REL}` ({file_size_human(summary_path)}, sha256 {sha256_short(summary_path)}).",
+        f"- Task log actual: `{TASK_LOG_REPO_REL}` ({file_size_human(task_log_path)}, sha256 {sha256_short(task_log_path)}).",
+        f"- Ciclos grandes completados fuente: `{COMPLETED_CYCLES_REPO_REL}` ({file_size_human(completed_cycles_path)}, sha256 {sha256_short(completed_cycles_path)}).",
+    ]
+    return "\n".join(rows)
+
+
+def default_completed_cycles_md() -> str:
+    return """# Ciclos grandes completados — DataSeed / Demeter
+
+Este archivo es curado manualmente por Demeter. Solo debe contener hitos/ciclos grandes ya cerrados y útiles para recuperación operativa.
+
+Reglas:
+- Incluir únicamente ciclos grandes completados.
+- No incluir tareas diarias, pasos intermedios, pendientes, bloqueos ni detalles extensos.
+- Para detalle diario, consultar `daily-summary.md` en el branch de tracking.
+- Para detalle vivo del día, consultar `task-log.md` antes de su limpieza diaria.
+
+## Ciclos registrados
+
+- Aún no hay ciclos grandes completados registrados manualmente.
+"""
+
+
+def build_completed_cycles_md() -> str:
+    if COMPLETED_CYCLES_SOURCE.exists() and COMPLETED_CYCLES_SOURCE.is_file():
+        text = COMPLETED_CYCLES_SOURCE.read_text(encoding="utf-8", errors="ignore")
+    else:
+        text = default_completed_cycles_md()
+    assert_no_secret_values(COMPLETED_CYCLES_REPO_REL, text)
+    return sanitize_text(text)
+
+
 def system_summary() -> str:
     lines = [
         f"- Host: `{platform.platform()}`",
@@ -472,7 +533,13 @@ def build_backup_md() -> str:
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `{BRANCH}` en `{REPO_URL}`.
 
-Los datos respaldados son semillas operativas: identidad, configuración resumida, cron jobs sanitizados, skills instalados y scripts seguros de restauración.
+Los datos respaldados son semillas operativas: identidad, configuración resumida, cron jobs sanitizados, skills instalados, scripts seguros de restauración y ciclos grandes completados.
+
+## Seguimiento de tareas y alcance del backup
+
+{task_tracking_reference_summary()}
+
+Regla operativa: el log diario registra detalles; el resumen diario consolida tareas y pendientes; el backup de las 05:00 AM solo guarda ciclos grandes completados y una referencia hacia el resumen diario.
 
 ## Identidad operativa
 
@@ -525,6 +592,7 @@ No se exportan ni se copian:
 - `state.db`, bases de datos runtime, WAL/SHM, caches, adjuntos, audios, imágenes o documentos de usuario.
 - Prompts completos de cron, destinos de entrega, chat identifiers, nombres de contactos o datos personales.
 - Logs completos o dumps de conversaciones.
+- `task-log.md` y `daily-summary.md`: no se copian al backup; se consultan en el branch de tracking (`feat/task-tracking-system`).
 
 ## Restauración
 
@@ -548,6 +616,8 @@ Esta guía permite reconstruir el estado operativo no sensible de Demeter despu�
 - Las credenciales se reconfiguran manualmente desde fuentes autorizadas.
 - Los prompts completos de cron y los destinos de entrega no se guardan en este backup.
 - Los scripts/documentos adicionales solo se guardan como copia dura con aprobación explícita y escaneo básico de secretos. Si hay duda, no se copian; quedan listados como pendientes de revisión.
+- `task-log.md` y `daily-summary.md` no se copian al backup diario; el backup solo referencia dónde consultarlos.
+- Las tareas solo pasan al backup cuando son ciclos grandes completados y están registradas en `backups/COMPLETED_CYCLES.md`.
 
 ## Pasos de recuperación
 
@@ -571,9 +641,15 @@ cd /opt/data/data_seed
 less backups/BACKUP.md
 ```
 
-4. Instalar o validar Hermes Agent según la documentación oficial.
+4. Revisar ciclos grandes completados:
 
-5. Configurar secretos fuera del repositorio:
+```bash
+less backups/COMPLETED_CYCLES.md
+```
+
+5. Instalar o validar Hermes Agent según la documentación oficial.
+
+6. Configurar secretos fuera del repositorio:
 
 - GitHub token o credenciales git.
 - OAuth de proveedores LLM.
@@ -581,7 +657,7 @@ less backups/BACKUP.md
 - Tokens de APIs externas como ChileCompra o HubSpot.
 - Sesiones de WhatsApp/gateway si se requiere continuidad de mensajería.
 
-6. Validar configuración y gateway:
+7. Validar configuración y gateway:
 
 ```bash
 /opt/hermes/.venv/bin/hermes config check || true
@@ -589,13 +665,18 @@ less backups/BACKUP.md
 /opt/hermes/.venv/bin/hermes cron list || true
 ```
 
-7. Reconstituir cron jobs:
+8. Reconstituir cron jobs:
 
 - Usar la sección de cron jobs de `backups/BACKUP.md` para nombres, horarios, scripts, skills y workdirs.
 - Pedir al operador humano los prompts completos y destinos cuando estén excluidos.
 - Mantener los backups y watchdogs como no-agent cuando sea posible para reducir riesgo de filtrar secretos.
 
-8. Ejecutar verificación segura:
+9. Consultar seguimiento diario si hace falta:
+
+- `daily-summary.md` en el branch `feat/task-tracking-system`: resumen diario, pendientes y bloqueos.
+- `task-log.md` en el branch `feat/task-tracking-system`: detalle vivo del día antes de la limpieza diaria.
+
+10. Ejecutar verificación segura:
 
 ```bash
 bash backups/restore.sh
@@ -604,6 +685,7 @@ bash backups/restore.sh
 ## Archivos seguros de este backup
 
 - `backups/BACKUP.md`: snapshot operativo sanitizado.
+- `backups/COMPLETED_CYCLES.md`: solo ciclos grandes completados; no contiene el log diario ni el resumen diario.
 - `backups/RESTORE_GUIDE.md`: esta guía.
 - `backups/restore.sh`: verificación segura post-restore.
 - `scripts/demeter_daily_backup.py`: rutina que genera el backup diario.
@@ -621,6 +703,7 @@ bash backups/restore.sh
 - sesiones de mensajería
 - logs completos
 - caches o adjuntos de usuario
+- `task-log.md` y `daily-summary.md` dentro del backup diario
 """)
 
 
@@ -659,6 +742,7 @@ fi
 
 echo "[5/5] Backup files"
 test -f backups/BACKUP.md && echo "OK backups/BACKUP.md"
+test -f backups/COMPLETED_CYCLES.md && echo "OK backups/COMPLETED_CYCLES.md"
 test -f backups/RESTORE_GUIDE.md && echo "OK backups/RESTORE_GUIDE.md"
 test -f scripts/demeter_daily_backup.py && echo "OK scripts/demeter_daily_backup.py"
 if [ -d scripts/cron ]; then
@@ -702,6 +786,7 @@ def copy_self_to_repo() -> None:
 
 def update_repo_files() -> None:
     copy_safe_cron_scripts()
+    write_repo_file(COMPLETED_CYCLES_REPO_REL, build_completed_cycles_md())
     write_repo_file("backups/BACKUP.md", build_backup_md())
     write_repo_file("backups/RESTORE_GUIDE.md", build_restore_guide())
     write_repo_file("backups/restore.sh", build_restore_sh(), executable=True)

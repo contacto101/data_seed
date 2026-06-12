@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-12 | Daniel Caignet
+**Tarea:** Definir la arquitectura correcta del tracking: log vivo, resumen diario a las 4:30 AM y backup de 5 AM solo con ciclos grandes completados.
+**Acción:** Ajusté el backup para no copiar `task-log.md` ni `daily-summary.md`, agregué referencia explícita hacia esos archivos, creé `backups/COMPLETED_CYCLES.md` para hitos/ciclos grandes completados, actualicé el script `demeter_daily_backup.py`, verifiqué sintaxis y probé el backup contra un repo temporal confirmando que solo genera archivos seguros.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-12 | Daniel Caignet
 **Tarea:** Revisar los otros 2 cronjobs de limpieza diaria porque uno también reportó error.
 **Acción:** Revisé outputs de cron, identifiqué que `81245070c3cf` falló por comandos sin `echo` en `daily-task-log-cleanup.sh` (`## Resumen...: command not found`), corregí el script runtime y la copia del repo, probé el cleanup en un repo temporal, y cambié ambos cronjobs de limpieza a modo `no_agent` con `daily-task-log-wrapper.sh` para que Hermes detecte exit codes reales.
 **Estado:** ✅ Finalizada exitosamente
