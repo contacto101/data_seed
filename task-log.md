@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-12 | Daniel Caignet
+**Tarea:** Aclarar si el backup quedó guardado en el repo después de corregir el cronjob.
+**Acción:** Verifiqué que la copia dedicada `/opt/data/data_seed_daily_backup` está en `main`, limpia, sincronizada con `origin/main`, y que local/remoto apuntan al mismo commit `b873376`.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-12 | Daniel Caignet
 **Tarea:** Revisar y corregir error del cronjob `Demeter Daily Backup` causado por `git checkout main` bloqueado por cambios locales en `daily-summary.md`.
 **Acción:** Diagnostiqué el cron `f68dd2fb20c3`, confirmé que el repo activo estaba en `feat/task-tracking-system` con cambios locales, ajusté el backup para usar una copia dedicada en `/opt/data/data_seed_daily_backup`, ejecuté y verifiqué el script, validé que el cron volvió a estado `ok`, y actualicé la documentación operativa del skill.
 **Estado:** ✅ Finalizada exitosamente
