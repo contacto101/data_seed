@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-12 | Daniel Caignet
+**Tarea:** Entregar el grafo interactivo Graphify por WhatsApp como archivo descargable.
+**Acción:** Generé `/tmp/dataseed-graphify-out.zip` con `graph.html`, `graph.json`, `GRAPH_REPORT.md` y README para abrirlo localmente en Windows; cerré el servidor HTTP temporal expuesto previamente.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-12 | Daniel Caignet
 **Tarea:** Corregir persistencia del aviso WhatsApp “Codex response remained incomplete after 3 continuation attempts” tras reiniciar gateway.
 **Acción:** Recolecté evidencia posterior al reinicio: gateway activo con PID 4905, health conectado, config viva con `require_mention: true`, `strict_require_mention: true`, `mention_patterns: (^|\\s)@(demeter|bot)\\b`, y filtro local validando que `hola` no debe procesarse. Identifiqué que la mención nativa de WhatsApp pasaba por `mentionedIds`, pero luego Hermes limpiaba el texto y el modelo recibía solo `hola` sin marcador `@Demeter`/`@bot`; esto hacía que Codex intentara responder vacío por la regla de grupos y Hermes lo reportara como respuesta incompleta. Apliqué parche local en `/opt/hermes/gateway/platforms/whatsapp.py` para conservar `@bot` cuando el mensaje entra por mención nativa y verifiqué con prueba temporal que antes fallaba y después pasaba. El reinicio/verificación final del gateway quedó bloqueado por autorización.
 **Estado:** ⚠️ Parche local aplicado; a la espera de autorización/reinicio del gateway para activar y verificar en producción
