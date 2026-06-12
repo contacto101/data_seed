@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-12 | Daniel Caignet
+**Tarea:** Investigar qué es Graphify y evaluar ventajas/riesgos de instalarlo en el entorno Hermes de Demeter.
+**Acción:** Revisé fuentes actuales del proyecto `safishamsi/graphify`, README, soporte específico para Hermes, funcionamiento como skill/CLI y opción MCP. Identifiqué beneficios para DataSeed, requisitos, riesgos y una recomendación de piloto sin instalar todavía.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-12 | Daniel Caignet
 **Tarea:** Probar que todos los cronjobs activos operan correctamente.
 **Acción:** Validé sintaxis/configuración, probé el cleanup diario en un repo temporal, ejecuté vía scheduler los 3 cronjobs (`f68dd2fb20c3`, `81245070c3cf`, `cefd086db3f5`), confirmé `last_status: ok` en todos, verifiqué outputs y validé que el backup quedó en `main` con commit `8c460c6` sin archivos sensibles ni `task-log.md`/`daily-summary.md`.
 **Estado:** ✅ Finalizada exitosamente
