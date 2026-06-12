@@ -9,7 +9,7 @@
 
 ### 2026-06-12 | Daniel Caignet
 **Tarea:** Ejecutar piloto controlado de Graphify en el entorno Hermes/DataSeed.
-**Acción:** Instalé Graphify con `uv tool install 'graphifyy[mcp]'` sin hooks automáticos, agregué `graphify-out/` a `.gitignore`, generé un grafo local code-only de `/opt/data/data_seed` con `graphify update . --force`, verifiqué `112 nodes`, `184 links`, `14 communities`, ejecuté consultas de backup/cleanup, y probé el servidor MCP por stdio sin activar configuración persistente ni reiniciar gateway.
+**Acción:** Instalé Graphify con `uv tool install 'graphifyy[mcp]'` sin hooks automáticos, agregué `graphify-out/` a `.gitignore`, generé un grafo local code-only de `/opt/data/data_seed` con `graphify update . --force`, verifiqué `113 nodes`, `185 links`, `14 communities`, ejecuté consultas de backup/cleanup, y probé el servidor MCP por stdio sin activar configuración persistente ni reiniciar gateway.
 **Estado:** ✅ Finalizada exitosamente
 
 ### 2026-06-12 | Daniel Caignet
