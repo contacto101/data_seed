@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-12 | Daniel Caignet
+**Tarea:** Ejecutar piloto controlado de Graphify en el entorno Hermes/DataSeed.
+**Acción:** Instalé Graphify con `uv tool install 'graphifyy[mcp]'` sin hooks automáticos, agregué `graphify-out/` a `.gitignore`, generé un grafo local code-only de `/opt/data/data_seed` con `graphify update . --force`, verifiqué `112 nodes`, `184 links`, `14 communities`, ejecuté consultas de backup/cleanup, y probé el servidor MCP por stdio sin activar configuración persistente ni reiniciar gateway.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-12 | Daniel Caignet
 **Tarea:** Diagnosticar aviso en grupo WhatsApp: “Codex response remained incomplete after 3 continuation attempts” y comportamiento como sesión nueva.
 **Acción:** Revisé skill/config/logs/sesiones. Confirmé que `/opt/data/config.yaml` ya tiene `whatsapp.require_mention: true`, `whatsapp.strict_require_mention: true`, `mention_patterns: (^|\\s)@(demeter|bot)\\b` y `group_sessions_per_user: false`, pero el gateway activo sigue con PID 981 desde antes de aplicar esa configuración; los mensajes de grupo sin mención (`Hola verifica...`, `hola`) sí fueron procesados y terminaron en respuestas vacías/parciales de Codex. Intenté reiniciar el gateway para aplicar la config, pero la acción fue denegada por aprobación.
 **Estado:** ⚠️ Diagnóstico completado; pendiente reinicio manual del gateway
