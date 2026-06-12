@@ -4,7 +4,7 @@
 
 set -e
 
-REPO_DIR="/opt/data/data_seed"
+REPO_DIR="${REPO_DIR:-/opt/data/data_seed}"
 TASK_LOG="$REPO_DIR/task-log.md"
 DAILY_SUMMARY="$REPO_DIR/daily-summary.md"
 DATE=$(TZ='America/Santiago' date '+%Y-%m-%d')
@@ -33,7 +33,7 @@ PENDING=$(echo "$ENTRIES" | grep -c "⏳\|espera\|pendiente\|waiting" || true)
 # Agregar resumen al daily-summary.md
 {
   echo ""
-  "## Resumen $DATE"
+  echo "## Resumen $DATE"
   echo ""
   echo "**Generado:** $TIMESTAMP"
   echo ""
@@ -48,7 +48,7 @@ PENDING=$(echo "$ENTRIES" | grep -c "⏳\|espera\|pendiente\|waiting" || true)
   echo ""
   echo "$ENTRIES"
   echo ""
-  "---"
+  echo "---"
 } >> "$DAILY_SUMMARY"
 
 # Limpiar task-log.md (mantener encabezado y marcador)
@@ -63,10 +63,15 @@ PENDING=$(echo "$ENTRIES" | grep -c "⏳\|espera\|pendiente\|waiting" || true)
   echo "<!-- ENTRADAS -->"
 } > "$TASK_LOG"
 
-# Commit y push al repo
+# Commit y push al repo. Si hay cambios, el push debe fallar fuerte para que
+# el cron reporte el problema en vez de marcar éxito falso.
 cd "$REPO_DIR"
 git add task-log.md daily-summary.md
-git commit -m "chore: daily task log cleanup and summary for $DATE" --no-verify 2>/dev/null || true
-git push origin feat/task-tracking-system 2>/dev/null || true
+if git diff --cached --quiet; then
+  echo "[$TIMESTAMP] No hay cambios para commitear."
+else
+  git commit -m "chore: daily task log cleanup and summary for $DATE" --no-verify
+  git push origin feat/task-tracking-system
+fi
 
 echo "[$TIMESTAMP] Limpieza completada. Resumen agregado al daily-summary.md."
