@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-12 | Daniel Caignet
+**Tarea:** Diagnosticar aviso en grupo WhatsApp: “Codex response remained incomplete after 3 continuation attempts” y comportamiento como sesión nueva.
+**Acción:** Revisé skill/config/logs/sesiones. Confirmé que `/opt/data/config.yaml` ya tiene `whatsapp.require_mention: true`, `whatsapp.strict_require_mention: true`, `mention_patterns: (^|\\s)@(demeter|bot)\\b` y `group_sessions_per_user: false`, pero el gateway activo sigue con PID 981 desde antes de aplicar esa configuración; los mensajes de grupo sin mención (`Hola verifica...`, `hola`) sí fueron procesados y terminaron en respuestas vacías/parciales de Codex. Intenté reiniciar el gateway para aplicar la config, pero la acción fue denegada por aprobación.
+**Estado:** ⚠️ Diagnóstico completado; pendiente reinicio manual del gateway
+
+### 2026-06-12 | Daniel Caignet
 **Tarea:** Investigar qué es Graphify y evaluar ventajas/riesgos de instalarlo en el entorno Hermes de Demeter.
 **Acción:** Revisé fuentes actuales del proyecto `safishamsi/graphify`, README, soporte específico para Hermes, funcionamiento como skill/CLI y opción MCP. Identifiqué beneficios para DataSeed, requisitos, riesgos y una recomendación de piloto sin instalar todavía.
 **Estado:** ✅ Finalizada exitosamente
