@@ -31,7 +31,11 @@ except Exception:  # pragma: no cover
 
 HERMES_HOME = Path(os.environ.get("HERMES_HOME", "/opt/data")).resolve()
 REPO_URL = os.environ.get("DATASEED_BACKUP_REPO", "https://github.com/contacto101/data_seed.git")
-REPO_DIR = Path(os.environ.get("DATASEED_REPO_DIR", str(HERMES_HOME / "data_seed"))).resolve()
+# Use a dedicated clone for the backup job. The live /opt/data/data_seed
+# worktree is used by normal DataSeed tasks (including task-log commits) and
+# may be on a feature branch with local changes; switching it to main from cron
+# can fail or disrupt active work.
+REPO_DIR = Path(os.environ.get("DATASEED_REPO_DIR", str(HERMES_HOME / "data_seed_daily_backup"))).resolve()
 BRANCH = os.environ.get("DATASEED_BACKUP_BRANCH", "main")
 HERMES_BIN = Path(os.environ.get("HERMES_BIN", "/opt/hermes/.venv/bin/hermes"))
 SCRIPT_SOURCE = Path(__file__).resolve()

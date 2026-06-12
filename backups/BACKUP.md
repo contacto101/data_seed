@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-11 16:33:27 UTC
-- Generado America/Santiago: 2026-06-11 12:33:27 -04
+- Generado UTC: 2026-06-12 14:34:00 UTC
+- Generado America/Santiago: 2026-06-12 10:34:00 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -21,16 +21,16 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - Host: `Linux-6.8.0-124-generic-x86_64-with-glibc2.41`
 - Python: `3.13.5`
 - Hermes home: `/opt/data`
-- Backup repo dir: `/opt/data/data_seed`
+- Backup repo dir: `/opt/data/data_seed_daily_backup`
 - Backup branch: `main`
 - Hermes binary: `/opt/hermes/.venv/bin/hermes`
 - Disk snapshot:
   `Filesystem      Size  Used Avail Use% Mounted on`
-  `/dev/sda1        96G   11G   86G  12% /opt/data`
+  `/dev/sda1        96G   11G   85G  12% /opt/data`
 
 ## Configuración Hermes sanitizada
 
-- Config path: `/opt/data/config.yaml` (14.3 KB, sha256 5bdbae3915003815)
+- Config path: `/opt/data/config.yaml` (14.4 KB, sha256 9f78d8a403655439)
 - Model provider: `openai-codex`
 - Model default: `gpt-5.5`
 - Agent max_turns: `60`
@@ -43,16 +43,30 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 
 ## Cron jobs configurados y estado
 
-Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
+Total jobs: 3. Sensitive fields excluded: prompt, deliver, delivery targets.
 
 - `f68dd2fb20c3` [active]
   - Nombre: Demeter Daily Backup
   - Schedule: 0 9 * * *
-  - Next run UTC: 2026-06-12T09:00:00+00:00
-  - Last run UTC/status: None / None
+  - Next run UTC: 2026-06-13T09:00:00+00:00
+  - Last run UTC/status: 2026-06-12T09:00:48.770636+00:00 / error
   - Mode: no-agent
   - Script: demeter_daily_backup.py
   - Workdir: /opt/data
+- `81245070c3cf` [active]
+  - Nombre: Daily Task Log Cleanup (4:30 AM Chile)
+  - Schedule: 30 8 * * *
+  - Next run UTC: 2026-06-13T08:30:00+00:00
+  - Last run UTC/status: 2026-06-12T08:31:08.784637+00:00 / ok
+  - Mode: agent
+  - Enabled toolsets: terminal
+- `cefd086db3f5` [active]
+  - Nombre: Daily Task Log Cleanup - Verano Chile (4:30 AM UTC-3)
+  - Schedule: 30 7 * * *
+  - Next run UTC: 2026-06-13T07:30:00+00:00
+  - Last run UTC/status: 2026-06-12T07:31:11.141267+00:00 / ok
+  - Mode: agent
+  - Enabled toolsets: terminal
 
 ## Skills instalados
 
@@ -138,12 +152,12 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 
 No se copia el contenido de estos archivos; solo tamaño y huella para validación.
 
-- `config.yaml`: 14.3 KB, sha256 5bdbae3915003815
-- `memories/MEMORY.md`: 1.8 KB, sha256 52659377451beaea
-- `memories/USER.md`: 1.0 KB, sha256 fda09d591b3c4def
-- `channel_directory.json`: 856.0 B, sha256 496b5ad9e9888b64
-- `gateway_state.json`: 505.0 B, sha256 2dc631c41718fc32
-- `cron/jobs.json`: 1.4 KB, sha256 bb1a74fdb4607987
+- `config.yaml`: 14.4 KB, sha256 9f78d8a403655439
+- `memories/MEMORY.md`: 2.1 KB, sha256 f6189f07f9081b32
+- `memories/USER.md`: 1.0 KB, sha256 68ffaa5c44585913
+- `channel_directory.json`: 1003.0 B, sha256 073c07b49d7b0b9e
+- `gateway_state.json`: 505.0 B, sha256 987160824968c5f8
+- `cron/jobs.json`: 4.5 KB, sha256 2064b2a05ef6a7d2
 
 ## Archivos actualizados por este backup
 
