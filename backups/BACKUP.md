@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-12 14:34:49 UTC
-- Generado America/Santiago: 2026-06-12 10:34:49 -04
+- Generado UTC: 2026-06-12 14:35:49 UTC
+- Generado America/Santiago: 2026-06-12 10:35:49 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -49,7 +49,7 @@ Total jobs: 3. Sensitive fields excluded: prompt, deliver, delivery targets.
   - Nombre: Demeter Daily Backup
   - Schedule: 0 9 * * *
   - Next run UTC: 2026-06-13T09:00:00+00:00
-  - Last run UTC/status: 2026-06-12T09:00:48.770636+00:00 / error
+  - Last run UTC/status: 2026-06-12T14:34:50.222887+00:00 / ok
   - Mode: no-agent
   - Script: demeter_daily_backup.py
   - Workdir: /opt/data
@@ -157,7 +157,7 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 - `memories/USER.md`: 1.0 KB, sha256 68ffaa5c44585913
 - `channel_directory.json`: 1003.0 B, sha256 a3d0f413ba38406f
 - `gateway_state.json`: 505.0 B, sha256 987160824968c5f8
-- `cron/jobs.json`: 4.5 KB, sha256 8859a10d0d6f4665
+- `cron/jobs.json`: 4.2 KB, sha256 72b60ec998211129
 
 ## Archivos actualizados por este backup
 
