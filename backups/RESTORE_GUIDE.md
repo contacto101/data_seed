@@ -9,6 +9,8 @@ Esta guía permite reconstruir el estado operativo no sensible de Demeter despu�
 - Las credenciales se reconfiguran manualmente desde fuentes autorizadas.
 - Los prompts completos de cron y los destinos de entrega no se guardan en este backup.
 - Los scripts/documentos adicionales solo se guardan como copia dura con aprobación explícita y escaneo básico de secretos. Si hay duda, no se copian; quedan listados como pendientes de revisión.
+- `task-log.md` y `daily-summary.md` no se copian al backup diario; el backup solo referencia dónde consultarlos.
+- Las tareas solo pasan al backup cuando son ciclos grandes completados y están registradas en `backups/COMPLETED_CYCLES.md`.
 
 ## Pasos de recuperación
 
@@ -32,9 +34,15 @@ cd /opt/data/data_seed
 less backups/BACKUP.md
 ```
 
-4. Instalar o validar Hermes Agent según la documentación oficial.
+4. Revisar ciclos grandes completados:
 
-5. Configurar secretos fuera del repositorio:
+```bash
+less backups/COMPLETED_CYCLES.md
+```
+
+5. Instalar o validar Hermes Agent según la documentación oficial.
+
+6. Configurar secretos fuera del repositorio:
 
 - GitHub token o credenciales git.
 - OAuth de proveedores LLM.
@@ -42,7 +50,7 @@ less backups/BACKUP.md
 - Tokens de APIs externas como ChileCompra o HubSpot.
 - Sesiones de WhatsApp/gateway si se requiere continuidad de mensajería.
 
-6. Validar configuración y gateway:
+7. Validar configuración y gateway:
 
 ```bash
 /opt/hermes/.venv/bin/hermes config check || true
@@ -50,13 +58,18 @@ less backups/BACKUP.md
 /opt/hermes/.venv/bin/hermes cron list || true
 ```
 
-7. Reconstituir cron jobs:
+8. Reconstituir cron jobs:
 
 - Usar la sección de cron jobs de `backups/BACKUP.md` para nombres, horarios, scripts, skills y workdirs.
 - Pedir al operador humano los prompts completos y destinos cuando estén excluidos.
 - Mantener los backups y watchdogs como no-agent cuando sea posible para reducir riesgo de filtrar secretos.
 
-8. Ejecutar verificación segura:
+9. Consultar seguimiento diario si hace falta:
+
+- `daily-summary.md` en el branch `feat/task-tracking-system`: resumen diario, pendientes y bloqueos.
+- `task-log.md` en el branch `feat/task-tracking-system`: detalle vivo del día antes de la limpieza diaria.
+
+10. Ejecutar verificación segura:
 
 ```bash
 bash backups/restore.sh
@@ -65,6 +78,7 @@ bash backups/restore.sh
 ## Archivos seguros de este backup
 
 - `backups/BACKUP.md`: snapshot operativo sanitizado.
+- `backups/COMPLETED_CYCLES.md`: solo ciclos grandes completados; no contiene el log diario ni el resumen diario.
 - `backups/RESTORE_GUIDE.md`: esta guía.
 - `backups/restore.sh`: verificación segura post-restore.
 - `scripts/demeter_daily_backup.py`: rutina que genera el backup diario.
@@ -82,3 +96,4 @@ bash backups/restore.sh
 - sesiones de mensajería
 - logs completos
 - caches o adjuntos de usuario
+- `task-log.md` y `daily-summary.md` dentro del backup diario

@@ -32,6 +32,7 @@ fi
 
 echo "[5/5] Backup files"
 test -f backups/BACKUP.md && echo "OK backups/BACKUP.md"
+test -f backups/COMPLETED_CYCLES.md && echo "OK backups/COMPLETED_CYCLES.md"
 test -f backups/RESTORE_GUIDE.md && echo "OK backups/RESTORE_GUIDE.md"
 test -f scripts/demeter_daily_backup.py && echo "OK scripts/demeter_daily_backup.py"
 if [ -d scripts/cron ]; then
