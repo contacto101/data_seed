@@ -1,4 +1,4 @@
-# AGENT.md — Guía del Agente Demeter para DataSeed
+# AGENTS.md — Guía del Agente Demeter para DataSeed
 
 ## Identidad operativa
 

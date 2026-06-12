@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-12 | Daniel Caignet
+**Tarea:** Unificar AGENT.md en AGENTS.md, eliminar duplicados y actualizar grafo.
+**Acción:** AGENTS.md ya contenía todo el contenido de AGENT.md + sección Graphify. Eliminé AGEMENT.md, corregí título de AGENTS.md, verifiqué que no había referencias externas colgadas. Grafo actualizado: 126 nodes (-8), 202 links (-7), 16 communities.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-12 | Daniel Caignet
 **Tarea:** Actualizar grafo de Graphify e instalar skill en Hermes; integrar actualización del grafo en el flujo diario de backup.
 **Acción:** Actualicé el grafo con `graphify update .` (124 nodes, 200 edges, 16 communities). Instalé la skill de graphify en Hermes vía `graphify hermes install`. Restauré AGENTS.md con la guía Demeter + sección graphify. Agregué `graphify update .` como paso 0 del script daily-operations.sh (flujo: grafo → cleanup → backup). Sincronizamos ambos repos.
 **Estado:** ✅ Finalizada exitosamente
