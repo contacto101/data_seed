@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-12 | Daniel Caignet
+**Tarea:** Actualizar grafo de Graphify e instalar skill en Hermes; integrar actualización del grafo en el flujo diario de backup.
+**Acción:** Actualicé el grafo con `graphify update .` (124 nodes, 200 edges, 16 communities). Instalé la skill de graphify en Hermes vía `graphify hermes install`. Restauré AGENTS.md con la guía Demeter + sección graphify. Agregué `graphify update .` como paso 0 del script daily-operations.sh (flujo: grafo → cleanup → backup). Sincronizamos ambos repos.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-12 | Daniel Caignet
 **Tarea:** Revisar que los cron jobs estén operativos y que el task tracking funcione correctamente.
 **Acción:** Verifiqué los 3 cronjobs originales (backup + 2 cleanup verano/invierno). Consolidé en un solo cronjob unificado (5:00 AM Chile) que ejecuta cleanup→backup en secuencia. Agregué el grafo de Graphify al backup (GRAPH_REPORT.md, manifest.json, labels.json). Incluí los nuevos scripts (daily-operations.sh, wrapper) en el backup. Corregí referencias de hora 4:30→5:00 AM en todos los archivos. Sincronizamos cambios en ambos repos (tracking feat/task-tracking-system y backup main).
 **Estado:** ✅ Finalizada exitosamente
