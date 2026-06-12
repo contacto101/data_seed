@@ -347,7 +347,7 @@ def task_tracking_reference_summary() -> str:
     task_log_path = TASK_TRACKING_REPO_DIR / TASK_LOG_REPO_REL
     completed_cycles_path = TASK_TRACKING_REPO_DIR / COMPLETED_CYCLES_REPO_REL
     rows = [
-        "- El `task-log.md` es volátil: se actualiza durante el día y se limpia a las 04:30 AM America/Santiago.",
+        "- El `task-log.md` es volátil: se actualiza durante el día y se limpia a las 05:00 AM America/Santiago.",
         "- El `daily-summary.md` conserva el resumen diario y debe consultarse para tareas diarias, pendientes y bloqueos.",
         "- El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.",
         "- Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.",
