@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-12 16:17:49 UTC
-- Generado America/Santiago: 2026-06-12 12:17:49 -04
+- Generado UTC: 2026-06-12 21:32:15 UTC
+- Generado America/Santiago: 2026-06-12 17:32:15 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -16,7 +16,7 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
 - Repo/branch de tracking: `/opt/data/data_seed` / `feat/task-tracking-system`.
 - Daily summary: `daily-summary.md` (170.0 B, sha256 5b11f191b6ffecdf).
-- Task log actual: `task-log.md` (2.6 KB, sha256 a6d035a5d9d36ac0).
+- Task log actual: `task-log.md` (6.4 KB, sha256 3919e132504cb68e).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (594.0 B, sha256 6fd18874fbd0ad90).
 
 Regla operativa: el log diario registra detalles; el resumen diario consolida tareas y pendientes; el backup de las 05:00 AM solo guarda ciclos grandes completados y una referencia hacia el resumen diario.
@@ -39,7 +39,7 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 - Hermes binary: `/opt/hermes/.venv/bin/hermes`
 - Disk snapshot:
   `Filesystem      Size  Used Avail Use% Mounted on`
-  `/dev/sda1        96G   11G   85G  12% /opt/data`
+  `/dev/sda1        96G   12G   85G  12% /opt/data`
 
 ## Configuración Hermes sanitizada
 
@@ -56,30 +56,15 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 
 ## Cron jobs configurados y estado
 
-Total jobs: 3. Sensitive fields excluded: prompt, deliver, delivery targets.
+Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 
-- `f68dd2fb20c3` [active]
-  - Nombre: Demeter Daily Backup
+- `ea05ea193912` [active]
+  - Nombre: Demeter Daily Operations (5:00 AM Chile)
   - Schedule: 0 9 * * *
   - Next run UTC: 2026-06-13T09:00:00+00:00
-  - Last run UTC/status: 2026-06-12T14:35:50.311210+00:00 / ok
+  - Last run UTC/status: None / None
   - Mode: no-agent
-  - Script: demeter_daily_backup.py
-  - Workdir: /opt/data
-- `81245070c3cf` [active]
-  - Nombre: Daily Task Log Cleanup (4:30 AM Chile)
-  - Schedule: 30 8 * * *
-  - Next run UTC: 2026-06-13T08:30:00+00:00
-  - Last run UTC/status: 2026-06-12T16:17:49.185206+00:00 / ok
-  - Mode: no-agent
-  - Script: daily-task-log-wrapper.sh
-- `cefd086db3f5` [active]
-  - Nombre: Daily Task Log Cleanup - Verano Chile (4:30 AM UTC-3)
-  - Schedule: 30 7 * * *
-  - Next run UTC: 2026-06-13T07:30:00+00:00
-  - Last run UTC/status: 2026-06-12T16:17:49.180398+00:00 / ok
-  - Mode: no-agent
-  - Script: daily-task-log-wrapper.sh
+  - Script: daily-operations-wrapper.sh
 
 ## Skills instalados
 
@@ -151,6 +136,7 @@ Total jobs: 3. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `openhue` (smart-home/openhue) — Control Philips Hue lights, scenes, rooms via OpenHue CLI.
 - `xurl` (social-media/xurl) — X/Twitter via xurl CLI: post, search, DM, media, v2 API.
 - `hermes-agent-skill-authoring` (software-development/hermes-agent-skill-authoring) — Author in-repo SKILL.md: frontmatter, validator, structure.
+- `knowledge-graph-codebase-navigation` (software-development/knowledge-graph-codebase-navigation) — Build and use local knowledge graphs for codebase/navigation tasks, especially via Graphify, MCP, and agent skills.
 - `node-inspect-debugger` (software-development/node-inspect-debugger) — Debug Node.js via --inspect + Chrome DevTools Protocol CLI.
 - `plan` (software-development/plan) — Plan mode: write an actionable markdown plan to .hermes/plans/, no execution. Bite-sized tasks, exact paths, complete code.
 - `python-debugpy` (software-development/python-debugpy) — Debug Python: pdb REPL + debugpy remote (DAP).
@@ -166,11 +152,22 @@ Total jobs: 3. Sensitive fields excluded: prompt, deliver, delivery targets.
 No se copia el contenido de estos archivos; solo tamaño y huella para validación.
 
 - `config.yaml`: 14.4 KB, sha256 9f78d8a403655439
-- `memories/MEMORY.md`: 2.0 KB, sha256 df809d9cafe8d1be
-- `memories/USER.md`: 1.0 KB, sha256 68ffaa5c44585913
-- `channel_directory.json`: 1003.0 B, sha256 14116f91492651ad
-- `gateway_state.json`: 505.0 B, sha256 987160824968c5f8
-- `cron/jobs.json`: 4.2 KB, sha256 a18bf73f85176402
+- `memories/MEMORY.md`: 2.0 KB, sha256 c8429be837ec134d
+- `memories/USER.md`: 1.2 KB, sha256 e78f7e4ef75de41c
+- `channel_directory.json`: 1003.0 B, sha256 808d1de65b9b22cc
+- `gateway_state.json`: 507.0 B, sha256 25f31ec28aa4a9fa
+- `cron/jobs.json`: 1.6 KB, sha256 d9fd78d313a112f2
+
+## Grafo de conocimiento del proyecto (Graphify)
+
+El grafo de Graphify mapea las relaciones entre archivos, funciones y conceptos del proyecto.
+Se actualiza con `graphify update .` después de cambios importantes en el código.
+
+- Directorio del grafo: `graphify-out/`
+- Archivos incluidos en este backup: `GRAPH_REPORT.md`, `manifest.json`, `.graphify_labels.json`
+- Archivos grandes NO incluidos (regenerables): `graph.html`, `graph.json`
+- Para regenerar: `cd /opt/data/data_seed && graphify update .`
+- Reporte del grafo: `graphify-out/GRAPH_REPORT.md` (incluido en este backup)
 
 ## Archivos actualizados por este backup
 
@@ -179,6 +176,11 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 - `backups/RESTORE_GUIDE.md`
 - `backups/restore.sh`
 - `scripts/demeter_daily_backup.py`
+- `scripts/daily-operations.sh`
+- `scripts/daily-operations-wrapper.sh`
+- `graphify-out/GRAPH_REPORT.md`
+- `graphify-out/manifest.json`
+- `graphify-out/.graphify_labels.json`
 
 ## Scripts de cron seguros incluidos
 
@@ -186,7 +188,7 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 
 ## Scripts/documentos pendientes de aprobación humana
 
-- `daily-task-log-wrapper.sh`: pendiente; existe pero NO se copia como copia dura sin aprobación explícita en `/opt/data/backup_hardcopy_allowlist.txt`.
+- `daily-operations-wrapper.sh`: pendiente; existe pero NO se copia como copia dura sin aprobación explícita en `/opt/data/backup_hardcopy_allowlist.txt`.
 
 ## Exclusiones estrictas
 

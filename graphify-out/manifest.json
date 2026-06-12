@@ -1,0 +1,92 @@
+{
+  "backups/restore.sh": {
+    "mtime": 1781195607.3833857,
+    "ast_hash": "e3ea399358d628b348cfaaf62980e4b1",
+    "semantic_hash": ""
+  },
+  "scripts/daily-task-log-cleanup.sh": {
+    "mtime": 1781275454.8000576,
+    "ast_hash": "538187e9ebe11468f68d6db2c04b24cf",
+    "semantic_hash": ""
+  },
+  "scripts/daily-task-log-wrapper.sh": {
+    "mtime": 1781203597.3485785,
+    "ast_hash": "615eb3c574ded0bcc203a9854cf74cda",
+    "semantic_hash": ""
+  },
+  "scripts/dataseed_demo_proxy.py": {
+    "mtime": 1781194422.67889,
+    "ast_hash": "b37963b5969faf6a3a8d5ad3aa163d94",
+    "semantic_hash": ""
+  },
+  "scripts/demeter_daily_backup.py": {
+    "mtime": 1781276909.2083087,
+    "ast_hash": "60731c60c99a21516019041e3dc161cf",
+    "semantic_hash": ""
+  },
+  "AGENT.md": {
+    "mtime": 1781194422.6748898,
+    "ast_hash": "09a1bcc586a6eb68291be661d4b78b36",
+    "semantic_hash": ""
+  },
+  "backups/BACKUP.md": {
+    "mtime": 1781195607.3833857,
+    "ast_hash": "f4031061a2977df639c8fe82c4b1c35c",
+    "semantic_hash": ""
+  },
+  "backups/COMPLETED_CYCLES.md": {
+    "mtime": 1781276905.6613097,
+    "ast_hash": "0a36da7273497e20bacad5da432bb07c",
+    "semantic_hash": ""
+  },
+  "backups/RESTORE_GUIDE.md": {
+    "mtime": 1781195607.3833857,
+    "ast_hash": "4bc2b2b3f46ace059a0eeb4ceaabd875",
+    "semantic_hash": ""
+  },
+  "daily-summary.md": {
+    "mtime": 1781253057.6142354,
+    "ast_hash": "d4a91a37f0985647330c6f37ec5e3e9b",
+    "semantic_hash": ""
+  },
+  "hola.txt": {
+    "mtime": 1781194422.6778898,
+    "ast_hash": "8c8432c5523c8507a5ec3b1ae3ab364f",
+    "semantic_hash": ""
+  },
+  "hola_segundo.txt": {
+    "mtime": 1781194422.6778898,
+    "ast_hash": "22935506b6ad0e62466b996483ef6a65",
+    "semantic_hash": ""
+  },
+  "hola_tercer.txt": {
+    "mtime": 1781194422.6778898,
+    "ast_hash": "d8b841530352ace8ad818b93ff8bc1a7",
+    "semantic_hash": ""
+  },
+  "hola_whatsapp.txt": {
+    "mtime": 1781194422.6778898,
+    "ast_hash": "cc0f55223470a6d8f8e3810c64572080",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1781194422.67889,
+    "ast_hash": "85d33c555be8dfa9d135aa15724acb5b",
+    "semantic_hash": ""
+  },
+  "task-log.md": {
+    "mtime": 1781295525.0092483,
+    "ast_hash": "a2967965fbbaa7ad9e9082c2a09cb945",
+    "semantic_hash": ""
+  },
+  "test_access.md": {
+    "mtime": 1781194422.67889,
+    "ast_hash": "0c8ced1b554dea13bfd43e96088f7b81",
+    "semantic_hash": ""
+  },
+  "dataseed_logo_black.png": {
+    "mtime": 1781194422.6778898,
+    "ast_hash": "1eb36737493f1a1c90e11caefc35ece6",
+    "semantic_hash": ""
+  }
+}
