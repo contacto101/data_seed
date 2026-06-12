@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-12 | Daniel Caignet
+**Tarea:** Probar que todos los cronjobs activos operan correctamente.
+**Acción:** Validé sintaxis/configuración, probé el cleanup diario en un repo temporal, ejecuté vía scheduler los 3 cronjobs (`f68dd2fb20c3`, `81245070c3cf`, `cefd086db3f5`), confirmé `last_status: ok` en todos, verifiqué outputs y validé que el backup quedó en `main` con commit `8c460c6` sin archivos sensibles ni `task-log.md`/`daily-summary.md`.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-12 | Daniel Caignet
 **Tarea:** Definir la arquitectura correcta del tracking: log vivo, resumen diario a las 4:30 AM y backup de 5 AM solo con ciclos grandes completados.
 **Acción:** Ajusté el backup para no copiar `task-log.md` ni `daily-summary.md`, agregué referencia explícita hacia esos archivos, creé `backups/COMPLETED_CYCLES.md` para hitos/ciclos grandes completados, actualicé el script `demeter_daily_backup.py`, verifiqué sintaxis y probé el backup contra un repo temporal confirmando que solo genera archivos seguros.
 **Estado:** ✅ Finalizada exitosamente
