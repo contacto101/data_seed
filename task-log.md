@@ -7,6 +7,11 @@
 
 <!-- ENTRADAS -->
 
+### 2026-06-13 | Daniel Caignet
+**Tarea:** Corregir fallo del cronjob `Demeter Daily Operations (5:00 AM Chile)` por `Permission denied` al ejecutar `daily-operations.sh`.
+**Acción:** Identifiqué que `/opt/data/scripts/daily-operations.sh` no tenía bit de ejecución (`600`). Apliqué `chmod u+x` al wrapper y al script principal, validé sintaxis con `bash -n`, comprobé ejecución silenciosa del wrapper fuera de la ventana de 05:00, disparé el cronjob manualmente y confirmé `last_status: ok`. También dejé los scripts de recuperación del repo con bit ejecutable para evitar que el problema reaparezca al restaurar.
+**Estado:** ✅ Finalizada exitosamente
+
 ### 2026-06-12 | Daniel Caignet
 **Tarea:** Unificar AGENT.md en AGENTS.md, eliminar duplicados y actualizar grafo.
 **Acción:** AGENTS.md ya contenía todo el contenido de AGENT.md + sección Graphify. Eliminé AGEMENT.md, corregí título de AGENTS.md, verifiqué que no había referencias externas colgadas. Grafo actualizado: 126 nodes (-8), 202 links (-7), 16 communities.
