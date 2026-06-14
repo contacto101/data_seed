@@ -14,8 +14,8 @@
 
 ### 2026-06-14 | Daniel Caignet
 **Tarea:** Revisar las salidas del cronjob diario y diagnosticar por qué no encontró entradas en el log para generar el resumen antes de limpiar.
-**Acción:** En revisión: inspeccionaré las salidas del cronjob de hoy, los scripts diarios y el orden resumen→limpieza.
-**Estado:** 🔄 En progreso
+**Acción:** Revisé la salida `2026-06-14_09-00-24.md` del cron `ea05ea193912`, confirmé que ejecutó a las 05:00 Chile y saltó el resumen por falso vacío. Corregí `daily-task-log-cleanup.sh`: ahora solo considera vacío el bloque completo sin contenido, no cualquier línea en blanco; además cuenta estados solo desde líneas `**Estado:**`. Verifiqué en repos temporales que el resumen se genera antes de limpiar y que el `task-log` queda vacío después. Recuperé el resumen omitido en `daily-summary.md`, limpié del log vivo solo las entradas antiguas ya resumidas y dejé el backup copiando también `daily-task-log-cleanup.sh`.
+**Estado:** ✅ Finalizada exitosamente
 
 ### 2026-06-14 | Daniel Caignet
 **Tarea:** Explicar qué es un design system.

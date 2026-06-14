@@ -1,6 +1,6 @@
 #!/bin/bash
 # Script unificado de operaciones diarias Demeter
-# Orden: 1) Cleanup task-log → resumen del día, 2) Backup → snapshot post-cleanup
+# Orden: 0) Actualizar grafo, 1) Generar resumen diario del task-log, 2) Limpiar task-log, 3) Backup post-resumen
 
 set -euo pipefail
 

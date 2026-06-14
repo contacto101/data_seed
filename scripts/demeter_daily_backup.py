@@ -61,6 +61,7 @@ ALLOWED_REPO_OUTPUTS = [
     "scripts/demeter_daily_backup.py",
     "scripts/daily-operations.sh",
     "scripts/daily-operations-wrapper.sh",
+    "scripts/daily-task-log-cleanup.sh",
     "graphify-out/GRAPH_REPORT.md",
     "graphify-out/manifest.json",
     "graphify-out/.graphify_labels.json",
@@ -832,6 +833,7 @@ def copy_new_scripts() -> None:
     scripts = [
         ("scripts/daily-operations.sh", True),
         ("scripts/daily-operations-wrapper.sh", True),
+        ("scripts/daily-task-log-cleanup.sh", True),
     ]
     for rel, executable in scripts:
         source = HERMES_HOME / rel
