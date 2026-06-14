@@ -8,6 +8,16 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-14 | Daniel Caignet
+**Tarea:** Confirmar ubicación de las skills `ui-ux-pro-max` e `impeccable` dentro de Hermes.
+**Acción:** Verifiqué con `skill_view` y `hermes skills list` que ambas están bajo el root de skills del perfil activo (`/opt/data/skills`): `ui-ux-pro-max` en `/opt/data/skills/ui-ux-pro-max` e `impeccable` en `/opt/data/skills/creative/impeccable`, ambas habilitadas.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-14 | Daniel Caignet
+**Tarea:** Convertir el grafo local del repo DataSeed a multi-branch y eliminar temporales de la prueba.
+**Acción:** Implementé `scripts/update-multibranch-graph.py` con generación segura vía `git archive`, filtro anti-secretos/runtime y reemplazo controlado solo de `graphify-out/`. Actualicé el flujo diario para usar ese generador multi-branch y el backup para incluir sus metadatos seguros. Ejecuté el generador en `/opt/data/data_seed`: grafo actualizado con 9 branches, 1251 nodes, 1509 links, 143 communities, y validación de los 9 nombres de branch. Eliminé los temporales previos `/tmp/dataseed-multibranch-*` y el `__pycache__` generado por validación.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-14 | Daniel Caignet
 **Tarea:** Instalar la skill `impeccable` para usarla junto con `ui-ux-pro-max`.
 **Acción:** Busqué e inspeccioné `skills-sh/pbakaus/impeccable/impeccable`. La instalación oficial fue bloqueada por Hermes con veredicto `DANGEROUS` por scripts live-browser, hooks, fetch localhost con token y automatización de instalación. Para no introducir esos riesgos, creé una adaptación local segura `creative/impeccable` que conserva la guía de diseño, auditoría, polish, layout, tipografía, motion y anti-AI-slop, excluyendo scripts/hooks ejecutables. Verifiqué que aparece como skill local habilitada.
 **Estado:** ✅ Finalizada exitosamente
