@@ -62,9 +62,12 @@ ALLOWED_REPO_OUTPUTS = [
     "scripts/daily-operations.sh",
     "scripts/daily-operations-wrapper.sh",
     "scripts/daily-task-log-cleanup.sh",
+    "scripts/update-multibranch-graph.py",
     "graphify-out/GRAPH_REPORT.md",
     "graphify-out/manifest.json",
     "graphify-out/.graphify_labels.json",
+    "graphify-out/MULTIBRANCH_README.md",
+    "graphify-out/multibranch_manifest.json",
 ]
 SAFE_CRON_SCRIPT_EXTENSIONS = {".py", ".sh", ".bash"}
 HARD_COPY_ALLOWLIST = HERMES_HOME / "backup_hardcopy_allowlist.txt"
@@ -818,6 +821,8 @@ def copy_graphify_outputs() -> None:
         ("graphify-out/GRAPH_REPORT.md", False),
         ("graphify-out/manifest.json", False),
         ("graphify-out/.graphify_labels.json", False),
+        ("graphify-out/MULTIBRANCH_README.md", False),
+        ("graphify-out/multibranch_manifest.json", False),
     ]
     for rel, executable in graphify_files:
         source = TASK_TRACKING_REPO_DIR / rel
@@ -834,6 +839,7 @@ def copy_new_scripts() -> None:
         ("scripts/daily-operations.sh", True),
         ("scripts/daily-operations-wrapper.sh", True),
         ("scripts/daily-task-log-cleanup.sh", True),
+        ("scripts/update-multibranch-graph.py", True),
     ]
     for rel, executable in scripts:
         source = HERMES_HOME / rel

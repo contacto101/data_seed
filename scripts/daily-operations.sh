@@ -7,11 +7,11 @@ set -euo pipefail
 TIMESTAMP=$(TZ='America/Santiago' date '+%Y-%m-%d %H:%M:%S %Z')
 echo "[$TIMESTAMP] Iniciando operaciones diarias unificadas..."
 
-# 0. Actualizar el grafo de conocimiento (AST-only, sin costo de API)
-echo "[$TIMESTAMP] Paso 0/3: Actualizando grafo de conocimiento..."
+# 0. Actualizar el grafo de conocimiento multi-branch (AST-only, sin costo de API)
+echo "[$TIMESTAMP] Paso 0/3: Actualizando grafo de conocimiento multi-branch..."
 cd /opt/data/data_seed
-/opt/data/home/.local/share/uv/tools/graphifyy/bin/graphify update . --force 2>&1 || {
-  echo "[$TIMESTAMP] WARNING: Error actualizando grafo. Continuando con backup..."
+python3 /opt/data/scripts/update-multibranch-graph.py 2>&1 || {
+  echo "[$TIMESTAMP] WARNING: Error actualizando grafo multi-branch. Continuando con backup..."
 }
 
 # 1. Cleanup del task-log: genera resumen de últimas 24h y limpia el log
