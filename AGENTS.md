@@ -70,6 +70,7 @@ Este proyecto tiene un grafo de conocimiento en `graphify-out/` con nodos clave,
 
 **Reglas:**
 - Para preguntas sobre el codebase, primero ejecuta `graphify query "<pregunta>"` cuando `graphify-out/graph.json` existe. Usa `graphify path "<A>" "<B>"` para relaciones y `graphify explain "<concepto>"` para conceptos específicos. Estos devuelven un subgrafo enfocado, mucho más pequeño que GRAPH_REPORT.md o grep raw.
-- Después de modificar código, ejecuta `graphify update .` para mantener el grafo actualizado (solo AST, sin costo de API).
+- El grafo es **multi-branch**: incluye archivos de todas las ramas remotas de `origin/*`, no solo el branch actual. Esto permite encontrar código que existe en otros branches aunque no esté en el working tree.
+- Después de modificar código, ejecuta `python3 /opt/data/scripts/update-multibranch-graph.py` para mantener el grafo actualizado (solo AST, sin costo de API). El grafo se regenera automáticamente cada noche a las 5:00 AM Chile junto con el backup diario.
 - Lee `graphify-out/GRAPH_REPORT.md` solo para revisión de arquitectura general o cuando query/path/explain no aporten suficiente contexto.
-- El grafo se actualiza automáticamente cada noche a las 5:00 AM Chile junto con el backup diario.
+- `graphify-out/multibranch_manifest.json` contiene metadatos del grafo multi-branch: branches incluidos, commits, nodos, links y comunidades.
