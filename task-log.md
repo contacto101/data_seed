@@ -9,7 +9,7 @@
 
 ### 2026-06-14 | Daniel Caignet
 **Tarea:** Explicar qué capacidades aporta la skill `ui-ux-pro-max`.
-**Acción:** Revisé la skill instalada y resumí sus usos prácticos para diseño, revisión, mejora e implementación UI/UX en DataSeed y otros productos.
+**Acción:** Revisé la skill instalada, detecté que los recursos `scripts` y `data` habían quedado como archivos placeholder, los reparé copiando los directorios reales del paquete upstream, verifiqué `search.py` generando un design system de prueba para DataSeed y resumí sus usos prácticos para diseño, revisión, mejora e implementación UI/UX.
 **Estado:** ✅ Finalizada exitosamente
 
 ### 2026-06-14 | Daniel Caignet
