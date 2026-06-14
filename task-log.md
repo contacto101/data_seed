@@ -24,8 +24,8 @@
 
 ### 2026-06-14 | Daniel Caignet
 **Tarea:** Revisar por qué algunos branches del repo no aparecen en el grafo de Graphify.
-**Acción:** Diagnóstico parcial completado: el grafo actual fue generado desde `feat/task-tracking-system` en el commit `21d726a`, no desde todas las ramas. Se detectaron ramas remotas con archivos que no están en el manifiesto actual (`agent-landing-updates`, `docs/factory-protocols`, `feat/publica-platform`, `internal-agent-console`, `supabase-auth-staging`, entre otras). Intenté preparar un snapshot temporal multi-branch en `/tmp/dataseed-multibranch-snapshot`, pero el comando fue bloqueado/denegado por incluir `rm -rf` sobre esa carpeta temporal.
-**Estado:** ⚠️ Diagnóstico parcial; a la espera de autorización para generar snapshot multi-branch seguro o definir otra estrategia
+**Acción:** Confirmé que el grafo normal de `/opt/data/data_seed/graphify-out` solo refleja el árbol activo, no todos los branches. Generé un snapshot temporal multi-branch sin borrar archivos en `/tmp/dataseed-multibranch-snapshot-c2s4g266`, usando `git archive` para 9 ramas remotas y filtro de seguridad para excluir runtime/sensibles (`graphify-out`, `.env` reales, claves, tokens, credenciales, DB/cache). Corrí `graphify update . --force` sobre ese snapshot: 1247 nodes, 1505 edges, 143 communities, 0 tokens de LLM; verifiqué que los 9 nombres de branch aparecen en el grafo y empaqueté el resultado en `/tmp/dataseed-multibranch-graphify-c2s4g266.zip`.
+**Estado:** ✅ Finalizada exitosamente
 
 ### 2026-06-13 | Daniel Caignet
 **Tarea:** Corregir fallo del cronjob `Demeter Daily Operations (5:00 AM Chile)` por `Permission denied` al ejecutar `daily-operations.sh`.
