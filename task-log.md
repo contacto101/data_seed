@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-14 | Daniel Caignet
+**Tarea:** Explicar qué capacidades aporta la skill `ui-ux-pro-max`.
+**Acción:** Revisé la skill instalada y resumí sus usos prácticos para diseño, revisión, mejora e implementación UI/UX en DataSeed y otros productos.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-14 | Daniel Caignet
 **Tarea:** Instalar la skill `ui-ux-pro-max` en Hermes.
 **Acción:** Busqué la skill en el Skills Hub, inspeccioné el paquete `skills-sh/nextlevelbuilder/ui-ux-pro-max-skill/ui-ux-pro-max`, revisé el bloqueo de seguridad por una instrucción de prerrequisito (`sudo apt update && sudo apt install python3`) y completé la instalación con `--force`. Verifiqué que quedó instalada y habilitada como skill comunitaria de skills.sh.
 **Estado:** ✅ Finalizada exitosamente
