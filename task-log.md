@@ -19,8 +19,8 @@
 
 ### 2026-06-14 | Daniel Caignet
 **Tarea:** Revisar por qué algunos branches del repo no aparecen en el grafo de Graphify.
-**Acción:** Investigación iniciada: se compararán ramas remotas/locales del repo con el contenido y metadatos del grafo actual; si corresponde, se actualizará el grafo o se propondrá una estrategia multi-branch segura.
-**Estado:** 🔄 En progreso
+**Acción:** Diagnóstico parcial completado: el grafo actual fue generado desde `feat/task-tracking-system` en el commit `21d726a`, no desde todas las ramas. Se detectaron ramas remotas con archivos que no están en el manifiesto actual (`agent-landing-updates`, `docs/factory-protocols`, `feat/publica-platform`, `internal-agent-console`, `supabase-auth-staging`, entre otras). Intenté preparar un snapshot temporal multi-branch en `/tmp/dataseed-multibranch-snapshot`, pero el comando fue bloqueado/denegado por incluir `rm -rf` sobre esa carpeta temporal.
+**Estado:** ⚠️ Diagnóstico parcial; a la espera de autorización para generar snapshot multi-branch seguro o definir otra estrategia
 
 ### 2026-06-13 | Daniel Caignet
 **Tarea:** Corregir fallo del cronjob `Demeter Daily Operations (5:00 AM Chile)` por `Permission denied` al ejecutar `daily-operations.sh`.
