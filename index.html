@@ -27,6 +27,8 @@
   color-scheme:dark;
   --bg:#050e06;
   --bg2:#071209;
+  --panel:#08150a;
+  --panel-2:#0b180e;
   --card:rgba(0,255,65,0.035);
   --card-b:rgba(0,255,65,0.12);
   --card-h:rgba(0,255,65,0.07);
@@ -36,7 +38,19 @@
   --text:#dff5e3;
   --sub:#7aaa84;
   --muted:#3d6645;
-  --r:16px;
+  --error:#ff6b6b;
+  --warn:#e5a100;
+  --info:#3b82f6;
+  --r-sm:8px;
+  --r-md:12px;
+  --r-lg:16px;
+  --r-xl:20px;
+  --r-2xl:32px;
+  --r-pill:999px;
+  --shadow-1:0 1px 3px rgba(0,0,0,0.3);
+  --shadow-2:0 4px 12px rgba(0,0,0,0.35);
+  --shadow-3:0 16px 48px rgba(0,255,65,0.07);
+  --shadow-cta:0 0 32px rgba(0,255,65,0.28);
   --chat--color-primary:var(--g);
   --chat--color-primary-shade-50:#00ea3c;
   --chat--color-primary-shade-100:#00cc33;
@@ -217,7 +231,7 @@ h1 em{font-style:normal;color:var(--g);text-shadow:0 0 50px rgba(0,255,65,.3);}
 .srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;}
 .srv{padding:2.4rem;}
 .srv-num{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.4rem;font-weight:500;}
-.srv-icon{width:46px;height:46px;background:rgba(0,255,65,.07);border:1px solid rgba(0,255,65,.18);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:1.4rem;}
+.srv-icon{width:46px;height:46px;background:rgba(0,255,65,.07);border:1px solid rgba(0,255,65,.18);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:1.4rem;color:var(--g);}
 .srv-title{font-family:'Syne',sans-serif;font-size:1.12rem;font-weight:700;margin-bottom:.7rem;letter-spacing:-.015em;}
 .srv-desc{font-size:.82rem;line-height:1.85;color:var(--sub);}
 .srv-tag{display:inline-block;background:rgba(0,255,65,.06);border:1px solid rgba(0,255,65,.14);border-radius:100px;padding:.22rem .8rem;font-size:.64rem;color:var(--g2);margin-top:1.2rem;font-weight:500;}
@@ -296,7 +310,7 @@ h1 em{font-style:normal;color:var(--g);text-shadow:0 0 50px rgba(0,255,65,.3);}
 #types{padding:5rem 0;border-top:1px solid rgba(0,255,65,.08);}
 .types-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-top:2.5rem;}
 .type{padding:1.9rem;}
-.type-icon{font-size:1.6rem;margin-bottom:.9rem;display:block;}
+.type-icon{font-size:1.6rem;margin-bottom:.9rem;display:block;color:var(--g);}
 .type-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.4rem;letter-spacing:-.01em;}
 .type-q{font-size:.7rem;color:var(--g2);font-weight:600;margin-bottom:.4rem;}
 .type-desc{font-size:.78rem;color:var(--sub);line-height:1.68;}
@@ -1029,9 +1043,9 @@ html[data-platform="android"] .demo-input,html[data-platform="android"] .contact
     <a href="#products" class="btn-o">Ver productos →</a>
   </div>
   <div class="hero-strip">
-    <div class="hf gc"><span class="hf-icon">📊</span><div class="hf-title">BI y tableros</div><p class="hf-desc">KPIs ejecutivos y visibilidad real del negocio en tiempo real.</p></div>
-    <div class="hf gc"><span class="hf-icon">🔗</span><div class="hf-title">Integración de datos</div><p class="hf-desc">Fuentes dispersas unificadas en un flujo de información ordenado.</p></div>
-    <div class="hf gc"><span class="hf-icon">🧠</span><div class="hf-title">Analítica avanzada</div><p class="hf-desc">Insights accionables para crecer con eficiencia y menos ruido.</p></div>
+    <div class="hf gc"><span class="hf-icon" aria-hidden="true">◆</span><div class="hf-title">BI y tableros</div><p class="hf-desc">KPIs ejecutivos y visibilidad real del negocio en tiempo real.</p></div>
+    <div class="hf gc"><span class="hf-icon" aria-hidden="true">▲</span><div class="hf-title">Integración de datos</div><p class="hf-desc">Fuentes dispersas unificadas en un flujo de información ordenado.</p></div>
+    <div class="hf gc"><span class="hf-icon" aria-hidden="true">●</span><div class="hf-title">Analítica avanzada</div><p class="hf-desc">Insights accionables para crecer con eficiencia y menos ruido.</p></div>
   </div>
 </section>
 
@@ -1052,21 +1066,21 @@ html[data-platform="android"] .demo-input,html[data-platform="android"] .contact
     <div class="srv-grid">
       <div class="srv gc">
         <div class="srv-num">01 — BI Consulting</div>
-        <div class="srv-icon">📊</div>
+        <div class="srv-icon" aria-hidden="true">◆</div>
         <div class="srv-title">Consultoría BI</div>
         <p class="srv-desc">Diseño y desarrollo de proyectos de Business Intelligence a medida. Arquitectura de datos, KPIs estratégicos y tableros ejecutivos para decidir con información real.</p>
         <span class="srv-tag">Tableros · KPIs · Reporting</span>
       </div>
       <div class="srv gc">
         <div class="srv-num">02 — Data Engineering</div>
-        <div class="srv-icon">⚙️</div>
+        <div class="srv-icon" aria-hidden="true">▲</div>
         <div class="srv-title">Procesamiento de Datos</div>
         <p class="srv-desc">Extracción y procesamiento masivo de múltiples fuentes heterogéneas. Consolidación, optimización de flujos y preparación de datos para análisis en tiempo real.</p>
         <span class="srv-tag">ETL · Pipelines · Automatización</span>
       </div>
       <div class="srv gc">
         <div class="srv-num">03 — Advanced Analytics</div>
-        <div class="srv-icon">🔍</div>
+        <div class="srv-icon" aria-hidden="true">●</div>
         <div class="srv-title">Analítica Avanzada</div>
         <p class="srv-desc">Desde analítica descriptiva hasta modelos cognitivos. Visualizaciones interactivas, reportes estadísticos y monitoreo dinámico de los indicadores que más impactan.</p>
         <span class="srv-tag">Predictiva · Prescriptiva · ML</span>
@@ -1189,10 +1203,10 @@ html[data-platform="android"] .demo-input,html[data-platform="android"] .contact
     <div class="pill" style="margin-bottom:1.4rem;">● Tipos de analítica</div>
     <h2 class="sec-title">Toda la cadena analítica,<br>en un solo partner.</h2>
     <div class="types-grid">
-      <div class="type gc"><span class="type-icon">📋</span><div class="type-q">¿Qué pasó?</div><div class="type-title">Descriptiva</div><p class="type-desc">Resúmenes claros de datos históricos y KPIs clave para entender el estado actual.</p></div>
-      <div class="type gc"><span class="type-icon">🔎</span><div class="type-q">¿Por qué pasó?</div><div class="type-title">Diagnóstica</div><p class="type-desc">Identificamos causas raíz y patrones ocultos en tus datos para actuar sobre lo correcto.</p></div>
-      <div class="type gc"><span class="type-icon">📈</span><div class="type-q">¿Qué va a pasar?</div><div class="type-title">Predictiva</div><p class="type-desc">Modelos estadísticos y de ML que anticipan tendencias, riesgos y oportunidades.</p></div>
-      <div class="type gc"><span class="type-icon">🎯</span><div class="type-q">¿Qué hacer?</div><div class="type-title">Prescriptiva</div><p class="type-desc">Recomendaciones accionables y simulaciones para optimizar decisiones antes de ejecutarlas.</p></div>
+      <div class="type gc"><span class="type-icon" aria-hidden="true">◆</span><div class="type-q">¿Qué pasó?</div><div class="type-title">Descriptiva</div><p class="type-desc">Resúmenes claros de datos históricos y KPIs clave para entender el estado actual.</p></div>
+      <div class="type gc"><span class="type-icon" aria-hidden="true">▲</span><div class="type-q">¿Por qué pasó?</div><div class="type-title">Diagnóstica</div><p class="type-desc">Identificamos causas raíz y patrones ocultos en tus datos para actuar sobre lo correcto.</p></div>
+      <div class="type gc"><span class="type-icon" aria-hidden="true">●</span><div class="type-q">¿Qué va a pasar?</div><div class="type-title">Predictiva</div><p class="type-desc">Modelos estadísticos y de ML que anticipan tendencias, riesgos y oportunidades.</p></div>
+      <div class="type gc"><span class="type-icon" aria-hidden="true">■</span><div class="type-q">¿Qué hacer?</div><div class="type-title">Prescriptiva</div><p class="type-desc">Recomendaciones accionables y simulaciones para optimizar decisiones antes de ejecutarlas.</p></div>
     </div>
   </div>
 </section>
