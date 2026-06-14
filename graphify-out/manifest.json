@@ -4,14 +4,19 @@
     "ast_hash": "e3ea399358d628b348cfaaf62980e4b1",
     "semantic_hash": ""
   },
+  "scripts/daily-operations-wrapper.sh": {
+    "mtime": 1781299895.8858616,
+    "ast_hash": "79a8fe4ff01ad250d0242070616c4c94",
+    "semantic_hash": ""
+  },
+  "scripts/daily-operations.sh": {
+    "mtime": 1781300322.7425203,
+    "ast_hash": "fe1109538d49b0adb14d3b1b778e013a",
+    "semantic_hash": ""
+  },
   "scripts/daily-task-log-cleanup.sh": {
     "mtime": 1781275454.8000576,
     "ast_hash": "538187e9ebe11468f68d6db2c04b24cf",
-    "semantic_hash": ""
-  },
-  "scripts/daily-task-log-wrapper.sh": {
-    "mtime": 1781203597.3485785,
-    "ast_hash": "615eb3c574ded0bcc203a9854cf74cda",
     "semantic_hash": ""
   },
   "scripts/dataseed_demo_proxy.py": {
@@ -20,18 +25,18 @@
     "semantic_hash": ""
   },
   "scripts/demeter_daily_backup.py": {
-    "mtime": 1781276909.2083087,
-    "ast_hash": "60731c60c99a21516019041e3dc161cf",
+    "mtime": 1781299969.0688024,
+    "ast_hash": "29f4898f7c6766f6c695ded147e603e3",
     "semantic_hash": ""
   },
-  "AGENT.md": {
-    "mtime": 1781194422.6748898,
-    "ast_hash": "09a1bcc586a6eb68291be661d4b78b36",
+  "AGENTS.md": {
+    "mtime": 1781303840.9701314,
+    "ast_hash": "f7d8d5f3f67a1d2732f2623f26a629cb",
     "semantic_hash": ""
   },
   "backups/BACKUP.md": {
-    "mtime": 1781195607.3833857,
-    "ast_hash": "f4031061a2977df639c8fe82c4b1c35c",
+    "mtime": 1781304402.5168276,
+    "ast_hash": "60f7d7e496bb420f6f9dd29f07232354",
     "semantic_hash": ""
   },
   "backups/COMPLETED_CYCLES.md": {
@@ -75,8 +80,8 @@
     "semantic_hash": ""
   },
   "task-log.md": {
-    "mtime": 1781295525.0092483,
-    "ast_hash": "a2967965fbbaa7ad9e9082c2a09cb945",
+    "mtime": 1781379333.8958347,
+    "ast_hash": "337382d0123e5bfa6059559603aaa5ad",
     "semantic_hash": ""
   },
   "test_access.md": {
