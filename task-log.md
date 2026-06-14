@@ -7,6 +7,16 @@
 
 <!-- ENTRADAS -->
 
+### 2026-06-14 | Daniel Caignet
+**Tarea:** Instalar la skill `ui-ux-pro-max` en Hermes.
+**Acción:** Busqué la skill en el Skills Hub, inspeccioné el paquete `skills-sh/nextlevelbuilder/ui-ux-pro-max-skill/ui-ux-pro-max`, revisé el bloqueo de seguridad por una instrucción de prerrequisito (`sudo apt update && sudo apt install python3`) y completé la instalación con `--force`. Verifiqué que quedó instalada y habilitada como skill comunitaria de skills.sh.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-14 | Daniel Caignet
+**Tarea:** Revisar por qué algunos branches del repo no aparecen en el grafo de Graphify.
+**Acción:** Investigación iniciada: se compararán ramas remotas/locales del repo con el contenido y metadatos del grafo actual; si corresponde, se actualizará el grafo o se propondrá una estrategia multi-branch segura.
+**Estado:** 🔄 En progreso
+
 ### 2026-06-13 | Daniel Caignet
 **Tarea:** Corregir fallo del cronjob `Demeter Daily Operations (5:00 AM Chile)` por `Permission denied` al ejecutar `daily-operations.sh`.
 **Acción:** Identifiqué que `/opt/data/scripts/daily-operations.sh` no tenía bit de ejecución (`600`). Apliqué `chmod u+x` al wrapper y al script principal, validé sintaxis con `bash -n`, comprobé ejecución silenciosa del wrapper fuera de la ventana de 05:00, disparé el cronjob manualmente y confirmé `last_status: ok`. También dejé los scripts de recuperación del repo con bit ejecutable para evitar que el problema reaparezca al restaurar.
