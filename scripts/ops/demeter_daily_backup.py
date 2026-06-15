@@ -67,6 +67,7 @@ ALLOWED_REPO_OUTPUTS = [
     "scripts/ops/daily-operations.sh",
     "scripts/ops/daily-operations-wrapper.sh",
     "scripts/ops/daily-task-log-cleanup.sh",
+    "scripts/generate-multibranch-graph.py",
     "graphify-out/GRAPH_REPORT.md",
     "graphify-out/manifest.json",
     "graphify-out/.graphify_labels.json",
@@ -585,12 +586,12 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 ## Grafo de conocimiento del proyecto (Graphify)
 
 El grafo de Graphify mapea las relaciones entre archivos, funciones y conceptos del proyecto.
-Se actualiza con `graphify update .` después de cambios importantes en el código.
+Se genera con `scripts/generate-multibranch-graph.py`, que crea un snapshot temporal de todos los branches remotos, deduplica archivos idénticos bajo `_shared/` y copia al repo solo los artefactos livianos versionables.
 
 - Directorio del grafo: `graphify-out/`
 - Archivos incluidos en este backup: `GRAPH_REPORT.md`, `manifest.json`, `.graphify_labels.json`
 - Archivos grandes NO incluidos (regenerables): `graph.html`, `graph.json`, `cache/`, snapshots multibranch temporales
-- Para regenerar: `cd /opt/data/data_seed && graphify update .`
+- Para regenerar: `cd /opt/data/data_seed && python3 scripts/generate-multibranch-graph.py`
 - Reporte del grafo: `graphify-out/GRAPH_REPORT.md` (incluido en este backup)
 
 ## Archivos actualizados por este backup

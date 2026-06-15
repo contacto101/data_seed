@@ -7,7 +7,7 @@ DataSeed transforma datos dispersos en terreno fértil para análisis, automatiz
 | Área | Fuente maestra | Estado |
 |---|---|---|
 | Operación de Demeter | `AGENTS.md` | Activo |
-| Identidad visual | `design-system/MASTER.md` | Activo |
+| Identidad visual | `docs/product/design-system.md` | Activo |
 | Índice documental | `docs/INDEX.md` | Activo |
 | Recuperación crítica | `backups/RESTORE_GUIDE.md` | Activo |
 | Sitio público | `site/index.html` | Activo |
