@@ -1,0 +1,25 @@
+# Runtime / local state
+.env
+*.env
+!.env.example
+*.log
+*.sqlite
+*.sqlite3
+*.db
+*.db-wal
+*.db-shm
+__pycache__/
+.cache/
+.venv/
+venv/
+node_modules/
+dist/
+build/
+
+# Graphify regenerable artifacts. Keep only the lightweight report/manifest files tracked.
+graphify-out/cache/
+graphify-out/graph.json
+graphify-out/graph.html
+graphify-out/.graphify_root
+graphify-out/multibranch_manifest.json
+graphify-out/MULTIBRANCH_README.md
