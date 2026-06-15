@@ -1,16 +1,16 @@
 # Graph Report - data_seed  (2026-06-15)
 
 ## Corpus Check
-- 39 files · ~38,553 words
+- 39 files · ~38,577 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 324 nodes · 377 edges · 40 communities (32 shown, 8 thin omitted)
+- 324 nodes · 377 edges · 39 communities (31 shown, 8 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `10394d67`
+- Built from commit: `1e9f2cb1`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -25,7 +25,6 @@
 - [[_COMMUNITY_Community 7|Community 7]]
 - [[_COMMUNITY_Community 8|Community 8]]
 - [[_COMMUNITY_Community 9|Community 9]]
-- [[_COMMUNITY_Community 10|Community 10]]
 - [[_COMMUNITY_Community 11|Community 11]]
 - [[_COMMUNITY_Community 12|Community 12]]
 - [[_COMMUNITY_Community 13|Community 13]]
@@ -72,15 +71,15 @@
 ## Import Cycles
 - 1-file cycle: `scripts/ops/demeter_daily_backup.py -> scripts/ops/demeter_daily_backup.py`
 
-## Communities (40 total, 8 thin omitted)
+## Communities (39 total, 8 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.10
 Nodes (49): Any, datetime, assert_no_secret_values(), backup_outputs_summary(), build_backup_md(), build_completed_cycles_md(), build_python_compat_wrapper(), build_restore_guide() (+41 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.06
-Nodes (33): 10. Anti-Patterns (prohibido), 11. Checklist pre-entrega, 1. Identidad de Marca, 2. Paleta de Colores, 4. Espaciado y Grid, 5. Componentes, 6. Iconografía, 7. Motion y Animación (+25 more)
+Cohesion: 0.05
+Nodes (40): 10. Anti-Patterns (prohibido), 11. Checklist pre-entrega, 1. Identidad de Marca, 2. Paleta de Colores, 3. Tipografías, 4. Espaciado y Grid, 5. Componentes, 6. Iconografía (+32 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.21
@@ -113,10 +112,6 @@ Nodes (7): Cliente ideal inicial, Diferenciales, Estado, Promesa, Próxima acci�
 ### Community 9 - "Community 9"
 Cohesion: 0.25
 Nodes (7): Estado, Fase 1 — Ordenar el repositorio, Fase 2 — Producto demostrable, Fase 3 — Pública MVP, Fase 4 — Plataforma privada, Fase 5 — Operación robusta, Roadmap DataSeed
-
-### Community 10 - "Community 10"
-Cohesion: 0.29
-Nodes (7): 3. Tipografías, Escala tipográfica, Fuente principal: Syne, Fuente secundaria: Inter, Fuente terciaria (dashboards/mono): JetBrains Mono, Google Fonts import (usar en todos los HTML), Reglas de tipografía
 
 ### Community 11 - "Community 11"
 Cohesion: 0.29
@@ -204,14 +199,12 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Path` connect `Community 0` to `Community 2`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
-- **Why does `Design System — DataSeed` connect `Community 1` to `Community 10`?**
-  _High betweenness centrality (0.013) - this node is a cross-community bridge._
 - **What connects `restore.sh script`, `daily-operations-wrapper.sh script`, `daily-operations.sh script` to the rest of the system?**
   _189 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.10204081632653061 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.04878048780487805 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.125 - nodes in this community are weakly interconnected._
 - **Should `Community 25` be split into smaller, more focused modules?**

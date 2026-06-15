@@ -6,17 +6,18 @@ Este índice conecta la información activa e histórica del repo. Si un documen
 
 | Documento | Estado | Responsable lógico | Tema | Rama/origen | Siguiente acción |
 |---|---|---|---|---|---|
-| `AGENTS.md` | Activo | Demeter | Guía operativa del agente | `main` | Mantener como única guía raíz |
-| `design-system/MASTER.md` | Activo | Diseño/DataSeed | Identidad visual | `main` | Usar antes de cambios UI |
-| `backups/RESTORE_GUIDE.md` | Activo | Operaciones | Recuperación crítica | `main` | Mantener alineado con scripts |
-| `docs/operations/rollback.md` | Activo | Operaciones | Rollback reorganización | `refactor/repo-information-architecture` | Usar ante falla |
+|| `AGENTS.md` | Activo | Demeter | Guía operativa del agente | `main` | Mantener como única guía raíz |
+|| `docs/product/design-system.md` | Activo | Diseño/DataSeed | Identidad visual | `main` → `docs/product/` | Usar antes de cambios UI |
+|| `backups/RESTORE_GUIDE.md` | Activo | Operaciones | Recuperación crítica | `main` | Mantener alineado con scripts |
+|| `docs/operations/rollback.md` | Activo | Operaciones | Rollback reorganización | `refactor/repo-information-architecture` | Usar ante falla |
 
 ## Producto
 
 | Documento | Estado | Responsable lógico | Tema | Rama/origen | Siguiente acción |
 |---|---|---|---|---|---|
-| `docs/product/agent-engine.md` | Activo | Producto | Agent Engine | Landing + demo proxy | Convertir en ficha comercial/técnica |
-| `docs/product/publica.md` | Activo | Producto | Pública by DataSeed | `agent-landing-updates/docs/publica-ai-product-strategy.md` | Validar MVP ChileCompra |
+|| `docs/product/agent-engine.md` | Activo | Producto | Agent Engine | Landing + demo proxy | Convertir en ficha comercial/técnica |
+|| `docs/product/design-system.md` | Activo | Diseño | Identidad visual DataSeed | `main` → `docs/product/` | Usar antes de cualquier cambio UI |
+|| `docs/product/publica.md` | Activo | Producto | Pública by DataSeed | `agent-landing-updates/docs/publica-ai-product-strategy.md` | Validar MVP ChileCompra |
 | `docs/product/roadmap.md` | Borrador activo | Producto/Ops | Roadmap | Grafo multi-branch | Priorizar fases |
 | `docs/product/strategy.md` | Activo | Dirección | Tesis estratégica | Stakeholder report + Pública strategy | Convertir en narrativa ejecutiva |
 

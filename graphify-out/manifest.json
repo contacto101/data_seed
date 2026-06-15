@@ -119,14 +119,9 @@
     "ast_hash": "0c8ced1b554dea13bfd43e96088f7b81",
     "semantic_hash": ""
   },
-  "design-system/MASTER.md": {
-    "mtime": 1781452517.3521507,
-    "ast_hash": "fe5cd1b60d118d0b38f7f88ca16868ce",
-    "semantic_hash": ""
-  },
   "docs/INDEX.md": {
-    "mtime": 1781498200.4833624,
-    "ast_hash": "400d96f8d14db7a0fbef9abdd961fe2c",
+    "mtime": 1781500817.8480709,
+    "ast_hash": "4b7e2749d268d4f982622c98fbc94a21",
     "semantic_hash": ""
   },
   "docs/commercial/faq.md": {
@@ -227,6 +222,11 @@
   "site/assets/dataseed_logo_black.png": {
     "mtime": 1781194422.6778898,
     "ast_hash": "1eb36737493f1a1c90e11caefc35ece6",
+    "semantic_hash": ""
+  },
+  "docs/product/design-system.md": {
+    "mtime": 1781452517.3521507,
+    "ast_hash": "fe5cd1b60d118d0b38f7f88ca16868ce",
     "semantic_hash": ""
   }
 }
