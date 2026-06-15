@@ -1,806 +1,781 @@
 {
   "_shared/backups/restore.sh": {
-    "mtime": 1781549726.7798393,
-    "ast_hash": "dc107c1ccb54b9e01916adca750cfffc",
+    "mtime": 1781554435.180053,
+    "ast_hash": "89f82c2fed989b6d3024cc1653b27c46",
     "semantic_hash": ""
   },
   "_shared/js/analytics-events.js": {
-    "mtime": 1781549726.7738392,
+    "mtime": 1781554435.191053,
     "ast_hash": "43fef608588ae59848df562fddbf130a",
     "semantic_hash": ""
   },
   "_shared/js/auth-ui.js": {
-    "mtime": 1781549726.7738392,
+    "mtime": 1781554435.191053,
     "ast_hash": "88b63470fb1558c085b7c43528da8fb3",
     "semantic_hash": ""
   },
-  "_shared/js/supabase-auth.js": {
-    "mtime": 1781549726.7938392,
-    "ast_hash": "a3b081a8afbfae76792ca274d4fc15ce",
-    "semantic_hash": ""
-  },
-  "_shared/js/supabase-config.example.js": {
-    "mtime": 1781549726.7938392,
-    "ast_hash": "5ac89e95afac9a3d99d53bbf92f42404",
-    "semantic_hash": ""
-  },
-  "_shared/js/supabase-config.js": {
-    "mtime": 1781549726.7938392,
-    "ast_hash": "2c2c379c22331590287417ddede9c896",
-    "semantic_hash": ""
-  },
-  "_shared/scripts/daily-operations-wrapper.sh": {
-    "mtime": 1781549726.785839,
-    "ast_hash": "fff8d59d0de5387e840feac0af34a0ec",
-    "semantic_hash": ""
-  },
-  "_shared/scripts/daily-operations.sh": {
-    "mtime": 1781549726.785839,
-    "ast_hash": "cb9570805e2db5d03c991f0420c29c13",
-    "semantic_hash": ""
-  },
   "_shared/scripts/dataseed_demo_proxy.py": {
-    "mtime": 1781549726.7938392,
+    "mtime": 1781554435.201053,
     "ast_hash": "b37963b5969faf6a3a8d5ad3aa163d94",
     "semantic_hash": ""
   },
-  "_shared/scripts/demeter_daily_backup.py": {
-    "mtime": 1781549726.785839,
-    "ast_hash": "d3540b4c396a707f0c87ebe71e904491",
-    "semantic_hash": ""
-  },
   "_shared/scripts/export-demeter-daily-report.py": {
-    "mtime": 1781549726.7938392,
+    "mtime": 1781554435.201053,
     "ast_hash": "f01189888ec784106e9a141124bd6a08",
     "semantic_hash": ""
   },
-  "_shared/scripts/ops/daily-operations-wrapper.sh": {
-    "mtime": 1781549726.7868392,
-    "ast_hash": "3c09b9e31514b2b67c8f96c8498d275f",
-    "semantic_hash": ""
-  },
-  "_shared/scripts/ops/daily-operations.sh": {
-    "mtime": 1781549726.7868392,
-    "ast_hash": "8ab5d6665397b4c64372f6d8e12e8286",
-    "semantic_hash": ""
-  },
   "_shared/scripts/ops/daily-task-log-cleanup.sh": {
-    "mtime": 1781549726.7878392,
+    "mtime": 1781554435.212053,
     "ast_hash": "75c75e89dbbad5a0122f9a8bfc0bd052",
     "semantic_hash": ""
   },
-  "_shared/scripts/ops/demeter_daily_backup.py": {
-    "mtime": 1781549726.8098392,
-    "ast_hash": "1a08e55309aeff53d3faa20dca925209",
-    "semantic_hash": ""
-  },
   "_shared/scripts/upload-demeter-report-firestore.py": {
-    "mtime": 1781549726.7948391,
+    "mtime": 1781554435.201053,
     "ast_hash": "289ddaf301ffc5f54d9d896c6f1d9484",
     "semantic_hash": ""
   },
-  "_shared/scripts/web/dataseed_demo_proxy.py": {
-    "mtime": 1781549726.788839,
-    "ast_hash": "e4358c0819c20ebf768466d6d55c00ae",
-    "semantic_hash": ""
-  },
-  "_shared/supabase/migrations/20260604_staging_auth.sql": {
-    "mtime": 1781549726.7948391,
-    "ast_hash": "8531f13c939761e14fcca52980ae9f28",
-    "semantic_hash": ""
-  },
   "branches/agent-landing-updates/api/demeter-demo.js": {
-    "mtime": 1781549726.7648392,
+    "mtime": 1781554435.179053,
     "ast_hash": "ccef5047000e1697208d2c7dee766ea3",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/data/publica-ai-demo-opportunities.json": {
-    "mtime": 1781549726.7678392,
+    "mtime": 1781554435.183053,
     "ast_hash": "9473c6f92a1750320fe5f9ad46338b38",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/firebase.json": {
-    "mtime": 1781549726.7718391,
+    "mtime": 1781554435.188053,
     "ast_hash": "0228291c0edc2f92c9b86f0e27626897",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/functions/index.js": {
-    "mtime": 1781549726.7718391,
+    "mtime": 1781554435.188053,
     "ast_hash": "f7a0ff5efabb402664d6be62772997f3",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/functions/package.json": {
-    "mtime": 1781549726.772839,
+    "mtime": 1781554435.189053,
     "ast_hash": "5307d56ea0d18b251d5bcd624b1b4158",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/js/ab-testing.js": {
-    "mtime": 1781549726.772839,
+    "mtime": 1781554435.190053,
     "ast_hash": "a4bcc979c50f96203a5e8b04ea7a502c",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/js/firebase-config.example.js": {
-    "mtime": 1781549726.7738392,
+    "mtime": 1781554435.191053,
     "ast_hash": "beb359054744d761841742b4f6b67e3e",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/js/gcp-firebase-auth.js": {
-    "mtime": 1781549726.7738392,
+    "mtime": 1781554435.191053,
     "ast_hash": "a7cde2d1ebd91f14ef7d38e44b49cc57",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/js/hubspot-form-adapter.js": {
-    "mtime": 1781549726.7748392,
+    "mtime": 1781554435.191053,
     "ast_hash": "ac9617dce0979882ea7bb4284c602731",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/scripts/export-demeter-daily-report.py": {
-    "mtime": 1781549726.7768393,
+    "mtime": 1781554435.193053,
     "ast_hash": "62b69496af84e5beaa996482bd43e1d9",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/scripts/generate-publica-ai-report.py": {
-    "mtime": 1781549726.7768393,
+    "mtime": 1781554435.194053,
     "ast_hash": "09d2c5778f11a980db86a62a59651d95",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/scripts/upload-demeter-report-firestore.py": {
-    "mtime": 1781549726.7768393,
+    "mtime": 1781554435.194053,
     "ast_hash": "3c66c8e2b3d10c9f7d7152036c7d63c2",
     "semantic_hash": ""
   },
-  "branches/chore/optimize-multibranch-information/scripts/generate-multibranch-graph.py": {
-    "mtime": 1781549726.7868392,
-    "ast_hash": "2e64830f92f6a9f08632a4f847ed52cf",
+  "branches/docs/factory-protocols/js/supabase-auth.js": {
+    "mtime": 1781554435.200053,
+    "ast_hash": "a3b081a8afbfae76792ca274d4fc15ce",
     "semantic_hash": ""
   },
-  "branches/chore/optimize-multibranch-information/scripts/ops/demeter_daily_backup.py": {
-    "mtime": 1781549726.7878392,
-    "ast_hash": "72d73cff0290713c1e06b7e8b77f3037",
+  "branches/docs/factory-protocols/js/supabase-config.example.js": {
+    "mtime": 1781554435.200053,
+    "ast_hash": "5ac89e95afac9a3d99d53bbf92f42404",
+    "semantic_hash": ""
+  },
+  "branches/docs/factory-protocols/js/supabase-config.js": {
+    "mtime": 1781554435.200053,
+    "ast_hash": "2c2c379c22331590287417ddede9c896",
+    "semantic_hash": ""
+  },
+  "branches/docs/factory-protocols/supabase/migrations/20260604_staging_auth.sql": {
+    "mtime": 1781554435.202053,
+    "ast_hash": "8531f13c939761e14fcca52980ae9f28",
     "semantic_hash": ""
   },
   "branches/feat/publica-platform/api/publica/alerts.js": {
-    "mtime": 1781549726.7978392,
+    "mtime": 1781554435.207053,
     "ast_hash": "93ac419f803b2b6f641fe10b2ae120f5",
     "semantic_hash": ""
   },
   "branches/feat/publica-platform/api/publica/ask.js": {
-    "mtime": 1781549726.798839,
+    "mtime": 1781554435.207053,
     "ast_hash": "7841422c841f94f612bc8503f53ce07c",
     "semantic_hash": ""
   },
   "branches/feat/publica-platform/api/publica/chilecompra.js": {
-    "mtime": 1781549726.798839,
+    "mtime": 1781554435.207053,
     "ast_hash": "9b31572f3bf91ddb5d2190a0461f9c4c",
     "semantic_hash": ""
   },
   "branches/feat/publica-platform/api/publica/data.js": {
-    "mtime": 1781549726.798839,
+    "mtime": 1781554435.207053,
     "ast_hash": "602d967d8779556378c82ad3d6eac225",
     "semantic_hash": ""
   },
   "branches/feat/publica-platform/api/publica/opportunities.js": {
-    "mtime": 1781549726.7998393,
+    "mtime": 1781554435.2080529,
     "ast_hash": "40edc60eb59e3fa0ffac4842817063ce",
     "semantic_hash": ""
   },
   "branches/feat/publica-platform/package.json": {
-    "mtime": 1781549726.7998393,
+    "mtime": 1781554435.2080529,
     "ast_hash": "e7f4e215930ca9018190094cd0d195c4",
     "semantic_hash": ""
   },
   "branches/feat/publica-platform/tests/publica-api.test.js": {
-    "mtime": 1781549726.8008392,
+    "mtime": 1781554435.209053,
     "ast_hash": "62ccee73232ade52f277a0abf1eb0500",
     "semantic_hash": ""
   },
   "branches/feat/task-tracking-system/backups/restore.sh": {
-    "mtime": 1781549726.801839,
+    "mtime": 1781554435.211053,
     "ast_hash": "e3ea399358d628b348cfaaf62980e4b1",
     "semantic_hash": ""
   },
   "branches/feat/task-tracking-system/scripts/daily-operations-wrapper.sh": {
-    "mtime": 1781549726.8028393,
+    "mtime": 1781554435.211053,
     "ast_hash": "79a8fe4ff01ad250d0242070616c4c94",
     "semantic_hash": ""
   },
   "branches/feat/task-tracking-system/scripts/daily-operations.sh": {
-    "mtime": 1781549726.8028393,
+    "mtime": 1781554435.212053,
     "ast_hash": "cdc75e45b928d106b50f5c9e14a65a8c",
     "semantic_hash": ""
   },
   "branches/feat/task-tracking-system/scripts/demeter_daily_backup.py": {
-    "mtime": 1781549726.8028393,
+    "mtime": 1781554435.212053,
     "ast_hash": "04173513b62d5b008f3f1a768519ee8e",
     "semantic_hash": ""
   },
   "branches/feat/task-tracking-system/scripts/update-multibranch-graph.py": {
-    "mtime": 1781549726.8028393,
+    "mtime": 1781554435.212053,
     "ast_hash": "841431df29b8d84374f0261b3af62e5e",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/api/demeter-chat.js": {
-    "mtime": 1781549726.8048391,
+    "mtime": 1781554435.214053,
     "ast_hash": "c9e1f2d71d71a1f15924419fba7045ee",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/components/console/app.js": {
-    "mtime": 1781549726.805839,
+    "mtime": 1781554435.215053,
     "ast_hash": "825e49c35e158152c136817362d51302",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/components/console/generated/ops-inventory.json": {
-    "mtime": 1781549726.8068392,
+    "mtime": 1781554435.215053,
     "ast_hash": "41f597fb7b1bb0f8014cf15d9b09855f",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/components/console/runtime-config.example.js": {
-    "mtime": 1781549726.8068392,
+    "mtime": 1781554435.216053,
     "ast_hash": "14d6a8facdbf95fcb6fe3b2745ec6d95",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/components/console/session-store.js": {
-    "mtime": 1781549726.8068392,
+    "mtime": 1781554435.216053,
     "ast_hash": "19cb0ee0626cac87917a1590bcad6791",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/components/console/use-demeter.js": {
-    "mtime": 1781549726.8068392,
+    "mtime": 1781554435.216053,
     "ast_hash": "755580ef071a73e608a8d26b6a36f1d8",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/package.json": {
-    "mtime": 1781549726.8068392,
+    "mtime": 1781554435.216053,
     "ast_hash": "5912eba011ab28eec2d85d3281ef5eb1",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/scripts/check-console.mjs": {
-    "mtime": 1781549726.8078392,
+    "mtime": 1781554435.217053,
     "ast_hash": "6316b3d7ac843dd76cfaa02515c05c15",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/scripts/dataseed_demo_proxy.py": {
-    "mtime": 1781549726.8078392,
+    "mtime": 1781554435.217053,
     "ast_hash": "062da5222f05013bf54f486d159b31a4",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/scripts/generate-console-config.mjs": {
-    "mtime": 1781549726.8078392,
+    "mtime": 1781554435.217053,
     "ast_hash": "052bc93d8d131a96472d6dd338a7dbdf",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/scripts/generate-ops-inventory.mjs": {
-    "mtime": 1781549726.8078392,
+    "mtime": 1781554435.2180529,
     "ast_hash": "3b291150c1545f412e05aa68a159d0eb",
     "semantic_hash": ""
   },
+  "branches/main/backups/restore.sh": {
+    "mtime": 1781554435.221053,
+    "ast_hash": "dc107c1ccb54b9e01916adca750cfffc",
+    "semantic_hash": ""
+  },
+  "branches/main/scripts/daily-operations-wrapper.sh": {
+    "mtime": 1781554435.226053,
+    "ast_hash": "fff8d59d0de5387e840feac0af34a0ec",
+    "semantic_hash": ""
+  },
+  "branches/main/scripts/daily-operations.sh": {
+    "mtime": 1781554435.226053,
+    "ast_hash": "cb9570805e2db5d03c991f0420c29c13",
+    "semantic_hash": ""
+  },
+  "branches/main/scripts/dataseed_demo_proxy.py": {
+    "mtime": 1781554435.226053,
+    "ast_hash": "2e8785a0db2b9b710e21633e77e5ad6c",
+    "semantic_hash": ""
+  },
+  "branches/main/scripts/demeter_daily_backup.py": {
+    "mtime": 1781554435.226053,
+    "ast_hash": "d3540b4c396a707f0c87ebe71e904491",
+    "semantic_hash": ""
+  },
+  "branches/main/scripts/generate-multibranch-graph.py": {
+    "mtime": 1781554435.226053,
+    "ast_hash": "2e64830f92f6a9f08632a4f847ed52cf",
+    "semantic_hash": ""
+  },
+  "branches/main/scripts/ops/daily-operations-wrapper.sh": {
+    "mtime": 1781554435.226053,
+    "ast_hash": "3c09b9e31514b2b67c8f96c8498d275f",
+    "semantic_hash": ""
+  },
+  "branches/main/scripts/ops/daily-operations.sh": {
+    "mtime": 1781554435.227053,
+    "ast_hash": "8ab5d6665397b4c64372f6d8e12e8286",
+    "semantic_hash": ""
+  },
+  "branches/main/scripts/ops/demeter_daily_backup.py": {
+    "mtime": 1781554435.227053,
+    "ast_hash": "72d73cff0290713c1e06b7e8b77f3037",
+    "semantic_hash": ""
+  },
+  "branches/main/scripts/web/dataseed_demo_proxy.py": {
+    "mtime": 1781554435.227053,
+    "ast_hash": "e4358c0819c20ebf768466d6d55c00ae",
+    "semantic_hash": ""
+  },
   "branches/vercel/install-vercel-speed-insights-ivlisy/package.json": {
-    "mtime": 1781549726.8128393,
+    "mtime": 1781554435.229053,
     "ast_hash": "6320a87bf1a474d48cf1dd634b2e2f1d",
     "semantic_hash": ""
   },
   "branches/vercel/install-vercel-speed-insights-ivlisy/scripts/dataseed_demo_proxy.py": {
-    "mtime": 1781549726.8128393,
+    "mtime": 1781554435.229053,
     "ast_hash": "b5c1003c1f5bf33db7fe9a125583c4ff",
     "semantic_hash": ""
   },
   "snapshot_manifest.json": {
-    "mtime": 1781549726.838839,
-    "ast_hash": "a1fdf0bb1e6e703dd1f0a86a28e17ae1",
+    "mtime": 1781554435.2540529,
+    "ast_hash": "dbd37d526b07360f00efb0a0a21ab8d9",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1781549726.838839,
+    "mtime": 1781554435.2540529,
     "ast_hash": "523ca14add00b29f8f2fe7b512fc703e",
     "semantic_hash": ""
   },
-  "_shared/.hermes/plans/2026-06-15_042824-repo-information-architecture.md": {
-    "mtime": 1781549726.7778392,
-    "ast_hash": "7f5fe03105e559f2bf111f31fe181ccb",
-    "semantic_hash": ""
-  },
-  "_shared/AGENTS.md": {
-    "mtime": 1781549726.8078392,
-    "ast_hash": "c2bbdb87740d5f956bda148afc60b53f",
-    "semantic_hash": ""
-  },
-  "_shared/README.md": {
-    "mtime": 1781549726.8078392,
-    "ast_hash": "1c3f32344ffc010c92963245f14efa15",
-    "semantic_hash": ""
-  },
-  "_shared/archive/README.md": {
-    "mtime": 1781549726.778839,
-    "ast_hash": "0fe2be4a0539cf84730ffcfdfb5f30a1",
-    "semantic_hash": ""
-  },
   "_shared/archive/legacy/AGENT.md": {
-    "mtime": 1781549726.7648392,
+    "mtime": 1781554435.179053,
     "ast_hash": "09a1bcc586a6eb68291be661d4b78b36",
     "semantic_hash": ""
   },
   "_shared/backups/BACKUP.md": {
-    "mtime": 1781549726.7998393,
+    "mtime": 1781554435.2080529,
     "ast_hash": "d5e2fe4155a43cd80f25f8c224f72851",
     "semantic_hash": ""
   },
   "_shared/backups/COMPLETED_CYCLES.md": {
-    "mtime": 1781549726.7798393,
+    "mtime": 1781554435.210053,
     "ast_hash": "0a36da7273497e20bacad5da432bb07c",
     "semantic_hash": ""
   },
   "_shared/backups/RESTORE_GUIDE.md": {
-    "mtime": 1781549726.7798393,
-    "ast_hash": "66a88da1c59a691f38b55d1491c7e7e7",
-    "semantic_hash": ""
-  },
-  "_shared/by-hash/675bd98d0a6d.txt": {
-    "mtime": 1781549726.7778392,
-    "ast_hash": "1be6ee1c92186503616f3bc75f700f8a",
-    "semantic_hash": ""
-  },
-  "_shared/by-hash/eb4fadfafa1f.txt": {
-    "mtime": 1781549726.788839,
-    "ast_hash": "789d13e99103ecfe5419ba35e7a71889",
-    "semantic_hash": ""
-  },
-  "_shared/dashboard.html": {
-    "mtime": 1781549726.7898393,
-    "ast_hash": "ee6174a74ae7f09052104b0856beffef",
-    "semantic_hash": ""
-  },
-  "_shared/docs/commercial/faq.md": {
-    "mtime": 1781549726.7808392,
-    "ast_hash": "bd86abc923ca53e9a061ccc5a74fe290",
-    "semantic_hash": ""
-  },
-  "_shared/docs/commercial/landing-copy.md": {
-    "mtime": 1781549726.7808392,
-    "ast_hash": "15acd2f586fb740fd30f1a524c847488",
-    "semantic_hash": ""
-  },
-  "_shared/docs/commercial/sales-pitch.md": {
-    "mtime": 1781549726.7818391,
-    "ast_hash": "5900fbb7d84997c42eafa18ee2cb5ec0",
-    "semantic_hash": ""
-  },
-  "_shared/docs/commercial/stakeholder-report.md": {
-    "mtime": 1781549726.7818391,
-    "ast_hash": "456eaeaa991ff35fc9e857c9ee0d4d7d",
-    "semantic_hash": ""
-  },
-  "_shared/docs/operations/cronjobs.md": {
-    "mtime": 1781549726.782839,
-    "ast_hash": "7a787e033d2a7df0ae76efa788e90431",
-    "semantic_hash": ""
-  },
-  "_shared/docs/operations/daily-backup.md": {
-    "mtime": 1781549726.782839,
-    "ast_hash": "ae1e2adbb2996125fb3d6343be803717",
-    "semantic_hash": ""
-  },
-  "_shared/docs/operations/demeter.md": {
-    "mtime": 1781549726.782839,
-    "ast_hash": "5815f37b257e34e3eb3f9ef1d05fa6a8",
-    "semantic_hash": ""
-  },
-  "_shared/docs/operations/graphify.md": {
-    "mtime": 1781549726.8098392,
-    "ast_hash": "2562461baf93dbe9fedcf784b083d2ef",
-    "semantic_hash": ""
-  },
-  "_shared/docs/operations/restore.md": {
-    "mtime": 1781549726.782839,
-    "ast_hash": "2e7f0062497b73afeb13cc02b1905e6e",
-    "semantic_hash": ""
-  },
-  "_shared/docs/operations/rollback.md": {
-    "mtime": 1781549726.782839,
-    "ast_hash": "a65538940994bd6f900d4a0691377244",
-    "semantic_hash": ""
-  },
-  "_shared/docs/operations/task-tracking.md": {
-    "mtime": 1781549726.7838392,
-    "ast_hash": "2ddd2472ddb34168a5f20f16a991e474",
-    "semantic_hash": ""
-  },
-  "_shared/docs/product/agent-engine.md": {
-    "mtime": 1781549726.7838392,
-    "ast_hash": "a6253bf30a9c5f51ff4d961d84c82903",
-    "semantic_hash": ""
-  },
-  "_shared/docs/product/design-system.md": {
-    "mtime": 1781549726.7838392,
-    "ast_hash": "fe5cd1b60d118d0b38f7f88ca16868ce",
-    "semantic_hash": ""
-  },
-  "_shared/docs/product/publica.md": {
-    "mtime": 1781549726.7838392,
-    "ast_hash": "3460d9cc8d8f3f85c8ada38959a52c35",
-    "semantic_hash": ""
-  },
-  "_shared/docs/product/roadmap.md": {
-    "mtime": 1781549726.7838392,
-    "ast_hash": "6fed084f7f43845e0bd0047e67b5e8f1",
-    "semantic_hash": ""
-  },
-  "_shared/docs/product/strategy.md": {
-    "mtime": 1781549726.7838392,
-    "ast_hash": "5fe5e3e68e853c8a5139e5f0bdf9a71d",
-    "semantic_hash": ""
-  },
-  "_shared/docs/security/auth-plan.md": {
-    "mtime": 1781549726.7848392,
-    "ast_hash": "20faf25d67a8357c93192b61ca481359",
-    "semantic_hash": ""
-  },
-  "_shared/docs/security/demo-guardrails.md": {
-    "mtime": 1781549726.7848392,
-    "ast_hash": "a9616d71a945a64ccc77eeaffe5ba08d",
-    "semantic_hash": ""
-  },
-  "_shared/docs/security/public-demo-risk-review.md": {
-    "mtime": 1781549726.7848392,
-    "ast_hash": "e5d377bc4ed993762d451ea38072aa69",
-    "semantic_hash": ""
-  },
-  "_shared/docs/supabase-auth-staging.md": {
-    "mtime": 1781549726.7938392,
-    "ast_hash": "21bbff8049eaa46ce9ed2f95202067f9",
+    "mtime": 1781554435.180053,
+    "ast_hash": "c28b16414c1de9c8e42ff1e8ea665703",
     "semantic_hash": ""
   },
   "_shared/index.html": {
-    "mtime": 1781549726.7938392,
+    "mtime": 1781554435.199053,
     "ast_hash": "85d33c555be8dfa9d135aa15724acb5b",
     "semantic_hash": ""
   },
-  "_shared/login.html": {
-    "mtime": 1781549726.7938392,
-    "ast_hash": "8ffce0e6cbb17e3eb00f4938774c6fa4",
-    "semantic_hash": ""
-  },
-  "_shared/site/index.html": {
-    "mtime": 1781549726.788839,
-    "ast_hash": "1cfb7e0f6e2f1d0d2982d3ce657571fa",
-    "semantic_hash": ""
-  },
   "branches/agent-landing-updates/BRANCH.md": {
-    "mtime": 1781549726.834839,
+    "mtime": 1781554435.252053,
     "ast_hash": "1cc7968e06a1551e069f3dec9ae3aadb",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/backups/BACKUP.md": {
-    "mtime": 1781549726.765839,
+    "mtime": 1781554435.180053,
     "ast_hash": "0dcc0884dae3c42ff0a8799b33828a35",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/blog/automatizar-reportes-manuales.html": {
-    "mtime": 1781549726.7668393,
+    "mtime": 1781554435.181053,
     "ast_hash": "56a43ecd359a8ca53632441498037fb6",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/blog/datos-dispersos-costos.html": {
-    "mtime": 1781549726.7668393,
+    "mtime": 1781554435.181053,
     "ast_hash": "0b29d68077a85b4715d76fc1e3a432e2",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/blog/hubspot-datos-crecimiento.html": {
-    "mtime": 1781549726.7668393,
+    "mtime": 1781554435.181053,
     "ast_hash": "3e2539ca2ebb050066f1289c09763002",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/blog/publica-ai-mercado-publico.html": {
-    "mtime": 1781549726.7668393,
+    "mtime": 1781554435.181053,
     "ast_hash": "811034eea393d53900d355c7aee1bcde",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/commercial-version.html": {
-    "mtime": 1781549726.7668393,
+    "mtime": 1781554435.182053,
     "ast_hash": "2e3552e5c6e08539ed86918f6da61ec9",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/dashboard.html": {
-    "mtime": 1781549726.7678392,
+    "mtime": 1781554435.182053,
     "ast_hash": "5e375e02e21eb9e6562e0b01546aceda",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/docs/auth-login-plan.md": {
-    "mtime": 1781549726.7688391,
+    "mtime": 1781554435.184053,
     "ast_hash": "24a51044b9595af27462d774c122bd33",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/docs/auth-users.md": {
-    "mtime": 1781549726.7688391,
+    "mtime": 1781554435.184053,
     "ast_hash": "4c64a40ebce4ace210da12c2d8ab20e8",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/docs/daily-report-portal.md": {
-    "mtime": 1781549726.7688391,
+    "mtime": 1781554435.184053,
     "ast_hash": "2aad64038602262fd3ce957d1426aabc",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/docs/hubspot-form-migration-plan.md": {
-    "mtime": 1781549726.7688391,
+    "mtime": 1781554435.185053,
     "ast_hash": "b0c14c1ce00f44adbdff5c4e4125eab5",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/docs/marketing/email-nurture-sequence.md": {
-    "mtime": 1781549726.7698393,
+    "mtime": 1781554435.185053,
     "ast_hash": "3373245819b0287c9739d6d8fa15eae8",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/docs/marketing/linkedin-founder-led-strategy.md": {
-    "mtime": 1781549726.7698393,
+    "mtime": 1781554435.186053,
     "ast_hash": "42d9aa145943b105245d357427327f6d",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/docs/marketing/retargeting-campaigns.md": {
-    "mtime": 1781549726.7698393,
+    "mtime": 1781554435.186053,
     "ast_hash": "7459174d745f004019655562d9586e61",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/docs/production-approval-secure-report.md": {
-    "mtime": 1781549726.7698393,
+    "mtime": 1781554435.186053,
     "ast_hash": "5b01dfb8f5f5f5abfa920e34b6416d1b",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/docs/publica-ai-product-strategy.md": {
-    "mtime": 1781549726.7698393,
+    "mtime": 1781554435.186053,
     "ast_hash": "cce3f7316b773f26fd35e13004aa08e6",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/docs/reports/stakeholder-executive-report-2026-05-30.md": {
-    "mtime": 1781549726.7708392,
+    "mtime": 1781554435.187053,
     "ast_hash": "99e92c37a5f70c2d0fd250aba24f7758",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/docs/secure-report-api-feasibility.md": {
-    "mtime": 1781549726.7708392,
+    "mtime": 1781554435.188053,
     "ast_hash": "ac291136a3596249ee1150a6efd6185c",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/docs/security-daily-report-portal-review.md": {
-    "mtime": 1781549726.7708392,
+    "mtime": 1781554435.188053,
     "ast_hash": "369bf7116dd1d9cdcd412866c2ee3a43",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/gracias.html": {
-    "mtime": 1781549726.772839,
+    "mtime": 1781554435.189053,
     "ast_hash": "d65ca0a93762243e43f0a3e5d86edd01",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/index.html": {
-    "mtime": 1781549726.772839,
+    "mtime": 1781554435.189053,
     "ast_hash": "9deb2c075a4e02337b98761f983a4e8a",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/internal/stakeholders-20260530.html": {
-    "mtime": 1781549726.772839,
+    "mtime": 1781554435.190053,
     "ast_hash": "a87be918eade7b5700d619128995b410",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/lead-magnets/publica-ai-guia.html": {
-    "mtime": 1781549726.7748392,
+    "mtime": 1781554435.192053,
     "ast_hash": "078ea51406e0f926fb46831c0dc6eded",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/login.html": {
-    "mtime": 1781549726.7748392,
+    "mtime": 1781554435.192053,
     "ast_hash": "dd066f5075b8e83f606aece82288fb87",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/publica-ai.html": {
-    "mtime": 1781549726.775839,
+    "mtime": 1781554435.192053,
     "ast_hash": "b5f2e5a905c49a190cd91a52e86dd2b5",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/reports.html": {
-    "mtime": 1781549726.775839,
+    "mtime": 1781554435.192053,
     "ast_hash": "50e1f9a5a62f40baeb1a23c996bd7e51",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/reports/publica-ai-radar-demo-2026-05-30.md": {
-    "mtime": 1781549726.775839,
+    "mtime": 1781554435.193053,
     "ast_hash": "b60dbe1adf591895275f3c1cb03b784c",
     "semantic_hash": ""
   },
   "branches/agent-landing-updates/sales-deck.html": {
-    "mtime": 1781549726.775839,
+    "mtime": 1781554435.193053,
     "ast_hash": "d3bb1ffac720ff743353e4e70376c5d8",
     "semantic_hash": ""
   },
-  "branches/chore/optimize-multibranch-information/AGENTS.md": {
-    "mtime": 1781549726.778839,
-    "ast_hash": "c83022a929f4f56a8064b6999719ecbd",
-    "semantic_hash": ""
-  },
-  "branches/chore/optimize-multibranch-information/BRANCH.md": {
-    "mtime": 1781549726.8358393,
-    "ast_hash": "9234368cee559aaef8e60ee1c08e6025",
-    "semantic_hash": ""
-  },
-  "branches/chore/optimize-multibranch-information/README.md": {
-    "mtime": 1781549726.778839,
-    "ast_hash": "a2e7133d273b626cd99fbc1e2f370d43",
-    "semantic_hash": ""
-  },
-  "branches/chore/optimize-multibranch-information/docs/INDEX.md": {
-    "mtime": 1781549726.7808392,
-    "ast_hash": "8ac2bc1fe8c4594859bfc1de56300a16",
-    "semantic_hash": ""
-  },
-  "branches/chore/optimize-multibranch-information/docs/operations/branch-inventory.md": {
-    "mtime": 1781549726.782839,
-    "ast_hash": "8d27cd10bf48b5b740461b2da1f59c0e",
-    "semantic_hash": ""
-  },
-  "branches/chore/optimize-multibranch-information/docs/operations/graphify.md": {
-    "mtime": 1781549726.782839,
-    "ast_hash": "4af5bd4fc16066bfd47ec13044f7000a",
-    "semantic_hash": ""
-  },
   "branches/docs/factory-protocols/BRANCH.md": {
-    "mtime": 1781549726.8358393,
-    "ast_hash": "53a4da9438fe9a0a57ea04d615b1ac89",
+    "mtime": 1781554435.252053,
+    "ast_hash": "d834557eccf2d4ee4f5740e67110718e",
+    "semantic_hash": ""
+  },
+  "branches/docs/factory-protocols/backups/BACKUP.md": {
+    "mtime": 1781554435.196053,
+    "ast_hash": "e8b70f61b858e9d8d49c245c796dc954",
+    "semantic_hash": ""
+  },
+  "branches/docs/factory-protocols/dashboard.html": {
+    "mtime": 1781554435.196053,
+    "ast_hash": "ee6174a74ae7f09052104b0856beffef",
     "semantic_hash": ""
   },
   "branches/docs/factory-protocols/docs/factory/01-concepts-and-architecture.md": {
-    "mtime": 1781549726.7918391,
+    "mtime": 1781554435.197053,
     "ast_hash": "86435b2d4b6944f4edd60097f24c3974",
     "semantic_hash": ""
   },
   "branches/docs/factory-protocols/docs/factory/02-agent-identity-and-profiles.md": {
-    "mtime": 1781549726.7918391,
+    "mtime": 1781554435.197053,
     "ast_hash": "64973cbeca3c446b29c2ffeba568c312",
     "semantic_hash": ""
   },
   "branches/docs/factory-protocols/docs/factory/03-autonomy-levels-and-governance.md": {
-    "mtime": 1781549726.7918391,
+    "mtime": 1781554435.197053,
     "ast_hash": "6e0999f1ae5d91c1dffdec500ddeb6f6",
     "semantic_hash": ""
   },
   "branches/docs/factory-protocols/docs/factory/04-build-profiles-and-distributions.md": {
-    "mtime": 1781549726.7918391,
+    "mtime": 1781554435.198053,
     "ast_hash": "436913c528d6ccae5ec6333995500e47",
     "semantic_hash": ""
   },
   "branches/docs/factory-protocols/docs/factory/05-kanban-and-multi-agent-ops.md": {
-    "mtime": 1781549726.792839,
+    "mtime": 1781554435.198053,
     "ast_hash": "1fa95c7954aea0795d6aacb8a3c66ebb",
     "semantic_hash": ""
   },
   "branches/docs/factory-protocols/docs/factory/07-runbooks-for-critical-actions.md": {
-    "mtime": 1781549726.792839,
+    "mtime": 1781554435.198053,
     "ast_hash": "4b17b9ab2417f41c12fab3c5a85d641f",
     "semantic_hash": ""
   },
   "branches/docs/factory-protocols/docs/factory/08-operations-for-humans.md": {
-    "mtime": 1781549726.792839,
+    "mtime": 1781554435.198053,
     "ast_hash": "4d80150b4006d874d4fd18ff37c2ffa3",
     "semantic_hash": ""
   },
   "branches/docs/factory-protocols/docs/factory/README.md": {
-    "mtime": 1781549726.792839,
+    "mtime": 1781554435.199053,
     "ast_hash": "6c1de05ac41a4d97310a7271c201042d",
     "semantic_hash": ""
   },
+  "branches/docs/factory-protocols/docs/supabase-auth-staging.md": {
+    "mtime": 1781554435.199053,
+    "ast_hash": "21bbff8049eaa46ce9ed2f95202067f9",
+    "semantic_hash": ""
+  },
+  "branches/docs/factory-protocols/login.html": {
+    "mtime": 1781554435.200053,
+    "ast_hash": "8ffce0e6cbb17e3eb00f4938774c6fa4",
+    "semantic_hash": ""
+  },
   "branches/docs/hubspot-checkpoint-20260531/BRANCH.md": {
-    "mtime": 1781549726.8358393,
+    "mtime": 1781554435.253053,
     "ast_hash": "897c10512c8bd5de091af7293c5e428e",
     "semantic_hash": ""
   },
   "branches/docs/hubspot-checkpoint-20260531/backups/BACKUP.md": {
-    "mtime": 1781549726.795839,
+    "mtime": 1781554435.203053,
     "ast_hash": "ae2ed0300be0f200b7cfe02cb21144d5",
     "semantic_hash": ""
   },
   "branches/docs/hubspot-checkpoint-20260531/docs/checkpoints/hubspot-adapter-checkpoint-20260531.md": {
-    "mtime": 1781549726.7968392,
+    "mtime": 1781554435.204053,
     "ast_hash": "6f01a2679c1a70fdb3bd660a66a9387e",
     "semantic_hash": ""
   },
   "branches/docs/hubspot-checkpoint-20260531/index.html": {
-    "mtime": 1781549726.7968392,
+    "mtime": 1781554435.204053,
     "ast_hash": "85096249d33705187e1240e61ed00d8f",
     "semantic_hash": ""
   },
   "branches/feat/publica-platform/BRANCH.md": {
-    "mtime": 1781549726.8358393,
+    "mtime": 1781554435.253053,
     "ast_hash": "8c68e27a8a64206d76121f159c7a5736",
     "semantic_hash": ""
   },
   "branches/feat/publica-platform/index.html": {
-    "mtime": 1781549726.7998393,
+    "mtime": 1781554435.2080529,
     "ast_hash": "cad72ec2c865ac295b32aa49c1e6b5bb",
     "semantic_hash": ""
   },
   "branches/feat/publica-platform/publica.html": {
-    "mtime": 1781549726.7998393,
+    "mtime": 1781554435.209053,
     "ast_hash": "e63d4a3c384f249edc92ff286740755e",
     "semantic_hash": ""
   },
   "branches/feat/task-tracking-system/AGENTS.md": {
-    "mtime": 1781549726.8008392,
+    "mtime": 1781554435.210053,
     "ast_hash": "c143d2085887a72a8a3d7f1616434036",
     "semantic_hash": ""
   },
   "branches/feat/task-tracking-system/BRANCH.md": {
-    "mtime": 1781549726.8368392,
-    "ast_hash": "b9034c208cbef89dae56c00f9fad97a2",
+    "mtime": 1781554435.253053,
+    "ast_hash": "46b374223255d97c5170096c9097a6a7",
     "semantic_hash": ""
   },
   "branches/feat/task-tracking-system/backups/BACKUP.md": {
-    "mtime": 1781549726.801839,
+    "mtime": 1781554435.210053,
     "ast_hash": "60f7d7e496bb420f6f9dd29f07232354",
     "semantic_hash": ""
   },
   "branches/feat/task-tracking-system/backups/RESTORE_GUIDE.md": {
-    "mtime": 1781549726.801839,
+    "mtime": 1781554435.211053,
     "ast_hash": "4bc2b2b3f46ace059a0eeb4ceaabd875",
     "semantic_hash": ""
   },
   "branches/feat/task-tracking-system/daily-summary.md": {
-    "mtime": 1781549726.801839,
+    "mtime": 1781554435.211053,
     "ast_hash": "125f71f57e7908210c2e8cc2eb4145cc",
     "semantic_hash": ""
   },
   "branches/feat/task-tracking-system/task-log.md": {
-    "mtime": 1781549726.8038392,
-    "ast_hash": "f7438e0ae28523235cdc62d9778c0655",
+    "mtime": 1781554435.213053,
+    "ast_hash": "5241e5086e715d657a021afd6de5a9e6",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/BRANCH.md": {
-    "mtime": 1781549726.8368392,
+    "mtime": 1781554435.253053,
     "ast_hash": "b7ca67fb28971bd3f8266e7fb286782f",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/backups/BACKUP.md": {
-    "mtime": 1781549726.8048391,
+    "mtime": 1781554435.214053,
     "ast_hash": "ee64de1fe4925fe9847ed33f3e352bf2",
     "semantic_hash": ""
   },
   "branches/internal-agent-console/console.html": {
-    "mtime": 1781549726.8068392,
+    "mtime": 1781554435.216053,
     "ast_hash": "cfb1be16f286aeee740778419f575084",
     "semantic_hash": ""
   },
+  "branches/main/.hermes/plans/2026-06-15_042824-repo-information-architecture.md": {
+    "mtime": 1781554435.219053,
+    "ast_hash": "7f5fe03105e559f2bf111f31fe181ccb",
+    "semantic_hash": ""
+  },
+  "branches/main/AGENTS.md": {
+    "mtime": 1781554435.219053,
+    "ast_hash": "c83022a929f4f56a8064b6999719ecbd",
+    "semantic_hash": ""
+  },
   "branches/main/BRANCH.md": {
-    "mtime": 1781549726.8368392,
-    "ast_hash": "7e5f053146b286d49e742a950b881aed",
+    "mtime": 1781554435.253053,
+    "ast_hash": "92cf9c278803a867e48bd04d65935811",
+    "semantic_hash": ""
+  },
+  "branches/main/README.md": {
+    "mtime": 1781554435.220053,
+    "ast_hash": "a2e7133d273b626cd99fbc1e2f370d43",
+    "semantic_hash": ""
+  },
+  "branches/main/archive/README.md": {
+    "mtime": 1781554435.220053,
+    "ast_hash": "0fe2be4a0539cf84730ffcfdfb5f30a1",
+    "semantic_hash": ""
+  },
+  "branches/main/backups/BACKUP.md": {
+    "mtime": 1781554435.220053,
+    "ast_hash": "eac51680c193b6e8c47f9f19907a1823",
+    "semantic_hash": ""
+  },
+  "branches/main/backups/RESTORE_GUIDE.md": {
+    "mtime": 1781554435.221053,
+    "ast_hash": "66a88da1c59a691f38b55d1491c7e7e7",
     "semantic_hash": ""
   },
   "branches/main/docs/INDEX.md": {
-    "mtime": 1781549726.808839,
-    "ast_hash": "4b7e2749d268d4f982622c98fbc94a21",
+    "mtime": 1781554435.221053,
+    "ast_hash": "8ac2bc1fe8c4594859bfc1de56300a16",
     "semantic_hash": ""
   },
-  "branches/refactor/repo-information-architecture/.hermes/plans/2026-06-15_042824-repo-information-architecture.md": {
-    "mtime": 1781549726.8108392,
-    "ast_hash": "c3aef53122e26831bc764c5a786eff86",
+  "branches/main/docs/commercial/faq.md": {
+    "mtime": 1781554435.221053,
+    "ast_hash": "bd86abc923ca53e9a061ccc5a74fe290",
     "semantic_hash": ""
   },
-  "branches/refactor/repo-information-architecture/BRANCH.md": {
-    "mtime": 1781549726.8368392,
-    "ast_hash": "3e0598a5cdf4bc4f6e1c790d473b72e2",
+  "branches/main/docs/commercial/landing-copy.md": {
+    "mtime": 1781554435.221053,
+    "ast_hash": "15acd2f586fb740fd30f1a524c847488",
     "semantic_hash": ""
   },
-  "branches/refactor/repo-information-architecture/docs/INDEX.md": {
-    "mtime": 1781549726.811839,
-    "ast_hash": "400d96f8d14db7a0fbef9abdd961fe2c",
+  "branches/main/docs/commercial/sales-pitch.md": {
+    "mtime": 1781554435.221053,
+    "ast_hash": "5900fbb7d84997c42eafa18ee2cb5ec0",
     "semantic_hash": ""
   },
-  "branches/supabase-auth-staging/BRANCH.md": {
-    "mtime": 1781549726.8378391,
-    "ast_hash": "363316b5b9de71f4efff06418983b19e",
+  "branches/main/docs/commercial/stakeholder-report.md": {
+    "mtime": 1781554435.221053,
+    "ast_hash": "456eaeaa991ff35fc9e857c9ee0d4d7d",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/operations/branch-cleanup-checkpoint-20260615-201112.md": {
+    "mtime": 1781554435.222053,
+    "ast_hash": "158e16441f8e9470732808606854cab2",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/operations/branch-inventory.md": {
+    "mtime": 1781554435.222053,
+    "ast_hash": "bfa6a9b1e180c8cd9cd2f221907d66e8",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/operations/cronjobs.md": {
+    "mtime": 1781554435.222053,
+    "ast_hash": "7a787e033d2a7df0ae76efa788e90431",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/operations/daily-backup.md": {
+    "mtime": 1781554435.222053,
+    "ast_hash": "ae1e2adbb2996125fb3d6343be803717",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/operations/demeter.md": {
+    "mtime": 1781554435.222053,
+    "ast_hash": "5815f37b257e34e3eb3f9ef1d05fa6a8",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/operations/graphify.md": {
+    "mtime": 1781554435.222053,
+    "ast_hash": "4af5bd4fc16066bfd47ec13044f7000a",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/operations/restore.md": {
+    "mtime": 1781554435.223053,
+    "ast_hash": "2e7f0062497b73afeb13cc02b1905e6e",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/operations/rollback.md": {
+    "mtime": 1781554435.223053,
+    "ast_hash": "a65538940994bd6f900d4a0691377244",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/operations/task-tracking.md": {
+    "mtime": 1781554435.223053,
+    "ast_hash": "2ddd2472ddb34168a5f20f16a991e474",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/product/agent-engine.md": {
+    "mtime": 1781554435.223053,
+    "ast_hash": "a6253bf30a9c5f51ff4d961d84c82903",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/product/design-system.md": {
+    "mtime": 1781554435.224053,
+    "ast_hash": "fe5cd1b60d118d0b38f7f88ca16868ce",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/product/publica.md": {
+    "mtime": 1781554435.224053,
+    "ast_hash": "3460d9cc8d8f3f85c8ada38959a52c35",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/product/roadmap.md": {
+    "mtime": 1781554435.224053,
+    "ast_hash": "6fed084f7f43845e0bd0047e67b5e8f1",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/product/strategy.md": {
+    "mtime": 1781554435.224053,
+    "ast_hash": "5fe5e3e68e853c8a5139e5f0bdf9a71d",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/security/auth-plan.md": {
+    "mtime": 1781554435.225053,
+    "ast_hash": "20faf25d67a8357c93192b61ca481359",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/security/demo-guardrails.md": {
+    "mtime": 1781554435.225053,
+    "ast_hash": "a9616d71a945a64ccc77eeaffe5ba08d",
+    "semantic_hash": ""
+  },
+  "branches/main/docs/security/public-demo-risk-review.md": {
+    "mtime": 1781554435.225053,
+    "ast_hash": "e5d377bc4ed993762d451ea38072aa69",
+    "semantic_hash": ""
+  },
+  "branches/main/index.html": {
+    "mtime": 1781554435.225053,
+    "ast_hash": "4222817ed7c783f29dece511389b5f8f",
+    "semantic_hash": ""
+  },
+  "branches/main/site/index.html": {
+    "mtime": 1781554435.2280529,
+    "ast_hash": "1cfb7e0f6e2f1d0d2982d3ce657571fa",
     "semantic_hash": ""
   },
   "branches/vercel/install-vercel-speed-insights-ivlisy/BRANCH.md": {
-    "mtime": 1781549726.8378391,
+    "mtime": 1781554435.2540529,
     "ast_hash": "fb68e2b8aa907f656a7e577f117dcfd3",
     "semantic_hash": ""
   },
   "branches/vercel/install-vercel-speed-insights-ivlisy/index.html": {
-    "mtime": 1781549726.811839,
+    "mtime": 1781554435.2280529,
     "ast_hash": "a87677d6c3b766d438d4464bddd5a8a3",
     "semantic_hash": ""
   }
