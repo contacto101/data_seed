@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-15 | Daniel Caignet
+**Tarea:** Unificar duplicados y optimizar la información multi-branch del repo DataSeed.
+**Acción:** Inicié rama segura `chore/optimize-multibranch-information` para corregir referencias obsoletas, deduplicar el snapshot Graphify multi-branch, reducir ruido histórico y validar de nuevo antes de modificar `main`.
+**Estado:** 🟡 En ejecución
+
+### 2026-06-15 | Daniel Caignet
 **Tarea:** Reorganizar la arquitectura de información del repo DataSeed con plan operativo, doble verificación, actualización de rutas/cronjobs, rollback y ejecución iterativa.
 **Acción:** Ejecuté la reorganización en rama segura `refactor/repo-information-architecture`: plan en `.hermes/plans/`, docs por dominio (product/commercial/operations/security), scripts canónicos en `scripts/ops` y `scripts/web`, wrappers de compatibilidad, landing bajo `site/` con redirect en raíz, design-system movido a `docs/product/`, archivos de prueba archivados, backups/restore actualizados. Segunda validación: 0 fallos, 0 warnings. Grafo regenerado: 324 nodes, 377 edges, 39 communities. Merge a main sin conflictos y push a origin/main.
 **Estado:** ✅ Finalizada exitosamente — Mergeado a main
