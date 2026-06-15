@@ -1,7 +1,7 @@
-# Graph Report - dataseed-multibranch-snapshot-dnsczlss  (2026-06-15)
+# Graph Report - dataseed-multibranch-snapshot-hnpszl8b  (2026-06-15)
 
 ## Corpus Check
-- 132 files · ~95,633 words
+- 132 files · ~95,657 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
