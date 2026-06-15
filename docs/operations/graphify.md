@@ -31,8 +31,9 @@ Principios:
 2. Exporta cada branch remoto con `git archive` hacia una carpeta temporal única.
 3. Excluye secretos, `.env` reales, caches, bases runtime, binarios pesados, `node_modules`, `graphify-out`, archivos de prueba triviales (`hola*.txt`, `test_access.md`) y artefactos regenerables.
 4. Deduplica por hash de contenido: si el mismo archivo aparece idéntico en varias ramas, se guarda una sola vez bajo `_shared/` y cada `BRANCH.md` apunta a esa copia compartida.
-5. Mantiene archivos divergentes bajo `branches/<branch>/...` para que el grafo preserve diferencias reales entre ramas.
-6. Copia al repo solo los artefactos livianos versionados; `graph.html` y `graph.json` quedan disponibles para ZIP/visualización pero no se commitean.
+5. Trata documentos operativos globales (`backups/`, `AGENTS.md`, `README.md`, `docs/INDEX.md` y docs operativos del grafo/inventario) como fuente canónica de `main`; las copias históricas en ramas de feature no se indexan para evitar duplicación semántica.
+6. Mantiene archivos divergentes bajo `branches/<branch>/...` para que el grafo preserve diferencias reales entre ramas.
+7. Copia al repo solo los artefactos livianos versionados; `graph.html` y `graph.json` quedan disponibles para ZIP/visualización pero no se commitean.
 
 ## Uso
 

@@ -120,6 +120,20 @@ EXCLUDED_EXACT_PATHS = {
     "archive/testing/test_access.md",
 }
 
+# These files describe global operational recovery state, not branch-specific
+# product work. Older copies in feature branches create semantic duplicates in
+# the multi-branch graph, so main is the only source of truth for them.
+MAIN_ONLY_PREFIXES = (
+    "backups/",
+)
+MAIN_ONLY_EXACT_PATHS = {
+    "AGENTS.md",
+    "README.md",
+    "docs/INDEX.md",
+    "docs/operations/branch-inventory.md",
+    "docs/operations/graphify.md",
+}
+
 LIGHTWEIGHT_OUTPUTS = [
     "GRAPH_REPORT.md",
     "manifest.json",
@@ -206,6 +220,11 @@ def files_from_branch(branch: str) -> list[tuple[str, bytes]]:
                 continue
             allowed, _reason = is_allowed_path(member.name)
             if not allowed:
+                continue
+            if branch != "main" and (
+                member.name in MAIN_ONLY_EXACT_PATHS
+                or any(member.name.startswith(prefix) for prefix in MAIN_ONLY_PREFIXES)
+            ):
                 continue
             extracted = archive.extractfile(member)
             if extracted is None:
