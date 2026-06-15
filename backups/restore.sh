@@ -34,7 +34,11 @@ echo "[5/5] Backup files"
 test -f backups/BACKUP.md && echo "OK backups/BACKUP.md"
 test -f backups/COMPLETED_CYCLES.md && echo "OK backups/COMPLETED_CYCLES.md"
 test -f backups/RESTORE_GUIDE.md && echo "OK backups/RESTORE_GUIDE.md"
-test -f scripts/demeter_daily_backup.py && echo "OK scripts/demeter_daily_backup.py"
+test -f scripts/ops/demeter_daily_backup.py && echo "OK scripts/ops/demeter_daily_backup.py"
+test -f scripts/demeter_daily_backup.py && echo "OK scripts/demeter_daily_backup.py compatibility wrapper"
+test -f scripts/ops/daily-operations.sh && echo "OK scripts/ops/daily-operations.sh"
+test -f scripts/ops/daily-operations-wrapper.sh && echo "OK scripts/ops/daily-operations-wrapper.sh"
+test -f scripts/ops/daily-task-log-cleanup.sh && echo "OK scripts/ops/daily-task-log-cleanup.sh"
 if [ -d scripts/cron ]; then
   echo "Cron scripts copied for rollback:"
   find scripts/cron -type f | sort

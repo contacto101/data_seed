@@ -22,7 +22,7 @@ El nombre Demeter hace referencia a la diosa asociada a la agricultura y la fert
 - No incluir información sensible en el repositorio: tokens, API keys, secretos OAuth, contraseñas, archivos `.env`, tokens de Google o credenciales privadas.
 - No editar `main` directamente salvo para respaldos automáticos documentados en `backups/`.
 - Mantener el diseño visual actual de la landing, incluyendo tema verde oscuro y tipografías Syne + Inter.
-- Respetar la estructura HTML única cuando el sitio esté contenido en `index.html`.
+- La landing activa vive en `site/index.html`; el `index.html` raíz solo mantiene compatibilidad de acceso.
 - Los cambios deben ser responsive y mantener compatibilidad móvil.
 - Usar commits en español, descriptivos y concisos.
 - Mantener referencias a personas específicas fuera de la documentación técnica, salvo cuando sean imprescindibles para permisos o responsabilidades legales.
@@ -30,7 +30,29 @@ El nombre Demeter hace referencia a la diosa asociada a la agricultura y la fert
 - En documentos técnicos, la narrativa de marca debe ocupar aproximadamente un 5% del contenido.
 - En documentos comerciales, mercado o estrategia, la narrativa de marca puede ocupar aproximadamente un 30% del contenido.
 
+## Estructura activa del repositorio
+
+Fuentes maestras:
+
+- `AGENTS.md`: guía operativa activa del agente.
+- `design-system/MASTER.md`: identidad visual y reglas UI.
+- `docs/INDEX.md`: índice maestro de documentación.
+- `backups/RESTORE_GUIDE.md`: recuperación crítica no sensible.
+
+Carpetas activas:
+
+- `site/`: landing pública y assets web.
+- `docs/product/`: Agent Engine, Pública, roadmap y estrategia.
+- `docs/commercial/`: copy, FAQ, pitch y material ejecutivo.
+- `docs/operations/`: Demeter, task tracking, backup, restore, cronjobs, Graphify y rollback.
+- `docs/security/`: secretos, auth, guardrails y revisiones de riesgo.
+- `scripts/ops/`: scripts operativos canónicos.
+- `scripts/web/`: proxy/demo web.
+- `archive/`: históricos y archivos de prueba retirados de raíz.
+
 ## Estructura de la landing
+
+La implementación activa vive en `site/index.html`; el `index.html` raíz es un wrapper de compatibilidad.
 
 Secciones en orden:
 
@@ -72,4 +94,5 @@ Este proyecto tiene un grafo de conocimiento en `graphify-out/` con nodos clave,
 - Para preguntas sobre el codebase, primero ejecuta `graphify query "<pregunta>"` cuando `graphify-out/graph.json` existe. Usa `graphify path "<A>" "<B>"` para relaciones y `graphify explain "<concepto>"` para conceptos específicos. Estos devuelven un subgrafo enfocado, mucho más pequeño que GRAPH_REPORT.md o grep raw.
 - Después de modificar código, ejecuta `graphify update .` para mantener el grafo actualizado (solo AST, sin costo de API).
 - Lee `graphify-out/GRAPH_REPORT.md` solo para revisión de arquitectura general o cuando query/path/explain no aporten suficiente contexto.
+- Mantén versionados solo `graphify-out/GRAPH_REPORT.md`, `graphify-out/manifest.json` y `graphify-out/.graphify_labels.json`; `graph.html`, `graph.json`, snapshots multibranch y `cache/` son regenerables.
 - El grafo se actualiza automáticamente cada noche a las 5:00 AM Chile junto con el backup diario.

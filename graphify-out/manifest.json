@@ -1,95 +1,230 @@
 {
   "backups/restore.sh": {
-    "mtime": 1781195607.3833857,
-    "ast_hash": "e3ea399358d628b348cfaaf62980e4b1",
+    "mtime": 1781498263.7303464,
+    "ast_hash": "dc107c1ccb54b9e01916adca750cfffc",
     "semantic_hash": ""
   },
   "scripts/daily-operations-wrapper.sh": {
-    "mtime": 1781299895.8858616,
-    "ast_hash": "79a8fe4ff01ad250d0242070616c4c94",
+    "mtime": 1781497993.5584016,
+    "ast_hash": "fff8d59d0de5387e840feac0af34a0ec",
     "semantic_hash": ""
   },
   "scripts/daily-operations.sh": {
-    "mtime": 1781300322.7425203,
-    "ast_hash": "fe1109538d49b0adb14d3b1b778e013a",
-    "semantic_hash": ""
-  },
-  "scripts/daily-task-log-cleanup.sh": {
-    "mtime": 1781275454.8000576,
-    "ast_hash": "538187e9ebe11468f68d6db2c04b24cf",
+    "mtime": 1781497989.068402,
+    "ast_hash": "cb9570805e2db5d03c991f0420c29c13",
     "semantic_hash": ""
   },
   "scripts/dataseed_demo_proxy.py": {
-    "mtime": 1781194422.67889,
-    "ast_hash": "b37963b5969faf6a3a8d5ad3aa163d94",
+    "mtime": 1781498009.7413993,
+    "ast_hash": "2e8785a0db2b9b710e21633e77e5ad6c",
     "semantic_hash": ""
   },
   "scripts/demeter_daily_backup.py": {
-    "mtime": 1781299969.0688024,
-    "ast_hash": "29f4898f7c6766f6c695ded147e603e3",
+    "mtime": 1781498004.9994001,
+    "ast_hash": "d3540b4c396a707f0c87ebe71e904491",
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1781303840.9701314,
-    "ast_hash": "f7d8d5f3f67a1d2732f2623f26a629cb",
+    "mtime": 1781498282.6483414,
+    "ast_hash": "c2bbdb87740d5f956bda148afc60b53f",
     "semantic_hash": ""
   },
   "backups/BACKUP.md": {
-    "mtime": 1781304402.5168276,
-    "ast_hash": "60f7d7e496bb420f6f9dd29f07232354",
+    "mtime": 1781498239.436353,
+    "ast_hash": "eac51680c193b6e8c47f9f19907a1823",
     "semantic_hash": ""
   },
   "backups/COMPLETED_CYCLES.md": {
-    "mtime": 1781276905.6613097,
+    "mtime": 1781452494.6041598,
     "ast_hash": "0a36da7273497e20bacad5da432bb07c",
     "semantic_hash": ""
   },
   "backups/RESTORE_GUIDE.md": {
-    "mtime": 1781195607.3833857,
-    "ast_hash": "4bc2b2b3f46ace059a0eeb4ceaabd875",
+    "mtime": 1781498251.7983496,
+    "ast_hash": "66a88da1c59a691f38b55d1491c7e7e7",
     "semantic_hash": ""
   },
-  "daily-summary.md": {
-    "mtime": 1781253057.6142354,
-    "ast_hash": "d4a91a37f0985647330c6f37ec5e3e9b",
+  "index.html": {
+    "mtime": 1781497984.4464028,
+    "ast_hash": "4222817ed7c783f29dece511389b5f8f",
     "semantic_hash": ""
   },
-  "hola.txt": {
+  "scripts/ops/daily-operations-wrapper.sh": {
+    "mtime": 1781497970.6724043,
+    "ast_hash": "3c09b9e31514b2b67c8f96c8498d275f",
+    "semantic_hash": ""
+  },
+  "scripts/ops/daily-operations.sh": {
+    "mtime": 1781499096.4940407,
+    "ast_hash": "8ab5d6665397b4c64372f6d8e12e8286",
+    "semantic_hash": ""
+  },
+  "scripts/ops/daily-task-log-cleanup.sh": {
+    "mtime": 1781497909.13141,
+    "ast_hash": "75c75e89dbbad5a0122f9a8bfc0bd052",
+    "semantic_hash": ""
+  },
+  "scripts/ops/demeter_daily_backup.py": {
+    "mtime": 1781498288.7863398,
+    "ast_hash": "1a08e55309aeff53d3faa20dca925209",
+    "semantic_hash": ""
+  },
+  "scripts/web/dataseed_demo_proxy.py": {
+    "mtime": 1781499102.679038,
+    "ast_hash": "e4358c0819c20ebf768466d6d55c00ae",
+    "semantic_hash": ""
+  },
+  ".hermes/plans/2026-06-15_042824-repo-information-architecture.md": {
+    "mtime": 1781497743.5224333,
+    "ast_hash": "c3aef53122e26831bc764c5a786eff86",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1781498200.4833624,
+    "ast_hash": "1c3f32344ffc010c92963245f14efa15",
+    "semantic_hash": ""
+  },
+  "archive/README.md": {
+    "mtime": 1781498200.4863625,
+    "ast_hash": "0fe2be4a0539cf84730ffcfdfb5f30a1",
+    "semantic_hash": ""
+  },
+  "archive/legacy/AGENT.md": {
+    "mtime": 1781451879.0273871,
+    "ast_hash": "09a1bcc586a6eb68291be661d4b78b36",
+    "semantic_hash": ""
+  },
+  "archive/testing/hola.txt": {
     "mtime": 1781194422.6778898,
     "ast_hash": "8c8432c5523c8507a5ec3b1ae3ab364f",
     "semantic_hash": ""
   },
-  "hola_segundo.txt": {
-    "mtime": 1781194422.6778898,
+  "archive/testing/hola_segundo.txt": {
+    "mtime": 1781452459.6871736,
     "ast_hash": "22935506b6ad0e62466b996483ef6a65",
     "semantic_hash": ""
   },
-  "hola_tercer.txt": {
-    "mtime": 1781194422.6778898,
+  "archive/testing/hola_tercer.txt": {
+    "mtime": 1781452459.6871736,
     "ast_hash": "d8b841530352ace8ad818b93ff8bc1a7",
     "semantic_hash": ""
   },
-  "hola_whatsapp.txt": {
+  "archive/testing/hola_whatsapp.txt": {
     "mtime": 1781194422.6778898,
     "ast_hash": "cc0f55223470a6d8f8e3810c64572080",
     "semantic_hash": ""
   },
-  "index.html": {
-    "mtime": 1781194422.67889,
-    "ast_hash": "85d33c555be8dfa9d135aa15724acb5b",
-    "semantic_hash": ""
-  },
-  "task-log.md": {
-    "mtime": 1781379333.8958347,
-    "ast_hash": "337382d0123e5bfa6059559603aaa5ad",
-    "semantic_hash": ""
-  },
-  "test_access.md": {
+  "archive/testing/test_access.md": {
     "mtime": 1781194422.67889,
     "ast_hash": "0c8ced1b554dea13bfd43e96088f7b81",
     "semantic_hash": ""
   },
-  "dataseed_logo_black.png": {
+  "design-system/MASTER.md": {
+    "mtime": 1781452517.3521507,
+    "ast_hash": "fe5cd1b60d118d0b38f7f88ca16868ce",
+    "semantic_hash": ""
+  },
+  "docs/INDEX.md": {
+    "mtime": 1781498200.4833624,
+    "ast_hash": "400d96f8d14db7a0fbef9abdd961fe2c",
+    "semantic_hash": ""
+  },
+  "docs/commercial/faq.md": {
+    "mtime": 1781498200.4843626,
+    "ast_hash": "bd86abc923ca53e9a061ccc5a74fe290",
+    "semantic_hash": ""
+  },
+  "docs/commercial/landing-copy.md": {
+    "mtime": 1781498200.4843626,
+    "ast_hash": "15acd2f586fb740fd30f1a524c847488",
+    "semantic_hash": ""
+  },
+  "docs/commercial/sales-pitch.md": {
+    "mtime": 1781498200.4843626,
+    "ast_hash": "5900fbb7d84997c42eafa18ee2cb5ec0",
+    "semantic_hash": ""
+  },
+  "docs/commercial/stakeholder-report.md": {
+    "mtime": 1781498200.4843626,
+    "ast_hash": "456eaeaa991ff35fc9e857c9ee0d4d7d",
+    "semantic_hash": ""
+  },
+  "docs/operations/cronjobs.md": {
+    "mtime": 1781498200.4853625,
+    "ast_hash": "7a787e033d2a7df0ae76efa788e90431",
+    "semantic_hash": ""
+  },
+  "docs/operations/daily-backup.md": {
+    "mtime": 1781499109.3700352,
+    "ast_hash": "ae1e2adbb2996125fb3d6343be803717",
+    "semantic_hash": ""
+  },
+  "docs/operations/demeter.md": {
+    "mtime": 1781498200.4843626,
+    "ast_hash": "5815f37b257e34e3eb3f9ef1d05fa6a8",
+    "semantic_hash": ""
+  },
+  "docs/operations/graphify.md": {
+    "mtime": 1781498200.4853625,
+    "ast_hash": "2562461baf93dbe9fedcf784b083d2ef",
+    "semantic_hash": ""
+  },
+  "docs/operations/restore.md": {
+    "mtime": 1781498200.4843626,
+    "ast_hash": "2e7f0062497b73afeb13cc02b1905e6e",
+    "semantic_hash": ""
+  },
+  "docs/operations/rollback.md": {
+    "mtime": 1781498200.4853625,
+    "ast_hash": "a65538940994bd6f900d4a0691377244",
+    "semantic_hash": ""
+  },
+  "docs/operations/task-tracking.md": {
+    "mtime": 1781498200.4843626,
+    "ast_hash": "2ddd2472ddb34168a5f20f16a991e474",
+    "semantic_hash": ""
+  },
+  "docs/product/agent-engine.md": {
+    "mtime": 1781498200.4833624,
+    "ast_hash": "a6253bf30a9c5f51ff4d961d84c82903",
+    "semantic_hash": ""
+  },
+  "docs/product/publica.md": {
+    "mtime": 1781498200.4843626,
+    "ast_hash": "3460d9cc8d8f3f85c8ada38959a52c35",
+    "semantic_hash": ""
+  },
+  "docs/product/roadmap.md": {
+    "mtime": 1781498200.4843626,
+    "ast_hash": "6fed084f7f43845e0bd0047e67b5e8f1",
+    "semantic_hash": ""
+  },
+  "docs/product/strategy.md": {
+    "mtime": 1781498200.4843626,
+    "ast_hash": "5fe5e3e68e853c8a5139e5f0bdf9a71d",
+    "semantic_hash": ""
+  },
+  "docs/security/auth-plan.md": {
+    "mtime": 1781498200.4853625,
+    "ast_hash": "20faf25d67a8357c93192b61ca481359",
+    "semantic_hash": ""
+  },
+  "docs/security/demo-guardrails.md": {
+    "mtime": 1781498200.4853625,
+    "ast_hash": "a9616d71a945a64ccc77eeaffe5ba08d",
+    "semantic_hash": ""
+  },
+  "docs/security/public-demo-risk-review.md": {
+    "mtime": 1781498200.4863625,
+    "ast_hash": "e5d377bc4ed993762d451ea38072aa69",
+    "semantic_hash": ""
+  },
+  "site/index.html": {
+    "mtime": 1781497939.7944076,
+    "ast_hash": "1cfb7e0f6e2f1d0d2982d3ce657571fa",
+    "semantic_hash": ""
+  },
+  "site/assets/dataseed_logo_black.png": {
     "mtime": 1781194422.6778898,
     "ast_hash": "1eb36737493f1a1c90e11caefc35ece6",
     "semantic_hash": ""

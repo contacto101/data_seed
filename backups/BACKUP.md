@@ -165,7 +165,7 @@ Se actualiza con `graphify update .` después de cambios importantes en el códi
 
 - Directorio del grafo: `graphify-out/`
 - Archivos incluidos en este backup: `GRAPH_REPORT.md`, `manifest.json`, `.graphify_labels.json`
-- Archivos grandes NO incluidos (regenerables): `graph.html`, `graph.json`
+- Archivos grandes NO incluidos (regenerables): `graph.html`, `graph.json`, `cache/`, snapshots multibranch temporales
 - Para regenerar: `cd /opt/data/data_seed && graphify update .`
 - Reporte del grafo: `graphify-out/GRAPH_REPORT.md` (incluido en este backup)
 
@@ -175,9 +175,11 @@ Se actualiza con `graphify update .` después de cambios importantes en el códi
 - `backups/COMPLETED_CYCLES.md`
 - `backups/RESTORE_GUIDE.md`
 - `backups/restore.sh`
-- `scripts/demeter_daily_backup.py`
-- `scripts/daily-operations.sh`
-- `scripts/daily-operations-wrapper.sh`
+- `scripts/ops/demeter_daily_backup.py` — backup canónico.
+- `scripts/ops/daily-operations.sh` — pipeline diario.
+- `scripts/ops/daily-operations-wrapper.sh` — wrapper horario Chile.
+- `scripts/ops/daily-task-log-cleanup.sh` — cleanup task-log sanitizado.
+- `scripts/demeter_daily_backup.py`, `scripts/daily-operations.sh`, `scripts/daily-operations-wrapper.sh` — wrappers temporales de compatibilidad.
 - `graphify-out/GRAPH_REPORT.md`
 - `graphify-out/manifest.json`
 - `graphify-out/.graphify_labels.json`
