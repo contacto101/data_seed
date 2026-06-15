@@ -35,7 +35,7 @@ El nombre Demeter hace referencia a la diosa asociada a la agricultura y la fert
 Fuentes maestras:
 
 - `AGENTS.md`: guía operativa activa del agente.
-- `design-system/MASTER.md`: identidad visual y reglas UI.
+- `docs/product/design-system.md`: identidad visual y reglas UI.
 - `docs/INDEX.md`: índice maestro de documentación.
 - `backups/RESTORE_GUIDE.md`: recuperación crítica no sensible.
 
