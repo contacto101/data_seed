@@ -7,6 +7,11 @@
 
 <!-- ENTRADAS -->
 
+### 2026-06-15 | Daniel Caignet
+**Tarea:** Reorganizar la arquitectura de información del repo DataSeed con plan operativo, doble verificación, actualización de rutas/cronjobs, rollback y ejecución iterativa.
+**Acción:** Inicié plan operativo en rama segura `refactor/repo-information-architecture`, con foco en fuentes maestras, docs, scripts ops/web, sitio, backups, archivo histórico, graphify liviano y validaciones cruzadas antes de push.
+**Estado:** 🟡 En ejecución
+
 ### 2026-06-14 | Daniel Caignet
 **Tarea:** Entregar el último grafo de Graphify en un archivo ZIP por WhatsApp.
 **Acción:** Empaqueté el contenido actual de `graphify-out/` en `/tmp/dataseed-graphify-latest.zip`, incluyendo `graph.html`, `graph.json`, reportes, manifiestos y README de uso para abrir el grafo interactivo localmente.
