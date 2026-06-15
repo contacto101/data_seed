@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-14 | Daniel Caignet
+**Tarea:** Entregar el último grafo de Graphify en un archivo ZIP por WhatsApp.
+**Acción:** Empaqueté el contenido actual de `graphify-out/` en `/tmp/dataseed-graphify-latest.zip`, incluyendo `graph.html`, `graph.json`, reportes, manifiestos y README de uso para abrir el grafo interactivo localmente.
+**Estado:** ✅ Finalizada exitosamente
+
+### 2026-06-14 | Daniel Caignet
 **Tarea:** Confirmar ubicación de las skills `ui-ux-pro-max` e `impeccable` dentro de Hermes.
 **Acción:** Verifiqué con `skill_view` y `hermes skills list` que ambas están bajo el root de skills del perfil activo (`/opt/data/skills`): `ui-ux-pro-max` en `/opt/data/skills/ui-ux-pro-max` e `impeccable` en `/opt/data/skills/creative/impeccable`, ambas habilitadas.
 **Estado:** ✅ Finalizada exitosamente
