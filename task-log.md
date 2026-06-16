@@ -7,6 +7,11 @@
 
 <!-- ENTRADAS -->
 
+### 2026-06-16 | Mati
+**Tarea:** Definir prioridades semanales a partir del documento “Avances DataSeed” del 16 de junio de 2026.
+**Acción:** Se estructuraron las tareas pendientes por dependencia operativa: primero recuperar acceso técnico y conectividad base, luego estabilizar la demo, coordinar revisión de contenedores, medir consumo y finalmente optimizar el sitio móvil.
+**Estado:** ✅ Finalizada exitosamente
+
 ### 2026-06-15 | Daniel Caignet
 **Tarea:** Regenerar el grafo actualizado y revisar si la información del repo DataSeed está organizada de forma óptima.
 **Acción:** Regeneré el grafo multi-branch deduplicado, detecté duplicación semántica residual en backups/restore históricos de ramas activas, optimicé el generador para tratar documentación operativa global como fuente canónica de `main`, regeneré y validé de nuevo. Resultado: 8 branches, 121 archivos, 1077 nodos, 1364 edges, 117 communities, 0 duplicados exactos de communities, 0 referencias legacy, 0 secretos y checks de sintaxis OK.
