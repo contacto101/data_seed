@@ -13,3 +13,4 @@
 |---|---|---|---|---|
 | 14:00 | Daniel | Verificar repo, crear checkpoint, borrar ramas duplicadas | Verificadas 3 ramas ya borradas con checkpoint. Creados tags checkpoint/demo-production-24x7 y checkpoint/post-demo-deploy. Mergeada demo 24/7 a main. Actualizado branch-inventory.md. Las 6 ramas restantes tienen contenido único (no son duplicados). | ✅ Completo |
 | 14:10 | Daniel | Demo 24/7 hardeneada | Caddy reverse proxy en :8080, demo proxy en :8766 con uri strip_prefix /api. Timeout 120s. Health checks OK. API key NO hardcodeada (lee de /opt/data/run/demeter_api_key). | ✅ Completo |
+| 19:41 | Daniel | Portal auth Supabase v2 producción | Creado login.html + dashboard.html con Supabase Auth. RLS optimizado con (select auth.uid()). Rate limiting client-side. CSP headers. Audit log. Auto-onboarding. Guía configuración Supabase. Botón "Acceder" en landing nav. Rama: feat/supabase-auth-production. | ✅ Completo |
