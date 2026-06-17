@@ -1,52 +1,57 @@
 # Inventario de branches DataSeed
 
-Este inventario separa la fuente oficial (`main`) de ramas activas, operativas e históricas. Fue actualizado después de borrar ramas duplicadas/mergeadas con checkpoint de rollback.
+Este inventario separa la fuente oficial (`main`) de ramas activas, operativas e históricas. Última actualización: 2026-06-17.
 
 ## Regla operativa
 
 - `main` es la fuente oficial publicada.
 - `feat/task-tracking-system` es operativo y mantiene `task-log.md` / `daily-summary.md`.
-- Las demás ramas listadas abajo contienen contenido único detectado; no deben borrarse como duplicadas sin integrar o archivar su contenido útil.
+- Las demás ramas listadas abajo contienen contenido único detectado; no deben borrarse sin integrar o archivar su contenido útil.
 - Las ramas mergeadas/duplicadas pueden cerrarse solo después de crear tags de rollback.
 - El grafo multi-branch deduplicado trata archivos idénticos entre ramas como conocimiento compartido, no como documentos diferentes.
 
-## Branches activos observados
+## Branches activos
 
-| Branch | SHA | Fecha | Estado | Último asunto |
-|---|---:|---|---|---|
-| `agent-landing-updates` | `6f676cd` | 2026-06-02 | Activo con contenido único / revisar antes de integrar o cerrar | fix: meet WCAG AA color contrast on Matrix landing |
-| `docs/factory-protocols` | `db6d022` | 2026-06-08 | Activo con contenido único / revisar antes de integrar o cerrar | docs: factory protocols for autonomous agent manufacturing |
-| `docs/hubspot-checkpoint-20260531` | `8562b0f` | 2026-06-03 | Activo con contenido único / revisar antes de integrar o cerrar | hero: cambiar Transforma por Convierte en H1 |
-| `feat/publica-platform` | `451e149` | 2026-06-03 | Activo con contenido único / revisar antes de integrar o cerrar | feat: add ChileCompra connector, alerts endpoint, and frontend integration |
-| `feat/task-tracking-system` | `cb30c27` | 2026-06-15 | Activo operativo | docs: registra limpieza final de ramas duplicadas |
-| `internal-agent-console` | `4667cf2` | 2026-06-04 | Activo con contenido único / revisar antes de integrar o cerrar | fix: bust console module cache |
-| `main` | `83b8c37` | 2026-06-15 | Activo oficial | docs: documenta checkpoint y limpieza de ramas duplicadas |
-| `vercel/install-vercel-speed-insights-ivlisy` | `351decd` | 2026-06-03 | Activo con contenido único / revisar antes de integrar o cerrar | fix: rewrite demo as commercial sales agent (sync from main) |
+| Branch | SHA | Fecha | Estado | Contenido único |
+|---|---|---|---|---|
+| `agent-landing-updates` | `6f676cd` | 2026-06-02 | Feature / pendiente integrar | Blog posts, landing Matrix, WCAG fixes, publica report scripts |
+| `docs/factory-protocols` | `db6d022` | 2026-06-08 | Feature / pendiente integrar | Factory protocols (6 docs), auth seed example, supabase migrations |
+| `docs/hubspot-checkpoint-20260531` | `8562b0f` | 2026-06-31 | Feature / pendiente integrar | HubSpot adapter checkpoint, copy change en H1 |
+| `feat/publica-platform` | `451e149` | 2026-06-03 | Feature / pendiente integrar | ChileCompra connector, Publica API, alerts endpoint, tests |
+| `feat/task-tracking-system` | `cb30c27` | 2026-06-15 | Operativo | Task log, daily summary, Graphify liviano |
+| `internal-agent-console` | `4667cf2` | 2026-06-04 | Feature / pendiente integrar | Ops dashboard, console components, session store |
+| `main` | `b43bb3e` | 2026-06-17 | Oficial | Demo 24/7 con Caddy, proxy endurecido, grafo deduplicado |
+| `vercel/install-vercel-speed-insights-ivlisy` | `351decd` | 2026-06-03 | Candidato a archivar | Vercel Speed Insights install, versión vieja del proxy |
 
-## Ramas duplicadas borradas con checkpoint
+## Ramas duplicadas borradas (con checkpoint)
 
-| Branch borrado | SHA respaldado | Tag de rollback | Motivo |
-|---|---:|---|---|
-| `chore/optimize-multibranch-information` | `02a0e402fa1b` | `checkpoint/deleted/chore-optimize-multibranch-information-20260615-201112` | Mergeado en `main`; árbol idéntico a `main` antes de borrar |
-| `refactor/repo-information-architecture` | `1e9f2cb10c33` | `checkpoint/deleted/refactor-repo-information-architecture-20260615-201112` | Mergeado en `main`; diff efectivo contra `main` vacío |
-| `supabase-auth-staging` | `6a04768d314f` | `checkpoint/deleted/supabase-auth-staging-20260615-201112` | Grafo deduplicado final mostró `files_included_unique: 0`; contenido duplicado en ramas conservadas/checkpoint |
+| Branch borrado | Tag de rollback | Motivo |
+|---|---|---|
+| `chore/optimize-multibranch-information` | `checkpoint/deleted/chore-optimize-multibranch-information-20260615-201112` | Mergeado en main; contenido idéntico |
+| `refactor/repo-information-architecture` | `checkpoint/deleted/refactor-repo-information-architecture-20260615-201112` | Mergeado en main; diff efectivo vacío |
+| `supabase-auth-staging` | `checkpoint/deleted/supabase-auth-staging-20260615-201112` | Contenido duplicado; 0 archivos únicos |
 
-## Checkpoint principal
+## Checkpoints
 
-- Tag: `checkpoint/pre-branch-cleanup-20260615-201112`
-- SHA main previo al borrado: `606130495f90`
+| Tag | Descripción |
+|---|---|
+| `checkpoint/pre-branch-cleanup-20260615-201112` | Estado previo al primer borrado de duplicados |
+| `checkpoint/demo-production-24x7-20260617-142129` | Pre-deploy de demo 24/7 |
+| `checkpoint/post-demo-deploy-20260617-142452` | Post-deploy de demo 24/7 en main |
+| `checkpoint/pre-cleanup-20260617-142129` | Pre-limpieza general |
 
-## Rollback de ramas borradas
+## Rollback
 
-Para restaurar una rama borrada desde su tag de rollback:
+Para restaurar una rama borrada desde su tag:
 
 ```bash
-git fetch origin --tags
-git push origin refs/tags/checkpoint/deleted/chore-optimize-multibranch-information-20260615-201112:refs/heads/chore/optimize-multibranch-information
-git push origin refs/tags/checkpoint/deleted/refactor-repo-information-architecture-20260615-201112:refs/heads/refactor/repo-information-architecture
-git push origin refs/tags/checkpoint/deleted/supabase-auth-staging-20260615-201112:refs/heads/supabase-auth-staging
+git push origin refs/tags/<tag>:refs/heads/<nombre-rama>
 ```
 
-## Próxima higiene pendiente
+## Resumen
 
-Las ramas activas con contenido único deben revisarse en ciclos separados: integrar a `main`, mover a `archive/`, o cerrarlas con aprobación explícita si dejan de ser necesarias.
+- **3 ramas duplicadas borradas** (con checkpoint)
+- **6 ramas de feature activas** (con contenido único, pendientes de integrar)
+- **1 candidata a archivar** (vercel)
+- **1 operativa** (task-tracking-system)
+- **1 oficial** (main)
