@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-14 09:00:23 UTC
-- Generado America/Santiago: 2026-06-14 05:00:23 -04
+- Generado UTC: 2026-06-17 06:34:04 UTC
+- Generado America/Santiago: 2026-06-17 02:34:04 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -14,9 +14,9 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - El `daily-summary.md` conserva el resumen diario y debe consultarse para tareas diarias, pendientes y bloqueos.
 - El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
-- Repo/branch de tracking: `/opt/data/data_seed` / `feat/task-tracking-system`.
-- Daily summary: `daily-summary.md` (170.0 B, sha256 5b11f191b6ffecdf).
-- Task log actual: `task-log.md` (8.7 KB, sha256 c718b55dfd4391ac).
+- Repo/branch de tracking: `/opt/data/data_seed_tasklog_worktree` / `feat/task-tracking-system`.
+- Daily summary: `daily-summary.md` (9.2 KB, sha256 543158137ed3d0fc).
+- Task log actual: `task-log.md` (9.3 KB, sha256 38889cb06d5a596c).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (594.0 B, sha256 6fd18874fbd0ad90).
 
 Regla operativa: el log diario registra detalles; el resumen diario consolida tareas y pendientes; el backup de las 05:00 AM solo guarda ciclos grandes completados y una referencia hacia el resumen diario.
@@ -43,7 +43,7 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 
 ## Configuración Hermes sanitizada
 
-- Config path: `/opt/data/config.yaml` (14.3 KB, sha256 88ba556455858b2e)
+- Config path: `/opt/data/config.yaml` (14.5 KB, sha256 dbc73832abd28181)
 - Model provider: `openai-codex`
 - Model default: `gpt-5.5`
 - Agent max_turns: `60`
@@ -61,41 +61,31 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `ea05ea193912` [active]
   - Nombre: Demeter Daily Operations (5:00 AM Chile)
   - Schedule: 0 9 * * *
-  - Next run UTC: 2026-06-15T09:00:00+00:00
-  - Last run UTC/status: 2026-06-13T19:34:20.209918+00:00 / ok
+  - Next run UTC: 2026-06-17T09:00:00+00:00
+  - Last run UTC/status: 2026-06-16T09:00:32.633360+00:00 / error
   - Mode: no-agent
   - Script: daily-operations-wrapper.sh
 
 ## Skills instalados
 
-- `apple-notes` (apple/apple-notes) — Manage Apple Notes via memo CLI: create, search, edit.
-- `apple-reminders` (apple/apple-reminders) — Apple Reminders via remindctl: add, list, complete.
-- `findmy` (apple/findmy) — Track Apple devices/AirTags via FindMy.app on macOS.
-- `imessage` (apple/imessage) — Send and receive iMessages/SMS via the imsg CLI on macOS.
-- `macos-computer-use` (apple/macos-computer-use) — |
-- `claude-code` (autonomous-ai-agents/claude-code) — Delegate coding to Claude Code CLI (features, PRs).
-- `codex` (autonomous-ai-agents/codex) — Delegate coding to OpenAI Codex CLI (features, PRs).
+- `ai-coding-agent-orchestration` (autonomous-ai-agents/ai-coding-agent-orchestration) — Use when delegating software work to external AI coding CLIs such as Claude Code, Codex, or OpenCode, including one-shot, background, interactive, PR review, and parallel worktree workflows.
 - `hermes-agent` (autonomous-ai-agents/hermes-agent) — Configure, extend, or contribute to Hermes Agent.
-- `opencode` (autonomous-ai-agents/opencode) — Delegate coding to OpenCode CLI (features, PR review).
 - `architecture-diagram` (creative/architecture-diagram) — Dark-themed SVG architecture/cloud/infra diagrams as HTML.
-- `ascii-art` (creative/ascii-art) — ASCII art: pyfiglet, cowsay, boxes, image-to-ascii.
 - `ascii-video` (creative/ascii-video) — ASCII video: convert video/audio to colored ASCII MP4/GIF.
 - `baoyu-infographic` (creative/baoyu-infographic) — Infographics: 21 layouts x 21 styles (信息图, 可视化).
-- `claude-design` (creative/claude-design) — Design one-off HTML artifacts (landing, deck, prototype).
 - `comfyui` (creative/comfyui) — Generate images, video, and audio with ComfyUI — install, launch, manage nodes/models, run workflows with parameter injection. Uses the official comfy-cli for lifecycle and direct REST/WebSocket API for execution.
 - `design-md` (creative/design-md) — Author/validate/export Google
 - `excalidraw` (creative/excalidraw) — Hand-drawn Excalidraw JSON diagrams (arch, flow, seq).
 - `humanizer` (creative/humanizer) — Humanize text: strip AI-isms and add real voice.
+- `impeccable` (creative/impeccable) — Safe Hermes adaptation of Impeccable: use with ui-ux-pro-max for production-grade frontend/UI design, critique, audit, polish, layout, typography, motion, accessibility, responsive behavior, UX copy, design systems, and anti-AI-slop review. Excludes upstream live-browser scripts, hooks, and auto-install commands that were blocked by Hermes security scan.
+- `lightweight-creative-prototyping` (creative/lightweight-creative-prototyping) — Use when producing quick creative artifacts without a full specialized pipeline: throwaway HTML mockups, Claude-designed pages, and terminal ASCII art.
 - `manim-video` (creative/manim-video) — Manim CE animations: 3Blue1Brown math/algo videos.
 - `p5js` (creative/p5js) — p5.js sketches: gen art, shaders, interactive, 3D.
 - `popular-web-designs` (creative/popular-web-designs) — 54 real design systems (Stripe, Linear, Vercel) as HTML/CSS.
 - `pretext` (creative/pretext) — Use when building creative browser demos with @chenglou/pretext — DOM-free text layout for ASCII art, typographic flow around obstacles, text-as-geometry games, kinetic typography, and text-powered generative art. Produces single-file HTML demos by default.
-- `sketch` (creative/sketch) — Throwaway HTML mockups: 2-3 design variants to compare.
-- `songwriting-and-ai-music` (creative/songwriting-and-ai-music) — Songwriting craft and Suno AI music prompts.
 - `touchdesigner-mcp` (creative/touchdesigner-mcp) — Control a running TouchDesigner instance via twozero MCP — create operators, set parameters, wire connections, execute Python, build real-time visuals. 36 native tools.
 - `jupyter-live-kernel` (data-science/jupyter-live-kernel) — Iterative Python via live Jupyter kernel (hamelnb).
-- `kanban-orchestrator` (devops/kanban-orchestrator) — Decomposition playbook + anti-temptation rules for an orchestrator profile routing work through Kanban. The
-- `kanban-worker` (devops/kanban-worker) — Pitfalls, examples, and edge cases for Hermes Kanban workers. The lifecycle itself is auto-injected into every worker
+- `kanban-agent-workflows` (devops/kanban-agent-workflows) — Use when orchestrating Kanban-style multi-agent work: board setup, task decomposition, worker prompts, status transitions, and recovery.
 - `operational-recovery-backups` (devops/operational-recovery-backups) — Build and maintain safe operational recovery backups for Hermes/DataSeed: cron job reconstruction, non-secret GitHub snapshots, rollback docs, script inclusion policies, graphify knowledge graph backup, and unified cleanup-then-backup daily operations.
 - `whatsapp-gateway-config` (devops/whatsapp-gateway-config) — WhatsApp gateway configuration for Hermes Agent — require_mention, dm_policy, group_policy, allow_from, mention_patterns, group_sessions_per_user, and all platform-specific settings.
 - `dogfood` (dogfood) — Exploratory QA of web apps: find bugs, evidence, reports.
@@ -106,9 +96,7 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `github-issues` (github/github-issues) — Create, triage, label, assign GitHub issues via gh or REST.
 - `github-pr-workflow` (github/github-pr-workflow) — GitHub PR lifecycle: branch, commit, open, CI, merge.
 - `github-repo-management` (github/github-repo-management) — Clone/create/fork repos; manage remotes, releases.
-- `gif-search` (media/gif-search) — Search/download GIFs from Tenor via curl + jq.
-- `heartmula` (media/heartmula) — HeartMuLa: Suno-like song generation from lyrics + tags.
-- `songsee` (media/songsee) — Audio spectrograms/features (mel, chroma, MFCC) via CLI.
+- `audio-music-media-workflows` (media/audio-music-media-workflows) — Use when creating, transforming, searching, or analyzing lightweight audio/music/media assets: songwriting prompts, local song generation, audio feature visualization, and GIF retrieval.
 - `youtube-content` (media/youtube-content) — YouTube transcripts to summaries, threads, blogs.
 - `evaluating-llms-harness` (mlops/evaluation/lm-evaluation-harness) — lm-eval-harness: benchmark LLMs (MMLU, GSM8K, etc.).
 - `weights-and-biases` (mlops/evaluation/weights-and-biases) — W&B: log ML experiments, sweeps, model registry, dashboards.
@@ -120,6 +108,7 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `segment-anything-model` (mlops/models/segment-anything) — SAM: zero-shot image segmentation via points, boxes, masks.
 - `obsidian` (note-taking/obsidian) — Read, search, create, and edit notes in the Obsidian vault.
 - `airtable` (productivity/airtable) — Airtable REST API via curl. Records CRUD, filters, upserts.
+- `apple-platform-automation` (productivity/apple-platform-automation) — Use when automating Apple/macOS apps and services from Hermes: Notes, Reminders, Messages, Find My, and visual computer-use workflows.
 - `google-workspace` (productivity/google-workspace) — Gmail, Calendar, Drive, Docs, Sheets via gws CLI or Python.
 - `maps` (productivity/maps) — Geocode, POIs, routes, timezones via OpenStreetMap/OSRM.
 - `nano-pdf` (productivity/nano-pdf) — Edit PDF text/typos/titles via nano-pdf CLI (NL prompts).
@@ -137,36 +126,31 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `xurl` (social-media/xurl) — X/Twitter via xurl CLI: post, search, DM, media, v2 API.
 - `hermes-agent-skill-authoring` (software-development/hermes-agent-skill-authoring) — Author in-repo SKILL.md: frontmatter, validator, structure.
 - `knowledge-graph-codebase-navigation` (software-development/knowledge-graph-codebase-navigation) — Build and use local knowledge graphs for codebase/navigation tasks, especially via Graphify, MCP, and agent skills.
-- `node-inspect-debugger` (software-development/node-inspect-debugger) — Debug Node.js via --inspect + Chrome DevTools Protocol CLI.
 - `plan` (software-development/plan) — Plan mode: write an actionable markdown plan to .hermes/plans/, no execution. Bite-sized tasks, exact paths, complete code.
-- `python-debugpy` (software-development/python-debugpy) — Debug Python: pdb REPL + debugpy remote (DAP).
-- `requesting-code-review` (software-development/requesting-code-review) — Pre-commit review: security scan, quality gates, auto-fix.
-- `simplify-code` (software-development/simplify-code) — Parallel 3-agent cleanup of recent code changes.
-- `spike` (software-development/spike) — Throwaway experiments to validate an idea before build.
-- `systematic-debugging` (software-development/systematic-debugging) — 4-phase root cause debugging: understand bugs before fixing.
-- `test-driven-development` (software-development/test-driven-development) — TDD: enforce RED-GREEN-REFACTOR, tests before code.
+- `software-debugging-and-quality` (software-development/software-debugging-and-quality) — Use when improving software correctness: root-cause debugging, TDD, debugger attachment, pre-commit review, simplification passes, and throwaway validation spikes.
+- `ui-ux-pro-max` (ui-ux-pro-max) — UI/UX design intelligence for web and mobile. Includes 50+ styles, 161 color palettes, 57 font pairings, 161 product types, 99 UX guidelines, and 25 chart types across 10 stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS). Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, and check UI/UX code. Projects: website, landing page, dashboard, admin panel, e-commerce, SaaS, portfolio, blog, and mobile app. Elements: button, modal, navbar, sidebar, card, table, form, and chart. Styles: glassmorphism, claymorphism, minimalism, brutalism, neumorphism, bento grid, dark mode, responsive, skeuomorphism, and flat design. Topics: color systems, accessibility, animation, layout, typography, font pairing, spacing, interaction states, shadow, and gradient. Integrations: shadcn/ui MCP for component search and examples.
 - `yuanbao` (yuanbao) — Yuanbao (元宝) groups: @mention users, query info/members.
 
 ## Archivos operativos clave observados
 
 No se copia el contenido de estos archivos; solo tamaño y huella para validación.
 
-- `config.yaml`: 14.3 KB, sha256 88ba556455858b2e
-- `memories/MEMORY.md`: 2.1 KB, sha256 29e39b97ce5e9da1
+- `config.yaml`: 14.5 KB, sha256 dbc73832abd28181
+- `memories/MEMORY.md`: 2.1 KB, sha256 fee9c44f61d1a56e
 - `memories/USER.md`: 1.2 KB, sha256 e78f7e4ef75de41c
-- `channel_directory.json`: 1003.0 B, sha256 f3439b8836cc48ce
+- `channel_directory.json`: 1003.0 B, sha256 f01c9806ebbf7817
 - `gateway_state.json`: 506.0 B, sha256 6c0f10236fa779c5
-- `cron/jobs.json`: 1.6 KB, sha256 33e0679ff2aa5239
+- `cron/jobs.json`: 3.2 KB, sha256 6199a6740d107575
 
 ## Grafo de conocimiento del proyecto (Graphify)
 
 El grafo de Graphify mapea las relaciones entre archivos, funciones y conceptos del proyecto.
-Se actualiza con `graphify update .` después de cambios importantes en el código.
+Se genera con `scripts/generate-multibranch-graph.py`, que crea un snapshot temporal de todos los branches remotos, deduplica archivos idénticos bajo `_shared/` y copia al repo solo los artefactos livianos versionables.
 
 - Directorio del grafo: `graphify-out/`
 - Archivos incluidos en este backup: `GRAPH_REPORT.md`, `manifest.json`, `.graphify_labels.json`
 - Archivos grandes NO incluidos (regenerables): `graph.html`, `graph.json`, `cache/`, snapshots multibranch temporales
-- Para regenerar: `cd /opt/data/data_seed && graphify update .`
+- Para regenerar: `cd /opt/data/data_seed && python3 scripts/generate-multibranch-graph.py`
 - Reporte del grafo: `graphify-out/GRAPH_REPORT.md` (incluido en este backup)
 
 ## Archivos actualizados por este backup
@@ -175,11 +159,14 @@ Se actualiza con `graphify update .` después de cambios importantes en el códi
 - `backups/COMPLETED_CYCLES.md`
 - `backups/RESTORE_GUIDE.md`
 - `backups/restore.sh`
-- `scripts/ops/demeter_daily_backup.py` — backup canónico.
-- `scripts/ops/daily-operations.sh` — pipeline diario.
-- `scripts/ops/daily-operations-wrapper.sh` — wrapper horario Chile.
-- `scripts/ops/daily-task-log-cleanup.sh` — cleanup task-log sanitizado.
-- `scripts/demeter_daily_backup.py`, `scripts/daily-operations.sh`, `scripts/daily-operations-wrapper.sh` — wrappers temporales de compatibilidad.
+- `scripts/demeter_daily_backup.py`
+- `scripts/daily-operations.sh`
+- `scripts/daily-operations-wrapper.sh`
+- `scripts/ops/demeter_daily_backup.py`
+- `scripts/ops/daily-operations.sh`
+- `scripts/ops/daily-operations-wrapper.sh`
+- `scripts/ops/daily-task-log-cleanup.sh`
+- `scripts/generate-multibranch-graph.py`
 - `graphify-out/GRAPH_REPORT.md`
 - `graphify-out/manifest.json`
 - `graphify-out/.graphify_labels.json`

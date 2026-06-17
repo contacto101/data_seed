@@ -84,8 +84,8 @@ bash backups/restore.sh
 - `scripts/ops/demeter_daily_backup.py`: rutina canónica que genera el backup diario.
 - `scripts/ops/daily-operations.sh`: pipeline diario cleanup → backup.
 - `scripts/ops/daily-operations-wrapper.sh`: wrapper horario America/Santiago para cron.
-- `scripts/ops/daily-task-log-cleanup.sh`: limpieza de `task-log.md` y resumen diario, copia sanitizada.
-- `scripts/demeter_daily_backup.py`, `scripts/daily-operations.sh`, `scripts/daily-operations-wrapper.sh`: wrappers temporales de compatibilidad.
+- `scripts/ops/daily-task-log-cleanup.sh`: limpieza de `task-log.md` y resumen diario, copia sanitizada aprobada.
+- `scripts/demeter_daily_backup.py`, `scripts/daily-operations.sh`, `scripts/daily-operations-wrapper.sh`: wrappers temporales de compatibilidad para rutas antiguas.
 - `scripts/cron/`: scripts referenciados por cron, solo si existen en `/opt/data/scripts`, tienen extensión segura (`.py`, `.sh`, `.bash`), pasan escaneo básico de secretos y fueron aprobados explícitamente en `/opt/data/backup_hardcopy_allowlist.txt`.
 
 ## Nunca commitear
