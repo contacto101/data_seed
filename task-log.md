@@ -7,6 +7,11 @@
 
 <!-- ENTRADAS -->
 
+### 2026-06-17 | Daniel Caignet
+**Tarea:** Diagnosticar qué se necesita para que la demo de la landing en `main` funcione 24/7.
+**Acción:** Revisé `site/index.html`, `scripts/web/dataseed_demo_proxy.py`, puertos locales, API server de Hermes y endpoint actual de la demo. Detecté que la landing apunta a un túnel temporal `trycloudflare.com`, el proxy estable vive en `127.0.0.1:8766`, el API server responde en `127.0.0.1:8642`, pero falta credencial/API key para que el proxy pueda llamar al API server.
+**Estado:** ✅ Diagnóstico completado
+
 ### 2026-06-16 | Mati
 **Tarea:** Definir prioridades semanales a partir del documento “Avances DataSeed” del 16 de junio de 2026.
 **Acción:** Se estructuraron las tareas pendientes por dependencia operativa: primero recuperar acceso técnico y conectividad base, luego estabilizar la demo, coordinar revisión de contenedores, medir consumo y finalmente optimizar el sitio móvil.
