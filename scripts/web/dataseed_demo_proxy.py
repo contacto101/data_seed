@@ -207,7 +207,7 @@ class DemoProxy:
                 await self._respond(writer, 200, b'{"ok":true}', [("Content-Type", "application/json")])
                 return
 
-            if route_path == "/api/demo-chat" and method == "POST":
+            if route_path in ("/demo-chat", "/api/demo-chat") and method == "POST":
                 if not _rate_limit_check(ip, now, self._rate_table):
                     await self._respond(writer, 429, b'{"error":"rate_limited"}',
                                         [("Content-Type", "application/json")] + _cors_headers(origin))
@@ -265,7 +265,7 @@ class DemoProxy:
                 method="POST",
             )
 
-            with urllib.request.urlopen(api_request, timeout=30) as resp:
+            with urllib.request.urlopen(api_request, timeout=120) as resp:
                 resp_body = _sanitize_demo_payload(resp.read())
 
             cors = _cors_headers(origin)

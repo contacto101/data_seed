@@ -1,0 +1,35 @@
+# Caddyfile — DataSeed Demo (HTTP para prueba, HTTPS cuando haya dominio)
+:8080 {
+    # Headers de seguridad
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Content-Security-Policy "default-src 'self'; script-src 'self' cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' fonts.googleapis.com cdn.jsdelivr.net; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'"
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+        -Server
+    }
+
+    # Servir landing estática
+    root * /opt/data/data_seed/site
+    file_server {
+        hide .git .env
+    }
+
+    # Reverse proxy al demo proxy (interno, no expuesto)
+    # Strip /api prefix — el proxy maneja /demo-chat y /health directamente
+    route /api/* {
+        uri strip_prefix /api
+        reverse_proxy 127.0.0.1:8766
+    }
+
+    # Bloquear archivos sensibles
+    @blocked {
+        path /.env* /.git* /*.py /*.sh /backups/* /scripts/*
+    }
+    respond @blocked 404
+
+    log {
+        output file /opt/data/logs/caddy-dataseed.log
+    }
+}

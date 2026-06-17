@@ -1,0 +1,29 @@
+[Unit]
+Description=DataSeed Demo Proxy
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=hermes
+Group=hermes
+WorkingDirectory=/opt/data/data_seed
+ExecStart=/usr/bin/env python3 scripts/web/dataseed_demo_proxy.py
+Environment=DEMO_PROXY_HOST=127.0.0.1
+Environment=DEMO_PROXY_PORT=8766
+EnvironmentFile=-/opt/data/run/dataseed-demo.env
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=dataseed-demo-proxy
+
+# Seguridad
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/data/run /tmp
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
