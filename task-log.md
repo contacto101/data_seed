@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-17 | Daniel Caignet
+**Tarea:** Definir mejores prácticas para desplegar la demo de la landing con ciberseguridad y garantía operacional 24/7.
+**Acción:** Revisé políticas actuales de seguridad (`demo-guardrails`, `secret-policy`, `public-demo-risk-review`, `auth-plan`) y estado técnico diagnosticado de la demo.
+**Estado:** ✅ Recomendaciones entregadas
+
+### 2026-06-17 | Daniel Caignet
 **Tarea:** Diagnosticar qué se necesita para que la demo de la landing en `main` funcione 24/7.
 **Acción:** Revisé `site/index.html`, `scripts/web/dataseed_demo_proxy.py`, puertos locales, API server de Hermes y endpoint actual de la demo. Detecté que la landing apunta a un túnel temporal `trycloudflare.com`, el proxy estable vive en `127.0.0.1:8766`, el API server responde en `127.0.0.1:8642`, pero falta credencial/API key para que el proxy pueda llamar al API server.
 **Estado:** ✅ Diagnóstico completado
