@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Dataseed</title>
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/brand.css">
+<style>
+body{background:#F8FAFC}.dash-layout{min-height:100vh;display:grid;grid-template-columns:280px 1fr}.sidebar{background:#1B2D45;color:#fff;padding:1.5rem;display:flex;flex-direction:column;gap:2rem}.brand{display:flex;align-items:center;gap:.75rem;color:#fff;text-decoration:none}.brand img{height:36px;filter:brightness(0) invert(1)}.brand strong{font-family:Inter,sans-serif}.nav-list{display:grid;gap:.4rem}.nav-list a{color:rgba(255,255,255,.72);text-decoration:none;padding:.8rem 1rem;border-radius:14px;font-weight:700}.nav-list a.active,.nav-list a:hover{background:rgba(255,255,255,.08);color:#fff}.main{padding:2rem clamp(1rem,4vw,3rem)}.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:2rem}.top h1{font-size:clamp(2rem,4vw,3.4rem);letter-spacing:-.05em;margin:0}.user{color:var(--slate);font-weight:700}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.card{background:#fff;border:1px solid var(--slate-light);border-radius:22px;padding:1.5rem;box-shadow:var(--shadow-1)}.metric{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:var(--seed-green)}.report-list{display:grid;gap:1rem;margin-top:1rem}.report{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;border:1px solid var(--slate-light);border-radius:18px;padding:1rem;background:#fff}.badge{border-radius:999px;background:var(--seed-green-light);color:var(--seed-green);font:800 .75rem Inter,sans-serif;padding:.35rem .7rem}.btn-logout{border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;border-radius:999px;padding:.75rem 1rem;font-weight:800;cursor:pointer}.status{display:none;margin-top:1rem;border-radius:16px;padding:1rem;font-weight:700}.status.warn{display:block;background:#FEF3C7;color:#92400E}.status.ok{display:block;background:#DCFCE7;color:#166534}@media(max-width:860px){.dash-layout{grid-template-columns:1fr}.sidebar{position:relative}.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body data-require-auth="true">
+<div class="dash-layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html"><img src="dataseed_logo_black.png" alt="Dataseed"><strong>Dataseed</strong></a>
+    <nav class="nav-list" aria-label="Dashboard">
+      <a class="active" href="dashboard.html">Resumen</a>
+      <a href="reports.html">Reporte diario</a>
+      <a href="publica-ai.html">Pública AI</a>
+      <a href="lead-magnets/publica-ai-guia.html">Guía Pública AI</a>
+      <a href="sales-deck.html">Sales deck</a>
+    </nav>
+    <button class="btn-logout" type="button" data-auth-action="logout">Cerrar sesión</button>
+  </aside>
+  <main class="main">
+    <div class="top">
+      <div>
+        <p class="pill">Dashboard privado · V1</p>
+        <h1>Hola, <span data-user-name>usuario</span>.</h1>
+        <p class="user">Cuenta: <span data-user-email>validando sesión…</span></p>
+      </div>
+      <a class="btn-primary" href="publica-ai.html">Ver Pública AI →</a>
+    </div>
+    <section class="grid" aria-label="Métricas principales">
+      <article class="card"><p>Reportes disponibles</p><div class="metric">4</div><small>Diario / Demo / Pública AI / Diagnóstico</small></article>
+      <article class="card"><p>Oportunidades radar</p><div class="metric">5</div><small>Ejemplo para pilotos comerciales</small></article>
+      <article class="card"><p>Estado cuenta</p><div class="metric">V1</div><small>Auth + reportes privados</small></article>
+    </section>
+    <section class="card" style="margin-top:1rem">
+      <h2>Reportes iniciales</h2>
+      <p>Este dashboard es la base privada para reportes personalizados de clientes. En V2 se conectará a Supabase, BigQuery y CRM.</p>
+      <div class="report-list">
+        <div class="report"><div><strong>Reporte diario Demeter</strong><p>Estado operativo, actividad del día y señales para el equipo.</p></div><a class="btn-secondary" href="reports.html">Abrir</a></div>
+        <div class="report"><div><strong>Radar Pública AI — demo</strong><p>Oportunidades públicas priorizadas por rubro.</p></div><span class="badge">Demo</span></div>
+        <div class="report"><div><strong>Diagnóstico DataSeed</strong><p>Mapa inicial de problema, datos disponibles y oportunidad.</p></div><span class="badge">Preview</span></div>
+        <div class="report"><div><strong>Sales deck</strong><p>Versión comercial para presentar DataSeed y Pública AI.</p></div><a class="btn-secondary" href="sales-deck.html">Abrir</a></div>
+      </div>
+      <div id="dashboard-status" class="status" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+</div>
+<script src="js/analytics-events.js"></script>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/supabase-auth.js"></script>
+</body>
+</html>

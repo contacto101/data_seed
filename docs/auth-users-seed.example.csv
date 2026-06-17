@@ -1,0 +1,3 @@
+name,email,role,status,notes
+Example Admin,admin@example.com,admin,pending_email,Replace with real account outside Git
+Example Member,member@example.com,member,pending_email,Replace with real account outside Git

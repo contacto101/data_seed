@@ -16,6 +16,9 @@ node_modules/
 dist/
 build/
 
+# Supabase config con credenciales (la anon key es pública pero mejor no exponerla en el repo)
+js/supabase-config.js
+
 # Graphify regenerable artifacts. Keep only the lightweight report/manifest files tracked.
 graphify-out/cache/
 graphify-out/graph.json
