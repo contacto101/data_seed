@@ -34,14 +34,24 @@ except Exception:  # pragma: no cover
 HERMES_HOME = Path(os.environ.get("HERMES_HOME", "/opt/data")).resolve()
 REPO_URL = os.environ.get("DATASEED_BACKUP_REPO", "https://github.com/contacto101/data_seed.git")
 # Use a dedicated clone for the backup job. The live /opt/data/data_seed
-# worktree is used by normal DataSeed tasks (including task-log commits) and
-# may be on a feature branch with local changes; switching it to main from cron
-# can fail or disrupt active work.
+# worktree is used by normal DataSeed tasks and may have local graph changes;
+# switching or pulling it from cron can fail or disrupt active work.
 REPO_DIR = Path(os.environ.get("DATASEED_REPO_DIR", str(HERMES_HOME / "data_seed_daily_backup"))).resolve()
+DEFAULT_BACKUP_REPO_DIR = (HERMES_HOME / "data_seed_daily_backup").resolve()
 BRANCH = os.environ.get("DATASEED_BACKUP_BRANCH", "main")
 HERMES_BIN = Path(os.environ.get("HERMES_BIN", "/opt/hermes/.venv/bin/hermes"))
 SCRIPT_SOURCE = Path(__file__).resolve()
-TASK_TRACKING_REPO_DIR = Path(os.environ.get("DATASEED_TASK_TRACKING_REPO_DIR", str(HERMES_HOME / "data_seed"))).resolve()
+CANONICAL_REPO_DIR = Path(os.environ.get("DATASEED_CANONICAL_REPO_DIR", str(HERMES_HOME / "data_seed"))).resolve()
+DEFAULT_TASK_TRACKING_REPO_DIR = (HERMES_HOME / "data_seed_tasklog_worktree").resolve()
+if "DATASEED_TASK_TRACKING_REPO_DIR" in os.environ:
+    TASK_TRACKING_REPO_DIR = Path(os.environ["DATASEED_TASK_TRACKING_REPO_DIR"]).resolve()
+elif (DEFAULT_TASK_TRACKING_REPO_DIR / "task-log.md").exists():
+    TASK_TRACKING_REPO_DIR = DEFAULT_TASK_TRACKING_REPO_DIR
+else:
+    TASK_TRACKING_REPO_DIR = CANONICAL_REPO_DIR
+GRAPHIFY_SOURCE_REPO_DIR = Path(
+    os.environ.get("DATASEED_GRAPHIFY_SOURCE_REPO_DIR", str(CANONICAL_REPO_DIR))
+).resolve()
 TASK_TRACKING_BRANCH = os.environ.get("DATASEED_TASK_TRACKING_BRANCH", "feat/task-tracking-system")
 TASK_LOG_REPO_REL = "task-log.md"
 DAILY_SUMMARY_REPO_REL = "daily-summary.md"
@@ -171,10 +181,33 @@ def ensure_git_auth() -> None:
             pass
 
 
+def clean_backup_repo_if_needed() -> None:
+    """Discard stale generated output in the dedicated backup clone before pull.
+
+    The daily backup writes only generated recovery files into REPO_DIR. If a
+    previous run fails after writing those files but before committing, the next
+    `git pull --ff-only` can fail with "local changes would be overwritten".
+    Resetting is allowed for the default dedicated clone only; custom repos must
+    opt in explicitly to avoid deleting operator work.
+    """
+    status = run(["git", "status", "--porcelain"], cwd=REPO_DIR, check=False)
+    if not status.strip():
+        return
+    allow_reset = REPO_DIR == DEFAULT_BACKUP_REPO_DIR or os.environ.get("DATASEED_ALLOW_BACKUP_REPO_RESET") == "1"
+    if not allow_reset:
+        raise RuntimeError(
+            f"Backup repo {REPO_DIR} has local changes; set DATASEED_ALLOW_BACKUP_REPO_RESET=1 "
+            "or clean it manually before running the backup."
+        )
+    run(["git", "reset", "--hard", "HEAD"], cwd=REPO_DIR)
+    run(["git", "clean", "-fd"], cwd=REPO_DIR)
+
+
 def ensure_repo() -> None:
     ensure_git_auth()
     REPO_DIR.parent.mkdir(parents=True, exist_ok=True)
     if (REPO_DIR / ".git").is_dir():
+        clean_backup_repo_if_needed()
         run(["git", "remote", "set-url", "origin", REPO_URL], cwd=REPO_DIR)
         run(["git", "fetch", "origin", BRANCH], cwd=REPO_DIR)
         run(["git", "checkout", BRANCH], cwd=REPO_DIR)
@@ -862,7 +895,7 @@ def copy_graphify_outputs() -> None:
         ("graphify-out/.graphify_labels.json", False),
     ]
     for rel, executable in graphify_files:
-        source = TASK_TRACKING_REPO_DIR / rel
+        source = GRAPHIFY_SOURCE_REPO_DIR / rel
         if not source.exists():
             continue
         text = source.read_text(encoding="utf-8", errors="ignore")
@@ -878,7 +911,7 @@ def copy_new_scripts() -> None:
         ("daily-task-log-cleanup.sh", "scripts/ops/daily-task-log-cleanup.sh", True),
     ]
     for source_name, repo_rel, executable in scripts:
-        repo_source = TASK_TRACKING_REPO_DIR / repo_rel
+        repo_source = CANONICAL_REPO_DIR / repo_rel
         runtime_source = HERMES_HOME / "scripts" / source_name
         source = repo_source if repo_source.exists() else runtime_source
         if not source.exists():
@@ -886,6 +919,12 @@ def copy_new_scripts() -> None:
         text = source.read_text(encoding="utf-8", errors="ignore")
         assert_no_secret_values(repo_rel, text)
         write_repo_file(repo_rel, text, executable=executable)
+
+    generator_source = CANONICAL_REPO_DIR / "scripts/generate-multibranch-graph.py"
+    if generator_source.exists():
+        text = generator_source.read_text(encoding="utf-8", errors="ignore")
+        assert_no_secret_values("scripts/generate-multibranch-graph.py", text)
+        write_repo_file("scripts/generate-multibranch-graph.py", text, executable=True)
 
     write_repo_file(
         "scripts/daily-operations.sh",

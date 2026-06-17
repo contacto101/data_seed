@@ -4,7 +4,17 @@
 
 set -e
 
-REPO_DIR="${REPO_DIR:-/opt/data/data_seed}"
+if [ -n "${REPO_DIR:-}" ]; then
+  REPO_DIR="$REPO_DIR"
+elif [ -n "${DATASEED_TASK_TRACKING_REPO_DIR:-}" ]; then
+  REPO_DIR="$DATASEED_TASK_TRACKING_REPO_DIR"
+elif [ -f "/opt/data/data_seed_tasklog_worktree/task-log.md" ]; then
+  REPO_DIR="/opt/data/data_seed_tasklog_worktree"
+elif [ -f "/tmp/data_seed_tasklog_worktree/task-log.md" ]; then
+  REPO_DIR="/tmp/data_seed_tasklog_worktree"
+else
+  REPO_DIR="/opt/data/data_seed"
+fi
 TASK_LOG="$REPO_DIR/task-log.md"
 DAILY_SUMMARY="$REPO_DIR/daily-summary.md"
 DATE=$(TZ='America/Santiago' date '+%Y-%m-%d')
