@@ -8,6 +8,11 @@
 <!-- ENTRADAS -->
 
 ### 2026-06-17 | Daniel Caignet
+**Tarea:** Desplegar demo de la landing a producción 24/7 con ciberseguridad y garantía operacional.
+**Acción:** Crear perfil Hermes aislado `dataseed-demo`, configurar API key, cambiar landing a `/api/demo-chat`, instalar Caddy con HTTPS, crear systemd service, smoke test completo.
+**Estado:** 🔄 En progreso
+
+### 2026-06-17 | Daniel Caignet
 **Tarea:** Reparar el cronjob diario considerando que la información del repo fue optimizada mediante Graphify.
 **Acción:** Diagnostiqué el cron `ea05ea193912`: fallaba porque el flujo actualizaba Graphify en modo single-branch y dejaba cambios locales que bloqueaban el `git pull` del backup; además el cleanup buscaba `task-log.md` en `main`. Moví el worktree operativo de task tracking a `/opt/data/data_seed_tasklog_worktree`, actualicé los scripts canónicos para usar el generador multi-branch deduplicado `scripts/generate-multibranch-graph.py`, separé repo canónico, repo de tracking y fuente Graphify, agregué limpieza segura del clon dedicado de backup y sincronicé wrappers runtime. Verifiqué sintaxis, regeneré el grafo optimizado y ejecuté el backup correctamente.
 **Estado:** ✅ Finalizada exitosamente — cron `ea05ea193912` vuelve a estado `ok`
