@@ -26,3 +26,4 @@
 | Hora | Usuario | Tarea | Acción | Estado |
 |---|---|---|---|---|
 | 00:02 | Daniel | Revisar logs de reinicio del gateway WhatsApp | Analizados logs compartidos: el gateway recibió mensaje grupal, creó turno con plataforma whatsapp y envió respuesta en 15.6s con 3 llamadas API. Se respeta instrucción de no modificar configuración ni requerimiento porque el tag de WhatsApp funcionaba. | ✅ Informado |
+| 00:04 | Daniel | Aclarar cómo hacer funcionar el chat en grupo WhatsApp | Verificada configuración actual: whatsapp.require_mention=true, group_policy=open y group_sessions_per_user=false. Respuesta operacional: usar mención nativa del bot en el grupo; no modificar configuración si el tag nativo ya funcionaba. | ✅ Informado |
