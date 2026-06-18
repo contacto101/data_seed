@@ -20,3 +20,9 @@
 | 14:10 | Daniel | Demo 24/7 hardeneada | Caddy reverse proxy en :8080, demo proxy en :8766 con uri strip_prefix /api. Timeout 120s. Health checks OK. API key NO hardcodeada (lee de /opt/data/run/demeter_api_key). | ✅ Completo |
 | 19:41 | Daniel | Portal auth Supabase v2 producción | Creado login.html + dashboard.html con Supabase Auth. RLS optimizado con (select auth.uid()). Rate limiting client-side. CSP headers. Audit log. Auto-onboarding. Guía configuración Supabase. Botón "Acceder" en landing nav. Rama: feat/supabase-auth-production. | ✅ Completo |
 | 17:28 | Daniel | Corregir referencia de repositorio canónico | Confirmado que el repo actual es https://github.com/contacto101/data_seed. Eliminado el clon temporal equivocado y verificado 0 referencias a ZeroSentinels en /opt/data/data_seed. | ✅ Completo |
+
+## 2026-06-18
+
+| Hora | Usuario | Tarea | Acción | Estado |
+|---|---|---|---|---|
+| 00:02 | Daniel | Revisar logs de reinicio del gateway WhatsApp | Analizados logs compartidos: el gateway recibió mensaje grupal, creó turno con plataforma whatsapp y envió respuesta en 15.6s con 3 llamadas API. Se respeta instrucción de no modificar configuración ni requerimiento porque el tag de WhatsApp funcionaba. | ✅ Informado |
