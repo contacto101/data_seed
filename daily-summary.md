@@ -202,3 +202,48 @@
 **Estado:** ✅ Finalizada exitosamente
 
 ---
+
+## Resumen 2026-06-18
+
+**Generado:** 2026-06-18 05:00:33 -04
+
+| Estado | Cantidad |
+|--------|----------|
+| ✅ Finalizada exitosamente | 1 |
+| ❌ Finalizada con error | 0 |
+| 🔄 Activa | 1 |
+| ⏳ En espera de acción de usuario | 0 |
+
+### Detalle de tareas
+
+### 2026-06-17 | Daniel Caignet
+**Tarea:** Registrar regla operativa: no usar Caddy en DataSeed; el VPS usa Traefik externo.
+**Acción:** Guardé la regla en memoria persistente y verifiqué que la planificación de demo debe excluir Caddy por completo. Cualquier rastro real de Caddy dentro del contenedor debe revertirse solo como limpieza, sin reemplazar Traefik.
+**Estado:** ✅ Regla activa
+
+## 2026-06-17
+
+| Hora | Usuario | Tarea | Acción | Estado |
+|---|---|---|---|---|
+| 14:00 | Daniel | Verificar repo, crear checkpoint, borrar ramas duplicadas | Verificadas 3 ramas ya borradas con checkpoint. Creados tags checkpoint/demo-production-24x7 y checkpoint/post-demo-deploy. Mergeada demo 24/7 a main. Actualizado branch-inventory.md. Las 6 ramas restantes tienen contenido único (no son duplicados). | ✅ Completo |
+| 14:10 | Daniel | Demo 24/7 hardeneada | Caddy reverse proxy en :8080, demo proxy en :8766 con uri strip_prefix /api. Timeout 120s. Health checks OK. API key NO hardcodeada (lee de /opt/data/run/demeter_api_key). | ✅ Completo |
+| 19:41 | Daniel | Portal auth Supabase v2 producción | Creado login.html + dashboard.html con Supabase Auth. RLS optimizado con (select auth.uid()). Rate limiting client-side. CSP headers. Audit log. Auto-onboarding. Guía configuración Supabase. Botón "Acceder" en landing nav. Rama: feat/supabase-auth-production. | ✅ Completo |
+| 17:28 | Daniel | Corregir referencia de repositorio canónico | Confirmado que el repo actual es https://github.com/contacto101/data_seed. Eliminado el clon temporal equivocado y verificado 0 referencias a ZeroSentinels en /opt/data/data_seed. | ✅ Completo |
+
+## 2026-06-18
+
+| Hora | Usuario | Tarea | Acción | Estado |
+|---|---|---|---|---|
+| 00:02 | Daniel | Revisar logs de reinicio del gateway WhatsApp | Analizados logs compartidos: el gateway recibió mensaje grupal, creó turno con plataforma whatsapp y envió respuesta en 15.6s con 3 llamadas API. Se respeta instrucción de no modificar configuración ni requerimiento porque el tag de WhatsApp funcionaba. | ✅ Informado |
+| 00:04 | Daniel | Aclarar cómo hacer funcionar el chat en grupo WhatsApp | Verificada configuración actual: whatsapp.require_mention=true, group_policy=open y group_sessions_per_user=false. Respuesta operacional: usar mención nativa del bot en el grupo; no modificar configuración si el tag nativo ya funcionaba. | ✅ Informado |
+| 00:26 | Daniel | Recordar diagnóstico del aviso Codex incomplete en grupo WhatsApp | Recuperado diagnóstico histórico con session_search y verificado código activo: el problema original fue que la mención nativa podía pasar por mentionedIds pero el texto entregado al modelo quedaba sin @Demeter/@bot, provocando respuesta vacía/incompleta en Codex. No se modificó configuración. | ✅ Informado |
+| 00:30 | Daniel | Solicitar respuesta automática a todos los mensajes recibidos en grupo WhatsApp | Se cargó la guía de WhatsApp y se mantuvo la regla operativa vigente: en grupos la respuesta debe estar condicionada a mención explícita/gateway; no se modificó configuración. | ✅ Informado |
+| 00:31 | Daniel | Corregir causa raíz del aviso Codex incomplete | Daniel aclaró que era un problema del system prompt. Actualicé memoria persistente y skill whatsapp-gateway-config para priorizar diagnóstico del prompt antes de asumir cambio de configuración/QR/bridge. | ✅ Registrado |
+| 00:33 | Daniel | Actualizar regla operativa WhatsApp según system prompt | Actualicé memoria persistente: el gateway/filtro previo decide cuándo hablarle a Demeter; si un mensaje del grupo llega al agente se interpreta como autorizado para responder sin re-filtrar por texto visible, respetando instrucciones superiores. | ✅ Registrado |
+| 00:42 | Daniel | Verificar reinicio de gateway y aplicar ajuste real al system prompt | Verificado gateway reiniciado y WhatsApp conectado. Los logs mostraron que los mensajes de grupo aún generaban respuestas vacías/67 chars; se corrigió /opt/data/SOUL.md para que el modelo no haga una segunda verificación por @ visible cuando el gateway ya filtró la mención. Pendiente reinicio adicional para cargar el nuevo SOUL.md. | ⚠️ Pendiente reinicio |
+| 06:25 | Daniel | Crear landing Pro con animaciones modernas | Creada landing Pro en feat/landing-pro-rebuild con: partículas animadas (canvas), GSAP scroll-triggered animations, reveal on scroll, hero con anillos orbitales y métricas flotantes, dashboard con parallax, micro-interacciones en cards (hover lift + glow), FAQ acordeón mejorado, demo interactivo con respuestas predefinidas. Se mantuvo design system verde oscuro (Syne + Inter). Deploy requiere conexión de repo a Vercel. | ✅ Landing creada, ⏳ Pendiente deploy Vercel |
+| 00:50 | Daniel | Corregir persistencia del prompt antiguo en sesiones WhatsApp | Identificada causa de persistencia: Hermes guarda `sessions.system_prompt` en /opt/data/state.db para prefix caching y las sesiones activas seguían usando el prompt viejo aunque SOUL.md ya estaba corregido. Creado backup /opt/data/state.db.bak_prompt_fix_1781758204 e invalidado system_prompt=NULL en 4 sesiones WhatsApp activas para forzar rebuild en el próximo mensaje. Skill y memoria actualizadas con este hallazgo. | ✅ Aplicado; pendiente prueba |
+| 01:02 | Daniel | Resolver persistencia del fallo sin reinicio manual | Verificados logs: el grupo 120363406765196561@g.us seguía en sesión 20260618_041959_550c4248 con respuestas incompletas. Se creó una sesión limpia 20260618_050201_e8d5f2ca en sessions.json/state.db, cerrando la anterior con `manual_group_reset_prompt_fix`; backups creados: sessions.json.bak_group_reset_20260618_050201 y state.db.bak_group_reset_20260618_050201. Queda programado reinicio del gateway para que cargue la nueva ruta de sesión. | 🔄 Reinicio programado |
+| 01:08 | Daniel | Verificar si gateway se reinició | Verificado estado en vivo: gateway corriendo con PID 2537, WhatsApp bridge conectado con uptime ~254s y proceso node activo. El PID cambió respecto al anterior, confirmando reinicio. | ✅ Reiniciado |
+
+---
