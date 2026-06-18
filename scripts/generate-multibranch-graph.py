@@ -25,7 +25,7 @@ from collections import defaultdict
 from dataclasses import dataclass, asdict
 from pathlib import Path, PurePosixPath
 
-REPO = Path(__file__).resolve().parents[1]
+REPO = Path(os.environ.get("DATASEED_CANONICAL_REPO_DIR", str(Path(__file__).resolve().parents[1]))).resolve()
 OUTPUT_DIR = REPO / "graphify-out"
 GRAPHIFY_BIN = os.environ.get(
     "GRAPHIFY_BIN",

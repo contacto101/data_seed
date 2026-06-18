@@ -1,8 +1,69 @@
-#!/bin/bash
-# Script de limpieza diaria de task-log.md y generación de resumen
-# Se ejecuta a las 05:00 AM hora Chile (America/Santiago)
+#!/usr/bin/env bash
+# Limpieza diaria de task-log.md y generación de daily-summary.md.
+# Runtime estable para cron: NO delega al repo vivo, para que los cambios del repo no rompan el cron.
+set -euo pipefail
 
-set -e
+# GitHub auth bootstrap for non-interactive Hermes cron.
+load_github_token() {
+  if [ -n "${GITHUB_TOKEN:-}" ]; then
+    return 0
+  fi
+  local env_file="${HERMES_HOME:-/opt/data}/.env"
+  if [ ! -f "$env_file" ]; then
+    return 0
+  fi
+  local line value
+  while IFS= read -r line; do
+    case "$line" in
+      GITHUB_TOKEN=*)
+        value="${line#GITHUB_TOKEN=}"
+        value="${value%$'\r'}"
+        value="${value%\"}"; value="${value#\"}"
+        value="${value%\'}"; value="${value#\'}"
+        export GITHUB_TOKEN="$value"
+        return 0
+        ;;
+    esac
+  done < "$env_file"
+}
+
+setup_git_auth() {
+  export HOME="${HOME:-/opt/data/home}"
+  mkdir -p "$HOME"
+  load_github_token || true
+  git config --global credential.helper "store --file=$HOME/.git-credentials" >/dev/null 2>&1 || true
+  if [ -n "${GITHUB_TOKEN:-}" ]; then
+    if [ ! -f "$HOME/.git-credentials" ] || ! grep -q 'github.com' "$HOME/.git-credentials"; then
+      umask 077
+      printf 'https://x-access-token:%s@github.com\n' "$GITHUB_TOKEN" > "$HOME/.git-credentials"
+      chmod 600 "$HOME/.git-credentials" 2>/dev/null || true
+    fi
+    ASKPASS_FILE="$(mktemp /tmp/dataseed-git-askpass.XXXXXX)"
+    cat > "$ASKPASS_FILE" <<'ASKPASS'
+#!/bin/sh
+case "$1" in
+  *Username*) printf '%s\n' 'x-access-token' ;;
+  *Password*) printf '%s\n' "$GITHUB_TOKEN" ;;
+  *) printf '\n' ;;
+esac
+ASKPASS
+    chmod 700 "$ASKPASS_FILE"
+    export GIT_ASKPASS="$ASKPASS_FILE"
+    export GIT_TERMINAL_PROMPT=0
+    trap 'rm -f "${ASKPASS_FILE:-}"' EXIT
+  fi
+}
+
+ensure_git_identity() {
+  if ! git config user.name >/dev/null 2>&1; then
+    git config user.name "Demeter Ops Bot"
+  fi
+  if ! git config user.email >/dev/null 2>&1; then
+    git config user.email "demeter@dataseed.local"
+  fi
+}
+
+setup_git_auth
 
 if [ -n "${REPO_DIR:-}" ]; then
   REPO_DIR="$REPO_DIR"
@@ -19,33 +80,36 @@ TASK_LOG="$REPO_DIR/task-log.md"
 DAILY_SUMMARY="$REPO_DIR/daily-summary.md"
 DATE=$(TZ='America/Santiago' date '+%Y-%m-%d')
 TIMESTAMP=$(TZ='America/Santiago' date '+%Y-%m-%d %H:%M:%S %Z')
+PUSH_ENABLED="${DATASEED_CLEANUP_PUSH:-1}"
 
-# Verificar que task-log.md tiene entradas
+if [ ! -f "$TASK_LOG" ]; then
+  echo "[$TIMESTAMP] ERROR: no existe task-log.md en $REPO_DIR"
+  exit 1
+fi
+if [ ! -f "$DAILY_SUMMARY" ]; then
+  touch "$DAILY_SUMMARY"
+fi
+
 if ! grep -q "<!-- ENTRADAS -->" "$TASK_LOG"; then
   echo "[$TIMESTAMP] task-log.md no tiene el marcador de entradas. Saltando."
   exit 0
 fi
 
-# Extraer entradas (todo lo después de <!-- ENTRADAS -->)
 ENTRIES=$(sed -n '/<!-- ENTRADAS -->/,$p' "$TASK_LOG" | tail -n +3)
-
-# Solo saltar si el bloque completo está vacío o contiene únicamente espacios.
-# Antes se usaba `grep -qP '^\s*$'`, que marca como vacío cualquier bloque
-# que tenga una línea en blanco; las entradas Markdown normales siempre tienen
-# líneas en blanco entre título, tarea, acción y estado.
 if [ -z "$(printf '%s' "$ENTRIES" | tr -d '[:space:]')" ]; then
   echo "[$TIMESTAMP] No hay entradas en task-log.md para el $DATE. Saltando resumen."
   exit 0
 fi
 
-# Contar por estado usando solo líneas de Estado para evitar falsos positivos
-# en textos de Tarea/Acción que mencionen "error", "exitosamente", etc.
-SUCCESS=$(printf '%s\n' "$ENTRIES" | grep -ciE '^\*\*Estado:\*\*.*(✅|finalizada exitosamente|exitosamente|completada)' || true)
-ERRORS=$(printf '%s\n' "$ENTRIES" | grep -ciE '^\*\*Estado:\*\*.*(❌|error|fallida)' || true)
-ACTIVE=$(printf '%s\n' "$ENTRIES" | grep -ciE '^\*\*Estado:\*\*.*(🔄|(^|[^[:alpha:]])activa([^[:alpha:]]|$)|en progreso|in_progress)' || true)
-PENDING=$(printf '%s\n' "$ENTRIES" | grep -ciE '^\*\*Estado:\*\*.*(⏳|⚠️|espera|pendiente|waiting|bloquead)' || true)
+SUCCESS=$(printf '%s
+' "$ENTRIES" | grep -ciE '^\*\*Estado:\*\*.*(✅|finalizada exitosamente|exitosamente|completada)' || true)
+ERRORS=$(printf '%s
+' "$ENTRIES" | grep -ciE '^\*\*Estado:\*\*.*(❌|error|fallida)' || true)
+ACTIVE=$(printf '%s
+' "$ENTRIES" | grep -ciE '^\*\*Estado:\*\*.*(🔄|(^|[^[:alpha:]])activa([^[:alpha:]]|$)|en progreso|in_progress)' || true)
+PENDING=$(printf '%s
+' "$ENTRIES" | grep -ciE '^\*\*Estado:\*\*.*(⏳|⚠️|espera|pendiente|waiting|bloquead)' || true)
 
-# Agregar resumen al daily-summary.md
 {
   echo ""
   echo "## Resumen $DATE"
@@ -66,7 +130,6 @@ PENDING=$(printf '%s\n' "$ENTRIES" | grep -ciE '^\*\*Estado:\*\*.*(⏳|⚠️|es
   echo "---"
 } >> "$DAILY_SUMMARY"
 
-# Limpiar task-log.md (mantener encabezado y marcador)
 {
   echo "# Task Log - Demeter"
   echo ""
@@ -78,15 +141,20 @@ PENDING=$(printf '%s\n' "$ENTRIES" | grep -ciE '^\*\*Estado:\*\*.*(⏳|⚠️|es
   echo "<!-- ENTRADAS -->"
 } > "$TASK_LOG"
 
-# Commit y push al repo. Si hay cambios, el push debe fallar fuerte para que
-# el cron reporte el problema en vez de marcar éxito falso.
+chmod 0644 "$TASK_LOG" "$DAILY_SUMMARY" 2>/dev/null || true
+
 cd "$REPO_DIR"
+ensure_git_identity
 git add task-log.md daily-summary.md
 if git diff --cached --quiet; then
   echo "[$TIMESTAMP] No hay cambios para commitear."
 else
   git commit -m "chore: daily task log cleanup and summary for $DATE" --no-verify
-  git push origin feat/task-tracking-system
+  if [ "$PUSH_ENABLED" = "0" ]; then
+    echo "[$TIMESTAMP] Push deshabilitado por DATASEED_CLEANUP_PUSH=0."
+  else
+    git push origin feat/task-tracking-system
+  fi
 fi
 
 echo "[$TIMESTAMP] Limpieza completada. Resumen agregado al daily-summary.md."

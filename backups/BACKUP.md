@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-17 09:00:37 UTC
-- Generado America/Santiago: 2026-06-17 05:00:37 -04
+- Generado UTC: 2026-06-18 15:15:19 UTC
+- Generado America/Santiago: 2026-06-18 11:15:19 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -15,7 +15,7 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
 - Repo/branch de tracking: `/opt/data/data_seed_tasklog_worktree` / `feat/task-tracking-system`.
-- Daily summary: `daily-summary.md` (20.1 KB, sha256 e4d8da605ce95547).
+- Daily summary: `daily-summary.md` (26.4 KB, sha256 bbe58bc3dfa0ae4b).
 - Task log actual: `task-log.md` (213.0 B, sha256 1512ddaa0df19af1).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (594.0 B, sha256 6fd18874fbd0ad90).
 
@@ -39,11 +39,11 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 - Hermes binary: `/opt/hermes/.venv/bin/hermes`
 - Disk snapshot:
   `Filesystem      Size  Used Avail Use% Mounted on`
-  `/dev/sda1        96G   12G   85G  12% /opt/data`
+  `/dev/sda1        96G   19G   77G  20% /opt/data`
 
 ## Configuración Hermes sanitizada
 
-- Config path: `/opt/data/config.yaml` (14.5 KB, sha256 dbc73832abd28181)
+- Config path: `/opt/data/config.yaml` (16.3 KB, sha256 f9c71fda9b2ce203)
 - Model provider: `openai-codex`
 - Model default: `gpt-5.5`
 - Agent max_turns: `60`
@@ -61,8 +61,8 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `ea05ea193912` [active]
   - Nombre: Demeter Daily Operations (5:00 AM Chile)
   - Schedule: 0 9 * * *
-  - Next run UTC: 2026-06-18T09:00:00+00:00
-  - Last run UTC/status: 2026-06-17T06:35:34.412403+00:00 / ok
+  - Next run UTC: 2026-06-19T09:00:00+00:00
+  - Last run UTC/status: 2026-06-18T09:00:34.155665+00:00 / error
   - Mode: no-agent
   - Script: daily-operations-wrapper.sh
 
@@ -135,12 +135,12 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 
 No se copia el contenido de estos archivos; solo tamaño y huella para validación.
 
-- `config.yaml`: 14.5 KB, sha256 dbc73832abd28181
-- `memories/MEMORY.md`: 2.1 KB, sha256 cd3f91530b1f73ae
-- `memories/USER.md`: 1.2 KB, sha256 e78f7e4ef75de41c
-- `channel_directory.json`: 1003.0 B, sha256 822e6421a4c57b33
-- `gateway_state.json`: 506.0 B, sha256 6c0f10236fa779c5
-- `cron/jobs.json`: 1.6 KB, sha256 c9ece57992a98a42
+- `config.yaml`: 16.3 KB, sha256 f9c71fda9b2ce203
+- `memories/MEMORY.md`: 2.0 KB, sha256 e4bab41db41d3405
+- `memories/USER.md`: 1.3 KB, sha256 fb6d397bf7499bf7
+- `channel_directory.json`: 1.0 KB, sha256 f9fb1d16a9dc26a1
+- `gateway_state.json`: 544.0 B, sha256 2c656bd03277d9fd
+- `cron/jobs.json`: 7.2 KB, sha256 a9b5ce3916b96f99
 
 ## Grafo de conocimiento del proyecto (Graphify)
 

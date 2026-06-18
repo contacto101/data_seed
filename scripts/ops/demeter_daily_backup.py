@@ -165,10 +165,13 @@ def read_dotenv_key(key: str) -> str | None:
 
 
 def ensure_git_auth() -> None:
+    os.environ.setdefault("HOME", str(HERMES_HOME / "home"))
+    os.environ.setdefault("GIT_TERMINAL_PROMPT", "0")
+    Path(os.environ["HOME"]).mkdir(parents=True, exist_ok=True)
     token = read_dotenv_key("GITHUB_TOKEN")
     if not token:
         return
-    run(["git", "config", "--global", "credential.helper", "store"], check=False)
+    run(["git", "config", "--global", "credential.helper", f"store --file={Path.home() / '.git-credentials'}"], check=False)
     cred_path = Path.home() / ".git-credentials"
     existing = ""
     if cred_path.exists():
@@ -913,14 +916,17 @@ def copy_new_scripts() -> None:
     for source_name, repo_rel, executable in scripts:
         repo_source = CANONICAL_REPO_DIR / repo_rel
         runtime_source = HERMES_HOME / "scripts" / source_name
-        source = repo_source if repo_source.exists() else runtime_source
+        # Prefer runtime scripts: cron executes /opt/data/scripts, so these are the durable source of truth.
+        source = runtime_source if runtime_source.exists() else repo_source
         if not source.exists():
             continue
         text = source.read_text(encoding="utf-8", errors="ignore")
         assert_no_secret_values(repo_rel, text)
         write_repo_file(repo_rel, text, executable=executable)
 
-    generator_source = CANONICAL_REPO_DIR / "scripts/generate-multibranch-graph.py"
+    runtime_generator = HERMES_HOME / "scripts" / "generate-multibranch-graph.py"
+    repo_generator = CANONICAL_REPO_DIR / "scripts/generate-multibranch-graph.py"
+    generator_source = runtime_generator if runtime_generator.exists() else repo_generator
     if generator_source.exists():
         text = generator_source.read_text(encoding="utf-8", errors="ignore")
         assert_no_secret_values("scripts/generate-multibranch-graph.py", text)

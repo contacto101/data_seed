@@ -1,12 +1,73 @@
-#!/bin/bash
-# Script unificado de operaciones diarias Demeter.
-# Orden: 1) actualizar grafo multi-branch optimizado, 2) limpiar task-log → daily-summary, 3) backup operativo.
-
+#!/usr/bin/env bash
+# Operaciones diarias Demeter: grafo optimizado -> cleanup task-log -> backup operativo.
+# Runtime estable para cron: usa /opt/data/scripts como fuente de scripts, no el checkout vivo del repo.
 set -euo pipefail
+
+# GitHub auth bootstrap for non-interactive Hermes cron.
+load_github_token() {
+  if [ -n "${GITHUB_TOKEN:-}" ]; then
+    return 0
+  fi
+  local env_file="${HERMES_HOME:-/opt/data}/.env"
+  if [ ! -f "$env_file" ]; then
+    return 0
+  fi
+  local line value
+  while IFS= read -r line; do
+    case "$line" in
+      GITHUB_TOKEN=*)
+        value="${line#GITHUB_TOKEN=}"
+        value="${value%$'\r'}"
+        value="${value%\"}"; value="${value#\"}"
+        value="${value%\'}"; value="${value#\'}"
+        export GITHUB_TOKEN="$value"
+        return 0
+        ;;
+    esac
+  done < "$env_file"
+}
+
+setup_git_auth() {
+  export HOME="${HOME:-/opt/data/home}"
+  mkdir -p "$HOME"
+  load_github_token || true
+  git config --global credential.helper "store --file=$HOME/.git-credentials" >/dev/null 2>&1 || true
+  if [ -n "${GITHUB_TOKEN:-}" ]; then
+    if [ ! -f "$HOME/.git-credentials" ] || ! grep -q 'github.com' "$HOME/.git-credentials"; then
+      umask 077
+      printf 'https://x-access-token:%s@github.com\n' "$GITHUB_TOKEN" > "$HOME/.git-credentials"
+      chmod 600 "$HOME/.git-credentials" 2>/dev/null || true
+    fi
+    ASKPASS_FILE="$(mktemp /tmp/dataseed-git-askpass.XXXXXX)"
+    cat > "$ASKPASS_FILE" <<'ASKPASS'
+#!/bin/sh
+case "$1" in
+  *Username*) printf '%s\n' 'x-access-token' ;;
+  *Password*) printf '%s\n' "$GITHUB_TOKEN" ;;
+  *) printf '\n' ;;
+esac
+ASKPASS
+    chmod 700 "$ASKPASS_FILE"
+    export GIT_ASKPASS="$ASKPASS_FILE"
+    export GIT_TERMINAL_PROMPT=0
+    trap 'rm -f "${ASKPASS_FILE:-}"' EXIT
+  fi
+}
+
+ensure_git_identity() {
+  if ! git config user.name >/dev/null 2>&1; then
+    git config user.name "Demeter Ops Bot"
+  fi
+  if ! git config user.email >/dev/null 2>&1; then
+    git config user.email "demeter@dataseed.local"
+  fi
+}
+
+setup_git_auth
 
 TIMESTAMP=$(TZ='America/Santiago' date '+%Y-%m-%d %H:%M:%S %Z')
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CANONICAL_REPO="${DATASEED_CANONICAL_REPO_DIR:-$(cd "$SCRIPT_DIR/../.." && pwd)}"
+CANONICAL_REPO="${DATASEED_CANONICAL_REPO_DIR:-/opt/data/data_seed}"
 
 if [ -n "${DATASEED_TASK_TRACKING_REPO_DIR:-}" ]; then
   TRACKING_REPO="$DATASEED_TASK_TRACKING_REPO_DIR"
@@ -15,22 +76,22 @@ elif [ -f "/opt/data/data_seed_tasklog_worktree/task-log.md" ]; then
 elif [ -f "/tmp/data_seed_tasklog_worktree/task-log.md" ]; then
   TRACKING_REPO="/tmp/data_seed_tasklog_worktree"
 else
-  TRACKING_REPO="/opt/data/data_seed"
+  TRACKING_REPO="$CANONICAL_REPO"
 fi
 
-GRAPHIFY_BIN="${GRAPHIFY_BIN:-/opt/data/home/.local/share/uv/tools/graphifyy/bin/graphify}"
-GRAPH_GENERATOR="${DATASEED_GRAPH_GENERATOR:-$CANONICAL_REPO/scripts/generate-multibranch-graph.py}"
+GRAPH_GENERATOR="${DATASEED_GRAPH_GENERATOR:-$SCRIPT_DIR/generate-multibranch-graph.py}"
 TASK_CLEANUP="${DATASEED_TASK_CLEANUP_SCRIPT:-$SCRIPT_DIR/daily-task-log-cleanup.sh}"
 BACKUP_SCRIPT="${DATASEED_DAILY_BACKUP_SCRIPT:-$SCRIPT_DIR/demeter_daily_backup.py}"
 
-# Fuente canónica: scripts versionados co-localizados en scripts/ops/.
-# Compatibilidad: si se ejecuta desde un entorno restaurado sin esas copias,
-# usar los scripts runtime antiguos bajo /opt/data/scripts/ como fallback explícito.
-if [ ! -f "$TASK_CLEANUP" ] && [ -f "/opt/data/scripts/daily-task-log-cleanup.sh" ]; then
-  TASK_CLEANUP="/opt/data/scripts/daily-task-log-cleanup.sh"
+# Fallbacks de recuperación si falta algún runtime script.
+if [ ! -f "$GRAPH_GENERATOR" ] && [ -f "$CANONICAL_REPO/scripts/generate-multibranch-graph.py" ]; then
+  GRAPH_GENERATOR="$CANONICAL_REPO/scripts/generate-multibranch-graph.py"
 fi
-if [ ! -f "$BACKUP_SCRIPT" ] && [ -f "/opt/data/scripts/demeter_daily_backup.py" ]; then
-  BACKUP_SCRIPT="/opt/data/scripts/demeter_daily_backup.py"
+if [ ! -f "$TASK_CLEANUP" ] && [ -f "$CANONICAL_REPO/scripts/ops/daily-task-log-cleanup.sh" ]; then
+  TASK_CLEANUP="$CANONICAL_REPO/scripts/ops/daily-task-log-cleanup.sh"
+fi
+if [ ! -f "$BACKUP_SCRIPT" ] && [ -f "$CANONICAL_REPO/scripts/ops/demeter_daily_backup.py" ]; then
+  BACKUP_SCRIPT="$CANONICAL_REPO/scripts/ops/demeter_daily_backup.py"
 fi
 
 echo "[$TIMESTAMP] Iniciando operaciones diarias unificadas..."
@@ -40,29 +101,18 @@ echo "[$TIMESTAMP] Graph generator: $GRAPH_GENERATOR"
 echo "[$TIMESTAMP] Cleanup script: $TASK_CLEANUP"
 echo "[$TIMESTAMP] Backup script: $BACKUP_SCRIPT"
 
-# 0. Actualizar el grafo de conocimiento multi-branch deduplicado.
-# No usar graphify update directo sobre el repo vivo: eso reemplaza el grafo optimizado
-# por un grafo single-branch y puede dejar cambios locales que bloquean el backup.
 echo "[$TIMESTAMP] Paso 0/3: Actualizando grafo de conocimiento optimizado..."
-if [ -d "$CANONICAL_REPO" ] && [ -f "$GRAPH_GENERATOR" ]; then
-  cd "$CANONICAL_REPO"
-  git fetch origin --prune 2>&1 || {
+if [ -d "$CANONICAL_REPO/.git" ] && [ -f "$GRAPH_GENERATOR" ]; then
+  git -C "$CANONICAL_REPO" fetch origin --prune 2>&1 || {
     echo "[$TIMESTAMP] WARNING: No se pudo actualizar refs remotos antes de Graphify. Continuando con refs locales..."
   }
-  python3 "$GRAPH_GENERATOR" 2>&1 || {
+  DATASEED_CANONICAL_REPO_DIR="$CANONICAL_REPO" python3 "$GRAPH_GENERATOR" 2>&1 || {
     echo "[$TIMESTAMP] WARNING: Error actualizando grafo multi-branch. Continuando con backup..."
   }
-elif [ -d "$CANONICAL_REPO" ] && [ -x "$GRAPHIFY_BIN" ]; then
-  echo "[$TIMESTAMP] WARNING: No existe generador multi-branch; usando fallback Graphify single-branch."
-  cd "$CANONICAL_REPO"
-  "$GRAPHIFY_BIN" update . --force 2>&1 || {
-    echo "[$TIMESTAMP] WARNING: Error actualizando grafo fallback. Continuando con backup..."
-  }
 else
-  echo "[$TIMESTAMP] WARNING: No se pudo actualizar Graphify; falta repo, generador o binario. Continuando..."
+  echo "[$TIMESTAMP] WARNING: No se pudo actualizar Graphify; falta repo o generador. Continuando..."
 fi
 
-# 1. Cleanup del task-log: genera resumen de últimas 24h y limpia el log.
 echo "[$TIMESTAMP] Paso 1/3: Generando resumen diario y limpiando task-log..."
 if [ ! -f "$TASK_CLEANUP" ]; then
   echo "[$TIMESTAMP] ERROR: no existe TASK_CLEANUP=$TASK_CLEANUP. Abortando backup."
@@ -73,17 +123,13 @@ REPO_DIR="$TRACKING_REPO" DATASEED_TASK_TRACKING_REPO_DIR="$TRACKING_REPO" bash 
   exit 1
 }
 
-# 2. Backup operativo: snapshot post-cleanup (incluye daily-summary actualizado por referencia)
 echo "[$TIMESTAMP] Paso 2/3: Ejecutando backup operativo..."
 if [ ! -f "$BACKUP_SCRIPT" ]; then
   echo "[$TIMESTAMP] ERROR: no existe BACKUP_SCRIPT=$BACKUP_SCRIPT."
   exit 1
 fi
 cd /opt/data
-DATASEED_TASK_TRACKING_REPO_DIR="$TRACKING_REPO" \
-DATASEED_CANONICAL_REPO_DIR="$CANONICAL_REPO" \
-DATASEED_GRAPHIFY_SOURCE_REPO_DIR="$CANONICAL_REPO" \
-python3 "$BACKUP_SCRIPT" 2>&1 || {
+DATASEED_TASK_TRACKING_REPO_DIR="$TRACKING_REPO" DATASEED_CANONICAL_REPO_DIR="$CANONICAL_REPO" DATASEED_GRAPHIFY_SOURCE_REPO_DIR="$CANONICAL_REPO" python3 "$BACKUP_SCRIPT" 2>&1 || {
   echo "[$TIMESTAMP] ERROR en backup. El cleanup ya fue completado."
   exit 1
 }
