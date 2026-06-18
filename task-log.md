@@ -7,6 +7,11 @@
 
 <!-- ENTRADAS -->
 
+### 2026-06-17 | Daniel Caignet
+**Tarea:** Registrar regla operativa: no usar Caddy en DataSeed; el VPS usa Traefik externo.
+**Acción:** Guardé la regla en memoria persistente y verifiqué que la planificación de demo debe excluir Caddy por completo. Cualquier rastro real de Caddy dentro del contenedor debe revertirse solo como limpieza, sin reemplazar Traefik.
+**Estado:** ✅ Regla activa
+
 ## 2026-06-17
 
 | Hora | Usuario | Tarea | Acción | Estado |
