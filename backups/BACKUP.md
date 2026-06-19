@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-18 15:15:19 UTC
-- Generado America/Santiago: 2026-06-18 11:15:19 -04
+- Generado UTC: 2026-06-19 09:00:38 UTC
+- Generado America/Santiago: 2026-06-19 05:00:38 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -15,7 +15,7 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
 - Repo/branch de tracking: `/opt/data/data_seed_tasklog_worktree` / `feat/task-tracking-system`.
-- Daily summary: `daily-summary.md` (26.4 KB, sha256 bbe58bc3dfa0ae4b).
+- Daily summary: `daily-summary.md` (27.4 KB, sha256 3e50a9ea37283b0d).
 - Task log actual: `task-log.md` (213.0 B, sha256 1512ddaa0df19af1).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (594.0 B, sha256 6fd18874fbd0ad90).
 
@@ -39,7 +39,7 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 - Hermes binary: `/opt/hermes/.venv/bin/hermes`
 - Disk snapshot:
   `Filesystem      Size  Used Avail Use% Mounted on`
-  `/dev/sda1        96G   19G   77G  20% /opt/data`
+  `/dev/sda1        96G   12G   85G  13% /opt/data`
 
 ## Configuración Hermes sanitizada
 
@@ -61,8 +61,8 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `ea05ea193912` [active]
   - Nombre: Demeter Daily Operations (5:00 AM Chile)
   - Schedule: 0 9 * * *
-  - Next run UTC: 2026-06-19T09:00:00+00:00
-  - Last run UTC/status: 2026-06-18T09:00:34.155665+00:00 / error
+  - Next run UTC: 2026-06-20T09:00:00+00:00
+  - Last run UTC/status: 2026-06-18T15:16:32.184456+00:00 / ok
   - Mode: no-agent
   - Script: daily-operations-wrapper.sh
 
@@ -136,11 +136,11 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 No se copia el contenido de estos archivos; solo tamaño y huella para validación.
 
 - `config.yaml`: 16.3 KB, sha256 f9c71fda9b2ce203
-- `memories/MEMORY.md`: 2.0 KB, sha256 e4bab41db41d3405
+- `memories/MEMORY.md`: 2.1 KB, sha256 6bbd81ed230f9c62
 - `memories/USER.md`: 1.3 KB, sha256 fb6d397bf7499bf7
-- `channel_directory.json`: 1.0 KB, sha256 f9fb1d16a9dc26a1
+- `channel_directory.json`: 1.0 KB, sha256 36069482a21f5c2f
 - `gateway_state.json`: 544.0 B, sha256 2c656bd03277d9fd
-- `cron/jobs.json`: 7.2 KB, sha256 a9b5ce3916b96f99
+- `cron/jobs.json`: 1.6 KB, sha256 0ebf87778a365e0a
 
 ## Grafo de conocimiento del proyecto (Graphify)
 
