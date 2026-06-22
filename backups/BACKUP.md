@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-21 09:00:45 UTC
-- Generado America/Santiago: 2026-06-21 05:00:45 -04
+- Generado UTC: 2026-06-22 09:00:33 UTC
+- Generado America/Santiago: 2026-06-22 05:00:33 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -15,7 +15,7 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
 - Repo/branch de tracking: `/opt/data/data_seed_tasklog_worktree` / `feat/task-tracking-system`.
-- Daily summary: `daily-summary.md` (27.4 KB, sha256 3e50a9ea37283b0d).
+- Daily summary: `daily-summary.md` (34.3 KB, sha256 609c7fc9c2bec975).
 - Task log actual: `task-log.md` (213.0 B, sha256 1512ddaa0df19af1).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (594.0 B, sha256 6fd18874fbd0ad90).
 
@@ -39,11 +39,11 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 - Hermes binary: `/opt/hermes/.venv/bin/hermes`
 - Disk snapshot:
   `Filesystem      Size  Used Avail Use% Mounted on`
-  `/dev/sda1        96G   12G   85G  13% /opt/data`
+  `/dev/sda1        96G   17G   80G  18% /opt/data`
 
 ## Configuración Hermes sanitizada
 
-- Config path: `/opt/data/config.yaml` (16.3 KB, sha256 f9c71fda9b2ce203)
+- Config path: `/opt/data/config.yaml` (16.6 KB, sha256 c9d9496abbc06272)
 - Model provider: `openai-codex`
 - Model default: `gpt-5.5`
 - Agent max_turns: `60`
@@ -61,8 +61,8 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `ea05ea193912` [active]
   - Nombre: Demeter Daily Operations (5:00 AM Chile)
   - Schedule: 0 9 * * *
-  - Next run UTC: 2026-06-22T09:00:00+00:00
-  - Last run UTC/status: 2026-06-20T09:00:46.855924+00:00 / ok
+  - Next run UTC: 2026-06-23T09:00:00+00:00
+  - Last run UTC/status: 2026-06-21T09:00:47.814475+00:00 / ok
   - Mode: no-agent
   - Script: daily-operations-wrapper.sh
 
@@ -87,6 +87,7 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `jupyter-live-kernel` (data-science/jupyter-live-kernel) — Iterative Python via live Jupyter kernel (hamelnb).
 - `kanban-agent-workflows` (devops/kanban-agent-workflows) — Use when orchestrating Kanban-style multi-agent work: board setup, task decomposition, worker prompts, status transitions, and recovery.
 - `operational-recovery-backups` (devops/operational-recovery-backups) — Build and maintain safe operational recovery backups for Hermes/DataSeed: cron job reconstruction, non-secret GitHub snapshots, rollback docs, script inclusion policies, graphify knowledge graph backup, and unified cleanup-then-backup daily operations.
+- `safe-mcp-api-integrations` (devops/safe-mcp-api-integrations) — Build and configure MCP API integrations with a safety proxy that preserves operational access while blocking irreversible actions.
 - `whatsapp-gateway-config` (devops/whatsapp-gateway-config) — WhatsApp gateway configuration for Hermes Agent — require_mention, dm_policy, group_policy, allow_from, mention_patterns, group_sessions_per_user, and all platform-specific settings.
 - `dogfood` (dogfood) — Exploratory QA of web apps: find bugs, evidence, reports.
 - `himalaya` (email/himalaya) — Himalaya CLI: IMAP/SMTP email from terminal.
@@ -124,7 +125,7 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `research-paper-writing` (research/research-paper-writing) — Write ML papers for NeurIPS/ICML/ICLR: design→submit.
 - `openhue` (smart-home/openhue) — Control Philips Hue lights, scenes, rooms via OpenHue CLI.
 - `xurl` (social-media/xurl) — X/Twitter via xurl CLI: post, search, DM, media, v2 API.
-- `hermes-agent-skill-authoring` (software-development/hermes-agent-skill-authoring) — Author in-repo SKILL.md: frontmatter, validator, structure.
+- `hermes-agent-skill-authoring` (software-development/hermes-agent-skill-authoring) — Author in-repo SKILL.md: frontmatter, validator, structure, and writing-quality principles.
 - `knowledge-graph-codebase-navigation` (software-development/knowledge-graph-codebase-navigation) — Build and use local knowledge graphs for codebase/navigation tasks, especially via Graphify, MCP, and agent skills.
 - `plan` (software-development/plan) — Plan mode: write an actionable markdown plan to .hermes/plans/, no execution. Bite-sized tasks, exact paths, complete code.
 - `software-debugging-and-quality` (software-development/software-debugging-and-quality) — Use when improving software correctness: root-cause debugging, TDD, debugger attachment, pre-commit review, simplification passes, and throwaway validation spikes.
@@ -135,12 +136,12 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 
 No se copia el contenido de estos archivos; solo tamaño y huella para validación.
 
-- `config.yaml`: 16.3 KB, sha256 f9c71fda9b2ce203
-- `memories/MEMORY.md`: 2.1 KB, sha256 6bbd81ed230f9c62
-- `memories/USER.md`: 1.3 KB, sha256 fb6d397bf7499bf7
-- `channel_directory.json`: 1.0 KB, sha256 e9566cf99b2adb17
-- `gateway_state.json`: 544.0 B, sha256 2c656bd03277d9fd
-- `cron/jobs.json`: 1.6 KB, sha256 7c54f4930be380ee
+- `config.yaml`: 16.6 KB, sha256 c9d9496abbc06272
+- `memories/MEMORY.md`: 1.9 KB, sha256 98e5261f6be0955a
+- `memories/USER.md`: 1.2 KB, sha256 7d55d8780575bf05
+- `channel_directory.json`: 1.0 KB, sha256 a244581e35ccb828
+- `gateway_state.json`: 544.0 B, sha256 961a5b843a70bbec
+- `cron/jobs.json`: 1.6 KB, sha256 e266516eae3ef3a3
 
 ## Grafo de conocimiento del proyecto (Graphify)
 
