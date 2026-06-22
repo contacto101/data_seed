@@ -54,3 +54,11 @@
 **Acción:** Ejecuté preflight read-only: Docker CLI existe dentro del contenedor de Demeter, pero no hay socket `/var/run/docker.sock` ni conexión al daemon. Verifiqué Hermes MCP: `hostinger_safe` está activo; `graphify_dataseed` falla por configuración de args. Por MCP Hostinger se confirmó el VPS `1698640` con Docker+Traefik y el proyecto `hermes-workspace-xip3`, donde el contenedor actual coincide con el hostname `f378aa9076fd`. No se creó ningún contenedor porque `VPS_createNewProjectV1` permitiría crear un proyecto Docker, pero el MCP seguro no expone una operación de eliminación/rollback completo; solo permitiría detenerlo, dejando residuos.
 
 **Estado:** ⛔ Bloqueado por requisito de rollback completo; no se aplicaron cambios en Docker
+
+### 2026-06-22 06:19 - Daniel Caignet
+
+**Tarea:** Aplicar una allowlist segura al MCP de Hostinger para permitir fábrica de contenedores sin exponer herramientas destructivas, y explicar cómo bloquear cambios futuros de la allowlist fuera de edición manual.
+
+**Acción:** Actualicé `/opt/data/mcp/hostinger-safe/hostinger-safe-mcp.mjs` a modo `allowlist-factory-readonly`: 20 tools expuestas de 140, con `VPS_createNewProjectV1` guardada por prefijos `factory-`, `demeter-factory-` o `sandbox-`, validación de compose y bloqueo de reemplazo de proyectos existentes. Validé con `node --check`, smoke test MCP y `hermes mcp test hostinger_safe`, confirmando que las llamadas peligrosas quedan rechazadas y que la lectura real de VPS funciona.
+
+**Estado:** ✅ Allowlist aplicada en disco; pendiente reinicio/reset de gateway para que WhatsApp cargue el nuevo schema
