@@ -62,3 +62,11 @@
 **Acción:** Actualicé `/opt/data/mcp/hostinger-safe/hostinger-safe-mcp.mjs` a modo `allowlist-factory-readonly`: 20 tools expuestas de 140, con `VPS_createNewProjectV1` guardada por prefijos `factory-`, `demeter-factory-` o `sandbox-`, validación de compose y bloqueo de reemplazo de proyectos existentes. Validé con `node --check`, smoke test MCP y `hermes mcp test hostinger_safe`, confirmando que las llamadas peligrosas quedan rechazadas y que la lectura real de VPS funciona.
 
 **Estado:** ✅ Allowlist aplicada en disco; pendiente reinicio/reset de gateway para que WhatsApp cargue el nuevo schema
+
+### 2026-06-22 06:35 - Daniel Caignet
+
+**Tarea:** Crear el contenedor vacío de prueba en el mismo Docker de Demeter, aceptando eliminación manual desde el panel de Hostinger.
+
+**Acción:** Creé vía Hostinger MCP el proyecto Docker `demeter-empty-test-20260622-0610` en el VPS `1698640` con una sola imagen `alpine:3.20`, sin puertos publicados, sin volúmenes, `read_only: true`, `cap_drop: ALL`, `no-new-privileges:true` y `tmpfs` limitado para `/tmp`. La acción async `100476171` terminó en `success`.
+
+**Estado:** ✅ Contenedor creado y verificado: `demeter-empty-test-20260622-0610-empty-1` (`08bb24026f56`) está `running`; eliminación pendiente manual en Hostinger
