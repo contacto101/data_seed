@@ -70,3 +70,11 @@
 **Acción:** Creé vía Hostinger MCP el proyecto Docker `demeter-empty-test-20260622-0610` en el VPS `1698640` con una sola imagen `alpine:3.20`, sin puertos publicados, sin volúmenes, `read_only: true`, `cap_drop: ALL`, `no-new-privileges:true` y `tmpfs` limitado para `/tmp`. La acción async `100476171` terminó en `success`.
 
 **Estado:** ✅ Contenedor creado y verificado: `demeter-empty-test-20260622-0610-empty-1` (`08bb24026f56`) está `running`; eliminación pendiente manual en Hostinger
+
+### 2026-06-22 06:49 - Daniel Caignet
+
+**Tarea:** Eliminar el contenedor de prueba demeter-empty-test.
+
+**Acción:** El MCP seguro de Hostinger no expone herramientas de eliminación de proyectos. Se ejecutó `VPS_stopProjectV1` sobre `demeter-empty-test-20260622-0610` en VPS `1698640`; acción async `100478595` completada, contenedor `08bb24026f56` en estado `Exited (143)`. El proyecto/carpeta docker-compose quedó detenido en `/docker/demeter-empty-test-20260622-0610`. El MCP seguro permite crear proyecto pero no eliminarlo; eliminación definitiva requiere panel Hostinger o SSH al VPS.
+
+**Estado:** ⏳ Contenedor detenido vía MCP; eliminación definitiva de archivos del proyecto requiere acceso manual
