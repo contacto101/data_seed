@@ -38,3 +38,11 @@
 **Acción:** Identifiqué el gateway activo (`hermes gateway run --replace`) y el bridge de WhatsApp conectado en `127.0.0.1:3000`. El intento de reinicio vía CLI quedó bloqueado por autorización del entorno, por lo que no se ejecutó el reinicio.
 
 **Estado:** ⏳ A la espera de autorización
+
+### 2026-06-22 06:04 - Daniel Caignet
+
+**Tarea:** Investigar medidas de ciberseguridad para proteger DataSeed ante el nuevo acceso operativo a Hostinger.
+
+**Acción:** Consulté fuentes públicas autoritativas de ciberseguridad (CISA, NIST CSF, CIS Controls, OWASP, Docker Docs y GitHub Docs) y preparé una matriz de controles prioritarios: reducción del alcance del MCP, gestión de secretos, MFA, backups/recuperación, hardening de VPS/Docker, monitoreo y respuesta a incidentes.
+
+**Estado:** ✅ Investigación y recomendaciones entregadas
