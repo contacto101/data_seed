@@ -78,3 +78,21 @@
 **Acción:** El MCP seguro de Hostinger no expone herramientas de eliminación de proyectos. Se ejecutó `VPS_stopProjectV1` sobre `demeter-empty-test-20260622-0610` en VPS `1698640`; acción async `100478595` completada, contenedor `08bb24026f56` en estado `Exited (143)`. El proyecto/carpeta docker-compose quedó detenido en `/docker/demeter-empty-test-20260622-0610`. El MCP seguro permite crear proyecto pero no eliminarlo; eliminación definitiva requiere panel Hostinger o SSH al VPS.
 
 **Estado:** ⏳ Contenedor detenido vía MCP; eliminación definitiva de archivos del proyecto requiere acceso manual
+
+### 2026-06-22 07:32 - Daniel Caignet
+
+**Tarea:** Crear contenedor con Hermes montado sobre Ubuntu en el VPS Hostinger usando la imagen oficial.
+
+**Acción:** Creé vía Hostinger MCP el proyecto `demeter-hermes-agent-20260622` en VPS `1698640` usando `noussearch/hermes-agent:latest` (imagen oficial). Configuración: red host, volumen persistente `hermes-data` montado en `/opt/data`, límite 4GB RAM / 1.5 CPU, healthcheck PID 1 s6-svcan, logging rotativo. Acción async `100486292` completada en `success`.
+
+**Prácticas aplicadas:**
+- Imagem oficial `nousresearch/hermes-agent:latest` con s6-overlay como PID 1
+- Volumen Docker persistente separado para `/opt/data` (config, skills, memoria)
+- `network_mode: host` para que el gateway pueda acceder al bridge de WhatsApp del host
+- Límite de recursos para no afectar el servicio existente
+- Healthcheck que verifica que s6-svcan está vivo
+- Logging rotativo (50MB max, 3 archivos)
+- Labels identificativos para Traefik/orquestación
+- Sin puertos públicos expuestos
+
+**Estado:** ✅ Hermes corriendo dentro del contenedor `demeter-hermes-agent-20260622-hermes-agent-1` (`6b66bb27d42f`), health check `healthy`, gateway iniciado bajo s6
