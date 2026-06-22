@@ -22,3 +22,11 @@
 **Acción:** Revisé configuración local, `.env` sin imprimir secretos, referencias del repo, branch `docs/hubspot-checkpoint-20260531`, archivos esperados de OAuth/adaptador y ejecución de health del adaptador. El checkpoint histórico indica que hubo una conexión HubSpot probada contra Hub ID 40198216, pero en el entorno actual no existen los tokens ni el adaptador local.
 
 **Estado:** ✅ Verificado; conexión HubSpot no activa actualmente
+
+### 2026-06-22 04:51 - Daniel Caignet
+
+**Tarea:** Resumir las tareas realizadas por Demeter.
+
+**Acción:** Revisé `task-log.md`, `daily-summary.md` y sesiones recientes para consolidar avances por áreas: repositorio, Graphify, cron/backup, WhatsApp, demo/landing, skills, HubSpot y documentación operativa.
+
+**Estado:** ✅ Resumen entregado
