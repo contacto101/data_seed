@@ -30,3 +30,11 @@
 **Acción:** Revisé `task-log.md`, `daily-summary.md` y sesiones recientes para consolidar avances por áreas: repositorio, Graphify, cron/backup, WhatsApp, demo/landing, skills, HubSpot y documentación operativa.
 
 **Estado:** ✅ Resumen entregado
+
+### 2026-06-22 01:34 - Daniel Caignet
+
+**Tarea:** Reiniciar el gateway de WhatsApp para aplicar la nueva configuración de Hostinger.
+
+**Acción:** Identifiqué el gateway activo (`hermes gateway run --replace`) y el bridge de WhatsApp conectado en `127.0.0.1:3000`. El intento de reinicio vía CLI quedó bloqueado por autorización del entorno, por lo que no se ejecutó el reinicio.
+
+**Estado:** ⏳ A la espera de autorización
