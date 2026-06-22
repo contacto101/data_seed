@@ -46,3 +46,11 @@
 **Acción:** Consulté fuentes públicas autoritativas de ciberseguridad (CISA, NIST CSF, CIS Controls, OWASP, Docker Docs y GitHub Docs) y preparé una matriz de controles prioritarios: reducción del alcance del MCP, gestión de secretos, MFA, backups/recuperación, hardening de VPS/Docker, monitoreo y respuesta a incidentes.
 
 **Estado:** ✅ Investigación y recomendaciones entregadas
+
+### 2026-06-22 06:08 - Daniel Caignet
+
+**Tarea:** Probar creación de un contenedor vacío en el mismo Docker donde corre Demeter usando MCP, con rollback disponible en cualquier instante y sin acciones irreversibles sin explicación previa.
+
+**Acción:** Ejecuté preflight read-only: Docker CLI existe dentro del contenedor de Demeter, pero no hay socket `/var/run/docker.sock` ni conexión al daemon. Verifiqué Hermes MCP: `hostinger_safe` está activo; `graphify_dataseed` falla por configuración de args. Por MCP Hostinger se confirmó el VPS `1698640` con Docker+Traefik y el proyecto `hermes-workspace-xip3`, donde el contenedor actual coincide con el hostname `f378aa9076fd`. No se creó ningún contenedor porque `VPS_createNewProjectV1` permitiría crear un proyecto Docker, pero el MCP seguro no expone una operación de eliminación/rollback completo; solo permitiría detenerlo, dejando residuos.
+
+**Estado:** ⛔ Bloqueado por requisito de rollback completo; no se aplicaron cambios en Docker
