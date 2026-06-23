@@ -38,3 +38,11 @@
 **Acción:** El usuario reportó haber creado el vault, el agente y el service `hostinger` con host pattern `developers.hostinger.com` y credencial referenciada `HOSTINGER_API`, sin compartir secretos por WhatsApp. La siguiente acción recomendada es validar `/discover` y una llamada read-only a Hostinger vía proxy local de Agent Vault.
 
 **Estado:** 🧪 Configuración UI inicial completada; validación por proxy pendiente
+
+### 2026-06-23 03:15 - Daniel Caignet
+
+**Tarea:** Validar descubrimiento inicial de Agent Vault para el vault `dataseed-vault`.
+
+**Acción:** El usuario cargó el agent token de forma local y segura en el VPS, validó que el token tiene prefijo correcto y ejecutó `/discover` contra `http://127.0.0.1:15321` con `X-Vault: dataseed-vault`. La respuesta confirmó el service `hostinger` para `developers.hostinger.com` y la credencial disponible `HOSTINGER_API`, sin exponer valores secretos.
+
+**Estado:** ✅ Discovery de Agent Vault validado; pendiente prueba read-only vía proxy MITM hacia Hostinger
