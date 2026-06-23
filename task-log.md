@@ -46,3 +46,11 @@
 **Acción:** El usuario cargó el agent token de forma local y segura en el VPS, validó que el token tiene prefijo correcto y ejecutó `/discover` contra `http://127.0.0.1:15321` con `X-Vault: dataseed-vault`. La respuesta confirmó el service `hostinger` para `developers.hostinger.com` y la credencial disponible `HOSTINGER_API`, sin exponer valores secretos.
 
 **Estado:** ✅ Discovery de Agent Vault validado; pendiente prueba read-only vía proxy MITM hacia Hostinger
+
+### 2026-06-23 03:19 - Daniel Caignet
+
+**Tarea:** Validar inyección real de credencial Hostinger mediante el proxy MITM de Agent Vault.
+
+**Acción:** El usuario descargó el CA de Agent Vault y ejecutó una llamada read-only a `https://developers.hostinger.com/api/vps/v1/virtual-machines` usando `127.0.0.1:15322` como proxy, sin enviar header `Authorization` directo. La respuesta fue `HTTP 200`, JSON tipo lista con 1 VPS y claves esperadas de virtual machine; esto confirma que Agent Vault inyectó `HOSTINGER_API` correctamente.
+
+**Estado:** ✅ Agent Vault validado end-to-end para Hostinger; pendiente definir conexión controlada con Hermes/Demeter y sumar otros servicios
