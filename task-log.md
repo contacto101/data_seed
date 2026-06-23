@@ -30,3 +30,11 @@
 **Acción:** El usuario levantó el contenedor Agent Vault con `network_mode: host` y puertos locales alternativos. Confirmó health check real contra `http://127.0.0.1:15321/health` con `HTTP/1.1 200 OK`. Se mantiene el acceso local, sin exponer el proxy MITM públicamente.
 
 **Estado:** ✅ Agent Vault responde correctamente en localhost:15321; siguiente paso: registrar admin/vault/agent token y conectar Hermes
+
+### 2026-06-23 02:55 - Daniel Caignet
+
+**Tarea:** Configurar los componentes iniciales de Agent Vault para proteger credenciales de DataSeed.
+
+**Acción:** El usuario reportó haber creado el vault, el agente y el service `hostinger` con host pattern `developers.hostinger.com` y credencial referenciada `HOSTINGER_API`, sin compartir secretos por WhatsApp. La siguiente acción recomendada es validar `/discover` y una llamada read-only a Hostinger vía proxy local de Agent Vault.
+
+**Estado:** 🧪 Configuración UI inicial completada; validación por proxy pendiente
