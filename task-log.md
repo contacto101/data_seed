@@ -62,3 +62,11 @@
 **Acción:** Se revisó el task-log y se definió el siguiente tramo: prueba aislada dentro del contenedor Hermes/Demeter con placeholders y proxy de Agent Vault, antes de modificar configuración persistente o reiniciar gateway.
 
 **Estado:** 🧪 Pendiente ejecutar prueba desde el contenedor de Demeter sin exponer tokens reales
+
+### 2026-06-23 03:55 - Daniel Caignet
+
+**Tarea:** Ajustar la prueba de Demeter + Hostinger MCP + Agent Vault según la red real del contenedor.
+
+**Acción:** El usuario identificó contenedores Hermes/Demeter y verificó que `hermes-workspace-xip3-hermes-agent-1` está en `network_mode=hermes-workspace-xip3_default`, no `host`; por lo tanto `127.0.0.1` dentro del contenedor no apunta al Agent Vault del host. Se definió como siguiente paso detectar el gateway Docker de esa red y probar Agent Vault desde dentro del contenedor usando esa IP, sin cambios persistentes.
+
+**Estado:** 🧪 Pendiente prueba interna del contenedor usando gateway Docker en lugar de localhost
