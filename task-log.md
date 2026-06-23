@@ -54,3 +54,11 @@
 **Acción:** El usuario descargó el CA de Agent Vault y ejecutó una llamada read-only a `https://developers.hostinger.com/api/vps/v1/virtual-machines` usando `127.0.0.1:15322` como proxy, sin enviar header `Authorization` directo. La respuesta fue `HTTP 200`, JSON tipo lista con 1 VPS y claves esperadas de virtual machine; esto confirma que Agent Vault inyectó `HOSTINGER_API` correctamente.
 
 **Estado:** ✅ Agent Vault validado end-to-end para Hostinger; pendiente definir conexión controlada con Hermes/Demeter y sumar otros servicios
+
+### 2026-06-23 03:45 - Daniel Caignet
+
+**Tarea:** Preparar continuidad para probar que Demeter accede al MCP seguro de Hostinger pasando por Agent Vault.
+
+**Acción:** Se revisó el task-log y se definió el siguiente tramo: prueba aislada dentro del contenedor Hermes/Demeter con placeholders y proxy de Agent Vault, antes de modificar configuración persistente o reiniciar gateway.
+
+**Estado:** 🧪 Pendiente ejecutar prueba desde el contenedor de Demeter sin exponer tokens reales
