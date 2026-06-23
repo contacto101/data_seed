@@ -22,3 +22,11 @@
 **Acción:** Consulté documentación pública de Agent Vault sobre instalación, Docker, Hermes Agent y despliegue en VPS. También intenté una consulta read-only al MCP seguro de Hostinger para inspeccionar el VPS, pero la API respondió `Unauthenticated`; por lo tanto la guía se preparó sin tocar el VPS ni exponer secretos.
 
 **Estado:** 📝 Guía operativa preparada; ejecución pendiente de autorización/manualidad del usuario
+
+### 2026-06-23 00:52 - Daniel Caignet
+
+**Tarea:** Acompañar despliegue inicial de Agent Vault en el VPS de Hostinger.
+
+**Acción:** El usuario levantó el contenedor Agent Vault con `network_mode: host` y puertos locales alternativos. Confirmó health check real contra `http://127.0.0.1:15321/health` con `HTTP/1.1 200 OK`. Se mantiene el acceso local, sin exponer el proxy MITM públicamente.
+
+**Estado:** ✅ Agent Vault responde correctamente en localhost:15321; siguiente paso: registrar admin/vault/agent token y conectar Hermes
