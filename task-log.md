@@ -78,3 +78,11 @@
 **Acción:** El usuario creó forwards temporales desde `172.16.1.1:15321` y `172.16.1.1:15322` hacia `127.0.0.1:15321/15322`. La salida `ss` mostró listeners activos en ambos puertos, con procesos Python iniciales. Se detectó pegado mezclado que pudo corromper `/tmp/agent-vault-forward.py`, pero los listeners activos permiten continuar con la prueba de health desde el contenedor sin recrear el forward.
 
 **Estado:** 🧪 Forward temporal activo; pendiente ejecutar health check y prueba `hermes mcp test hostinger_safe` desde el contenedor
+
+### 2026-06-23 04:07 - Daniel Caignet
+
+**Tarea:** Corregir error de pegado/comillas al ejecutar la prueba Demeter + Agent Vault.
+
+**Acción:** El usuario mostró que Bash entró en prompt secundario `>` al quedar abierta la comilla de `sh -lc "..."`; luego ejecutó una línea interna con escapes literales, causando `curl: (3) URL rejected: Bad hostname` y ausencia del archivo CA. Se redefinió el próximo paso como script seguro de una sola ejecución para evitar comillas multilínea.
+
+**Estado:** 🧪 Pendiente ejecutar script simplificado de prueba desde el VPS sin pegar tokens ni prompt secundario
