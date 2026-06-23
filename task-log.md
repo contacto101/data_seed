@@ -70,3 +70,11 @@
 **Acción:** El usuario identificó contenedores Hermes/Demeter y verificó que `hermes-workspace-xip3-hermes-agent-1` está en `network_mode=hermes-workspace-xip3_default`, no `host`; por lo tanto `127.0.0.1` dentro del contenedor no apunta al Agent Vault del host. Se definió como siguiente paso detectar el gateway Docker de esa red y probar Agent Vault desde dentro del contenedor usando esa IP, sin cambios persistentes.
 
 **Estado:** 🧪 Pendiente prueba interna del contenedor usando gateway Docker en lugar de localhost
+
+### 2026-06-23 04:02 - Daniel Caignet
+
+**Tarea:** Registrar avance del forward temporal Agent Vault hacia la red Docker de Hermes.
+
+**Acción:** El usuario creó forwards temporales desde `172.16.1.1:15321` y `172.16.1.1:15322` hacia `127.0.0.1:15321/15322`. La salida `ss` mostró listeners activos en ambos puertos, con procesos Python iniciales. Se detectó pegado mezclado que pudo corromper `/tmp/agent-vault-forward.py`, pero los listeners activos permiten continuar con la prueba de health desde el contenedor sin recrear el forward.
+
+**Estado:** 🧪 Forward temporal activo; pendiente ejecutar health check y prueba `hermes mcp test hostinger_safe` desde el contenedor
