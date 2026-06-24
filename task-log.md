@@ -30,3 +30,11 @@
 **Acción:** Revalidé el estado del worktree `/opt/data/data_seed_tasklog_worktree` en la rama `feat/task-tracking-system`. Confirmé que sigue sincronizado con `origin/feat/task-tracking-system` y que las modificaciones pendientes están en archivos no relacionados con `task-log.md`/`daily-summary.md`.
 
 **Estado:** ✅ Explicación entregada; no se limpiaron/revirtieron cambios sin autorización explícita.
+
+### 2026-06-24 15:00 - Daniel Caignet
+
+**Tarea:** Revisar diffs generales de los repos/worktrees DataSeed y explicar por qué no fueron commiteados.
+
+**Acción:** Revisé `git diff --stat`, `--summary`, modos de archivo, ramas y comparaciones contra runtime/backup. En el worktree de task tracking los diffs son solo cambios de permisos `100644 => 100755` en 13 archivos, sin cambios de contenido; los archivos están en modo filesystem `777` desde 2026-06-17 06:23:53. En el repo canónico `/opt/data/data_seed`, rama `feat/landing-pro-rebuild`, hay cambios reales en `graphify-out/*` y scripts operativos; esos archivos coinciden con runtime `/opt/data/scripts` y con el backup dedicado `/opt/data/data_seed_daily_backup`, pero el checkout canónico no tiene upstream configurado y el flujo diario commitea el backup dedicado, no esa rama feature.
+
+**Estado:** ✅ Diagnóstico entregado; no se commitearon ni revirtieron cambios ajenos sin autorización.
