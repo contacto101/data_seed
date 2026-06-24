@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-23 09:00:19 UTC
-- Generado America/Santiago: 2026-06-23 05:00:19 -04
+- Generado UTC: 2026-06-24 09:00:07 UTC
+- Generado America/Santiago: 2026-06-24 05:00:07 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -15,7 +15,7 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
 - Repo/branch de tracking: `/opt/data/data_seed_tasklog_worktree` / `feat/task-tracking-system`.
-- Daily summary: `daily-summary.md` (40.7 KB, sha256 8ea1f7cdd8c3620f).
+- Daily summary: `daily-summary.md` (41.9 KB, sha256 ee47953e4b61a42c).
 - Task log actual: `task-log.md` (213.0 B, sha256 1512ddaa0df19af1).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (594.0 B, sha256 6fd18874fbd0ad90).
 
@@ -39,7 +39,7 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 - Hermes binary: `/opt/hermes/.venv/bin/hermes`
 - Disk snapshot:
   `Filesystem      Size  Used Avail Use% Mounted on`
-  `/dev/sda1        96G   19G   78G  20% /opt/data`
+  `/dev/sda1        96G   14G   82G  15% /opt/data`
 
 ## Configuración Hermes sanitizada
 
@@ -61,19 +61,28 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `ea05ea193912` [active]
   - Nombre: Demeter Daily Operations (5:00 AM Chile)
   - Schedule: 0 9 * * *
-  - Next run UTC: 2026-06-24T09:00:00+00:00
-  - Last run UTC/status: 2026-06-22T09:00:36.149130+00:00 / ok
+  - Next run UTC: 2026-06-25T09:00:00+00:00
+  - Last run UTC/status: 2026-06-23T09:00:21.679732+00:00 / ok
   - Mode: no-agent
   - Script: daily-operations-wrapper.sh
 
 ## Skills instalados
 
+- `apple-notes` (apple/apple-notes) — Manage Apple Notes via memo CLI: create, search, edit.
+- `apple-reminders` (apple/apple-reminders) — Apple Reminders via remindctl: add, list, complete.
+- `findmy` (apple/findmy) — Track Apple devices/AirTags via FindMy.app on macOS.
+- `imessage` (apple/imessage) — Send and receive iMessages/SMS via the imsg CLI on macOS.
 - `ai-coding-agent-orchestration` (autonomous-ai-agents/ai-coding-agent-orchestration) — Use when delegating software work to external AI coding CLIs such as Claude Code, Codex, or OpenCode, including one-shot, background, interactive, PR review, and parallel worktree workflows.
+- `claude-code` (autonomous-ai-agents/claude-code) — Delegate coding to Claude Code CLI (features, PRs).
+- `codex` (autonomous-ai-agents/codex) — Delegate coding to OpenAI Codex CLI (features, PRs).
 - `hermes-agent` (autonomous-ai-agents/hermes-agent) — Configure, extend, or contribute to Hermes Agent.
+- `opencode` (autonomous-ai-agents/opencode) — Delegate coding to OpenCode CLI (features, PR review).
 - `computer-use` (computer-use) — |
 - `architecture-diagram` (creative/architecture-diagram) — Dark-themed SVG architecture/cloud/infra diagrams as HTML.
+- `ascii-art` (creative/ascii-art) — ASCII art: pyfiglet, cowsay, boxes, image-to-ascii.
 - `ascii-video` (creative/ascii-video) — ASCII video: convert video/audio to colored ASCII MP4/GIF.
 - `baoyu-infographic` (creative/baoyu-infographic) — Infographics: 21 layouts x 21 styles (信息图, 可视化).
+- `claude-design` (creative/claude-design) — Design one-off HTML artifacts (landing, deck, prototype).
 - `comfyui` (creative/comfyui) — Generate images, video, and audio with ComfyUI — install, launch, manage nodes/models, run workflows with parameter injection. Uses the official comfy-cli for lifecycle and direct REST/WebSocket API for execution.
 - `design-md` (creative/design-md) — Author/validate/export Google
 - `excalidraw` (creative/excalidraw) — Hand-drawn Excalidraw JSON diagrams (arch, flow, seq).
@@ -84,6 +93,8 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `p5js` (creative/p5js) — p5.js sketches: gen art, shaders, interactive, 3D.
 - `popular-web-designs` (creative/popular-web-designs) — 54 real design systems (Stripe, Linear, Vercel) as HTML/CSS.
 - `pretext` (creative/pretext) — Use when building creative browser demos with @chenglou/pretext — DOM-free text layout for ASCII art, typographic flow around obstacles, text-as-geometry games, kinetic typography, and text-powered generative art. Produces single-file HTML demos by default.
+- `sketch` (creative/sketch) — Throwaway HTML mockups: 2-3 design variants to compare.
+- `songwriting-and-ai-music` (creative/songwriting-and-ai-music) — Songwriting craft and Suno AI music prompts.
 - `touchdesigner-mcp` (creative/touchdesigner-mcp) — Control a running TouchDesigner instance via twozero MCP — create operators, set parameters, wire connections, execute Python, build real-time visuals. 36 native tools.
 - `jupyter-live-kernel` (data-science/jupyter-live-kernel) — Iterative Python via live Jupyter kernel (hamelnb).
 - `deployment-platform-verification` (devops/deployment-platform-verification) — Verify deployment-platform connections (Vercel, Netlify, Render, cloud deploy APIs) safely using real API calls without exposing secrets.
@@ -100,6 +111,9 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `github-pr-workflow` (github/github-pr-workflow) — GitHub PR lifecycle: branch, commit, open, CI, merge.
 - `github-repo-management` (github/github-repo-management) — Clone/create/fork repos; manage remotes, releases.
 - `audio-music-media-workflows` (media/audio-music-media-workflows) — Use when creating, transforming, searching, or analyzing lightweight audio/music/media assets: songwriting prompts, local song generation, audio feature visualization, and GIF retrieval.
+- `gif-search` (media/gif-search) — Search/download GIFs from Tenor via curl + jq.
+- `heartmula` (media/heartmula) — HeartMuLa: Suno-like song generation from lyrics + tags.
+- `songsee` (media/songsee) — Audio spectrograms/features (mel, chroma, MFCC) via CLI.
 - `youtube-content` (media/youtube-content) — YouTube transcripts to summaries, threads, blogs.
 - `evaluating-llms-harness` (mlops/evaluation/lm-evaluation-harness) — lm-eval-harness: benchmark LLMs (MMLU, GSM8K, etc.).
 - `weights-and-biases` (mlops/evaluation/weights-and-biases) — W&B: log ML experiments, sweeps, model registry, dashboards.
@@ -129,8 +143,15 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `xurl` (social-media/xurl) — X/Twitter via xurl CLI: post, search, DM, media, v2 API.
 - `hermes-agent-skill-authoring` (software-development/hermes-agent-skill-authoring) — Author in-repo SKILL.md: frontmatter, validator, structure, and writing-quality principles.
 - `knowledge-graph-codebase-navigation` (software-development/knowledge-graph-codebase-navigation) — Build and use local knowledge graphs for codebase/navigation tasks, especially via Graphify, MCP, and agent skills.
+- `node-inspect-debugger` (software-development/node-inspect-debugger) — Debug Node.js via --inspect + Chrome DevTools Protocol CLI.
 - `plan` (software-development/plan) — Plan mode: write an actionable markdown plan to .hermes/plans/, no execution. Bite-sized tasks, exact paths, complete code.
+- `python-debugpy` (software-development/python-debugpy) — Debug Python: pdb REPL + debugpy remote (DAP).
+- `requesting-code-review` (software-development/requesting-code-review) — Pre-commit review: security scan, quality gates, auto-fix.
+- `simplify-code` (software-development/simplify-code) — Parallel 3-agent cleanup of recent code changes.
 - `software-debugging-and-quality` (software-development/software-debugging-and-quality) — Use when improving software correctness: root-cause debugging, TDD, debugger attachment, pre-commit review, simplification passes, and throwaway validation spikes.
+- `spike` (software-development/spike) — Throwaway experiments to validate an idea before build.
+- `systematic-debugging` (software-development/systematic-debugging) — 4-phase root cause debugging: understand bugs before fixing.
+- `test-driven-development` (software-development/test-driven-development) — TDD: enforce RED-GREEN-REFACTOR, tests before code.
 - `ui-ux-pro-max` (ui-ux-pro-max) — UI/UX design intelligence for web and mobile. Includes 50+ styles, 161 color palettes, 57 font pairings, 161 product types, 99 UX guidelines, and 25 chart types across 10 stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS). Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, and check UI/UX code. Projects: website, landing page, dashboard, admin panel, e-commerce, SaaS, portfolio, blog, and mobile app. Elements: button, modal, navbar, sidebar, card, table, form, and chart. Styles: glassmorphism, claymorphism, minimalism, brutalism, neumorphism, bento grid, dark mode, responsive, skeuomorphism, and flat design. Topics: color systems, accessibility, animation, layout, typography, font pairing, spacing, interaction states, shadow, and gradient. Integrations: shadcn/ui MCP for component search and examples.
 - `yuanbao` (yuanbao) — Yuanbao (元宝) groups: @mention users, query info/members.
 
@@ -140,10 +161,10 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 
 - `config.yaml`: 16.6 KB, sha256 c9d9496abbc06272
 - `memories/MEMORY.md`: 2.1 KB, sha256 a05290a778d20c1e
-- `memories/USER.md`: 1.2 KB, sha256 c797fa1ba248452b
-- `channel_directory.json`: 1.0 KB, sha256 9ade88479ab460c5
-- `gateway_state.json`: 544.0 B, sha256 39563eff2abb1067
-- `cron/jobs.json`: 1.7 KB, sha256 cd66cc5fe66a4aa6
+- `memories/USER.md`: 1.3 KB, sha256 5e2f00509a08627f
+- `channel_directory.json`: 1.0 KB, sha256 7232e2966e1e8cad
+- `gateway_state.json`: 545.0 B, sha256 b84950fd4a57f4f1
+- `cron/jobs.json`: 1.7 KB, sha256 44aa26acec2705fa
 
 ## Grafo de conocimiento del proyecto (Graphify)
 
