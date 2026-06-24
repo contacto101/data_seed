@@ -38,3 +38,11 @@
 **Acción:** Revisé `git diff --stat`, `--summary`, modos de archivo, ramas y comparaciones contra runtime/backup. En el worktree de task tracking los diffs son solo cambios de permisos `100644 => 100755` en 13 archivos, sin cambios de contenido; los archivos están en modo filesystem `777` desde 2026-06-17 06:23:53. En el repo canónico `/opt/data/data_seed`, rama `feat/landing-pro-rebuild`, hay cambios reales en `graphify-out/*` y scripts operativos; esos archivos coinciden con runtime `/opt/data/scripts` y con el backup dedicado `/opt/data/data_seed_daily_backup`, pero el checkout canónico no tiene upstream configurado y el flujo diario commitea el backup dedicado, no esa rama feature.
 
 **Estado:** ✅ Diagnóstico entregado; no se commitearon ni revirtieron cambios ajenos sin autorización.
+
+### 2026-06-24 15:01 - Daniel Caignet
+
+**Tarea:** Fijar Agent Vault/Infisical como ruta por defecto para integraciones API de Demeter, empezando por Hostinger MCP seguro.
+
+**Acción:** Verifiqué que Agent Vault en el VPS host responde en `127.0.0.1:15321`, que el MITM proxy escucha en `15322`, que el vault `dataseed-vault` expone el servicio `hostinger` para `developers.hostinger.com` y que existe la credencial `HOSTINGER_API`. Revisé la configuración Hermes actual y confirmé que `mcp_servers.hostinger_safe` todavía pasa `${HOSTINGER_API}` directamente, por lo que la migración brokered no está completa. También validé la política local del MCP seguro: allowlist estricta de 20 herramientas permitidas y 120 bloqueadas. Detecté el bloqueo principal: desde el contenedor Hermes, `127.0.0.1` no alcanza Agent Vault porque el broker vive en el localhost del VPS host; se requiere puente privado host↔contenedor antes del smoke test final.
+
+**Estado:** ⏳ En progreso; a la espera de crear/verificar el puente privado hacia Agent Vault y ejecutar el smoke test con placeholder `__hostinger_api__`.
