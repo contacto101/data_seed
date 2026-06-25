@@ -54,3 +54,11 @@
 **Acción:** Daniel creó/verificó el puente privado `172.16.1.1:15321/15322` desde el contenedor `hermes-workspace-xip3-hermes-agent-1` hacia Agent Vault. La health check desde el contenedor devolvió `HTTP 200`, el MITM proxy quedó abierto, la CA de Agent Vault se copió al contenedor y una llamada directa a Hostinger vía Agent Vault devolvió `HTTP 200`. El smoke test real del MCP seguro, con `HOSTINGER_API=__hostinger_api__` y proxy Agent Vault, pasó completo: `tools=20`, `allowlist_exact=true`, bloqueos esperados activos, `read_only_vps_list_ok=true`, `vps_count=1`. Luego dejé `/opt/data/config.yaml` preparado para `mcp_servers.hostinger_safe` con placeholders, proxy privado y CA persistente en `/opt/data/agent-vault/agent-vault-ca.pem`, sin guardar tokens reales de Hostinger en la configuración.
 
 **Estado:** ⏳ En progreso; falta persistir `AGENT_VAULT_TOKEN` en el entorno del contenedor/gateway sin exponerlo en chat y reiniciar/validar que el gateway cargue el MCP con la configuración nueva.
+
+### 2026-06-25 01:58 - Daniel Caignet
+
+**Tarea:** Instalar GitHub Spec Kit (`specify-cli`) desde GitHub.
+
+**Acción:** Verifiqué la documentación oficial del repo `github/spec-kit`, confirmé que la última release publicada es `v0.11.8`, intenté la instalación recomendada con `uv tool install specify-cli --from git+https://github.com/github/spec-kit.git@v0.11.8` y detecté bloqueo del `git fetch` por autenticación del proxy Agent Vault. Apliqué alternativa equivalente usando el tarball oficial de la release desde GitHub, instalando localmente con `uv tool install specify-cli --from /tmp/spec-kit-v0.11.8`.
+
+**Estado:** ✅ Instalación completada y verificada: `specify` quedó disponible en `/opt/data/home/.local/bin/specify`, `specify version` reporta `CLI Version 0.11.8` y `uv tool list` muestra `specify-cli v0.11.8`. `specify self check` no pudo consultar online por timeout/proxy, pero la última release fue verificada vía API GitHub con `curl`.
