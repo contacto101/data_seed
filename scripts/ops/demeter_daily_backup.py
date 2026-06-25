@@ -99,13 +99,9 @@ SECRET_VALUE_PATTERNS = [
     re.compile(r"https://[^\s:@]+:[^\s:@]{12,}@github\.com"),
 ]
 
-GIT_PROXY_ENV_KEYS = (
-    "HTTPS_PROXY",
-    "HTTP_PROXY",
-    "https_proxy",
-    "http_proxy",
-    "ALL_PROXY",
-    "all_proxy",
+AGENT_VAULT_CA_CANDIDATES = (
+    "/opt/agent-vault-ca.pem",
+    "/opt/data/agent-vault/agent-vault-ca.pem",
 )
 
 
@@ -122,13 +118,39 @@ def now_santiago() -> datetime | None:
         return None
 
 
+def normalize_agent_vault_git_env(env: dict[str, str]) -> None:
+    """Make git/libcurl use Agent Vault proxy non-interactively.
+
+    The gateway exports Agent Vault as http://TOKEN@host:port. libcurl used by
+    git interprets username-only proxy URLs as needing a password prompt. Agent
+    Vault accepts an empty password, so normalize to http://TOKEN:@host:port.
+    This preserves the proxy path; it does not bypass Agent Vault.
+    """
+    for key in ("HTTPS_PROXY", "HTTP_PROXY", "https_proxy", "http_proxy"):
+        value = env.get(key)
+        if not value or "://" not in value or "@" not in value:
+            continue
+        scheme, rest = value.split("://", 1)
+        userinfo, hostpart = rest.split("@", 1)
+        if ":" not in userinfo:
+            env[key] = f"{scheme}://{userinfo}:@{hostpart}"
+    if not env.get("GIT_SSL_CAINFO"):
+        ca = env.get("SSL_CERT_FILE") or env.get("REQUESTS_CA_BUNDLE")
+        if ca and Path(ca).exists():
+            env["GIT_SSL_CAINFO"] = ca
+        else:
+            for candidate in AGENT_VAULT_CA_CANDIDATES:
+                if Path(candidate).exists():
+                    env["GIT_SSL_CAINFO"] = candidate
+                    break
+
+
 def run(cmd: list[str], cwd: Path | None = None, check: bool = True, extra_env: dict[str, str] | None = None) -> str:
     env = os.environ.copy()
     if extra_env:
         env.update(extra_env)
     if cmd and cmd[0] == "git":
-        for key in GIT_PROXY_ENV_KEYS:
-            env.pop(key, None)
+        normalize_agent_vault_git_env(env)
     proc = subprocess.run(
         cmd,
         cwd=str(cwd) if cwd else None,

@@ -54,8 +54,26 @@ ASKPASS
   fi
 }
 
-git_direct() {
-  env -u HTTPS_PROXY -u HTTP_PROXY -u https_proxy -u http_proxy -u ALL_PROXY -u all_proxy git "$@"
+normalize_agent_vault_git_env() {
+  # Git/libcurl treats a proxy URL with only username as a prompt for password.
+  # Agent Vault accepts an empty password, so add the ':' while preserving the proxy.
+  if [ -n "${HTTPS_PROXY:-}" ] && [[ "$HTTPS_PROXY" == http://*@* ]] && [[ "$HTTPS_PROXY" != *://*:*@* ]]; then
+    export HTTPS_PROXY="${HTTPS_PROXY/@/:@}"
+  fi
+  if [ -n "${HTTP_PROXY:-}" ] && [[ "$HTTP_PROXY" == http://*@* ]] && [[ "$HTTP_PROXY" != *://*:*@* ]]; then
+    export HTTP_PROXY="${HTTP_PROXY/@/:@}"
+  fi
+  if [ -z "${GIT_SSL_CAINFO:-}" ]; then
+    if [ -n "${SSL_CERT_FILE:-}" ] && [ -f "$SSL_CERT_FILE" ]; then
+      export GIT_SSL_CAINFO="$SSL_CERT_FILE"
+    elif [ -n "${REQUESTS_CA_BUNDLE:-}" ] && [ -f "$REQUESTS_CA_BUNDLE" ]; then
+      export GIT_SSL_CAINFO="$REQUESTS_CA_BUNDLE"
+    elif [ -f /opt/agent-vault-ca.pem ]; then
+      export GIT_SSL_CAINFO=/opt/agent-vault-ca.pem
+    elif [ -f /opt/data/agent-vault/agent-vault-ca.pem ]; then
+      export GIT_SSL_CAINFO=/opt/data/agent-vault/agent-vault-ca.pem
+    fi
+  fi
 }
 
 ensure_git_identity() {
@@ -68,6 +86,7 @@ ensure_git_identity() {
 }
 
 setup_git_auth
+normalize_agent_vault_git_env
 
 TIMESTAMP=$(TZ='America/Santiago' date '+%Y-%m-%d %H:%M:%S %Z')
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -107,7 +126,7 @@ echo "[$TIMESTAMP] Backup script: $BACKUP_SCRIPT"
 
 echo "[$TIMESTAMP] Paso 0/3: Actualizando grafo de conocimiento optimizado..."
 if [ -d "$CANONICAL_REPO/.git" ] && [ -f "$GRAPH_GENERATOR" ]; then
-  git_direct -C "$CANONICAL_REPO" fetch origin --prune 2>&1 || {
+  git -C "$CANONICAL_REPO" fetch origin --prune 2>&1 || {
     echo "[$TIMESTAMP] WARNING: No se pudo actualizar refs remotos antes de Graphify. Continuando con refs locales..."
   }
   DATASEED_CANONICAL_REPO_DIR="$CANONICAL_REPO" python3 "$GRAPH_GENERATOR" 2>&1 || {
