@@ -99,6 +99,15 @@ SECRET_VALUE_PATTERNS = [
     re.compile(r"https://[^\s:@]+:[^\s:@]{12,}@github\.com"),
 ]
 
+GIT_PROXY_ENV_KEYS = (
+    "HTTPS_PROXY",
+    "HTTP_PROXY",
+    "https_proxy",
+    "http_proxy",
+    "ALL_PROXY",
+    "all_proxy",
+)
+
 
 def now_utc() -> datetime:
     return datetime.now(timezone.utc)
@@ -117,6 +126,9 @@ def run(cmd: list[str], cwd: Path | None = None, check: bool = True, extra_env: 
     env = os.environ.copy()
     if extra_env:
         env.update(extra_env)
+    if cmd and cmd[0] == "git":
+        for key in GIT_PROXY_ENV_KEYS:
+            env.pop(key, None)
     proc = subprocess.run(
         cmd,
         cwd=str(cwd) if cwd else None,

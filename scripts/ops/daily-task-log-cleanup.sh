@@ -54,6 +54,10 @@ ASKPASS
   fi
 }
 
+git_direct() {
+  env -u HTTPS_PROXY -u HTTP_PROXY -u https_proxy -u http_proxy -u ALL_PROXY -u all_proxy git "$@"
+}
+
 ensure_git_identity() {
   if ! git config user.name >/dev/null 2>&1; then
     git config user.name "Demeter Ops Bot"
@@ -153,7 +157,7 @@ else
   if [ "$PUSH_ENABLED" = "0" ]; then
     echo "[$TIMESTAMP] Push deshabilitado por DATASEED_CLEANUP_PUSH=0."
   else
-    git push origin feat/task-tracking-system
+    git_direct push origin feat/task-tracking-system
   fi
 fi
 

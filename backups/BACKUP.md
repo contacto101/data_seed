@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-24 09:00:07 UTC
-- Generado America/Santiago: 2026-06-24 05:00:07 -04
+- Generado UTC: 2026-06-25 15:47:17 UTC
+- Generado America/Santiago: 2026-06-25 11:47:17 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -15,7 +15,7 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
 - Repo/branch de tracking: `/opt/data/data_seed_tasklog_worktree` / `feat/task-tracking-system`.
-- Daily summary: `daily-summary.md` (41.9 KB, sha256 ee47953e4b61a42c).
+- Daily summary: `daily-summary.md` (49.3 KB, sha256 b56880f812aeb45d).
 - Task log actual: `task-log.md` (213.0 B, sha256 1512ddaa0df19af1).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (594.0 B, sha256 6fd18874fbd0ad90).
 
@@ -39,11 +39,11 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 - Hermes binary: `/opt/hermes/.venv/bin/hermes`
 - Disk snapshot:
   `Filesystem      Size  Used Avail Use% Mounted on`
-  `/dev/sda1        96G   14G   82G  15% /opt/data`
+  `/dev/sda1        96G   18G   79G  18% /opt/data`
 
 ## Configuración Hermes sanitizada
 
-- Config path: `/opt/data/config.yaml` (16.6 KB, sha256 c9d9496abbc06272)
+- Config path: `/opt/data/config.yaml` (16.0 KB, sha256 51efc34a1d26c65f)
 - Model provider: `openai-codex`
 - Model default: `gpt-5.5`
 - Agent max_turns: `60`
@@ -61,8 +61,8 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `ea05ea193912` [active]
   - Nombre: Demeter Daily Operations (5:00 AM Chile)
   - Schedule: 0 9 * * *
-  - Next run UTC: 2026-06-25T09:00:00+00:00
-  - Last run UTC/status: 2026-06-23T09:00:21.679732+00:00 / ok
+  - Next run UTC: 2026-06-26T09:00:00+00:00
+  - Last run UTC/status: 2026-06-25T09:00:39.611262+00:00 / error
   - Mode: no-agent
   - Script: daily-operations-wrapper.sh
 
@@ -131,6 +131,7 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `nano-pdf` (productivity/nano-pdf) — Edit PDF text/typos/titles via nano-pdf CLI (NL prompts).
 - `notion` (productivity/notion) — Notion API + ntn CLI: pages, databases, markdown, Workers.
 - `ocr-and-documents` (productivity/ocr-and-documents) — Extract text from PDFs/scans (pymupdf, marker-pdf).
+- `petdex` (productivity/petdex) — Install and select animated petdex mascots for Hermes.
 - `powerpoint` (productivity/powerpoint) — Create, read, edit .pptx decks, slides, notes, templates.
 - `teams-meeting-pipeline` (productivity/teams-meeting-pipeline) — Operate the Teams meeting summary pipeline via Hermes CLI — summarize meetings, inspect pipeline status, replay jobs, manage Microsoft Graph subscriptions.
 - `godmode` (red-teaming/godmode) — Jailbreak LLMs: Parseltongue, GODMODE, ULTRAPLINIAN.
@@ -143,6 +144,7 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `xurl` (social-media/xurl) — X/Twitter via xurl CLI: post, search, DM, media, v2 API.
 - `hermes-agent-skill-authoring` (software-development/hermes-agent-skill-authoring) — Author in-repo SKILL.md: frontmatter, validator, structure, and writing-quality principles.
 - `knowledge-graph-codebase-navigation` (software-development/knowledge-graph-codebase-navigation) — Build and use local knowledge graphs for codebase/navigation tasks, especially via Graphify, MCP, and agent skills.
+- `live-documentation-mcp` (software-development/live-documentation-mcp) — Configure and use live documentation sources such as Context7 for coding agents via MCP or CLI fallback.
 - `node-inspect-debugger` (software-development/node-inspect-debugger) — Debug Node.js via --inspect + Chrome DevTools Protocol CLI.
 - `plan` (software-development/plan) — Plan mode: write an actionable markdown plan to .hermes/plans/, no execution. Bite-sized tasks, exact paths, complete code.
 - `python-debugpy` (software-development/python-debugpy) — Debug Python: pdb REPL + debugpy remote (DAP).
@@ -159,12 +161,12 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 
 No se copia el contenido de estos archivos; solo tamaño y huella para validación.
 
-- `config.yaml`: 16.6 KB, sha256 c9d9496abbc06272
-- `memories/MEMORY.md`: 2.1 KB, sha256 a05290a778d20c1e
+- `config.yaml`: 16.0 KB, sha256 51efc34a1d26c65f
+- `memories/MEMORY.md`: 1.8 KB, sha256 e0ed4db8d724a833
 - `memories/USER.md`: 1.3 KB, sha256 5e2f00509a08627f
-- `channel_directory.json`: 1.0 KB, sha256 7232e2966e1e8cad
-- `gateway_state.json`: 545.0 B, sha256 b84950fd4a57f4f1
-- `cron/jobs.json`: 1.7 KB, sha256 44aa26acec2705fa
+- `channel_directory.json`: 1.0 KB, sha256 9d872b75b9f4e570
+- `gateway_state.json`: 544.0 B, sha256 0e149c51512666b3
+- `cron/jobs.json`: 6.9 KB, sha256 8acb1c4ce0d3d968
 
 ## Grafo de conocimiento del proyecto (Graphify)
 

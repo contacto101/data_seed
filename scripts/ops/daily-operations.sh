@@ -54,6 +54,10 @@ ASKPASS
   fi
 }
 
+git_direct() {
+  env -u HTTPS_PROXY -u HTTP_PROXY -u https_proxy -u http_proxy -u ALL_PROXY -u all_proxy git "$@"
+}
+
 ensure_git_identity() {
   if ! git config user.name >/dev/null 2>&1; then
     git config user.name "Demeter Ops Bot"
@@ -103,7 +107,7 @@ echo "[$TIMESTAMP] Backup script: $BACKUP_SCRIPT"
 
 echo "[$TIMESTAMP] Paso 0/3: Actualizando grafo de conocimiento optimizado..."
 if [ -d "$CANONICAL_REPO/.git" ] && [ -f "$GRAPH_GENERATOR" ]; then
-  git -C "$CANONICAL_REPO" fetch origin --prune 2>&1 || {
+  git_direct -C "$CANONICAL_REPO" fetch origin --prune 2>&1 || {
     echo "[$TIMESTAMP] WARNING: No se pudo actualizar refs remotos antes de Graphify. Continuando con refs locales..."
   }
   DATASEED_CANONICAL_REPO_DIR="$CANONICAL_REPO" python3 "$GRAPH_GENERATOR" 2>&1 || {
