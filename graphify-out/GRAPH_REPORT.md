@@ -1,11 +1,11 @@
-# Graph Report - dataseed-multibranch-snapshot-dp1n7gy9  (2026-06-25)
+# Graph Report - dataseed-multibranch-snapshot-ov45bl90  (2026-06-26)
 
 ## Corpus Check
-- 136 files · ~115,698 words
+- 136 files · ~116,303 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1277 nodes · 1673 edges · 136 communities (120 shown, 16 thin omitted)
+- 1282 nodes · 1682 edges · 136 communities (120 shown, 16 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 5 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
@@ -120,12 +120,12 @@
 - [[_COMMUNITY_Community 107|Community 107]]
 - [[_COMMUNITY_Community 108|Community 108]]
 - [[_COMMUNITY_Community 109|Community 109]]
-- [[_COMMUNITY_Community 111|Community 111]]
+- [[_COMMUNITY_Community 110|Community 110]]
 - [[_COMMUNITY_Community 112|Community 112]]
 - [[_COMMUNITY_Community 113|Community 113]]
 - [[_COMMUNITY_Community 114|Community 114]]
 - [[_COMMUNITY_Community 115|Community 115]]
-- [[_COMMUNITY_Community 117|Community 117]]
+- [[_COMMUNITY_Community 116|Community 116]]
 - [[_COMMUNITY_Community 118|Community 118]]
 - [[_COMMUNITY_Community 119|Community 119]]
 - [[_COMMUNITY_Community 120|Community 120]]
@@ -166,8 +166,8 @@
 ## Communities (136 total, 16 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.10
-Nodes (51): Any, datetime, assert_no_secret_values(), backup_outputs_summary(), build_backup_md(), build_completed_cycles_md(), build_python_compat_wrapper(), build_restore_guide() (+43 more)
+Cohesion: 0.09
+Nodes (53): Any, datetime, assert_no_secret_values(), backup_outputs_summary(), build_backup_md(), build_completed_cycles_md(), build_python_compat_wrapper(), build_restore_guide() (+45 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.10
@@ -450,52 +450,52 @@ Cohesion: 0.33
 Nodes (5): Archivos seguros de este backup, Guía de restauración crítica — DataSeed / Demeter, Nunca commitear, Pasos de recuperación, Principios
 
 ### Community 71 - "Community 71"
-Cohesion: 0.33
-Nodes (5): Estado, Estructura, Landing copy DataSeed, Mensaje central, Reglas de edición
+Cohesion: 0.53
+Nodes (4): load_github_token(), normalize_agent_vault_git_env(), setup_git_auth(), daily-operations.sh script
 
 ### Community 72 - "Community 72"
-Cohesion: 0.33
-Nodes (5): CTA, Para Pública by DataSeed, Pitch corto, Pitch ejecutivo, Sales pitch DataSeed
+Cohesion: 0.60
+Nodes (5): ensure_git_identity(), load_github_token(), normalize_agent_vault_git_env(), setup_git_auth(), daily-task-log-cleanup.sh script
 
 ### Community 73 - "Community 73"
 Cohesion: 0.33
-Nodes (5): Estado, Puntos reutilizables, Reporte ejecutivo para stakeholders — síntesis, Síntesis, Uso recomendado
+Nodes (5): Estado, Estructura, Landing copy DataSeed, Mensaje central, Reglas de edición
 
 ### Community 74 - "Community 74"
 Cohesion: 0.33
-Nodes (5): Correos pendientes, Cómo dar acceso sin crear usuarios manualmente, Lo que sí está listo, Si quieren control manual, Usuarios iniciales — DataSeed Auth
+Nodes (5): CTA, Para Pública by DataSeed, Pitch corto, Pitch ejecutivo, Sales pitch DataSeed
 
 ### Community 75 - "Community 75"
 Cohesion: 0.33
-Nodes (5): Cronjobs Hermes — DataSeed, Estado observado, Impacto de la reorganización, Migración recomendada después de merge, Rollback
+Nodes (5): Estado, Puntos reutilizables, Reporte ejecutivo para stakeholders — síntesis, Síntesis, Uso recomendado
 
 ### Community 76 - "Community 76"
 Cohesion: 0.33
-Nodes (5): Fuente maestra, Operación de Demeter, Próxima acción, Reglas clave, Rol
+Nodes (5): Correos pendientes, Cómo dar acceso sin crear usuarios manualmente, Lo que sí está listo, Si quieren control manual, Usuarios iniciales — DataSeed Auth
 
 ### Community 77 - "Community 77"
 Cohesion: 0.33
-Nodes (5): Fuente maestra, Principio, Restauración operativa, Rutas nuevas, Verificación rápida
+Nodes (5): Cronjobs Hermes — DataSeed, Estado observado, Impacto de la reorganización, Migración recomendada después de merge, Rollback
 
 ### Community 78 - "Community 78"
-Cohesion: 0.60
-Nodes (5): is_blocklisted(), read_backlog(), repo_status(), sanitize(), main()
+Cohesion: 0.33
+Nodes (5): Fuente maestra, Operación de Demeter, Próxima acción, Reglas clave, Rol
 
 ### Community 79 - "Community 79"
 Cohesion: 0.33
-Nodes (5): Fuente técnica, Guardrails de demo pública, Principios, Tópicos permitidos, Verificación sugerida
+Nodes (5): Fuente maestra, Principio, Restauración operativa, Rutas nuevas, Verificación rápida
 
 ### Community 80 - "Community 80"
-Cohesion: 0.33
-Nodes (5): Estado, Hallazgo principal, Regla activa, Revisión de riesgo — portal/reportes públicos, Riesgos
+Cohesion: 0.60
+Nodes (5): is_blocklisted(), read_backlog(), repo_status(), sanitize(), main()
 
 ### Community 81 - "Community 81"
-Cohesion: 0.60
-Nodes (3): load_github_token(), setup_git_auth(), daily-operations.sh script
+Cohesion: 0.33
+Nodes (5): Fuente técnica, Guardrails de demo pública, Principios, Tópicos permitidos, Verificación sugerida
 
 ### Community 82 - "Community 82"
-Cohesion: 0.70
-Nodes (4): ensure_git_identity(), load_github_token(), setup_git_auth(), daily-task-log-cleanup.sh script
+Cohesion: 0.33
+Nodes (5): Estado, Hallazgo principal, Regla activa, Revisión de riesgo — portal/reportes públicos, Riesgos
 
 ### Community 83 - "Community 83"
 Cohesion: 0.40
@@ -608,9 +608,9 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `Reporte Ejecutivo para Stakeholders — DataSeed.cl` connect `Community 100` to `Community 68`, `Community 101`, `Community 102`, `Community 103`, `Community 85`, `Community 86`, `Community 55`, `Community 87`, `Community 88`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **What connects `daily-operations-wrapper.sh script`, `daily-operations.sh script`, `CompletedProcess` to the rest of the system?**
-  _633 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _634 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.09803921568627451 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0936408106219427 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.09728506787330317 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
