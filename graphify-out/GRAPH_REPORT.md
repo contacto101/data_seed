@@ -1,11 +1,11 @@
-# Graph Report - dataseed-multibranch-snapshot-ov45bl90  (2026-06-26)
+# Graph Report - dataseed-multibranch-snapshot-p1z2ynm8  (2026-06-27)
 
 ## Corpus Check
-- 136 files · ~116,303 words
+- 136 files · ~116,353 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1282 nodes · 1682 edges · 136 communities (120 shown, 16 thin omitted)
+- 1284 nodes · 1684 edges · 136 communities (120 shown, 16 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 5 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
@@ -120,12 +120,12 @@
 - [[_COMMUNITY_Community 107|Community 107]]
 - [[_COMMUNITY_Community 108|Community 108]]
 - [[_COMMUNITY_Community 109|Community 109]]
-- [[_COMMUNITY_Community 110|Community 110]]
+- [[_COMMUNITY_Community 111|Community 111]]
 - [[_COMMUNITY_Community 112|Community 112]]
 - [[_COMMUNITY_Community 113|Community 113]]
 - [[_COMMUNITY_Community 114|Community 114]]
 - [[_COMMUNITY_Community 115|Community 115]]
-- [[_COMMUNITY_Community 116|Community 116]]
+- [[_COMMUNITY_Community 117|Community 117]]
 - [[_COMMUNITY_Community 118|Community 118]]
 - [[_COMMUNITY_Community 119|Community 119]]
 - [[_COMMUNITY_Community 120|Community 120]]
@@ -246,44 +246,44 @@ Cohesion: 0.12
 Nodes (15): 3a. Providers, 3b. URL Configuration, 3c. Rate Limits, 3d. Security, Checklist de seguridad pre-producción, Guía de configuración Supabase — DataSeed Auth Production, Paso 1: Crear proyecto en Supabase, Paso 2: Ejecutar migración SQL (+7 more)
 
 ### Community 20 - "Community 20"
+Cohesion: 0.12
+Nodes (15): 2026-06-17, 2026-06-17 | Daniel Caignet, 2026-06-18, 2026-06-18 11:17 - Daniel, 2026-06-24 00:30 - Daniel Caignet, 2026-06-25 11:47 - Daniel Caignet, Daily Summary - Demeter, Detalle de tareas (+7 more)
+
+### Community 21 - "Community 21"
 Cohesion: 0.13
 Nodes (14): Archivos actualizados por este backup, Archivos operativos clave observados, Backup operativo no sensible — DataSeed / Demeter, Configuración Hermes sanitizada, Cron jobs configurados y estado, Estado técnico, Exclusiones estrictas, Grafo de conocimiento del proyecto (Graphify) (+6 more)
 
-### Community 21 - "Community 21"
+### Community 22 - "Community 22"
 Cohesion: 0.25
 Nodes (7): _cors_headers(), DemoProxy, _rate_limit_check(), StreamReader, StreamWriter, Forward the demo chat request to the Hermes API server., Return True if the request is allowed, False if rate-limited.
 
-### Community 22 - "Community 22"
+### Community 23 - "Community 23"
 Cohesion: 0.13
 Nodes (14): Arquitectura recomendada, Código base sugerido, Datos requeridos para implementar, Formulario HubSpot sugerido, Implementación frontend sugerida, Objetivo, Opción recomendada: HubSpot Forms API, Pasos (+6 more)
 
-### Community 23 - "Community 23"
+### Community 24 - "Community 24"
 Cohesion: 0.29
 Nodes (13): Path, main(), build_payload(), classify_health(), classify_path(), extract_bullets(), extract_code_block(), extract_meta() (+5 more)
 
-### Community 24 - "Community 24"
+### Community 25 - "Community 25"
 Cohesion: 0.37
 Nodes (13): CompletedProcess, Path, assert_no_secrets_in_outputs(), assert_safe_member(), export_branch(), is_excluded(), main(), remote_branches() (+5 more)
 
-### Community 25 - "Community 25"
+### Community 26 - "Community 26"
 Cohesion: 0.19
 Nodes (11): allowedEmails(), asObject(), authenticate(), extractToken(), { getAuth }, { getFirestore }, { initializeApp, getApps }, { logger } (+3 more)
 
-### Community 26 - "Community 26"
+### Community 27 - "Community 27"
 Cohesion: 0.14
 Nodes (13): dependencies, firebase-admin, firebase-functions, engines, node, main, name, overrides (+5 more)
 
-### Community 27 - "Community 27"
+### Community 28 - "Community 28"
 Cohesion: 0.19
 Nodes (6): emailDomain(), enforceAllowedDomain(), options, status(), track(), RateLimiter
 
-### Community 28 - "Community 28"
-Cohesion: 0.15
-Nodes (12): Commits realizados, Correcciones post-primera-validación, Definition of Done — Cumplido, Estructura final en main, Graphify resultado final, Lecciones aprendidas, Objetivo, Push realizados (+4 more)
-
 ### Community 29 - "Community 29"
 Cohesion: 0.15
-Nodes (12): 2026-06-17, 2026-06-17 | Daniel Caignet, 2026-06-18, 2026-06-18 11:17 - Daniel, 2026-06-24 00:30 - Daniel Caignet, Daily Summary - Demeter, Detalle de tareas, Detalle de tareas (+4 more)
+Nodes (12): Commits realizados, Correcciones post-primera-validación, Definition of Done — Cumplido, Estructura final en main, Graphify resultado final, Lecciones aprendidas, Objetivo, Push realizados (+4 more)
 
 ### Community 30 - "Community 30"
 Cohesion: 0.17
@@ -594,21 +594,21 @@ Cohesion: 0.50
 Nodes (3): Branch `feat/task-tracking-system`, Shared files reused by this branch, Unique files in this branch
 
 ## Knowledge Gaps
-- **607 isolated node(s):** `daily-operations-wrapper.sh script`, `daily-operations.sh script`, `CompletedProcess`, `daily-operations-wrapper.sh script`, `daily-operations.sh script` (+602 more)
+- **609 isolated node(s):** `daily-operations-wrapper.sh script`, `daily-operations.sh script`, `CompletedProcess`, `daily-operations-wrapper.sh script`, `daily-operations.sh script` (+604 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Daily Summary - Demeter` connect `Community 29` to `Community 43`, `Community 13`, `Community 18`, `Community 30`, `Community 31`?**
+- **Why does `Daily Summary - Demeter` connect `Community 20` to `Community 43`, `Community 13`, `Community 18`, `Community 30`, `Community 31`?**
   _High betweenness centrality (0.004) - this node is a cross-community bridge._
-- **Why does `Resumen 2026-06-17` connect `Community 13` to `Community 29`?**
+- **Why does `Resumen 2026-06-17` connect `Community 13` to `Community 20`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **Why does `Reporte Ejecutivo para Stakeholders — DataSeed.cl` connect `Community 100` to `Community 68`, `Community 101`, `Community 102`, `Community 103`, `Community 85`, `Community 86`, `Community 55`, `Community 87`, `Community 88`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **What connects `daily-operations-wrapper.sh script`, `daily-operations.sh script`, `CompletedProcess` to the rest of the system?**
-  _634 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _636 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.0936408106219427 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
