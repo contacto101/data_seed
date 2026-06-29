@@ -15,3 +15,11 @@
 
 **Estado:** ✅ Finalizada y verificada; loop activo. Intervención humana solo será requerida antes de publicar, contactar leads, modificar landing/CRM/ads o usar datos privados.
 
+## 2026-06-29 14:39 - Daniel Caignet
+
+**Tarea:** Limpieza de archivo temporal usado para normalizar el proxy de Agent Vault durante el push a GitHub.
+
+**Acción:** Intenté eliminar `/tmp/av_proxy_env.sh` después del push, pero el comando de borrado fue bloqueado por autorización de la interfaz.
+
+**Estado:** ⏳ A la espera de autorización. El loop ya quedó creado y verificado; este bloqueo solo afecta la limpieza del archivo temporal local.
+
