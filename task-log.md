@@ -23,3 +23,11 @@
 
 **Estado:** ⏳ A la espera de autorización. El loop ya quedó creado y verificado; este bloqueo solo afecta la limpieza del archivo temporal local.
 
+## 2026-06-29 15:03 - Daniel Caignet
+
+**Tarea:** Ajustar el loop del funnel Agent Factory para que corra de forma constante con validación de mercado online y controle el riesgo de construir un producto que nadie quiera.
+
+**Acción:** Actualicé el contexto `/opt/data/dataseed-agent-factory-funnel-loop/context.md` con el riesgo principal de no-demanda, métricas de mercado (`market_pull_score`, `no-demand-risk`) y obligación de buscar evidencia online. Reconfiguré builder/tester `0fffb87e5be9` y validator `2caf9a63f6d7` para correr cada 2 horas con toolsets `web/search/browser/terminal/file`; ambos deben investigar mercado online y registrar fuentes, URLs, señales positivas/negativas y limitaciones. Creé watchdog `56f0366edcb7` cada 1 hora para avisar por WhatsApp solo si aparece `HUMAN_REQUIRED`, riesgo alto/desconocido, bloqueo online o baja señal de demanda. Ejecuté corrida manual: Ciclo 002 investigó fuentes online de Chile/LatAm/enterprise AI, calculó `market_pull_score 3.57/5` y `no-demand-risk medio`; Validación 002 hizo chequeo independiente y aprobó `APPROVED_FOR_NEXT_AUTONOMOUS_CYCLE` con rúbrica 4.00/5.
+
+**Estado:** ✅ Finalizada y verificada; loop constante activo. No se publica ni contacta mercado sin autorización humana.
+
