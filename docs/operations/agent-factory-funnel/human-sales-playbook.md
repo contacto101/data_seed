@@ -1,6 +1,6 @@
 # DataSeed Agent Factory — Briefing Semanal para el Equipo
 
-Última actualización: 2026-06-29 19:45 America/Santiago.
+Última actualización: 2026-06-29 21:30 America/Santiago.
 Responsable del loop: Demeter (autónomo L2).
 Entrega: este archivo se actualiza cada 2h con tareas listas para ejecutar.
 
@@ -8,6 +8,63 @@ Entrega: este archivo se actualiza cada 2h con tareas listas para ejecutar.
 
 ## 🎯 Meta del mes
 Conseguir clientes B2B pagados (diagnóstico o piloto L2) empezando por el segmento más estrecho posible, incluso con producto no terminado.
+
+---
+
+## 🏗️ Fase 1: Creación del funnel (completar antes de ejecutar)
+
+Estas tareas construyen la base del funnel. Marca cada una cuando esté lista.
+
+### 1. Definir oferta y posicionamiento
+- [ ] Elegir nombre del servicio: "DataSeed Agent Factory" / "Diagnóstico Agent Factory" / otro.
+- [ ] Escribir propuesta de valor en 1 línea: qué problema resuelve, para quién, cómo.
+- [ ] Definir qué NO vendemos (plataforma final, automatización total, ROI garantizado).
+- [ ] Aprobar posicionamiento: "piloto acotado con humano en loop, no plataforma cerrada".
+
+### 2. Definir ICP y segmento inicial
+- [ ] Elegir 1 segmento B2B foco para empezar: ventas / operaciones / finanzas / cobranza.
+- [ ] Listar 5 empresas de ese segmento que conoces (red cercana, ex clientes, contactos).
+- [ ] Definir criterios de fit: tamaño, sistemas (ERP/CRM/BI), dolor, dueño, presupuesto.
+- [ ] Definir criterios de no-fit: solo curiosidad, sin datos, sin dueño, sin presupuesto.
+
+### 3. Diseñar oferta comercial
+- [ ] Definir qué incluye el diagnóstico: duración, entregables, límite, métrica.
+- [ ] Definir qué incluye el piloto L2: duración, alcance, fuentes, límite humano, métrica.
+- [ ] Definir precios iniciales (aunque sean placeholders para probar).
+- [ ] Definir condiciones de Go/No-Go del piloto.
+
+### 4. Crear materiales de venta
+- [ ] Escribir pitch corto (30 segundos).
+- [ ] Escribir copy de DM/LinkedIn para outreach.
+- [ ] Escribir email outbound breve.
+- [ ] Escribir guion de llamada de 15 min.
+- [ ] Escribir guion de diagnóstico.
+- [ ] Escribir guion de cierre Go/No-Go.
+- [ ] Crear checklist de calificación de leads.
+
+### 5. Preparar canales de atracción
+- [ ] Elegir canal principal: LinkedIn / email / referidos / DM.
+- [ ] Crear perfil optimizado (LinkedIn) si aplica.
+- [ ] Escribir 3 posts educativos iniciales.
+- [ ] Diseñar lead magnet (checklist, guía, template).
+
+### 6. Definir métricas y proceso de seguimiento
+- [ ] Definir métricas semanales: contactos, respuestas, llamadas, diagnósticos, pilotos.
+- [ ] Crear tracker simple (planilla, Notion, Miro).
+- [ ] Definir quién hace qué: outreach, llamadas, diagnóstico, cierre.
+- [ ] Definir proceso de registro de objeciones y aprendizajes.
+
+### 7. Preparar condiciones operativas
+- [ ] Definir quién factura/cobra.
+- [ ] Definir proceso de contrato/NDA si aplica.
+- [ ] Definir herramientas: CRM, email, calendario, tracking.
+- [ ] Definir límites de autonomía del equipo vs. escalación a Daniel/Elianis.
+
+---
+
+## 🚀 Fase 2: Ejución del funnel (ciclos semanales)
+
+Una vez completada la Fase 1, pasar a ejecución.
 
 ---
 
@@ -147,13 +204,38 @@ Archivo: `/opt/data/dataseed-agent-factory-funnel-loop/004-checklist-proceso-can
 
 ---
 
+## 🧰 Nuevo asset (Ciclo 005): Paquete Diagnóstico + Piloto + Pricing
+
+Archivo: `/opt/data/dataseed-agent-factory-funnel-loop/005-paquete-diagnostico-piloto.md`
+
+### Tareas inmediatas para el equipo
+- [ ] Revisar los 3 tramos (diagnóstico express USD 350–500, piloto L2 USD 2.500–5.000, design partner USD 1.500–3.000/mes) y ajustar rangos a la realidad DataSeed.
+- [ ] Elegir UN precio de diagnóstico para empezar (sugerido: USD 350 como entry point).
+- [ ] Probar el copy de diagnóstico (versión A/B/C) con 2–3 contactos reales.
+- [ ] Definir quién factura/cobra antes de enviar propuestas.
+- [ ] HUMAN_REQUIRED antes de: publicar precios en landing, enviar propuestas formales, firmar contratos, emitir facturas, tocar CRM.
+
+### Cómo usarlo
+1. Lead pasa fit check 4+ → proponer diagnóstico express (Copy A o B).
+2. Diagnóstico realizado → si hay caso, proponer piloto L2 (Copy post-diagnóstico).
+3. Piloto L2 con métrica lograda → proponer design partner mensual.
+4. Si en cualquier paso el lead pide contrato formal, NDA, factura o alcance mayor → escalar a humano.
+
+### Copies listos para usar (resumen)
+- **Post-fit check:** "Revisamos tus respuestas... diagnóstico express 60 min, ustedes traen el proceso, ficha con decisión/señal/acción/límite/métrica. Costo [rango]. Si no hay caso, no seguimos."
+- **Post-checklist 4+:** "Completaste el checklist con [N]/5. Eso indica caso candidato. Diagnóstico de 60 min con ficha concreta. ¿Te interesaría?"
+- **Post-llamada intro:** "La forma más rápida de validar es un diagnóstico pago de 60 min. Si hay caso, piloto acotado 2–4 semanas. Si no, te digo por qué y listo."
+- **Propuesta piloto L2:** "Después del diagnóstico, el caso es viable: [proceso]. Piloto L2 de [2-4] semanas, 1 proceso, [2-3] fuentes, humano en loop. Costo [rango]. Si a la semana 2 no hay señal usable, pausamos y no cobramos saldo."
+
+---
+
 ## 🔄 Próximo ciclo
 
 El loop sigue refinando el funnel cada 2h. La próxima entrega incluirá:
-- Ajustes a copy según objeciones reales.
-- Prueba del checklist con leads reales (cuando el equipo lo autorice).
+- Ajustes a pricing según feedback humano (¿se prueba el diagnóstico a USD 350? ¿subimos/bajamos?).
+- Secuencia de nurture post-checklist (3 emails educativos si no hay diagnóstico inmediato).
+- Ajustes a copy según objeciones reales de precio ("muy caro", "no hay presupuesto", "competencia más barata").
 - Nuevos segmentos/verticales si hay señales de demanda.
-- Pricing/paquete de diagnóstico/piloto si hay suficiente tracción.
 
 ---
 
