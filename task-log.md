@@ -55,3 +55,11 @@
 
 **Estado:** ✅ Consulta respondida con base en el resumen diario y registros del task tracking.
 
+## 2026-06-29 15:40 - Daniel Caignet
+
+**Tarea:** Actualizar estado de la capa de seguridad de gestión de secretos según cambios reales del entorno.
+
+**Acción:** Daniel confirmó los siguientes cambios operativos: (1) Hostinger MCP fue aislado del contenedor de Hermes a un proyecto Docker separado en el VPS y se revocó el acceso del usuario del contenedor de Demeter. (2) Agent Vault ya tiene registradas las APIs de Vercel, GitHub y OpenRouter junto con Hostinger. (3) El mecanismo es transparente para Hermes: el .env conserva las mismas variables pero con placeholders que Agent Vault intercepta vía proxy MITM; el agente llama igual pero recibe valores reales solo a través del broker. No hay pendiente de persistir AGENT_VAULT_TOKEN ni reiniciar gateway por este motivo. Se actualizó memoria persistente con la arquitectura final.
+
+**Estado:** ✅ Actualización registrada y memoria persistente sincronizada.
+
