@@ -47,3 +47,11 @@
 
 **Estado:** ✅ Finalizada y verificada; el loop sigue en background/local y ahora produce playbook comercial humano accionable.
 
+## 2026-06-29 15:33 - Daniel Caignet
+
+**Tarea:** Consultar qué está registrado en el resumen diario sobre la capa de seguridad agregada para gestión de secretos.
+
+**Acción:** Revisé `daily-summary.md`, `task-log.md` y el contexto histórico relevante de Agent Vault/Hostinger para consolidar el estado de la capa de seguridad: Agent Vault como broker de credenciales, placeholders en Hermes, proxy/CA persistentes, MCP seguro de Hostinger con allowlist estricta y pendientes operativos para terminar la migración viva.
+
+**Estado:** ✅ Consulta respondida con base en el resumen diario y registros del task tracking.
+
