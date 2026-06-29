@@ -31,3 +31,11 @@
 
 **Estado:** ✅ Finalizada y verificada; loop constante activo. No se publica ni contacta mercado sin autorización humana.
 
+## 2026-06-29 15:04 - Daniel Caignet
+
+**Tarea:** Dejar el loop de validación de mercado del Agent Factory corriendo en background para no afectar el chat de WhatsApp.
+
+**Acción:** Reconfiguré el watchdog `56f0366edcb7` de entrega `origin` a `local`, manteniendo builder `0fffb87e5be9` y validator `2caf9a63f6d7` también en `local`. Actualicé el contexto del loop para dejar explícito que todos los cronjobs de Agent Factory corren en background/local y no envían mensajes a este chat.
+
+**Estado:** ✅ Finalizada y verificada; el loop sigue activo cada 2 horas, pero sus salidas quedan guardadas localmente.
+
