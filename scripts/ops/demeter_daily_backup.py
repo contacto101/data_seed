@@ -41,6 +41,7 @@ DEFAULT_BACKUP_REPO_DIR = (HERMES_HOME / "data_seed_daily_backup").resolve()
 BRANCH = os.environ.get("DATASEED_BACKUP_BRANCH", "main")
 HERMES_BIN = Path(os.environ.get("HERMES_BIN", "/opt/hermes/.venv/bin/hermes"))
 SCRIPT_SOURCE = Path(__file__).resolve()
+GITHUB_API_HELPER = Path(os.environ.get("DATASEED_GITHUB_API_COMMIT_HELPER", str(HERMES_HOME / "scripts" / "github_api_commit.py"))).resolve()
 CANONICAL_REPO_DIR = Path(os.environ.get("DATASEED_CANONICAL_REPO_DIR", str(HERMES_HOME / "data_seed"))).resolve()
 DEFAULT_TASK_TRACKING_REPO_DIR = (HERMES_HOME / "data_seed_tasklog_worktree").resolve()
 if "DATASEED_TASK_TRACKING_REPO_DIR" in os.environ:
@@ -77,6 +78,8 @@ ALLOWED_REPO_OUTPUTS = [
     "scripts/ops/daily-operations.sh",
     "scripts/ops/daily-operations-wrapper.sh",
     "scripts/ops/daily-task-log-cleanup.sh",
+    "scripts/ops/github_api_commit.py",
+    "scripts/github_api_commit.py",
     "scripts/generate-multibranch-graph.py",
     "graphify-out/GRAPH_REPORT.md",
     "graphify-out/manifest.json",
@@ -145,11 +148,37 @@ def normalize_agent_vault_git_env(env: dict[str, str]) -> None:
                     break
 
 
+def disable_direct_git_credentials(env: dict[str, str]) -> None:
+    """Force GitHub access through Agent Vault instead of local secrets.
+
+    The daily cron must not read /opt/data/.env, materialize GITHUB_TOKEN, or
+    use ~/.git-credentials. If Agent Vault does not broker the request, git
+    should fail closed instead of prompting for or leaking a direct credential.
+    """
+    for key in ("GITHUB_TOKEN", "GH_TOKEN", "GITHUB_PAT"):
+        env.pop(key, None)
+    env["GIT_TERMINAL_PROMPT"] = "0"
+    if Path("/bin/false").exists():
+        env["GIT_ASKPASS"] = "/bin/false"
+        env["SSH_ASKPASS"] = "/bin/false"
+    else:
+        env.pop("GIT_ASKPASS", None)
+        env.pop("SSH_ASKPASS", None)
+    try:
+        count = int(env.get("GIT_CONFIG_COUNT", "0") or "0")
+    except ValueError:
+        count = 0
+    env[f"GIT_CONFIG_KEY_{count}"] = "credential.helper"
+    env[f"GIT_CONFIG_VALUE_{count}"] = ""
+    env["GIT_CONFIG_COUNT"] = str(count + 1)
+
+
 def run(cmd: list[str], cwd: Path | None = None, check: bool = True, extra_env: dict[str, str] | None = None) -> str:
     env = os.environ.copy()
     if extra_env:
         env.update(extra_env)
     if cmd and cmd[0] == "git":
+        disable_direct_git_credentials(env)
         normalize_agent_vault_git_env(env)
     proc = subprocess.run(
         cmd,
@@ -179,43 +208,18 @@ def assert_no_secret_values(label: str, text: str) -> None:
             raise RuntimeError(f"Refusing to write {label}: secret-like value detected by {pat.pattern}")
 
 
-def read_dotenv_key(key: str) -> str | None:
-    env_path = HERMES_HOME / ".env"
-    if key in os.environ and os.environ[key].strip():
-        return os.environ[key].strip().strip('"').strip("'")
-    if not env_path.exists():
-        return None
-    try:
-        for raw in env_path.read_text(encoding="utf-8", errors="ignore").splitlines():
-            line = raw.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            k, v = line.split("=", 1)
-            if k.strip() == key:
-                return v.strip().strip('"').strip("'")
-    except OSError:
-        return None
-    return None
-
-
-def ensure_git_auth() -> None:
+def ensure_brokered_git_auth() -> None:
     os.environ.setdefault("HOME", str(HERMES_HOME / "home"))
-    os.environ.setdefault("GIT_TERMINAL_PROMPT", "0")
+    os.environ["GIT_TERMINAL_PROMPT"] = "0"
+    if Path("/bin/false").exists():
+        os.environ["GIT_ASKPASS"] = "/bin/false"
+        os.environ["SSH_ASKPASS"] = "/bin/false"
+    else:
+        os.environ.pop("GIT_ASKPASS", None)
+        os.environ.pop("SSH_ASKPASS", None)
+    for key in ("GITHUB_TOKEN", "GH_TOKEN", "GITHUB_PAT"):
+        os.environ.pop(key, None)
     Path(os.environ["HOME"]).mkdir(parents=True, exist_ok=True)
-    token = read_dotenv_key("GITHUB_TOKEN")
-    if not token:
-        return
-    run(["git", "config", "--global", "credential.helper", f"store --file={Path.home() / '.git-credentials'}"], check=False)
-    cred_path = Path.home() / ".git-credentials"
-    existing = ""
-    if cred_path.exists():
-        existing = cred_path.read_text(encoding="utf-8", errors="ignore")
-    if "github.com" not in existing:
-        cred_path.write_text(f"https://x-access-token:{token}@github.com\n", encoding="utf-8")
-        try:
-            cred_path.chmod(0o600)
-        except OSError:
-            pass
 
 
 def clean_backup_repo_if_needed() -> None:
@@ -241,7 +245,7 @@ def clean_backup_repo_if_needed() -> None:
 
 
 def ensure_repo() -> None:
-    ensure_git_auth()
+    ensure_brokered_git_auth()
     REPO_DIR.parent.mkdir(parents=True, exist_ok=True)
     if (REPO_DIR / ".git").is_dir():
         clean_backup_repo_if_needed()
@@ -946,6 +950,7 @@ def copy_new_scripts() -> None:
         ("daily-operations.sh", "scripts/ops/daily-operations.sh", True),
         ("daily-operations-wrapper.sh", "scripts/ops/daily-operations-wrapper.sh", True),
         ("daily-task-log-cleanup.sh", "scripts/ops/daily-task-log-cleanup.sh", True),
+        ("github_api_commit.py", "scripts/ops/github_api_commit.py", True),
     ]
     for source_name, repo_rel, executable in scripts:
         repo_source = CANONICAL_REPO_DIR / repo_rel
@@ -976,6 +981,30 @@ def copy_new_scripts() -> None:
         build_shell_compat_wrapper("scripts/ops/daily-operations-wrapper.sh"),
         executable=True,
     )
+    write_repo_file(
+        "scripts/github_api_commit.py",
+        build_python_compat_wrapper("scripts/ops/github_api_commit.py"),
+        executable=True,
+    )
+
+
+def commit_via_agent_vault_api(message: str, changed_paths: list[str]) -> str:
+    if not GITHUB_API_HELPER.exists():
+        raise RuntimeError(f"Agent Vault GitHub API helper not found: {GITHUB_API_HELPER}")
+    return run(
+        [
+            "python3",
+            str(GITHUB_API_HELPER),
+            "--repo-dir",
+            str(REPO_DIR),
+            "--branch",
+            BRANCH,
+            "--message",
+            message,
+            *changed_paths,
+        ],
+        cwd=REPO_DIR,
+    )
 
 
 def commit_and_push() -> str:
@@ -986,11 +1015,17 @@ def commit_and_push() -> str:
         current = run(["git", "rev-parse", "--short", "HEAD"], cwd=REPO_DIR)
         return f"Demeter Daily Backup OK: sin cambios; HEAD {current}"
     utc = now_utc().strftime("%Y-%m-%d %H:%M UTC")
-    run(["git", "commit", "-m", f"backup: estado operativo Demeter {utc}"], cwd=REPO_DIR)
-    run(["git", "push", "origin", BRANCH], cwd=REPO_DIR)
-    current = run(["git", "rev-parse", "--short", "HEAD"], cwd=REPO_DIR)
+    message = f"backup: estado operativo Demeter {utc}"
+    changed_paths = diff.splitlines()
+    api_result = commit_via_agent_vault_api(message, changed_paths)
+    # Dedicated generated clone: align local state with the API-created commit so
+    # the next cron run can pull/compare cleanly. This reset policy is limited to
+    # the backup clone, not arbitrary operator repos.
+    run(["git", "fetch", "origin", BRANCH], cwd=REPO_DIR, check=False)
+    run(["git", "reset", "--hard", f"origin/{BRANCH}"], cwd=REPO_DIR, check=False)
+    current = run(["git", "rev-parse", "--short", "HEAD"], cwd=REPO_DIR, check=False) or "unknown"
     changed = ", ".join(diff.splitlines())
-    return f"Demeter Daily Backup OK: commit {current} enviado a {BRANCH}; archivos: {changed}"
+    return f"Demeter Daily Backup OK: {api_result}; local HEAD {current}; archivos: {changed}"
 
 
 def main() -> int:

@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-29 09:00:06 UTC
-- Generado America/Santiago: 2026-06-29 05:00:06 -04
+- Generado UTC: 2026-06-30 14:37:56 UTC
+- Generado America/Santiago: 2026-06-30 10:37:56 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -15,7 +15,7 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
 - Repo/branch de tracking: `/opt/data/data_seed_tasklog_worktree` / `feat/task-tracking-system`.
-- Daily summary: `daily-summary.md` (50.8 KB, sha256 4c9af734ca1ff48f).
+- Daily summary: `daily-summary.md` (58.3 KB, sha256 2e488be483b733d5).
 - Task log actual: `task-log.md` (213.0 B, sha256 1512ddaa0df19af1).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (594.0 B, sha256 6fd18874fbd0ad90).
 
@@ -43,7 +43,7 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 
 ## Configuración Hermes sanitizada
 
-- Config path: `/opt/data/config.yaml` (16.0 KB, sha256 51efc34a1d26c65f)
+- Config path: `/opt/data/config.yaml` (17.8 KB, sha256 1f4976130991156d)
 - Model provider: `openai-codex`
 - Model default: `gpt-5.5`
 - Agent max_turns: `60`
@@ -56,15 +56,40 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 
 ## Cron jobs configurados y estado
 
-Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
+Total jobs: 4. Sensitive fields excluded: prompt, deliver, delivery targets.
 
 - `ea05ea193912` [active]
   - Nombre: Demeter Daily Operations (5:00 AM Chile)
   - Schedule: 0 9 * * *
-  - Next run UTC: 2026-06-30T09:00:00+00:00
-  - Last run UTC/status: 2026-06-28T09:01:02.867877+00:00 / ok
+  - Next run UTC: 2026-07-01T09:00:00+00:00
+  - Last run UTC/status: 2026-06-30T09:00:38.264884+00:00 / error
   - Mode: no-agent
   - Script: daily-operations-wrapper.sh
+- `0fffb87e5be9` [active]
+  - Nombre: DataSeed Agent Factory Funnel Revenue Builder/Tester
+  - Schedule: 0 */2 * * *
+  - Next run UTC: 2026-06-30T16:00:00+00:00
+  - Last run UTC/status: 2026-06-30T14:01:22.458962+00:00 / ok
+  - Mode: agent
+  - Workdir: /opt/data
+  - Skills: hermes-agent, kanban-agent-workflows, spike
+  - Enabled toolsets: web, search, browser, file, terminal, session_search, skills
+- `2caf9a63f6d7` [active]
+  - Nombre: DataSeed Agent Factory Funnel Revenue Validator
+  - Schedule: 30 */2 * * *
+  - Next run UTC: 2026-06-30T16:30:00+00:00
+  - Last run UTC/status: 2026-06-30T14:35:50.927048+00:00 / ok
+  - Mode: agent
+  - Workdir: /opt/data
+  - Skills: hermes-agent, kanban-agent-workflows, spike
+  - Enabled toolsets: web, search, browser, file, terminal, session_search, skills
+- `56f0366edcb7` [active]
+  - Nombre: DataSeed Agent Factory Funnel Market Alert (Background Only)
+  - Schedule: every 60m
+  - Next run UTC: 2026-06-30T14:51:36.359305+00:00
+  - Last run UTC/status: 2026-06-30T13:51:36.359305+00:00 / ok
+  - Mode: no-agent
+  - Script: agent-factory-funnel-alert.sh
 
 ## Skills instalados
 
@@ -161,12 +186,12 @@ Total jobs: 1. Sensitive fields excluded: prompt, deliver, delivery targets.
 
 No se copia el contenido de estos archivos; solo tamaño y huella para validación.
 
-- `config.yaml`: 16.0 KB, sha256 51efc34a1d26c65f
-- `memories/MEMORY.md`: 1.9 KB, sha256 820870bc03ab5761
-- `memories/USER.md`: 1.3 KB, sha256 5e2f00509a08627f
-- `channel_directory.json`: 1.0 KB, sha256 9e769b79ffce2ae8
-- `gateway_state.json`: 544.0 B, sha256 50f887cd761bc6bb
-- `cron/jobs.json`: 1.7 KB, sha256 e7625dd7c199341a
+- `config.yaml`: 17.8 KB, sha256 1f4976130991156d
+- `memories/MEMORY.md`: 1.9 KB, sha256 14e5cceda76bb7ec
+- `memories/USER.md`: 1.3 KB, sha256 02a1208d1eb2b93f
+- `channel_directory.json`: 1.0 KB, sha256 1ede436d6f3d4d52
+- `gateway_state.json`: 545.0 B, sha256 3083cd50e2eab7f6
+- `cron/jobs.json`: 20.1 KB, sha256 74e89ec568d62551
 
 ## Grafo de conocimiento del proyecto (Graphify)
 
@@ -192,6 +217,8 @@ Se genera con `scripts/generate-multibranch-graph.py`, que crea un snapshot temp
 - `scripts/ops/daily-operations.sh`
 - `scripts/ops/daily-operations-wrapper.sh`
 - `scripts/ops/daily-task-log-cleanup.sh`
+- `scripts/ops/github_api_commit.py`
+- `scripts/github_api_commit.py`
 - `scripts/generate-multibranch-graph.py`
 - `graphify-out/GRAPH_REPORT.md`
 - `graphify-out/manifest.json`
@@ -204,6 +231,7 @@ Se genera con `scripts/generate-multibranch-graph.py`, que crea un snapshot temp
 ## Scripts/documentos pendientes de aprobación humana
 
 - `daily-operations-wrapper.sh`: pendiente; existe pero NO se copia como copia dura sin aprobación explícita en `/opt/data/backup_hardcopy_allowlist.txt`.
+- `agent-factory-funnel-alert.sh`: pendiente; existe pero NO se copia como copia dura sin aprobación explícita en `/opt/data/backup_hardcopy_allowlist.txt`.
 
 ## Exclusiones estrictas
 

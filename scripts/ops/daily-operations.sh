@@ -3,55 +3,32 @@
 # Runtime estable para cron: usa /opt/data/scripts como fuente de scripts, no el checkout vivo del repo.
 set -euo pipefail
 
-# GitHub auth bootstrap for non-interactive Hermes cron.
-load_github_token() {
-  if [ -n "${GITHUB_TOKEN:-}" ]; then
-    return 0
-  fi
-  local env_file="${HERMES_HOME:-/opt/data}/.env"
-  if [ ! -f "$env_file" ]; then
-    return 0
-  fi
-  local line value
-  while IFS= read -r line; do
-    case "$line" in
-      GITHUB_TOKEN=*)
-        value="${line#GITHUB_TOKEN=}"
-        value="${value%$'\r'}"
-        value="${value%\"}"; value="${value#\"}"
-        value="${value%\'}"; value="${value#\'}"
-        export GITHUB_TOKEN="$value"
-        return 0
-        ;;
-    esac
-  done < "$env_file"
+# Brokered GitHub access for non-interactive Hermes cron.
+# Security invariant: this script must not read .env, export raw tokens, write
+# ~/.git-credentials, or answer Git credential prompts. GitHub access must be
+# provided by Agent Vault/proxy policy; otherwise the job fails closed.
+disable_direct_git_credentials() {
+  local count="${GIT_CONFIG_COUNT:-0}"
+  case "$count" in
+    ''|*[!0-9]*) count=0 ;;
+  esac
+  export "GIT_CONFIG_KEY_${count}=credential.helper"
+  export "GIT_CONFIG_VALUE_${count}="
+  export GIT_CONFIG_COUNT=$((count + 1))
 }
 
-setup_git_auth() {
+setup_brokered_git_env() {
   export HOME="${HOME:-/opt/data/home}"
   mkdir -p "$HOME"
-  load_github_token || true
-  git config --global credential.helper "store --file=$HOME/.git-credentials" >/dev/null 2>&1 || true
-  if [ -n "${GITHUB_TOKEN:-}" ]; then
-    if [ ! -f "$HOME/.git-credentials" ] || ! grep -q 'github.com' "$HOME/.git-credentials"; then
-      umask 077
-      printf 'https://x-access-token:%s@github.com\n' "$GITHUB_TOKEN" > "$HOME/.git-credentials"
-      chmod 600 "$HOME/.git-credentials" 2>/dev/null || true
-    fi
-    ASKPASS_FILE="$(mktemp /tmp/dataseed-git-askpass.XXXXXX)"
-    cat > "$ASKPASS_FILE" <<'ASKPASS'
-#!/bin/sh
-case "$1" in
-  *Username*) printf '%s\n' 'x-access-token' ;;
-  *Password*) printf '%s\n' "$GITHUB_TOKEN" ;;
-  *) printf '\n' ;;
-esac
-ASKPASS
-    chmod 700 "$ASKPASS_FILE"
-    export GIT_ASKPASS="$ASKPASS_FILE"
-    export GIT_TERMINAL_PROMPT=0
-    trap 'rm -f "${ASKPASS_FILE:-}"' EXIT
+  unset GITHUB_TOKEN GH_TOKEN GITHUB_PAT
+  export GIT_TERMINAL_PROMPT=0
+  if [ -x /bin/false ]; then
+    export GIT_ASKPASS=/bin/false
+    export SSH_ASKPASS=/bin/false
+  else
+    unset GIT_ASKPASS SSH_ASKPASS
   fi
+  disable_direct_git_credentials
 }
 
 normalize_agent_vault_git_env() {
@@ -85,7 +62,7 @@ ensure_git_identity() {
   fi
 }
 
-setup_git_auth
+setup_brokered_git_env
 normalize_agent_vault_git_env
 
 TIMESTAMP=$(TZ='America/Santiago' date '+%Y-%m-%d %H:%M:%S %Z')
