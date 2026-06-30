@@ -7,6 +7,16 @@
 
 <!-- ENTRADAS -->
 
+## 2026-06-30 11:07:53 -04 — Corrección criterio Agent Vault GitHub API
+
+**Estado:** ✅ Finalizada exitosamente
+
+**Solicitud:** Recordar que `GITHUB_TOKEN` sí puede leerse cuando funciona como placeholder/trigger de Agent Vault, y que aunque el repo sea público no debe usarse la web/no-auth como atajo; la ruta sigue siendo GitHub API vía Agent Vault.
+
+**Acciones:** Se actualizó memoria operativa y skill de backups. Se ajustó `/opt/data/scripts/github_api_commit.py` para preservar `GITHUB_TOKEN`/`GH_TOKEN` como posibles placeholders de Agent Vault en el header Authorization, siempre exigiendo proxy AV y sin usar `.git-credentials`.
+
+**Verificación:** `py_compile` OK. Checks API vía AV OK para `main` y `feat/task-tracking-system`.
+
 ## 2026-06-30 10:39:14 -04 — Reparación cron daily backup
 
 **Estado:** ✅ Finalizada exitosamente
