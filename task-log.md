@@ -7,6 +7,16 @@
 
 <!-- ENTRADAS -->
 
+## 2026-06-30 11:10:38 -04 — Verificación aplicación al cronjob daily backup
+
+**Estado:** ✅ Finalizada exitosamente
+
+**Solicitud:** Confirmar si el ajuste de GitHub API vía Agent Vault y placeholder `GITHUB_TOKEN` quedó aplicado al cronjob.
+
+**Acciones:** Se verificó que `ea05ea193912` ejecuta `daily-operations-wrapper.sh`; el wrapper ejecuta `/opt/data/scripts/daily-operations.sh`, que llama a `daily-task-log-cleanup.sh` y `demeter_daily_backup.py`. Ambos usan `/opt/data/scripts/github_api_commit.py` por la ruta API/Agent Vault. Se ajustó comentario interno del backup para aclarar que el placeholder aplica a API, mientras raw git queda cerrado a `.git-credentials`.
+
+**Verificación:** `py_compile` OK. Backup publicó `9ef9fcd` en `main` con el script actualizado. Check API vía Agent Vault OK.
+
 ## 2026-06-30 11:07:53 -04 — Corrección criterio Agent Vault GitHub API
 
 **Estado:** ✅ Finalizada exitosamente
