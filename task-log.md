@@ -7,6 +7,16 @@
 
 <!-- ENTRADAS -->
 
+## 2026-06-30 11:17:49 -04 — Verificación escritura GitHub API vía Agent Vault
+
+**Estado:** ✅ Finalizada exitosamente
+
+**Solicitud:** Verificar que Demeter pueda acceder al repo y crear un `.md` con texto `Hola` por el flujo normal vía Agent Vault/API, sin usar web pública/no-auth.
+
+**Acciones:** Se consultó metadata de `contacto101/data_seed` por GitHub API usando el proxy transparente de Agent Vault; la API devolvió permisos `admin/push/pull=true` y `private=false` para ese repo. Se creó `archive/testing/av-private-repo-hola.md` en `feat/task-tracking-system` vía `/opt/data/scripts/github_api_commit.py`.
+
+**Verificación:** Commit remoto `2bb7d6a`; lectura posterior por GitHub API vía Agent Vault devolvió `content_repr='Hola\\n'` y `content_exact_hola=True`.
+
 ## 2026-06-30 11:10:38 -04 — Verificación aplicación al cronjob daily backup
 
 **Estado:** ✅ Finalizada exitosamente
