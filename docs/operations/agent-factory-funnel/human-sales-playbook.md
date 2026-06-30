@@ -1,6 +1,6 @@
 # DataSeed Agent Factory — Briefing Semanal Quick-Start
 
-Última actualización: 2026-06-30 por Demeter (L2).
+Última actualización: 2026-06-30T00:02:09+00:00 por Demeter (L2).
 Lectura objetivo: **5 minutos**. Detalle completo en secciones posteriores.
 
 ---
@@ -74,6 +74,8 @@ Conseguir **1 diagnóstico pagado** o **1 piloto L2 propuesto** este mes.
 | Diagnósticos agendados | — | — |
 | Diagnósticos cerrados (pagados) | — | — |
 | Objecciones más frecuentes | — | — |
+
+**Referencia para interpretar métricas (no es promesa):** DoWhatMatter sugiere para design partners B2B: reply frío típico 1–5%, bueno 5–8%; reuniones por respuesta positiva 20–40%, bueno 40–60%; MOU/piloto por primera reunión 20–40%, bueno 40–60%. Si tras 300 contactos las respuestas son <3%, cambiar lista u oferta antes de seguir refinando copy.
 
 ---
 
@@ -188,10 +190,10 @@ Tareas aún pendientes (requieren humano):
 
 ## 🔄 Próximo ciclo
 
-El loop refina cada 2h. Próxima entrega:
-- Secuencia de nurture post-checklist (3 emails si no hay diagnóstico inmediato)
-- Ajustes a pricing según feedback humano
-- Segmento vertical priorizado si hay señal
+El loop refina cada 2h. Próxima entrega autónoma:
+- No agregar nuevas piezas comerciales hasta que haya ejecución humana real.
+- Registrar métricas/objeciones si el equipo ejecutó outreach.
+- Si no hay ejecución durante 2 semanas, marcar HUMAN_REQUIRED para entrevistas, pivot de ICP/oferta o pausa de build.
 
 ---
 
