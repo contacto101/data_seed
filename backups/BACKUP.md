@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-30 15:08:10 UTC
-- Generado America/Santiago: 2026-06-30 11:08:10 -04
+- Generado UTC: 2026-06-30 15:10:17 UTC
+- Generado America/Santiago: 2026-06-30 11:10:17 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -189,8 +189,8 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 - `config.yaml`: 17.8 KB, sha256 1f4976130991156d
 - `memories/MEMORY.md`: 2.0 KB, sha256 607170d225fb9f59
 - `memories/USER.md`: 1.3 KB, sha256 02a1208d1eb2b93f
-- `channel_directory.json`: 1.0 KB, sha256 68a011e3e5ffc124
-- `gateway_state.json`: 545.0 B, sha256 9f5e6d632077b521
+- `channel_directory.json`: 1.0 KB, sha256 0c736c31cab1a200
+- `gateway_state.json`: 545.0 B, sha256 779e339d3974a92b
 - `cron/jobs.json`: 15.0 KB, sha256 50c7e2ebbe554dce
 
 ## Grafo de conocimiento del proyecto (Graphify)

@@ -149,11 +149,12 @@ def normalize_agent_vault_git_env(env: dict[str, str]) -> None:
 
 
 def disable_direct_git_credentials(env: dict[str, str]) -> None:
-    """Force GitHub access through Agent Vault instead of local secrets.
+    """Disable direct credentials for raw git subprocesses only.
 
-    The daily cron must not read /opt/data/.env, materialize GITHUB_TOKEN, or
-    use ~/.git-credentials. If Agent Vault does not broker the request, git
-    should fail closed instead of prompting for or leaking a direct credential.
+    GITHUB_TOKEN/GH_TOKEN may be an Agent Vault placeholder for API calls, but
+    raw git commands in this script must not fall back to direct PAT helpers or
+    ~/.git-credentials. If raw git is not brokered by Agent Vault, it should fail
+    closed instead of prompting for or leaking a direct credential.
     """
     for key in ("GITHUB_TOKEN", "GH_TOKEN", "GITHUB_PAT"):
         env.pop(key, None)
