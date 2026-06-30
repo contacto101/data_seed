@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-06-30 14:39:38 UTC
-- Generado America/Santiago: 2026-06-30 10:39:38 -04
+- Generado UTC: 2026-06-30 15:08:10 UTC
+- Generado America/Santiago: 2026-06-30 11:08:10 -04
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -16,7 +16,7 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
 - Repo/branch de tracking: `/opt/data/data_seed_tasklog_worktree` / `feat/task-tracking-system`.
 - Daily summary: `daily-summary.md` (58.3 KB, sha256 2e488be483b733d5).
-- Task log actual: `task-log.md` (1.2 KB, sha256 11ad25ffeb72982b).
+- Task log actual: `task-log.md` (2.0 KB, sha256 5949222823d15a53).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (594.0 B, sha256 6fd18874fbd0ad90).
 
 Regla operativa: el log diario registra detalles; el resumen diario consolida tareas y pendientes; el backup de las 05:00 AM solo guarda ciclos grandes completados y una referencia hacia el resumen diario.
@@ -86,8 +86,8 @@ Total jobs: 4. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `56f0366edcb7` [active]
   - Nombre: DataSeed Agent Factory Funnel Market Alert (Background Only)
   - Schedule: every 60m
-  - Next run UTC: 2026-06-30T14:51:36.359305+00:00
-  - Last run UTC/status: 2026-06-30T13:51:36.359305+00:00 / ok
+  - Next run UTC: 2026-06-30T15:51:36.697257+00:00
+  - Last run UTC/status: 2026-06-30T14:51:36.697257+00:00 / ok
   - Mode: no-agent
   - Script: agent-factory-funnel-alert.sh
 
@@ -187,11 +187,11 @@ Total jobs: 4. Sensitive fields excluded: prompt, deliver, delivery targets.
 No se copia el contenido de estos archivos; solo tamaño y huella para validación.
 
 - `config.yaml`: 17.8 KB, sha256 1f4976130991156d
-- `memories/MEMORY.md`: 1.9 KB, sha256 14e5cceda76bb7ec
+- `memories/MEMORY.md`: 2.0 KB, sha256 607170d225fb9f59
 - `memories/USER.md`: 1.3 KB, sha256 02a1208d1eb2b93f
-- `channel_directory.json`: 1.0 KB, sha256 472eb428904e15cd
-- `gateway_state.json`: 545.0 B, sha256 3083cd50e2eab7f6
-- `cron/jobs.json`: 15.0 KB, sha256 d1d73902fba58eb3
+- `channel_directory.json`: 1.0 KB, sha256 68a011e3e5ffc124
+- `gateway_state.json`: 545.0 B, sha256 9f5e6d632077b521
+- `cron/jobs.json`: 15.0 KB, sha256 50c7e2ebbe554dce
 
 ## Grafo de conocimiento del proyecto (Graphify)
 

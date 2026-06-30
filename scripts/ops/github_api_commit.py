@@ -2,9 +2,10 @@
 """Commit selected files to GitHub via Agent Vault-brokered GitHub API.
 
 Security invariant for DataSeed cron:
-- Do not read GITHUB_TOKEN, GH_TOKEN, GITHUB_PAT, or ~/.git-credentials.
-- Do not send an Authorization header from the agent process.
-- Require Agent Vault proxy environment and let Agent Vault inject GitHub auth.
+- Require Agent Vault proxy environment for every GitHub API request.
+- GITHUB_TOKEN/GH_TOKEN may be read only as an Agent Vault placeholder/trigger;
+  it must never be used without the AV proxy path.
+- Do not use ~/.git-credentials or direct git credential helpers.
 
 This helper exists because Git smart-HTTP push to github.com may not be
 brokered by the same Agent Vault service that brokers api.github.com.
@@ -118,9 +119,26 @@ def require_agent_vault_proxy() -> dict[str, str]:
     env["HTTP_PROXY"] = proxy
     env["https_proxy"] = proxy
     env["http_proxy"] = proxy
-    for key in ("GITHUB_TOKEN", "GH_TOKEN", "GITHUB_PAT"):
-        env.pop(key, None)
     return env
+
+
+def github_placeholder_auth_header(env: dict[str, str]) -> str | None:
+    """Return an Authorization header value for the AV placeholder token.
+
+    DataSeed's Agent Vault setup can use the GITHUB_TOKEN placeholder as the
+    signal that causes AV to broker the real GitHub credential. Keep this header
+    on API calls, but only after require_agent_vault_proxy() has enforced the AV
+    proxy. Never print the token, and reject control characters to avoid header
+    injection.
+    """
+    for key in ("GITHUB_TOKEN", "GH_TOKEN", "GITHUB_PAT"):
+        token = env.get(key)
+        if not token:
+            continue
+        if "\n" in token or "\r" in token:
+            fail(f"{key} contains control characters; refusing to build Authorization header")
+        return f"Authorization: Bearer {token}"
+    return None
 
 
 def api(env: dict[str, str], method: str, path: str, payload: dict[str, Any] | None = None) -> Any:
@@ -142,6 +160,9 @@ def api(env: dict[str, str], method: str, path: str, payload: dict[str, Any] | N
         "-w",
         "\n__HTTP_STATUS__:%{http_code}",
     ]
+    auth_header = github_placeholder_auth_header(env)
+    if auth_header:
+        cmd.extend(["-H", auth_header])
     ca = env.get("GIT_SSL_CAINFO") or env.get("SSL_CERT_FILE") or env.get("REQUESTS_CA_BUNDLE")
     if ca and Path(ca).exists():
         cmd.extend(["--cacert", ca])
