@@ -1,11 +1,11 @@
-# Graph Report - dataseed-multibranch-snapshot-hkdmu5dv  (2026-07-01)
+# Graph Report - dataseed-multibranch-snapshot-4ckdxk6i  (2026-07-02)
 
 ## Corpus Check
-- 140 files · ~120,797 words
+- 140 files · ~120,847 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1341 nodes · 1769 edges · 144 communities (129 shown, 15 thin omitted)
+- 1343 nodes · 1771 edges · 144 communities (128 shown, 16 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 5 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
@@ -126,12 +126,12 @@
 - [[_COMMUNITY_Community 113|Community 113]]
 - [[_COMMUNITY_Community 114|Community 114]]
 - [[_COMMUNITY_Community 115|Community 115]]
-- [[_COMMUNITY_Community 116|Community 116]]
+- [[_COMMUNITY_Community 117|Community 117]]
 - [[_COMMUNITY_Community 118|Community 118]]
 - [[_COMMUNITY_Community 119|Community 119]]
 - [[_COMMUNITY_Community 120|Community 120]]
 - [[_COMMUNITY_Community 121|Community 121]]
-- [[_COMMUNITY_Community 122|Community 122]]
+- [[_COMMUNITY_Community 123|Community 123]]
 - [[_COMMUNITY_Community 124|Community 124]]
 - [[_COMMUNITY_Community 125|Community 125]]
 - [[_COMMUNITY_Community 126|Community 126]]
@@ -141,7 +141,7 @@
 - [[_COMMUNITY_Community 130|Community 130]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Daily Summary - Demeter` - 22 edges
+1. `Daily Summary - Demeter` - 27 edges
 2. `Resumen 2026-06-17` - 20 edges
 3. `Resumen 2026-06-14 (recuperado)` - 17 edges
 4. `build_backup_md()` - 14 edges
@@ -169,7 +169,7 @@
 - 1-file cycle: `branches/feat/task-tracking-system/scripts/demeter_daily_backup.py -> branches/feat/task-tracking-system/scripts/demeter_daily_backup.py`
 - 1-file cycle: `branches/main/scripts/ops/demeter_daily_backup.py -> branches/main/scripts/ops/demeter_daily_backup.py`
 
-## Communities (144 total, 15 thin omitted)
+## Communities (144 total, 16 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.09
@@ -216,52 +216,52 @@ Cohesion: 0.20
 Nodes (21): CompletedProcess, Path, branch_commit(), BranchEntry, build_snapshot(), canonical_path_score(), copy_outputs(), FileEntry (+13 more)
 
 ### Community 11 - "Community 11"
-Cohesion: 0.21
-Nodes (11): Path, _cors_headers(), DemoProxy, _rate_limit_check(), StreamReader, StreamWriter, _completion_payload(), _deterministic_guardrail_reply() (+3 more)
+Cohesion: 0.09
+Nodes (21): 2026-06-17, 2026-06-18, 2026-06-29 14:37 - Daniel Caignet, 2026-06-29 14:39 - Daniel Caignet, 2026-06-29 15:03 - Daniel Caignet, 2026-06-29 15:04 - Daniel Caignet, 2026-06-29 15:33 - Daniel Caignet, 2026-06-29 15:33 - Daniel Caignet (+13 more)
 
 ### Community 12 - "Community 12"
 Cohesion: 0.21
-Nodes (20): CompletedProcess, Path, branch_commit(), BranchEntry, build_snapshot(), canonical_path_score(), copy_outputs(), FileEntry (+12 more)
+Nodes (11): Path, _cors_headers(), DemoProxy, _rate_limit_check(), StreamReader, StreamWriter, _completion_payload(), _deterministic_guardrail_reply() (+3 more)
 
 ### Community 13 - "Community 13"
+Cohesion: 0.21
+Nodes (20): CompletedProcess, Path, branch_commit(), BranchEntry, build_snapshot(), canonical_path_score(), copy_outputs(), FileEntry (+12 more)
+
+### Community 14 - "Community 14"
 Cohesion: 0.10
 Nodes (20): 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet (+12 more)
 
-### Community 14 - "Community 14"
+### Community 15 - "Community 15"
 Cohesion: 0.11
 Nodes (18): 1. Enviar 20 DMs a ICP B2B → [ ] Hecho, 2. Calificar respuestas con fit check → [ ] Hecho, 3. Proponer diagnóstico a los que pasen fit → [ ] Hecho, 📎 Assets complementarios (detalle en secciones abajo), 🔧 Checklist de Proceso Candidato a Agente L2 (Ciclo 004), 📝 Cómo usar este briefing, DataSeed Agent Factory — Briefing Semanal Quick-Start, DETALLE COMPLETO (referencia, no lectura obligatoria) (+10 more)
 
-### Community 15 - "Community 15"
+### Community 16 - "Community 16"
 Cohesion: 0.11
 Nodes (18): 1) Crear `firebase.json`, 2) Crear `.firebaserc` opcional, 3) Crear `functions/package.json`, 4) Crear `functions/index.js`, 5) Crear `functions/data/demeter-daily-report.json`, 6) Modificar `scripts/export-demeter-daily-report.py`, 7) Modificar `reports.html`, Archivos exactos involucrados (+10 more)
-
-### Community 16 - "Community 16"
-Cohesion: 0.21
-Nodes (10): StreamReader, StreamWriter, _completion_payload(), _cors_headers(), DemoProxy, _deterministic_guardrail_reply(), _rate_limit_check(), Return a safe canned reply for clearly out-of-scope or risky prompts. (+2 more)
 
 ### Community 17 - "Community 17"
 Cohesion: 0.21
 Nodes (10): StreamReader, StreamWriter, _completion_payload(), _cors_headers(), DemoProxy, _deterministic_guardrail_reply(), _rate_limit_check(), Return a safe canned reply for clearly out-of-scope or risky prompts. (+2 more)
 
 ### Community 18 - "Community 18"
+Cohesion: 0.21
+Nodes (10): StreamReader, StreamWriter, _completion_payload(), _cors_headers(), DemoProxy, _deterministic_guardrail_reply(), _rate_limit_check(), Return a safe canned reply for clearly out-of-scope or risky prompts. (+2 more)
+
+### Community 19 - "Community 19"
 Cohesion: 0.32
 Nodes (16): Any, Path, api(), commit_files(), create_blob(), fail(), get_head(), github_path() (+8 more)
 
-### Community 19 - "Community 19"
+### Community 20 - "Community 20"
 Cohesion: 0.12
 Nodes (16): author, bugs, url, dependencies, @vercel/speed-insights, description, homepage, keywords (+8 more)
 
-### Community 20 - "Community 20"
+### Community 21 - "Community 21"
 Cohesion: 0.12
 Nodes (17): 2026-06-11 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet (+9 more)
 
-### Community 21 - "Community 21"
-Cohesion: 0.12
-Nodes (15): 3a. Providers, 3b. URL Configuration, 3c. Rate Limits, 3d. Security, Checklist de seguridad pre-producción, Guía de configuración Supabase — DataSeed Auth Production, Paso 1: Crear proyecto en Supabase, Paso 2: Ejecutar migración SQL (+7 more)
-
 ### Community 22 - "Community 22"
 Cohesion: 0.12
-Nodes (15): 2026-06-17, 2026-06-18, 2026-06-29 14:37 - Daniel Caignet, 2026-06-29 14:39 - Daniel Caignet, 2026-06-29 15:03 - Daniel Caignet, 2026-06-29 15:04 - Daniel Caignet, 2026-06-29 15:33 - Daniel Caignet, 2026-06-29 15:33 - Daniel Caignet (+7 more)
+Nodes (15): 3a. Providers, 3b. URL Configuration, 3c. Rate Limits, 3d. Security, Checklist de seguridad pre-producción, Guía de configuración Supabase — DataSeed Auth Production, Paso 1: Crear proyecto en Supabase, Paso 2: Ejecutar migración SQL (+7 more)
 
 ### Community 23 - "Community 23"
 Cohesion: 0.13
@@ -512,137 +512,133 @@ Cohesion: 0.33
 Nodes (5): Estado, Hallazgo principal, Regla activa, Revisión de riesgo — portal/reportes públicos, Riesgos
 
 ### Community 85 - "Community 85"
-Cohesion: 0.33
-Nodes (5): 2026-06-30 10:39:14 -04 — Reparación cron daily backup, 2026-06-30 11:07:53 -04 — Corrección criterio Agent Vault GitHub API, 2026-06-30 11:10:38 -04 — Verificación aplicación al cronjob daily backup, 2026-06-30 11:17:49 -04 — Verificación escritura GitHub API vía Agent Vault, Task Log - Demeter
-
-### Community 86 - "Community 86"
 Cohesion: 0.40
 Nodes (4): 12 ideas iniciales, Cadencia 4 semanas, Estrategia LinkedIn Founder-led Content — DataSeed, Pilares
 
-### Community 87 - "Community 87"
+### Community 86 - "Community 86"
 Cohesion: 0.40
 Nodes (4): devDependencies, scripts, test, validate:publica
 
-### Community 88 - "Community 88"
+### Community 87 - "Community 87"
 Cohesion: 0.40
 Nodes (5): 3.1 Oportunidades de optimización comercial, 3.2 Oportunidades de automatización operativa, 3.3 Oportunidades de inteligencia competitiva, 3.4 Oportunidades de IA aplicada, 3. Problemas de negocio que DataSeed puede atacar
 
-### Community 89 - "Community 89"
+### Community 88 - "Community 88"
 Cohesion: 0.40
 Nodes (5): 6.1 Estado actual del repositorio, 6.2 Arquitectura web actual, 6.3 Integraciones actuales/parciales, 6.4 Pendientes técnicos críticos, 6. Visión técnica
 
-### Community 90 - "Community 90"
+### Community 89 - "Community 89"
 Cohesion: 0.40
 Nodes (5): 8. Links y rutas relevantes, Documentación estratégica en repo, Documentación local generada, Páginas principales dentro del repo, Repositorio
 
-### Community 91 - "Community 91"
+### Community 90 - "Community 90"
 Cohesion: 0.40
 Nodes (5): 9.1 Prioridad 1: Validar Pública AI con mercado real, 9.2 Prioridad 2: Cerrar infraestructura comercial mínima, 9.3 Prioridad 3: Construir login solo si habilita valor de producto, 9.4 Prioridad 4: Crear una URL privada de validación, 9. Recomendaciones ejecutivas
 
-### Community 92 - "Community 92"
+### Community 91 - "Community 91"
 Cohesion: 0.50
 Nodes (3): Branch `agent-landing-updates`, Shared files reused by this branch, Unique files in this branch
 
-### Community 93 - "Community 93"
+### Community 92 - "Community 92"
 Cohesion: 0.50
 Nodes (3): Archivo DataSeed, Regla, Subdirectorios
 
-### Community 94 - "Community 94"
+### Community 93 - "Community 93"
 Cohesion: 0.83
 Nodes (3): setMode(), setStatus(), track()
 
-### Community 95 - "Community 95"
+### Community 94 - "Community 94"
 Cohesion: 0.50
 Nodes (3): Branch `docs/factory-protocols`, Shared files reused by this branch, Unique files in this branch
 
-### Community 96 - "Community 96"
+### Community 95 - "Community 95"
 Cohesion: 0.50
 Nodes (3): Branch `docs/hubspot-checkpoint-20260531`, Shared files reused by this branch, Unique files in this branch
 
-### Community 97 - "Community 97"
+### Community 96 - "Community 96"
 Cohesion: 0.50
 Nodes (3): Branch `vercel/install-vercel-speed-insights-ivlisy`, Shared files reused by this branch, Unique files in this branch
 
-### Community 98 - "Community 98"
+### Community 97 - "Community 97"
 Cohesion: 0.50
 Nodes (3): Branch `internal-agent-console`, Shared files reused by this branch, Unique files in this branch
 
-### Community 99 - "Community 99"
+### Community 98 - "Community 98"
 Cohesion: 0.50
 Nodes (3): Branch `feat/landing-pro-rebuild`, Shared files reused by this branch, Unique files in this branch
 
-### Community 100 - "Community 100"
+### Community 99 - "Community 99"
 Cohesion: 0.50
 Nodes (3): builds, routes, version
 
-### Community 101 - "Community 101"
+### Community 100 - "Community 100"
 Cohesion: 0.50
 Nodes (3): Branch `main`, Shared files reused by this branch, Unique files in this branch
 
-### Community 102 - "Community 102"
+### Community 101 - "Community 101"
 Cohesion: 0.50
 Nodes (3): Branch `feat/publica-platform`, Shared files reused by this branch, Unique files in this branch
 
-### Community 103 - "Community 103"
+### Community 102 - "Community 102"
 Cohesion: 0.50
 Nodes (3): 11. Conclusión, 1. Resumen ejecutivo, Reporte Ejecutivo para Stakeholders — DataSeed.cl
 
-### Community 104 - "Community 104"
+### Community 103 - "Community 103"
 Cohesion: 0.50
 Nodes (4): 10. Próximos pasos recomendados, Próxima semana, Próximas 24–48 horas, Próximos 30 días
 
-### Community 105 - "Community 105"
+### Community 104 - "Community 104"
 Cohesion: 0.50
 Nodes (4): 2.1 Tesis central, 2.2 Posicionamiento recomendado, 2.3 Narrativa ejecutiva, 2. Enfoque estratégico de la empresa
 
-### Community 106 - "Community 106"
+### Community 105 - "Community 105"
 Cohesion: 0.50
 Nodes (4): 7. Backlog actual, Completadas relevantes, Pendiente crítico, Pendiente infraestructura
 
-### Community 107 - "Community 107"
+### Community 106 - "Community 106"
 Cohesion: 0.83
 Nodes (3): setMode(), setStatus(), track()
 
-### Community 108 - "Community 108"
+### Community 107 - "Community 107"
 Cohesion: 0.50
 Nodes (3): Branch `feat/supabase-auth-production`, Shared files reused by this branch, Unique files in this branch
 
-### Community 109 - "Community 109"
+### Community 108 - "Community 108"
 Cohesion: 0.50
 Nodes (3): Branch `feat/task-tracking-system`, Shared files reused by this branch, Unique files in this branch
 
-### Community 113 - "Community 113"
+### Community 112 - "Community 112"
 Cohesion: 0.67
 Nodes (3): 2026-06-17 | Daniel Caignet, Detalle de tareas, Resumen 2026-06-18
 
-### Community 114 - "Community 114"
+### Community 113 - "Community 113"
 Cohesion: 0.67
 Nodes (3): 2026-06-18 11:17 - Daniel, Detalle de tareas, Resumen 2026-06-19
 
-### Community 115 - "Community 115"
+### Community 114 - "Community 114"
 Cohesion: 0.67
 Nodes (3): 2026-06-24 00:30 - Daniel Caignet, Detalle de tareas, Resumen 2026-06-24
 
-### Community 116 - "Community 116"
+### Community 115 - "Community 115"
 Cohesion: 0.67
 Nodes (3): 2026-06-25 11:47 - Daniel Caignet, Detalle de tareas, Resumen 2026-06-26
 
 ## Knowledge Gaps
-- **638 isolated node(s):** `daily-operations-wrapper.sh script`, `daily-operations.sh script`, `CompletedProcess`, `daily-operations-wrapper.sh script`, `daily-operations.sh script` (+633 more)
+- **640 isolated node(s):** `daily-operations-wrapper.sh script`, `daily-operations.sh script`, `CompletedProcess`, `daily-operations-wrapper.sh script`, `daily-operations.sh script` (+635 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **15 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Daily Summary - Demeter` connect `Community 22` to `Community 32`, `Community 33`, `Community 13`, `Community 45`, `Community 113`, `Community 114`, `Community 115`, `Community 20`, `Community 116`?**
+- **Why does `Daily Summary - Demeter` connect `Community 11` to `Community 32`, `Community 33`, `Community 45`, `Community 14`, `Community 112`, `Community 113`, `Community 114`, `Community 115`, `Community 21`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `Resumen 2026-06-17` connect `Community 13` to `Community 22`?**
+- **Why does `Resumen 2026-06-17` connect `Community 14` to `Community 11`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
-- **Why does `Reporte Ejecutivo para Stakeholders — DataSeed.cl` connect `Community 103` to `Community 89`, `Community 71`, `Community 104`, `Community 105`, `Community 106`, `Community 88`, `Community 57`, `Community 90`, `Community 91`?**
+- **Why does `Reporte Ejecutivo para Stakeholders — DataSeed.cl` connect `Community 102` to `Community 89`, `Community 71`, `Community 104`, `Community 103`, `Community 105`, `Community 87`, `Community 88`, `Community 57`, `Community 90`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `daily-operations-wrapper.sh script`, `daily-operations.sh script`, `CompletedProcess` to the rest of the system?**
-  _667 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _669 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.09025974025974026 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
