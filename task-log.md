@@ -7,6 +7,13 @@
 
 <!-- ENTRADAS -->
 
+## 2026-09-09 12:16 -03 (America/Santiago)
+- **Solicitud:** Daniel: hacer el merge de "cerrar sesión" (commit 7f80581 en feat/publica-buscador-conectado) y dar el comando VPS para el SOUL.md sin chown.
+- **Resultado:** Merge directo vía API → conflicto (main ya había evolucionado la UI: logout movido al rail lateral en los merges #45-54). Diagnóstico: main YA contenía el logout (`publicaLogoutButton` en rail + wiring en auth-guard.js con POST /api/auth/publica/logout), la plantilla supabase/email-templates/confirm-signup.html y el noindex; solo faltaba tests/ui/publica-buscador.test.js. Con OK de Daniel: test agregado a main con el contenido exacto de 7f80581 (commit 7cbbca1, 1008 bytes); los 6 asserts del test verificados contra main actual (todos PASAN). Comando VPS entregado: `cp /opt/data/profiles/daniel/SOUL.md /opt/data/SOUL.md` (root; conserva owner/permisos del destino existente, sin chown).
+- **Estado:** completada.
+- **Verificación:** PUT contents API → commit 7cbbca1 en main con content sha f726b2c9b8; test ejecutado por regex contra main: 6/6 checks PASAN; rama feat/publica-buscador-conectado queda 100% absorbida.
+- **Pendientes:** opcional: borrar rama feat/publica-buscador-conectado (absorbida) con OK de Daniel; SOUL raíz pendiente del cp del usuario.
+
 ## 2026-09-09 11:56 -03 (America/Santiago)
 - **Solicitud:** Daniel: estandarizar de forma global el método de auditoría del repo — consulta de grafo primero y luego solo diff para modificaciones del día.
 - **Resultado:** Sección "Auditoría de repositorio (2026-09-09, Daniel)" agregada al final de los 10 SOUL.md de perfiles (grafo local primero: `graphify query` + `multibranch_manifest.json`; API GitHub solo para diff del día vía placeholder `__github_api__`; gate de frescura ~36 h antes de confiar en el manifest). Skill `knowledge-graph-codebase-navigation` actualizado con el procedimiento completo y el caso que lo motivó (auditoría por API con el manifest ya fresco). Raíz `/opt/data/SOUL.md` sigue pendiente (root:root + protegido; requiere comando root).
