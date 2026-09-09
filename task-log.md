@@ -7,6 +7,13 @@
 
 <!-- ENTRADAS -->
 
+## 2026-09-09 11:56 -03 (America/Santiago)
+- **Solicitud:** Daniel: estandarizar de forma global el método de auditoría del repo — consulta de grafo primero y luego solo diff para modificaciones del día.
+- **Resultado:** Sección "Auditoría de repositorio (2026-09-09, Daniel)" agregada al final de los 10 SOUL.md de perfiles (grafo local primero: `graphify query` + `multibranch_manifest.json`; API GitHub solo para diff del día vía placeholder `__github_api__`; gate de frescura ~36 h antes de confiar en el manifest). Skill `knowledge-graph-codebase-navigation` actualizado con el procedimiento completo y el caso que lo motivó (auditoría por API con el manifest ya fresco). Raíz `/opt/data/SOUL.md` sigue pendiente (root:root + protegido; requiere comando root).
+- **Estado:** completada. (raíz ⏳ a la espera de comando root del usuario)
+- **Verificación:** 9 perfiles operativos con sha256 idéntico 9e99bdb390acfcae; demo con 71491f0ef1d37cb7; skill parcheado (1 reemplazo confirmado).
+- **Pendientes:** ejecutar como root: `cp /opt/data/profiles/daniel/SOUL.md /opt/data/SOUL.md && chown root:root /opt/data/SOUL.md && chmod 755 /opt/data/SOUL.md` (incluye reglas 09-07 + auditoría 09-09).
+
 ## 2026-09-09 11:52 -03 (America/Santiago)
 - **Solicitud:** Daniel: auditar el repo de GitHub y actualizarse sobre los nuevos cambios en producción y ramas.
 - **Resultado:** Auditoría read-only vía API GitHub (patrón broker, sin tocar tokens): 39 ramas; main (producción) avanzó fuerte entre 08-09 sep con merges #37-#54: buscador Pública conectado a backend real mp-api con sesión (paginación, orden reciente/cierre/monto, sonda de desfase auto-reparable), auth Google/signup/serverless consolidado, UI del buscador con persistencia de filtros, fit score autodeclarado y nav rail (Buscador/Dashboard/Favoritas/Agente); backups diarios OK. preview/buscador-licitaciones: divergida (45 ahead / 53 behind) — vitrina UI; incluye fix 9326219 (rutas /site/) y merges UI del 07 (#23-26). Sin mergear: 7f80581 en feat/publica-buscador-conectado (botón cerrar sesión + plantilla correo). feat/buscador-backend-real (7 ahead: bundle+CI/SDD+backend 5833eb5) probablemente ya absorbida por main vía PRs. PRs abiertos: solo 4 viejos de junio. Autores del periodo: matias805 (merges), "Tu Nombre" (commits de desarrollo, identidad git sin configurar), danielcaignet-dataseed, Dataseed (backups).
