@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-09-09 08:00:28 UTC
-- Generado America/Santiago: 2026-09-09 05:00:28 -03
+- Generado UTC: 2026-09-10 08:01:24 UTC
+- Generado America/Santiago: 2026-09-10 05:01:24 -03
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -14,8 +14,8 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - El `daily-summary.md` conserva el resumen diario y debe consultarse para tareas diarias, pendientes y bloqueos.
 - El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
-- Repo/branch de tracking: `/tmp/tmp.egLd0PwCrO/tracking-workspace` / `feat/task-tracking-system`.
-- Daily summary: `daily-summary.md` (221.8 KB, sha256 3189b771b9a069ef).
+- Repo/branch de tracking: `/tmp/tmp.O1bekj75KT/tracking-workspace` / `feat/task-tracking-system`.
+- Daily summary: `daily-summary.md` (227.5 KB, sha256 185c95d65af80caf).
 - Task log actual: `task-log.md` (213.0 B, sha256 1512ddaa0df19af1).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (missing, sha256 missing).
 
@@ -73,8 +73,8 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `2073a6cc3d6e` [active]
   - Nombre: Demeter Daily Operations (5:00 AM Chile)
   - Schedule: 0 8,9 * * *
-  - Next run UTC: 2026-09-09T09:00:00+00:00
-  - Last run UTC/status: 2026-09-08T09:00:02.948771+00:00 / ok
+  - Next run UTC: 2026-09-10T09:00:00+00:00
+  - Last run UTC/status: 2026-09-09T09:00:29.888501+00:00 / ok
   - Mode: no-agent
   - Script: daily-operations-wrapper.sh
 - `89e2d5c6bd6b` [paused]
@@ -87,8 +87,8 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `3d3a4d137152` [active]
   - Nombre: Auto-provision perfiles aislados (chats WhatsApp nuevos)
   - Schedule: */10 * * * *
-  - Next run UTC: 2026-09-09T08:10:00+00:00
-  - Last run UTC/status: 2026-09-09T08:00:19.254079+00:00 / ok
+  - Next run UTC: 2026-09-10T08:10:00+00:00
+  - Last run UTC/status: 2026-09-10T08:00:51.321135+00:00 / ok
   - Mode: no-agent
   - Script: provision_new_chats_wrapper.sh
 
@@ -224,9 +224,9 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 - `config.yaml`: 17.9 KB, sha256 ef6c90b16fad5b4f
 - `memories/MEMORY.md`: 5.7 KB, sha256 08c4921ac5efc883
 - `memories/USER.md`: 2.0 KB, sha256 a3b1e2cef2c04d62
-- `channel_directory.json`: 648.0 B, sha256 0153e6e95a27f64c
-- `gateway_state.json`: 731.0 B, sha256 c145e20e6621fbfc
-- `cron/jobs.json`: 5.6 KB, sha256 46b32c5d3c49cd38
+- `channel_directory.json`: 648.0 B, sha256 a3f539ebff4f7c3e
+- `gateway_state.json`: 731.0 B, sha256 61b25a13e3e5b28d
+- `cron/jobs.json`: 5.6 KB, sha256 1b331d574f719b61
 
 ## Grafo de conocimiento del proyecto (Graphify)
 
