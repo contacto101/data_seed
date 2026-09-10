@@ -1819,3 +1819,46 @@
 - **Pendientes:** ninguno. (El fix persiste en disco; si el contenedor se recrea y el home del perfil se regenera sin `.agent-browser/`, reaparece el síntoma.)
 
 ---
+
+## Resumen 2026-09-10
+
+**Generado:** 2026-09-10 05:00:59 -03
+
+| Estado | Cantidad |
+|--------|----------|
+| ✅ Finalizada exitosamente | 3 |
+| ❌ Finalizada con error | 0 |
+| 🔄 Activa | 0 |
+| ⏳ En espera de acción de usuario | 2 |
+
+### Detalle de tareas
+
+## 2026-09-09 12:16 -03 (America/Santiago)
+- **Solicitud:** Daniel: hacer el merge de "cerrar sesión" (commit 7f80581 en feat/publica-buscador-conectado) y dar el comando VPS para el SOUL.md sin chown.
+- **Resultado:** Merge directo vía API → conflicto (main ya había evolucionado la UI: logout movido al rail lateral en los merges #45-54). Diagnóstico: main YA contenía el logout (`publicaLogoutButton` en rail + wiring en auth-guard.js con POST /api/auth/publica/logout), la plantilla supabase/email-templates/confirm-signup.html y el noindex; solo faltaba tests/ui/publica-buscador.test.js. Con OK de Daniel: test agregado a main con el contenido exacto de 7f80581 (commit 7cbbca1, 1008 bytes); los 6 asserts del test verificados contra main actual (todos PASAN). Comando VPS entregado: `cp /opt/data/profiles/daniel/SOUL.md /opt/data/SOUL.md` (root; conserva owner/permisos del destino existente, sin chown).
+- **Estado:** completada.
+- **Verificación:** PUT contents API → commit 7cbbca1 en main con content sha f726b2c9b8; test ejecutado por regex contra main: 6/6 checks PASAN; rama feat/publica-buscador-conectado queda 100% absorbida.
+- **Pendientes:** opcional: borrar rama feat/publica-buscador-conectado (absorbida) con OK de Daniel; SOUL raíz pendiente del cp del usuario.
+
+## 2026-09-09 11:56 -03 (America/Santiago)
+- **Solicitud:** Daniel: estandarizar de forma global el método de auditoría del repo — consulta de grafo primero y luego solo diff para modificaciones del día.
+- **Resultado:** Sección "Auditoría de repositorio (2026-09-09, Daniel)" agregada al final de los 10 SOUL.md de perfiles (grafo local primero: `graphify query` + `multibranch_manifest.json`; API GitHub solo para diff del día vía placeholder `__github_api__`; gate de frescura ~36 h antes de confiar en el manifest). Skill `knowledge-graph-codebase-navigation` actualizado con el procedimiento completo y el caso que lo motivó (auditoría por API con el manifest ya fresco). Raíz `/opt/data/SOUL.md` sigue pendiente (root:root + protegido; requiere comando root).
+- **Estado:** completada. (raíz ⏳ a la espera de comando root del usuario)
+- **Verificación:** 9 perfiles operativos con sha256 idéntico 9e99bdb390acfcae; demo con 71491f0ef1d37cb7; skill parcheado (1 reemplazo confirmado).
+- **Pendientes:** ejecutar como root: `cp /opt/data/profiles/daniel/SOUL.md /opt/data/SOUL.md && chown root:root /opt/data/SOUL.md && chmod 755 /opt/data/SOUL.md` (incluye reglas 09-07 + auditoría 09-09).
+
+## 2026-09-09 11:52 -03 (America/Santiago)
+- **Solicitud:** Daniel: auditar el repo de GitHub y actualizarse sobre los nuevos cambios en producción y ramas.
+- **Resultado:** Auditoría read-only vía API GitHub (patrón broker, sin tocar tokens): 39 ramas; main (producción) avanzó fuerte entre 08-09 sep con merges #37-#54: buscador Pública conectado a backend real mp-api con sesión (paginación, orden reciente/cierre/monto, sonda de desfase auto-reparable), auth Google/signup/serverless consolidado, UI del buscador con persistencia de filtros, fit score autodeclarado y nav rail (Buscador/Dashboard/Favoritas/Agente); backups diarios OK. preview/buscador-licitaciones: divergida (45 ahead / 53 behind) — vitrina UI; incluye fix 9326219 (rutas /site/) y merges UI del 07 (#23-26). Sin mergear: 7f80581 en feat/publica-buscador-conectado (botón cerrar sesión + plantilla correo). feat/buscador-backend-real (7 ahead: bundle+CI/SDD+backend 5833eb5) probablemente ya absorbida por main vía PRs. PRs abiertos: solo 4 viejos de junio. Autores del periodo: matias805 (merges), "Tu Nombre" (commits de desarrollo, identidad git sin configurar), danielcaignet-dataseed, Dataseed (backups).
+- **Estado:** completada.
+- **Verificación:** GET /branches (39), /commits por rama, /compare main...rama (ahead/behind) y /pulls — HTTP 200 con el placeholder `__github_api__` resuelto por el Vault; commit 9326219 confirmado presente en preview.
+- **Pendientes:** ninguno (solo observación: 7f80581 candidato a merge; ramas fix/publica-* y feat/publica-self-serve-auth absorbidas, cerrables).
+
+## 2026-09-09 11:47 -03 (America/Santiago)
+- **Solicitud:** Daniel: aplicar como configuración global (todas las sesiones) dos reglas: (1) proceso diagnóstico → propuesta → ejecución con OK explícito para cambios en producción/ramas compartidas; (2) límite duro de máximo 2 intentos por vía ante fallo técnico, luego reportar y preguntar.
+- **Resultado:** Sección "Reglas globales de operación (2026-09-07, Daniel)" agregada al final de los 10 SOUL.md de perfiles (daniel, mati, wa5352437119, wa56955123259, wa56976406976, wa56992354255, g120363406765196561, g120363410342471725, g120363426338264382, dataseed-demo), conservando el contenido previo. El canónico raíz `/opt/data/SOUL.md` (perfil default, root:root, archivo de instrucciones protegido) NO pudo actualizarse: write bloqueado por protección + aprobación expirada; no se reintentó (regla 2).
+- **Estado:** ⏳ a la espera de autorización (10/11 archivos aplicados; raíz pendiente).
+- **Verificación:** 9 perfiles operativos con sha256 idéntico 68d2728ffb73ee11; demo con 43d1b2708bd8a533 (SOUL propio + sección nueva); raíz sigue en a0ec2e2fc124c69a (sin la sección).
+- **Pendientes:** aprobar actualización de /opt/data/SOUL.md (o ejecutar como root: `cp /opt/data/profiles/daniel/SOUL.md /opt/data/SOUL.md && chown root:root /opt/data/SOUL.md && chmod 755 /opt/data/SOUL.md`); las sesiones activas tomarán las reglas al abrir sesión nueva o /new (no se invalidó system_prompt en state.db sin autorización).
+
+---
