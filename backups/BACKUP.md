@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-09-15 08:00:17 UTC
-- Generado America/Santiago: 2026-09-15 05:00:17 -03
+- Generado UTC: 2026-09-16 08:00:29 UTC
+- Generado America/Santiago: 2026-09-16 05:00:29 -03
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -14,7 +14,7 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - El `daily-summary.md` conserva el resumen diario y debe consultarse para tareas diarias, pendientes y bloqueos.
 - El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
-- Repo/branch de tracking: `/tmp/tmp.VX9kaxVbti/tracking-workspace` / `feat/task-tracking-system`.
+- Repo/branch de tracking: `/tmp/tmp.vkble6DUjH/tracking-workspace` / `feat/task-tracking-system`.
 - Daily summary: `daily-summary.md` (229.9 KB, sha256 b9b7b8ce44e1396c).
 - Task log actual: `task-log.md` (213.0 B, sha256 1512ddaa0df19af1).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (missing, sha256 missing).
@@ -73,8 +73,8 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `2073a6cc3d6e` [active]
   - Nombre: Demeter Daily Operations (5:00 AM Chile)
   - Schedule: 0 8,9 * * *
-  - Next run UTC: 2026-09-15T09:00:00+00:00
-  - Last run UTC/status: 2026-09-14T09:00:14.210232+00:00 / ok
+  - Next run UTC: 2026-09-16T09:00:00+00:00
+  - Last run UTC/status: 2026-09-15T09:00:21.852398+00:00 / ok
   - Mode: no-agent
   - Script: daily-operations-wrapper.sh
 - `89e2d5c6bd6b` [paused]
@@ -87,13 +87,42 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `3d3a4d137152` [active]
   - Nombre: Auto-provision perfiles aislados (chats WhatsApp nuevos)
   - Schedule: */10 * * * *
-  - Next run UTC: 2026-09-15T08:10:00+00:00
-  - Last run UTC/status: 2026-09-15T08:00:09.276471+00:00 / ok
+  - Next run UTC: 2026-09-16T08:10:00+00:00
+  - Last run UTC/status: 2026-09-16T08:00:21.523856+00:00 / ok
   - Mode: no-agent
   - Script: provision_new_chats_wrapper.sh
 
 ## Skills instalados
 
+- `airtable` (.archive/airtable) — Airtable REST API via curl. Records CRUD, filters, upserts.
+- `architecture-diagram` (.archive/architecture-diagram) — Dark-themed SVG architecture/cloud/infra diagrams as HTML.
+- `arxiv` (.archive/arxiv) — Search arXiv papers by keyword, author, category, or ID.
+- `ascii-video` (.archive/ascii-video) — ASCII video: convert video/audio to colored ASCII MP4/GIF.
+- `baoyu-infographic` (.archive/baoyu-infographic) — Infographics: 21 layouts x 21 styles (信息图, 可视化).
+- `comfyui` (.archive/comfyui) — Generate images, video, and audio via diffusion workflows.
+- `design-md` (.archive/design-md) — Author/validate/export Google
+- `evaluating-llms-harness` (.archive/evaluating-llms-harness) — lm-eval-harness: benchmark LLMs (MMLU, GSM8K, etc.).
+- `excalidraw` (.archive/excalidraw) — Hand-drawn Excalidraw JSON diagrams (arch, flow, seq).
+- `github-issues` (.archive/github-issues) — Create, triage, label, assign GitHub issues via gh or REST.
+- `hermes-agent-skill-authoring` (.archive/hermes-agent-skill-authoring) — Author in-repo SKILL.md files: frontmatter and structure.
+- `huggingface-hub` (.archive/huggingface-hub) — HuggingFace hf CLI: search/download/upload models, datasets.
+- `llama-cpp` (.archive/llama-cpp) — llama.cpp local GGUF inference + HF Hub model discovery.
+- `llm-wiki` (.archive/llm-wiki) — Karpathy
+- `manim-video` (.archive/manim-video) — Manim CE animations: 3Blue1Brown math/algo videos.
+- `maps` (.archive/maps) — Geocode, POIs, routes, timezones via OpenStreetMap/OSRM.
+- `nano-pdf` (.archive/nano-pdf) — Edit text in existing PDFs via natural-language prompts.
+- `notion` (.archive/notion) — Notion API + ntn CLI: pages, databases, markdown, Workers.
+- `obsidian` (.archive/obsidian) — Read, search, create, and edit notes in the Obsidian vault.
+- `ocr-and-documents` (.archive/ocr-and-documents) — Extract text from PDFs/scans (pymupdf, marker-pdf).
+- `openhue` (.archive/openhue) — Control Philips Hue lights, scenes, rooms via OpenHue CLI.
+- `powerpoint` (.archive/powerpoint) — Create, read, edit .pptx decks with python-pptx.
+- `pretext` (.archive/pretext) — Build creative browser demos with DOM-free text layout.
+- `research-paper-writing` (.archive/research-paper-writing) — Write ML papers for NeurIPS/ICML/ICLR: design→submit.
+- `serving-llms-vllm` (.archive/serving-llms-vllm) — vLLM: high-throughput LLM serving, OpenAI API, quantization.
+- `touchdesigner-mcp` (.archive/touchdesigner-mcp) — Control TouchDesigner via twozero MCP.
+- `weights-and-biases` (.archive/weights-and-biases) — W&B: log ML experiments, sweeps, model registry, dashboards.
+- `xurl` (.archive/xurl) — X/Twitter via xurl CLI: raw post search, posting, DM, media.
+- `youtube-content` (.archive/youtube-content) — YouTube transcripts to summaries, threads, blogs.
 - `apple-notes` (apple/apple-notes) — Manage Apple Notes via memo CLI: create, search, edit.
 - `apple-reminders` (apple/apple-reminders) — Apple Reminders via remindctl: add, list, complete.
 - `findmy` (apple/findmy) — Track Apple devices/AirTags via FindMy.app on macOS.
@@ -107,24 +136,15 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `apollo-prospecting` (business-development/apollo-prospecting) — Apollo.io de solo lectura: buscar personas y empresas, enriquecer, leer el CRM. La API key la inyecta Agent Vault.
 - `b2b-sales-outreach` (business-development/b2b-sales-outreach) — Design concise, personalized B2B cold emails, DMs, follow-ups, and diagnostic/pilot invitations without unverified claims or premature promises.
 - `saas-product-packaging-chile` (business-development/saas-product-packaging-chile) — Use when planning DataSeed SaaS sales readiness in Chile.
-- `architecture-diagram` (creative/architecture-diagram) — Dark-themed SVG architecture/cloud/infra diagrams as HTML.
 - `ascii-art` (creative/ascii-art) — ASCII art: pyfiglet, cowsay, boxes, image-to-ascii.
-- `ascii-video` (creative/ascii-video) — ASCII video: convert video/audio to colored ASCII MP4/GIF.
-- `baoyu-infographic` (creative/baoyu-infographic) — Infographics: 21 layouts x 21 styles (信息图, 可视化).
 - `claude-design` (creative/claude-design) — Design one-off HTML artifacts (landing, deck, prototype).
-- `comfyui` (creative/comfyui) — Generate images, video, and audio via diffusion workflows.
-- `design-md` (creative/design-md) — Author/validate/export Google
-- `excalidraw` (creative/excalidraw) — Hand-drawn Excalidraw JSON diagrams (arch, flow, seq).
 - `humanizer` (creative/humanizer) — Humanize text: strip AI-isms and add real voice.
 - `impeccable` (creative/impeccable) — Safe Hermes adaptation of Impeccable: use with ui-ux-pro-max for production-grade frontend/UI design, critique, audit, polish, layout, typography, motion, accessibility, responsive behavior, UX copy, design systems, and anti-AI-slop review. Excludes upstream live-browser scripts, hooks, and auto-install commands that were blocked by Hermes security scan.
 - `lightweight-creative-prototyping` (creative/lightweight-creative-prototyping) — Use when producing quick creative artifacts without a full specialized pipeline: throwaway HTML mockups, Claude-designed pages, and terminal ASCII art.
-- `manim-video` (creative/manim-video) — Manim CE animations: 3Blue1Brown math/algo videos.
 - `p5js` (creative/p5js) — p5.js sketches: gen art, shaders, interactive, 3D.
 - `popular-web-designs` (creative/popular-web-designs) — 54 real design systems (Stripe, Linear, Vercel) as HTML/CSS.
-- `pretext` (creative/pretext) — Build creative browser demos with DOM-free text layout.
 - `sketch` (creative/sketch) — Throwaway HTML mockups: 2-3 design variants to compare.
 - `songwriting-and-ai-music` (creative/songwriting-and-ai-music) — Songwriting craft and Suno AI music prompts.
-- `touchdesigner-mcp` (creative/touchdesigner-mcp) — Control TouchDesigner via twozero MCP.
 - `interactive-data-dashboards` (data-science/interactive-data-dashboards) — Build interactive dashboards from MCP/API data.
 - `jupyter-live-kernel` (data-science/jupyter-live-kernel) — Iterative Python via live Jupyter kernel (hamelnb).
 - `mercado-publico-analytics` (data-science/mercado-publico-analytics) — Use when analyzing ChileCompra via mcp__mercado_publico MCP.
@@ -147,7 +167,6 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `github-auth` (github/github-auth) — GitHub auth setup: HTTPS tokens, SSH keys, gh CLI login.
 - `github-code-review` (github/github-code-review) — Review PRs: diffs, inline comments via gh or REST.
 - `github-issue-to-pr` (github/github-issue-to-pr) — Carry a GitHub issue to a verified PR with honest CI state.
-- `github-issues` (github/github-issues) — Create, triage, label, assign GitHub issues via gh or REST.
 - `github-pr-workflow` (github/github-pr-workflow) — GitHub PR lifecycle: branch, commit, open, CI, merge.
 - `github-repo-management` (github/github-repo-management) — Clone/create/fork repos; manage remotes, releases.
 - `hermes-desktop-plugins` (hermes-desktop-plugins) — Write desktop app plugins that add UI panes and commands.
@@ -157,50 +176,31 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `gif-search` (media/gif-search) — Search/download GIFs from Tenor via curl + jq.
 - `heartmula` (media/heartmula) — HeartMuLa: Suno-like song generation from lyrics + tags.
 - `songsee` (media/songsee) — Audio spectrograms/features (mel, chroma, MFCC) via CLI.
-- `youtube-content` (media/youtube-content) — YouTube transcripts to summaries, threads, blogs.
-- `evaluating-llms-harness` (mlops/evaluation/evaluating-llms-harness) — lm-eval-harness: benchmark LLMs (MMLU, GSM8K, etc.).
-- `weights-and-biases` (mlops/evaluation/weights-and-biases) — W&B: log ML experiments, sweeps, model registry, dashboards.
-- `huggingface-hub` (mlops/huggingface-hub) — HuggingFace hf CLI: search/download/upload models, datasets.
-- `llama-cpp` (mlops/inference/llama-cpp) — llama.cpp local GGUF inference + HF Hub model discovery.
 - `obliteratus` (mlops/inference/obliteratus) — OBLITERATUS: abliterate LLM refusals (diff-in-means).
-- `serving-llms-vllm` (mlops/inference/serving-llms-vllm) — vLLM: high-throughput LLM serving, OpenAI API, quantization.
 - `audiocraft-audio-generation` (mlops/models/audiocraft) — AudioCraft: MusicGen text-to-music, AudioGen text-to-sound.
 - `segment-anything-model` (mlops/models/segment-anything) — SAM: zero-shot image segmentation via points, boxes, masks.
-- `obsidian` (note-taking/obsidian) — Read, search, create, and edit notes in the Obsidian vault.
-- `airtable` (productivity/airtable) — Airtable REST API via curl. Records CRUD, filters, upserts.
 - `apple-platform-automation` (productivity/apple-platform-automation) — Use when automating Apple/macOS apps and services from Hermes: Notes, Reminders, Messages, Find My, and visual computer-use workflows.
 - `business-reporting-systems` (productivity/business-reporting-systems) — Design, standardize, publish, validate, and automate cross-functional reporting systems for companies and startups. Use for area reports, executive status packs, KPI schemas, RAG health reporting, synthetic samples, and report folders in shared document systems.
 - `cross-functional-business-reporting` (productivity/cross-functional-business-reporting) — Design, create, validate, and automate standardized reporting systems across business or startup areas, including Drive folder structures, Markdown guides, editable document deliverables, KPI/RAG conventions, and cross-area dependencies.
 - `document-to-action-items` (productivity/document-to-action-items) — Extract cited obligations, deadlines, tasks from documents.
 - `docx` (productivity/docx) — Create, read, edit, template, and review Word .docx files.
 - `google-workspace` (productivity/google-workspace) — Gmail, Calendar, Drive, Docs, Sheets via gws CLI or Python.
-- `maps` (productivity/maps) — Geocode, POIs, routes, timezones via OpenStreetMap/OSRM.
 - `meeting-action-items` (productivity/meeting-action-items) — Turn meeting notes into cited decisions, owners, tickets.
-- `nano-pdf` (productivity/nano-pdf) — Edit text in existing PDFs via natural-language prompts.
-- `notion` (productivity/notion) — Notion API + ntn CLI: pages, databases, markdown, Workers.
-- `ocr-and-documents` (productivity/ocr-and-documents) — Extract text from PDFs/scans (pymupdf, marker-pdf).
 - `pdf` (productivity/pdf) — Create, read, merge, fill, and secure PDF files.
 - `petdex` (productivity/petdex) — Install and select animated petdex mascots for Hermes.
-- `powerpoint` (productivity/powerpoint) — Create, read, edit .pptx decks with python-pptx.
 - `product-price-monitor` (productivity/product-price-monitor) — Watch product, flight, or listing prices; alert on target.
 - `teams-meeting-pipeline` (productivity/teams-meeting-pipeline) — Teams meeting summaries, job replay, Graph subscriptions.
 - `tui-widgets` (productivity/tui-widgets) — Author live widget apps for the Hermes TUI dock.
 - `weekly-review-planning` (productivity/weekly-review-planning) — Weekly reset: commitments, stalled work, next-week plan.
 - `xlsx` (productivity/xlsx) — Create, read, edit Excel .xlsx workbooks and CSVs.
 - `godmode` (red-teaming/godmode) — Jailbreak LLMs: Parseltongue, GODMODE, ULTRAPLINIAN.
-- `arxiv` (research/arxiv) — Search arXiv papers by keyword, author, category, or ID.
 - `blogwatcher` (research/blogwatcher) — Monitor blogs and RSS/Atom feeds via blogwatcher-cli tool.
 - `competitor-news-monitor` (research/competitor-news-monitor) — Watch named companies for material news; cited digests.
 - `grounded-citations` (research/grounded-citations) — Ground answers and documents in cited, verifiable sources.
-- `llm-wiki` (research/llm-wiki) — Karpathy
 - `polymarket` (research/polymarket) — Query Polymarket: markets, prices, orderbooks, history.
-- `research-paper-writing` (research/research-paper-writing) — Write ML papers for NeurIPS/ICML/ICLR: design→submit.
 - `web-technology-fingerprinting` (research/web-technology-fingerprinting) — Detect a website
-- `openhue` (smart-home/openhue) — Control Philips Hue lights, scenes, rooms via OpenHue CLI.
-- `xurl` (social-media/xurl) — X/Twitter via xurl CLI: raw post search, posting, DM, media.
 - `audit` (software-development/audit) — Use when auditing a website
 - `dogfood` (software-development/dogfood) — Exploratory QA of web apps: find bugs, evidence, reports.
-- `hermes-agent-skill-authoring` (software-development/hermes-agent-skill-authoring) — Author in-repo SKILL.md files: frontmatter and structure.
 - `inspecting-hermes-desktop-dom` (software-development/inspecting-hermes-desktop-dom) — Read the live Hermes desktop DOM/CSS over CDP.
 - `knowledge-graph-codebase-navigation` (software-development/knowledge-graph-codebase-navigation) — Build and use local knowledge graphs for codebase/navigation tasks, especially via Graphify, MCP, and agent skills.
 - `live-documentation-mcp` (software-development/live-documentation-mcp) — Configure and use live documentation sources such as Context7 for coding agents via MCP or CLI fallback.
@@ -225,9 +225,9 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 - `config.yaml`: 19.0 KB, sha256 8c17885a87b390b5
 - `memories/MEMORY.md`: 6.9 KB, sha256 30242d90f2abeb40
 - `memories/USER.md`: 2.0 KB, sha256 a3b1e2cef2c04d62
-- `channel_directory.json`: 648.0 B, sha256 3de7cb7be3614d0f
+- `channel_directory.json`: 648.0 B, sha256 9291fe4487dd6e89
 - `gateway_state.json`: 731.0 B, sha256 feb59e3a9a7485b4
-- `cron/jobs.json`: 5.6 KB, sha256 6a235289d40b5b18
+- `cron/jobs.json`: 5.6 KB, sha256 c7844baaa864400d
 
 ## Grafo de conocimiento del proyecto (Graphify)
 
