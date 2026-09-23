@@ -13,3 +13,10 @@
 - **Estado:** a la espera de autorización.
 - **Verificación:** bridge.log: último evento 2026-09-18 22:31:55 -03, luego bucle "Logged out" (1.246 ocurrencias); gateway.log: "Bridge process died (exit code 1)" en bucle desde 2026-09-19 01:31 UTC; `curl http://127.0.0.1:3000/health` → connection refused; gateway s6 "up (pid 158)"; api_server 8642 operativo (lo sirve el gateway; se pausa durante la reparación).
 - **Pendientes:** (1) autorización para preparar la re-vinculación (backup + stop gateway + limpieza de sesión); (2) escaneo del QR con el teléfono del bot; (3) reactivar gateway y verificar bridge "connected" + mensaje de prueba; (4) registrar el resultado final.
+
+## 2026-09-23 08:40 -03 (America/Santiago)
+- **Solicitud:** Verificar la conexión de WhatsApp tras la re-vinculación del dispositivo, porque el bot aún no respondía.
+- **Resultado:** Re-vinculación exitosa y canal operativo. La sesión nueva quedó escrita a las 08:31 (hora Chile) y el gateway reconectó el bridge en su ciclo de reintento a las 08:34:45. Mensaje entrante de Daniel ("Hola", 08:34:51) procesado y respondido: respuesta de 271 caracteres enviada a las 08:35:05. Nota operativa: tras escanear el QR el bridge no se levanta de inmediato; el gateway reintenta cada ~5 minutos (hoy la conexión llegó en el reintento siguiente). Pendientes previos (1)-(3) cubiertos por la re-vinculación.
+- **Estado:** completada.
+- **Verificación:** `/health` del bridge → `{"status":"connected"}`; gateway.log: `✓ whatsapp reconnected successfully` (attempt 1247, 11:34:45 UTC) + `inbound message ... msg='Hola'` + `Sending response (271 chars) to 104544402972808@lid`; `session/creds.json` renovado 11:31:09 UTC; sin errores en gateway.log posteriores a la reconexión.
+- **Pendientes:** Ninguno. Se sugiere confirmar la recepción de la respuesta del lado de WhatsApp.
