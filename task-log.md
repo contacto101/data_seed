@@ -7,6 +7,13 @@
 
 <!-- ENTRADAS -->
 
+## 2026-09-24 02:21 -03 (America/Santiago)
+- **Solicitud:** Mati: entregar 3 contactos (empresa, nombre y correo) para prospección.
+- **Resultado:** Preselección entregada a nivel de búsqueda (0 créditos): 3 candidatos ICP (rubros ingeniería, seguros y minería) con empresa, cargo y disponibilidad de correo señalada; nombres parciales (ofuscados por Apollo) y sin correos en claro. La entrega de correos quedó detenida: por regla vigente requieren pedido explícito de Daniel y consumo de créditos (reveal), y el flujo de entrega con correos sigue pendiente de definición con Daniel. Sin llamadas de enriquecimiento ni reveal; sin datos personales volcados a registros ni archivos.
+- **Estado:** a la espera de autorización (entrega de correos; la preselección quedó entregada).
+- **Verificación:** /mixed_people/api_search y lectura del CRM ejecutadas (HTTP 200, 0 créditos); sin match/reveal; sin volcado de datos personales a tasklog, archivos, memoria ni repo.
+- **Pendientes:** OK explícito de Daniel para completar nombres y correos (con aviso de costo en créditos antes de ejecutar).
+
 ## 2026-09-24 02:07 -03 (America/Santiago)
 - **Solicitud:** Mati: confirmar si la conexión con Apollo.io está operativa.
 - **Resultado:** Conexión activa: `GET /auth/health` devolvió `{"healthy":true,"is_logged_in":true}` (HTTP 200) con la API key inyectada por Agent Vault. La prueba funcional complementaria (búsqueda de personas, 0 créditos) quedó bloqueada por el sistema de aprobaciones del terminal y no se ejecutó (sin reintentos).
