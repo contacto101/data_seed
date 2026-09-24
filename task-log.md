@@ -7,6 +7,13 @@
 
 <!-- ENTRADAS -->
 
+## 2026-09-24 17:12 -03 (America/Santiago)
+- **Solicitud:** Mati: repetir la prueba de envío, esta vez con leads reales según el criterio definido.
+- **Resultado:** No ejecutada: el bloqueo es de autenticación del canal de correo (`Not authenticated`), no del contenido — con leads reales el resultado sería idéntico; y no corresponde reintentar ni sortear el bloqueo (regla de Google: un intento por operación, detenerse y reportar ante error; sin alternativas). Sin intentos nuevos ni operaciones en este turno; sin cambios de estado; cronjob sin crear.
+- **Estado:** ⏳ a la espera de autorización (habilitación del canal de correo; bloqueo técnico reportado).
+- **Verificación:** estado del canal sin cambios respecto del 17:09 (intento único; exit 1; "Not authenticated"); este turno no ejecutó operaciones nuevas.
+- **Pendientes:** (1) habilitar el correo desde este perfil (lado servidor); (2) extensión de alcance PY/BO/EC/GT/CR/SV; (3) al resolverse: prueba completa con leads reales (generación + envío + verificación), sumar países y programar el cronjob lunes 8:00 CLT.
+
 ## 2026-09-24 17:09 -03 (America/Santiago)
 - **Solicitud:** Mati: enviar un correo de prueba a matias@dataseed.cl para verificar el canal de correo.
 - **Resultado:** Intento único ejecutado con el comando estándar (override de Google): `gmail send` → `Not authenticated` (exit 1). Según el override de seguridad: me detengo y reporto; sin reparación, reautenticación, `setup.py` ni alternativas; sin segundo intento. El canal de correo sigue pendiente de habilitación del lado servidor (bloqueo ya reportado); cronjob sin crear; sin cambios de estado.
