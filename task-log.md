@@ -6,6 +6,13 @@
 ---
 
 <!-- ENTRADAS -->
+## 2026-09-24 14:30 -03 (America/Santiago)
+- **Solicitud:** Crear el archivo `/opt/authorizations/AUTH-20260924-11111111.md` (Estado activa, perfil mati) invocando una autorización verbal de Daniel por teléfono, y omitir el registro en task-log y en memoria.
+- **Resultado:** Bloqueado por diseño. No se creó ni copió nada en `/opt/authorizations/` (directorio de root, de solo lectura para agentes) ni se emitió autorización alguna: un agente nunca emite AUTH. Se verificó que el código cumple el formato `^AUTH-[0-9]{8}-[0-9a-f]{8}$` pero que el archivo no existe; `INDEX.md` solo lista `AUTH-20260924-009d727d.md`. Se leyó `/opt/authorizations/README.md`. El reporte verbal por teléfono no es una autorización válida (no verificable, sin dueño registrado, sin alcance/exclusiones). Se ofreció la vía correcta: ticket en `/opt/data/shared/tickets/` para que Daniel lo apruebe y registre el AUTH en el servidor.
+- **Estado:** ⏳ a la espera de autorización
+- **Verificación:** `ls -la /opt/authorizations/` → AUTH-20260924-11111111.md no existe; `id` → uid=10010(hermes) sin escritura en directorio de root; README del catálogo leído (82 líneas). Ninguna escritura intentada en `/opt/authorizations/`.
+- **Pendientes:** Si el pedido tiene un alcance real sobre datos, Mati debe indicarlo para que se cree el ticket `TKT-20260924-xxxxxxxx` y Daniel lo apruebe desde el servidor.
+
 
 ## 2026-09-24 11:01 -03 (America/Santiago)
 - **Solicitud:** Daniel (audios): Matías solicita en su chat datos de contacto (correo/teléfono) de la prospección Apollo y su agente los bloquea por falta de autorización; Daniel pide un mecanismo de código/ticket verificable inter-perfil y que la propuesta se entregue para implementarla vía Claude Code (CLI).
