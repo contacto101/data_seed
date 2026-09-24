@@ -7,6 +7,13 @@
 
 <!-- ENTRADAS -->
 
+## 2026-09-24 17:09 -03 (America/Santiago)
+- **Solicitud:** Mati: enviar un correo de prueba a matias@dataseed.cl para verificar el canal de correo.
+- **Resultado:** Intento único ejecutado con el comando estándar (override de Google): `gmail send` → `Not authenticated` (exit 1). Según el override de seguridad: me detengo y reporto; sin reparación, reautenticación, `setup.py` ni alternativas; sin segundo intento. El canal de correo sigue pendiente de habilitación del lado servidor (bloqueo ya reportado); cronjob sin crear; sin cambios de estado.
+- **Estado:** ⏳ a la espera de autorización (habilitación del canal de correo; bloqueo técnico reportado).
+- **Verificación:** operación `gmail send` (prueba de canal, sin datos); exit 1; mensaje saneado: "Not authenticated. Run the setup script first". Un solo intento por operación (regla respetada); la prueba NO se envió.
+- **Pendientes:** (1) habilitar el correo desde este perfil (lado servidor/ops); (2) extensión de alcance PY/BO/EC/GT/CR/SV; (3) al resolverse: repetir prueba de canal, sumar países al motor y programar/verificar el cronjob lunes 8:00 CLT.
+
 ## 2026-09-24 17:01 -03 (America/Santiago)
 - **Solicitud:** Mati: agregar Ecuador, Guatemala, Costa Rica y El Salvador al pedido del ticket TKT-20260924-d224b5e4.
 - **Resultado:** Ticket actualizado: el pedido queda con 12 países (6 autorizados por AUTH-20260924-f3e7bf9b — CL/AR/PE/UY/CO/MX — y 6 pendientes de extensión de alcance: PY/BO/EC/GT/CR/SV). Sondeo en vivo confirmó disponibilidad ICP: Ecuador 2496, Guatemala 1268, Costa Rica 1249, El Salvador 714 (0 créditos). Sin cambios en el estado del montaje: envío de correo pendiente de habilitación (reportado) y cronjob sin crear.
