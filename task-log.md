@@ -7,6 +7,13 @@
 
 <!-- ENTRADAS -->
 
+## 2026-09-24 00:55 -03 (America/Santiago)
+- **Solicitud:** Daniel: búsqueda por EMPRESA para saber cuántas se ajustan al ICP completo (Apollo).
+- **Resultado:** Embudo de empresas ejecutado (2 requests, 2 créditos): A) Chile + 51-500 empleados → **5.883** empresas; B) + industrias ICP (distribución, importación, logística, transporte, retail, e-commerce, manufactura, mayorista) → **2.699** empresas (108 páginas de 25). Export de trabajo: `ICP_DataSeed_Apollo_empresas_p1.csv` (página 1). Nota: la respuesta de búsqueda de empresas llega en modo parcial (campos industry/employees vacíos por plan; el filtro sí aplica — los totales cambian).
+- **Estado:** completada.
+- **Verificación:** pagination.total_entries = 5883 (A) y 2699 (B) vía /mixed_companies/search; CSV con 8 filas (página 1); JSON en tmp.
+- **Pendientes:** opciones abiertas (con costo, requieren OK): desglose por segmento ICP (~1 crédito por segmento), exportar más páginas de las 2.699 (1 crédito/página), enriquecer empresas (1 crédito c/u, estimar antes). Sin gastos adicionales sin autorización.
+
 ## 2026-09-24 00:35 -03 (America/Santiago)
 - **Solicitud:** Daniel envía el documento "ICP Ideal Dataseed" (PDF) para prospección con Apollo.
 - **Resultado:** ICP traducido a filtros Apollo y primera búsqueda ejecutada: 10 títulos compradores (GG, Finanzas, Operaciones, CIO/CTO, TI, BI, Control de Gestión) + Chile → 35.441 personas; añadiendo tamaño ICP (51-500 empleados) → 8.150 personas. Nombres ofuscados por Apollo (sin PII en claro), flags has_email incluidos. Export de trabajo: `ICP_DataSeed_Apollo_p1.csv` (25 filas, página 1). Costo: 0 créditos (mixed_people/api_search).
