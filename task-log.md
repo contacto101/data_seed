@@ -6,6 +6,13 @@
 ---
 
 <!-- ENTRADAS -->
+## 2026-09-24 16:30 -03 (America/Santiago)
+- **Solicitud:** Mati: automatización semanal (lunes 8:00) de envío por correo a matias@dataseed.cl de 5 leads ICP (empresa, país, nombre, cargo y correo) con búsquedas Apollo ampliadas a Chile, Argentina, Perú, Uruguay, Colombia y México.
+- **Resultado:** Diagnóstico completado: búsquedas Apollo disponibles en los 6 países (0 créditos; totales de personas: CL 8150, AR 7369, PE 5514, UY 920, CO 5981, MX 15562); correo saliente viable (google_api.py; matias@dataseed.cl ya habilitado en allowlist); programación lunes 8:00 Chile con el manejo verano/invierno de la automatización diaria. Montaje bloqueado: el flujo excede el AUTH vigente (prospección Chile, vence 2026-10-01) y los correos de leads solo pueden incluirse ya revelados (reveals nuevos: créditos, pedido explícito aparte). Ticket TKT-20260924-d224b5e4 creado para aprobación de Daniel. Sin automatización montada, sin correos enviados, sin gastos.
+- **Estado:** ⏳ a la espera de autorización.
+- **Verificación:** sondeo en vivo `/mixed_people/api_search` por país (HTTP 200, 0 créditos); `google_api.py --help` OK; ticket en `/opt/data/shared/tickets/TKT-20260924-d224b5e4.md`; sin datos de terceros volcados al registro.
+- **Pendientes:** aprobación de Daniel → AUTH con alcance definitivo → montar y verificar el cronjob (lunes 8:00, hora Chile) y prueba de envío.
+
 ## 2026-09-24 15:29 -03 (America/Santiago)
 - **Solicitud:** Mati: entrega de 3 contactos ICP (nombre, empresa y correo) desde la prospección Apollo ICP DataSeed.
 - **Resultado:** Uso de AUTH-20260924-5828a23a (ticket TKT-20260924-db3e7667): entrega realizada de 3 contactos del ICP con correos ya revelados al equipo. Sin reveals nuevos (sin costo de revelado) ni teléfonos; los datos se entregaron solo a Mati en el chat (uso interno), sin volcado a archivos, tasklog, memoria ni repo.
