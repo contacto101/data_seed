@@ -6,6 +6,13 @@
 ---
 
 <!-- ENTRADAS -->
+## 2026-09-24 15:23 -03 (America/Santiago)
+- **Solicitud:** Mati: revisar el ticket TKT-20260924-db3e7667 e informar el estado de la autorización y su alcance.
+- **Resultado:** AUTH-20260924-5828a23a verificada (vigente y aplicable al pedido): alcance correos ya revelados al equipo y teléfonos de empresa de la prospección Apollo ICP DataSeed, uso interno del equipo; exclusiones: reveals nuevos (créditos), teléfonos personales, datos fuera de la prospección y terceros. Se informó a Mati sin entregar datos de contacto; la entrega queda a pedido explícito. La AUTH-20260924-009d727d (prueba técnica, revocada) no se usó.
+- **Estado:** completada.
+- **Verificación:** Código conforme a `^AUTH-[0-9]{8}-[0-9a-f]{8}$`; `/opt/authorizations/AUTH-20260924-5828a23a.md` con `Estado: activa`; perfil del entorno (`$HERMES_HOME=/opt/data/profiles/mati` → `mati`) coincide con `Otorgada a (perfil)`; `date -u` 2026-09-24T18:23Z < `Vence (UTC)` 2026-10-01T17:30Z; `INDEX.md` consistente. Sin datos de contacto volcados al registro.
+- **Pendientes:** Entrega de los datos cubiertos, a pedido explícito de Mati; sin reveals nuevos de Apollo.
+
 ## 2026-09-24 14:31 -03 (America/Santiago)
 - **Solicitud:** Mati: revisar el ticket TKT-20260924-db3e7667 e informar si tiene autorización y qué cubre exactamente, sin entregar datos de contacto todavía.
 - **Resultado:** Verificación de `AUTH-20260924-5828a23a`: Estado activa, Otorgada a (perfil) mati, Ticket TKT-20260924-db3e7667, dentro de vigencia. Alcance: datos de contacto de la prospección Apollo ICP DataSeed (correos ya revelados al equipo y teléfonos de empresa) para uso comercial interno. Exclusiones: reveals nuevos de Apollo (créditos), teléfonos personales, datos fuera de esa prospección y compartir con terceros. Se informó alcance y exclusiones sin entregar ningún dato de contacto (pedido explícito del solicitante). La AUTH-20260924-009d727d figura revocada y no se usó.
