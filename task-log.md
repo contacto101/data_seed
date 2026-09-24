@@ -7,6 +7,13 @@
 
 <!-- ENTRADAS -->
 
+## 2026-09-24 02:07 -03 (America/Santiago)
+- **Solicitud:** Mati: confirmar si la conexión con Apollo.io está operativa.
+- **Resultado:** Conexión activa: `GET /auth/health` devolvió `{"healthy":true,"is_logged_in":true}` (HTTP 200) con la API key inyectada por Agent Vault. La prueba funcional complementaria (búsqueda de personas, 0 créditos) quedó bloqueada por el sistema de aprobaciones del terminal y no se ejecutó (sin reintentos).
+- **Estado:** completada.
+- **Verificación:** Health check en vivo contra `https://api.apollo.io/api/v1/auth/health` → HTTP 200, `healthy:true`, `is_logged_in:true`.
+- **Pendientes:** Ninguno operativo; opcional con autorización: búsqueda de prueba (0 créditos).
+
 ## 2026-09-24 02:05 -03 (America/Santiago)
 - **Solicitud:** Daniel: confirmar qué datos trae el enriquecimiento de PERSONA en Apollo (¿correo y teléfono?).
 - **Resultado:** Prueba ejecutada (`people/match`, 1 persona de la lista): devuelve perfil completo — nombre sin ofuscar, headline, LinkedIn/Twitter/foto, historial laboral (8 cargos), seniority, timezone — y **el `email` cuando ya está revelado para el equipo** (`revealed_for_current_team: true`, sin costo nuevo de revelado). Teléfono de persona sigue fuera de alcance (requiere webhook). Aprendizaje documentado en la skill `apollo-prospecting` (punto 6) y propagado a los 10 perfiles (hash 95d5de472cc24592). Sin volcado de correos a archivos (excluidos del JSON de trabajo por regla de PII).
