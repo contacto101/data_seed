@@ -7,6 +7,13 @@
 
 <!-- ENTRADAS -->
 
+## 2026-09-24 00:35 -03 (America/Santiago)
+- **Solicitud:** Daniel envía el documento "ICP Ideal Dataseed" (PDF) para prospección con Apollo.
+- **Resultado:** ICP traducido a filtros Apollo y primera búsqueda ejecutada: 10 títulos compradores (GG, Finanzas, Operaciones, CIO/CTO, TI, BI, Control de Gestión) + Chile → 35.441 personas; añadiendo tamaño ICP (51-500 empleados) → 8.150 personas. Nombres ofuscados por Apollo (sin PII en claro), flags has_email incluidos. Export de trabajo: `ICP_DataSeed_Apollo_p1.csv` (25 filas, página 1). Costo: 0 créditos (mixed_people/api_search).
+- **Estado:** completada. (siguientes fases de pago ⏳ a la espera de elección de Daniel)
+- **Verificación:** HTTP 200 con total_entries 35441 y 8150; CSV generado con 25 filas; conexión Apollo ya verificada (health + búsquedas).
+- **Pendientes:** definir siguiente paso: búsqueda de empresas (1 crédito/página) o enriquecimiento (1 crédito/empresa, estimar antes); refinamiento por segmentos ICP (distribución/logística/retail/manufactura/servicios B2B) disponible gratis; emails/teléfonos requieren reveal (créditos, solo con pedido explícito de Daniel).
+
 ## 2026-09-23 08:25 -03 (America/Santiago)
 - **Solicitud:** Diagnosticar por qué la comunicación de WhatsApp dejó de funcionar.
 - **Resultado:** Causa raíz identificada: la sesión de WhatsApp del bot quedó cerrada/desvinculada a nivel servidor el 18-09-2026 ~22:31 (hora Chile). Desde entonces el bridge no puede autenticarse ("Logged out. Delete session and restart to re-authenticate.") y el gateway reintenta sin éxito cada ~5 minutos (≈1.246 intentos fallidos acumulados). Canal caído de punta a punta: sin mensajes procesados desde el 18-09 22:31. Recuperación definida (re-vinculación por QR: backup de sesión → detener gateway → limpiar sesión → escanear QR nuevo → reactivar gateway), pendiente de autorización del usuario y del escaneo del QR con el teléfono del bot.
