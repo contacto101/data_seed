@@ -6,6 +6,13 @@
 ---
 
 <!-- ENTRADAS -->
+## 2026-09-24 15:29 -03 (America/Santiago)
+- **Solicitud:** Mati: entrega de 3 contactos ICP (nombre, empresa y correo) desde la prospección Apollo ICP DataSeed.
+- **Resultado:** Uso de AUTH-20260924-5828a23a (ticket TKT-20260924-db3e7667): entrega realizada de 3 contactos del ICP con correos ya revelados al equipo. Sin reveals nuevos (sin costo de revelado) ni teléfonos; los datos se entregaron solo a Mati en el chat (uso interno), sin volcado a archivos, tasklog, memoria ni repo.
+- **Estado:** completada.
+- **Verificación:** AUTH revalidada al momento de uso (activa; perfil del entorno `mati`; `date -u` 2026-09-24T18:28Z < `Vence (UTC)` 2026-10-01T17:30Z); extracción con `/mixed_people/api_search` (0 créditos) + 3 llamadas `people/match` básicas sin flags de reveal; correos con `revealed_for_current_team: true`.
+- **Pendientes:** Ninguno para esta entrega (revelados adicionales requieren autorización aparte; consumen créditos).
+
 ## 2026-09-24 15:23 -03 (America/Santiago)
 - **Solicitud:** Mati: revisar el ticket TKT-20260924-db3e7667 e informar el estado de la autorización y su alcance.
 - **Resultado:** AUTH-20260924-5828a23a verificada (vigente y aplicable al pedido): alcance correos ya revelados al equipo y teléfonos de empresa de la prospección Apollo ICP DataSeed, uso interno del equipo; exclusiones: reveals nuevos (créditos), teléfonos personales, datos fuera de la prospección y terceros. Se informó a Mati sin entregar datos de contacto; la entrega queda a pedido explícito. La AUTH-20260924-009d727d (prueba técnica, revocada) no se usó.
