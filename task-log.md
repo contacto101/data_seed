@@ -6,6 +6,14 @@
 ---
 
 <!-- ENTRADAS -->
+
+## 2026-09-24 16:45 -03 (America/Santiago)
+- **Solicitud:** Daniel: retomar tras la implementación del sistema de tickets/autorizaciones inter-perfil.
+- **Resultado:** Sistema implementado y verificado (versión más estricta que la propuesta, coordinada por Daniel vía Claude Code): registro en `/opt/authorizations/` (root, agentes solo-lectura; imposible falsificar desde un agente), catálogo v1 (bloqueo por defecto), INDEX.md, tickets en `/opt/data/shared/tickets/`, regla "Tickets y autorizaciones entre perfiles" activa en los SOULs (incluido el del perfil daniel). Estado de autorizaciones: AUTH-...009d727d (prueba e2e) revocada ✓; AUTH-...5828a23a (contactos prospección Chile, ticket db3e7667) revocada y reemplazada; AUTH-...f3e7bf9b ACTIVA hasta 2027-09-24: prospección ICP multi-país (CL/AR/PE/UY/CO/MX), búsquedas sin créditos + datos ya revelados + entrega semanal de leads (lunes 8:00) a matias@dataseed.cl desde demeter@dataseed.cl. Tickets abiertos: db3e7667 (absorbido por el AUTH nuevo) y d224b5e4 (semanal, cubierto por el AUTH activo).
+- **Estado:** completada. (verificación de estado; sin acciones sobre datos)
+- **Verificación:** lectura directa de `/opt/authorizations/` (README, INDEX, 3 AUTHs) y de los 2 tickets; regla presente en SOUL (líneas 72-84); sin copia de datos personales en este registro.
+- **Pendientes:** (1) confirmar si la entrega semanal automatizada (lunes 8:00 → matias@dataseed.cl) ya está implementada o queda por montar; (2) definir cierre del ticket db3e7667 (absorbido) — decisión de Daniel/flujo.
+
 ## 2026-09-24 16:30 -03 (America/Santiago)
 - **Solicitud:** Mati: automatización semanal (lunes 8:00) de envío por correo a matias@dataseed.cl de 5 leads ICP (empresa, país, nombre, cargo y correo) con búsquedas Apollo ampliadas a Chile, Argentina, Perú, Uruguay, Colombia y México.
 - **Resultado:** Diagnóstico completado: búsquedas Apollo disponibles en los 6 países (0 créditos; totales de personas: CL 8150, AR 7369, PE 5514, UY 920, CO 5981, MX 15562); correo saliente viable (google_api.py; matias@dataseed.cl ya habilitado en allowlist); programación lunes 8:00 Chile con el manejo verano/invierno de la automatización diaria. Montaje bloqueado: el flujo excede el AUTH vigente (prospección Chile, vence 2026-10-01) y los correos de leads solo pueden incluirse ya revelados (reveals nuevos: créditos, pedido explícito aparte). Ticket TKT-20260924-d224b5e4 creado para aprobación de Daniel. Sin automatización montada, sin correos enviados, sin gastos.
