@@ -7,6 +7,13 @@
 
 <!-- ENTRADAS -->
 
+## 2026-09-24 16:58 -03 (America/Santiago)
+- **Solicitud:** Mati: agregar Paraguay y Bolivia al pedido del ticket TKT-20260924-d224b5e4; continuación del montaje de la entrega semanal de leads.
+- **Resultado:** (1) Ticket actualizado a 8 países con nota de cambio; sondeo OK (Paraguay 869, Bolivia 808; 0 créditos) — pero el AUTH-20260924-f3e7bf9b cubre 6 países (CL/AR/PE/UY/CO/MX): PY/BO quedan pendientes de extensión de alcance por Daniel. (2) Motor de la entrega construido y probado en seco: `weekly-icp-leads.py` + wrapper de horario (patrón DST de la automatización diaria); dry-run: 5 leads con correo ya revelado, sin reveals ni créditos. (3) Envío de correo BLOQUEADO: verificación Gmail → `Not authenticated` (operación: gmail search; exit 1; mensaje saneado: "Not authenticated. Run the setup script first"). Según el override de seguridad de Google: me detengo y reporto; sin reparación, reautenticación ni alternativas. Cronjob NO creado aún. Sin datos personales volcados.
+- **Estado:** ⏳ a la espera de autorización (habilitación del canal de correo desde este perfil; bloqueo técnico reportado).
+- **Verificación:** AUTH verificado en fuente (`AUTH-20260924-f3e7bf9b.md`: activa, perfil mati, 6 países, alcance semanal, vence 2027-09-24); dry-run `semana=2026-W39, candidatos=47, intentos=5, leads=5` (correos enmascarados); gmail search rc=1 (mensaje citado); ticket con Actualización 2026-09-24T16:53.
+- **Pendientes:** (1) habilitar el envío Gmail desde el perfil mati (lado servidor/ops); (2) extensión de alcance para Paraguay y Bolivia; (3) al habilitarse: crear el cronjob (lunes 8:00 CLT, invocación dual 11/12 UTC con guard) y primera corrida verificada.
+
 ## 2026-09-24 16:45 -03 (America/Santiago)
 - **Solicitud:** Daniel: retomar tras la implementación del sistema de tickets/autorizaciones inter-perfil.
 - **Resultado:** Sistema implementado y verificado (versión más estricta que la propuesta, coordinada por Daniel vía Claude Code): registro en `/opt/authorizations/` (root, agentes solo-lectura; imposible falsificar desde un agente), catálogo v1 (bloqueo por defecto), INDEX.md, tickets en `/opt/data/shared/tickets/`, regla "Tickets y autorizaciones entre perfiles" activa en los SOULs (incluido el del perfil daniel). Estado de autorizaciones: AUTH-...009d727d (prueba e2e) revocada ✓; AUTH-...5828a23a (contactos prospección Chile, ticket db3e7667) revocada y reemplazada; AUTH-...f3e7bf9b ACTIVA hasta 2027-09-24: prospección ICP multi-país (CL/AR/PE/UY/CO/MX), búsquedas sin créditos + datos ya revelados + entrega semanal de leads (lunes 8:00) a matias@dataseed.cl desde demeter@dataseed.cl. Tickets abiertos: db3e7667 (absorbido por el AUTH nuevo) y d224b5e4 (semanal, cubierto por el AUTH activo).
