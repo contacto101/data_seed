@@ -7,6 +7,13 @@
 
 <!-- ENTRADAS -->
 
+## 2026-09-24 02:05 -03 (America/Santiago)
+- **Solicitud:** Daniel: confirmar qué datos trae el enriquecimiento de PERSONA en Apollo (¿correo y teléfono?).
+- **Resultado:** Prueba ejecutada (`people/match`, 1 persona de la lista): devuelve perfil completo — nombre sin ofuscar, headline, LinkedIn/Twitter/foto, historial laboral (8 cargos), seniority, timezone — y **el `email` cuando ya está revelado para el equipo** (`revealed_for_current_team: true`, sin costo nuevo de revelado). Teléfono de persona sigue fuera de alcance (requiere webhook). Aprendizaje documentado en la skill `apollo-prospecting` (punto 6) y propagado a los 10 perfiles (hash 95d5de472cc24592). Sin volcado de correos a archivos (excluidos del JSON de trabajo por regla de PII).
+- **Estado:** completada.
+- **Verificación:** respuesta real de /people/match (match_confidence=high; email presente 24 chars; bandera revealed_for_current_team); sha256 idéntico del skill en origen + 10 ubicaciones.
+- **Pendientes:** definir con Daniel el siguiente paso: export de prospectos con correos disponibles/ya revelados, estimación de créditos para revelar más, o enriquecimiento de empresas (1 crédito c/u).
+
 ## 2026-09-24 00:55 -03 (America/Santiago)
 - **Solicitud:** Daniel: búsqueda por EMPRESA para saber cuántas se ajustan al ICP completo (Apollo).
 - **Resultado:** Embudo de empresas ejecutado (2 requests, 2 créditos): A) Chile + 51-500 empleados → **5.883** empresas; B) + industrias ICP (distribución, importación, logística, transporte, retail, e-commerce, manufactura, mayorista) → **2.699** empresas (108 páginas de 25). Export de trabajo: `ICP_DataSeed_Apollo_empresas_p1.csv` (página 1). Nota: la respuesta de búsqueda de empresas llega en modo parcial (campos industry/employees vacíos por plan; el filtro sí aplica — los totales cambian).
