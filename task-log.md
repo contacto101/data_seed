@@ -7,6 +7,13 @@
 
 <!-- ENTRADAS -->
 
+## 2026-09-24 17:01 -03 (America/Santiago)
+- **Solicitud:** Mati: agregar Ecuador, Guatemala, Costa Rica y El Salvador al pedido del ticket TKT-20260924-d224b5e4.
+- **Resultado:** Ticket actualizado: el pedido queda con 12 países (6 autorizados por AUTH-20260924-f3e7bf9b — CL/AR/PE/UY/CO/MX — y 6 pendientes de extensión de alcance: PY/BO/EC/GT/CR/SV). Sondeo en vivo confirmó disponibilidad ICP: Ecuador 2496, Guatemala 1268, Costa Rica 1249, El Salvador 714 (0 créditos). Sin cambios en el estado del montaje: envío de correo pendiente de habilitación (reportado) y cronjob sin crear.
+- **Estado:** ⏳ a la espera de autorización (extensión de alcance para PY/BO/EC/GT/CR/SV; habilitación del correo reportada).
+- **Verificación:** ticket editado (`Actualización 2026-09-24T17:00`); sondeo `/mixed_people/api_search` por país (HTTP 200, 0 créditos); sin datos personales volcados al registro.
+- **Pendientes:** (1) extensión de alcance por Daniel (6 países nuevos); (2) habilitación del correo desde este perfil; (3) al resolverse: sumar países al motor y programar/verificar el cronjob de los lunes 8:00 CLT.
+
 ## 2026-09-24 16:58 -03 (America/Santiago)
 - **Solicitud:** Mati: agregar Paraguay y Bolivia al pedido del ticket TKT-20260924-d224b5e4; continuación del montaje de la entrega semanal de leads.
 - **Resultado:** (1) Ticket actualizado a 8 países con nota de cambio; sondeo OK (Paraguay 869, Bolivia 808; 0 créditos) — pero el AUTH-20260924-f3e7bf9b cubre 6 países (CL/AR/PE/UY/CO/MX): PY/BO quedan pendientes de extensión de alcance por Daniel. (2) Motor de la entrega construido y probado en seco: `weekly-icp-leads.py` + wrapper de horario (patrón DST de la automatización diaria); dry-run: 5 leads con correo ya revelado, sin reveals ni créditos. (3) Envío de correo BLOQUEADO: verificación Gmail → `Not authenticated` (operación: gmail search; exit 1; mensaje saneado: "Not authenticated. Run the setup script first"). Según el override de seguridad de Google: me detengo y reporto; sin reparación, reautenticación ni alternativas. Cronjob NO creado aún. Sin datos personales volcados.
