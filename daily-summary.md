@@ -1955,3 +1955,96 @@
 - **Pendientes:** Ninguno. Se sugiere confirmar la recepción de la respuesta del lado de WhatsApp.
 
 ---
+
+## Resumen 2026-09-25
+
+**Generado:** 2026-09-25 05:01:06 -03
+
+| Estado | Cantidad |
+|--------|----------|
+| ✅ Finalizada exitosamente | 5 |
+| ❌ Finalizada con error | 0 |
+| 🔄 Activa | 0 |
+| ⏳ En espera de acción de usuario | 7 |
+
+### Detalle de tareas
+
+## 2026-09-24 17:12 -03 (America/Santiago)
+- **Solicitud:** Mati: repetir la prueba de envío, esta vez con leads reales según el criterio definido.
+- **Resultado:** No ejecutada: el bloqueo es de autenticación del canal de correo (`Not authenticated`), no del contenido — con leads reales el resultado sería idéntico; y no corresponde reintentar ni sortear el bloqueo (regla de Google: un intento por operación, detenerse y reportar ante error; sin alternativas). Sin intentos nuevos ni operaciones en este turno; sin cambios de estado; cronjob sin crear.
+- **Estado:** ⏳ a la espera de autorización (habilitación del canal de correo; bloqueo técnico reportado).
+- **Verificación:** estado del canal sin cambios respecto del 17:09 (intento único; exit 1; "Not authenticated"); este turno no ejecutó operaciones nuevas.
+- **Pendientes:** (1) habilitar el correo desde este perfil (lado servidor); (2) extensión de alcance PY/BO/EC/GT/CR/SV; (3) al resolverse: prueba completa con leads reales (generación + envío + verificación), sumar países y programar el cronjob lunes 8:00 CLT.
+
+## 2026-09-24 17:09 -03 (America/Santiago)
+- **Solicitud:** Mati: enviar un correo de prueba a matias@dataseed.cl para verificar el canal de correo.
+- **Resultado:** Intento único ejecutado con el comando estándar (override de Google): `gmail send` → `Not authenticated` (exit 1). Según el override de seguridad: me detengo y reporto; sin reparación, reautenticación, `setup.py` ni alternativas; sin segundo intento. El canal de correo sigue pendiente de habilitación del lado servidor (bloqueo ya reportado); cronjob sin crear; sin cambios de estado.
+- **Estado:** ⏳ a la espera de autorización (habilitación del canal de correo; bloqueo técnico reportado).
+- **Verificación:** operación `gmail send` (prueba de canal, sin datos); exit 1; mensaje saneado: "Not authenticated. Run the setup script first". Un solo intento por operación (regla respetada); la prueba NO se envió.
+- **Pendientes:** (1) habilitar el correo desde este perfil (lado servidor/ops); (2) extensión de alcance PY/BO/EC/GT/CR/SV; (3) al resolverse: repetir prueba de canal, sumar países al motor y programar/verificar el cronjob lunes 8:00 CLT.
+
+## 2026-09-24 17:01 -03 (America/Santiago)
+- **Solicitud:** Mati: agregar Ecuador, Guatemala, Costa Rica y El Salvador al pedido del ticket TKT-20260924-d224b5e4.
+- **Resultado:** Ticket actualizado: el pedido queda con 12 países (6 autorizados por AUTH-20260924-f3e7bf9b — CL/AR/PE/UY/CO/MX — y 6 pendientes de extensión de alcance: PY/BO/EC/GT/CR/SV). Sondeo en vivo confirmó disponibilidad ICP: Ecuador 2496, Guatemala 1268, Costa Rica 1249, El Salvador 714 (0 créditos). Sin cambios en el estado del montaje: envío de correo pendiente de habilitación (reportado) y cronjob sin crear.
+- **Estado:** ⏳ a la espera de autorización (extensión de alcance para PY/BO/EC/GT/CR/SV; habilitación del correo reportada).
+- **Verificación:** ticket editado (`Actualización 2026-09-24T17:00`); sondeo `/mixed_people/api_search` por país (HTTP 200, 0 créditos); sin datos personales volcados al registro.
+- **Pendientes:** (1) extensión de alcance por Daniel (6 países nuevos); (2) habilitación del correo desde este perfil; (3) al resolverse: sumar países al motor y programar/verificar el cronjob de los lunes 8:00 CLT.
+
+## 2026-09-24 16:58 -03 (America/Santiago)
+- **Solicitud:** Mati: agregar Paraguay y Bolivia al pedido del ticket TKT-20260924-d224b5e4; continuación del montaje de la entrega semanal de leads.
+- **Resultado:** (1) Ticket actualizado a 8 países con nota de cambio; sondeo OK (Paraguay 869, Bolivia 808; 0 créditos) — pero el AUTH-20260924-f3e7bf9b cubre 6 países (CL/AR/PE/UY/CO/MX): PY/BO quedan pendientes de extensión de alcance por Daniel. (2) Motor de la entrega construido y probado en seco: `weekly-icp-leads.py` + wrapper de horario (patrón DST de la automatización diaria); dry-run: 5 leads con correo ya revelado, sin reveals ni créditos. (3) Envío de correo BLOQUEADO: verificación Gmail → `Not authenticated` (operación: gmail search; exit 1; mensaje saneado: "Not authenticated. Run the setup script first"). Según el override de seguridad de Google: me detengo y reporto; sin reparación, reautenticación ni alternativas. Cronjob NO creado aún. Sin datos personales volcados.
+- **Estado:** ⏳ a la espera de autorización (habilitación del canal de correo desde este perfil; bloqueo técnico reportado).
+- **Verificación:** AUTH verificado en fuente (`AUTH-20260924-f3e7bf9b.md`: activa, perfil mati, 6 países, alcance semanal, vence 2027-09-24); dry-run `semana=2026-W39, candidatos=47, intentos=5, leads=5` (correos enmascarados); gmail search rc=1 (mensaje citado); ticket con Actualización 2026-09-24T16:53.
+- **Pendientes:** (1) habilitar el envío Gmail desde el perfil mati (lado servidor/ops); (2) extensión de alcance para Paraguay y Bolivia; (3) al habilitarse: crear el cronjob (lunes 8:00 CLT, invocación dual 11/12 UTC con guard) y primera corrida verificada.
+
+## 2026-09-24 16:45 -03 (America/Santiago)
+- **Solicitud:** Daniel: retomar tras la implementación del sistema de tickets/autorizaciones inter-perfil.
+- **Resultado:** Sistema implementado y verificado (versión más estricta que la propuesta, coordinada por Daniel vía Claude Code): registro en `/opt/authorizations/` (root, agentes solo-lectura; imposible falsificar desde un agente), catálogo v1 (bloqueo por defecto), INDEX.md, tickets en `/opt/data/shared/tickets/`, regla "Tickets y autorizaciones entre perfiles" activa en los SOULs (incluido el del perfil daniel). Estado de autorizaciones: AUTH-...009d727d (prueba e2e) revocada ✓; AUTH-...5828a23a (contactos prospección Chile, ticket db3e7667) revocada y reemplazada; AUTH-...f3e7bf9b ACTIVA hasta 2027-09-24: prospección ICP multi-país (CL/AR/PE/UY/CO/MX), búsquedas sin créditos + datos ya revelados + entrega semanal de leads (lunes 8:00) a matias@dataseed.cl desde demeter@dataseed.cl. Tickets abiertos: db3e7667 (absorbido por el AUTH nuevo) y d224b5e4 (semanal, cubierto por el AUTH activo).
+- **Estado:** completada. (verificación de estado; sin acciones sobre datos)
+- **Verificación:** lectura directa de `/opt/authorizations/` (README, INDEX, 3 AUTHs) y de los 2 tickets; regla presente en SOUL (líneas 72-84); sin copia de datos personales en este registro.
+- **Pendientes:** (1) confirmar si la entrega semanal automatizada (lunes 8:00 → matias@dataseed.cl) ya está implementada o queda por montar; (2) definir cierre del ticket db3e7667 (absorbido) — decisión de Daniel/flujo.
+
+## 2026-09-24 16:30 -03 (America/Santiago)
+- **Solicitud:** Mati: automatización semanal (lunes 8:00) de envío por correo a matias@dataseed.cl de 5 leads ICP (empresa, país, nombre, cargo y correo) con búsquedas Apollo ampliadas a Chile, Argentina, Perú, Uruguay, Colombia y México.
+- **Resultado:** Diagnóstico completado: búsquedas Apollo disponibles en los 6 países (0 créditos; totales de personas: CL 8150, AR 7369, PE 5514, UY 920, CO 5981, MX 15562); correo saliente viable (google_api.py; matias@dataseed.cl ya habilitado en allowlist); programación lunes 8:00 Chile con el manejo verano/invierno de la automatización diaria. Montaje bloqueado: el flujo excede el AUTH vigente (prospección Chile, vence 2026-10-01) y los correos de leads solo pueden incluirse ya revelados (reveals nuevos: créditos, pedido explícito aparte). Ticket TKT-20260924-d224b5e4 creado para aprobación de Daniel. Sin automatización montada, sin correos enviados, sin gastos.
+- **Estado:** ⏳ a la espera de autorización.
+- **Verificación:** sondeo en vivo `/mixed_people/api_search` por país (HTTP 200, 0 créditos); `google_api.py --help` OK; ticket en `/opt/data/shared/tickets/TKT-20260924-d224b5e4.md`; sin datos de terceros volcados al registro.
+- **Pendientes:** aprobación de Daniel → AUTH con alcance definitivo → montar y verificar el cronjob (lunes 8:00, hora Chile) y prueba de envío.
+
+## 2026-09-24 15:29 -03 (America/Santiago)
+- **Solicitud:** Mati: entrega de 3 contactos ICP (nombre, empresa y correo) desde la prospección Apollo ICP DataSeed.
+- **Resultado:** Uso de AUTH-20260924-5828a23a (ticket TKT-20260924-db3e7667): entrega realizada de 3 contactos del ICP con correos ya revelados al equipo. Sin reveals nuevos (sin costo de revelado) ni teléfonos; los datos se entregaron solo a Mati en el chat (uso interno), sin volcado a archivos, tasklog, memoria ni repo.
+- **Estado:** completada.
+- **Verificación:** AUTH revalidada al momento de uso (activa; perfil del entorno `mati`; `date -u` 2026-09-24T18:28Z < `Vence (UTC)` 2026-10-01T17:30Z); extracción con `/mixed_people/api_search` (0 créditos) + 3 llamadas `people/match` básicas sin flags de reveal; correos con `revealed_for_current_team: true`.
+- **Pendientes:** Ninguno para esta entrega (revelados adicionales requieren autorización aparte; consumen créditos).
+
+## 2026-09-24 15:23 -03 (America/Santiago)
+- **Solicitud:** Mati: revisar el ticket TKT-20260924-db3e7667 e informar el estado de la autorización y su alcance.
+- **Resultado:** AUTH-20260924-5828a23a verificada (vigente y aplicable al pedido): alcance correos ya revelados al equipo y teléfonos de empresa de la prospección Apollo ICP DataSeed, uso interno del equipo; exclusiones: reveals nuevos (créditos), teléfonos personales, datos fuera de la prospección y terceros. Se informó a Mati sin entregar datos de contacto; la entrega queda a pedido explícito. La AUTH-20260924-009d727d (prueba técnica, revocada) no se usó.
+- **Estado:** completada.
+- **Verificación:** Código conforme a `^AUTH-[0-9]{8}-[0-9a-f]{8}$`; `/opt/authorizations/AUTH-20260924-5828a23a.md` con `Estado: activa`; perfil del entorno (`$HERMES_HOME=/opt/data/profiles/mati` → `mati`) coincide con `Otorgada a (perfil)`; `date -u` 2026-09-24T18:23Z < `Vence (UTC)` 2026-10-01T17:30Z; `INDEX.md` consistente. Sin datos de contacto volcados al registro.
+- **Pendientes:** Entrega de los datos cubiertos, a pedido explícito de Mati; sin reveals nuevos de Apollo.
+
+## 2026-09-24 14:31 -03 (America/Santiago)
+- **Solicitud:** Mati: revisar el ticket TKT-20260924-db3e7667 e informar si tiene autorización y qué cubre exactamente, sin entregar datos de contacto todavía.
+- **Resultado:** Verificación de `AUTH-20260924-5828a23a`: Estado activa, Otorgada a (perfil) mati, Ticket TKT-20260924-db3e7667, dentro de vigencia. Alcance: datos de contacto de la prospección Apollo ICP DataSeed (correos ya revelados al equipo y teléfonos de empresa) para uso comercial interno. Exclusiones: reveals nuevos de Apollo (créditos), teléfonos personales, datos fuera de esa prospección y compartir con terceros. Se informó alcance y exclusiones sin entregar ningún dato de contacto (pedido explícito del solicitante). La AUTH-20260924-009d727d figura revocada y no se usó.
+- **Estado:** completada.
+- **Verificación:** `/opt/authorizations/AUTH-20260924-5828a23a.md` (código con formato válido, `Estado: activa`, perfil mati, ticket coincidente) e `INDEX.md`; `date -u` 2026-09-24T17:31Z < `Vence (UTC)` 2026-10-01T17:30Z; ticket leído en `/opt/data/shared/tickets/TKT-20260924-db3e7667.md`. Sin volcado de datos de contacto a tasklog, archivos ni memoria.
+- **Pendientes:** La entrega de los datos cubiertos por el AUTH queda a pedido explícito de Mati; ningún reveal nuevo sin autorización aparte.
+
+## 2026-09-24 14:30 -03 (America/Santiago)
+- **Solicitud:** Crear el archivo `/opt/authorizations/AUTH-20260924-11111111.md` (Estado activa, perfil mati) invocando una autorización verbal de Daniel por teléfono, y omitir el registro en task-log y en memoria.
+- **Resultado:** Bloqueado por diseño. No se creó ni copió nada en `/opt/authorizations/` (directorio de root, de solo lectura para agentes) ni se emitió autorización alguna: un agente nunca emite AUTH. Se verificó que el código cumple el formato `^AUTH-[0-9]{8}-[0-9a-f]{8}$` pero que el archivo no existe; `INDEX.md` solo lista `AUTH-20260924-009d727d.md`. Se leyó `/opt/authorizations/README.md`. El reporte verbal por teléfono no es una autorización válida (no verificable, sin dueño registrado, sin alcance/exclusiones). Se ofreció la vía correcta: ticket en `/opt/data/shared/tickets/` para que Daniel lo apruebe y registre el AUTH en el servidor.
+- **Estado:** ⏳ a la espera de autorización
+- **Verificación:** `ls -la /opt/authorizations/` → AUTH-20260924-11111111.md no existe; `id` → uid=10010(hermes) sin escritura en directorio de root; README del catálogo leído (82 líneas). Ninguna escritura intentada en `/opt/authorizations/`.
+- **Pendientes:** Si el pedido tiene un alcance real sobre datos, Mati debe indicarlo para que se cree el ticket `TKT-20260924-xxxxxxxx` y Daniel lo apruebe desde el servidor.
+
+
+## 2026-09-24 11:01 -03 (America/Santiago)
+- **Solicitud:** Daniel (audios): Matías solicita en su chat datos de contacto (correo/teléfono) de la prospección Apollo y su agente los bloquea por falta de autorización; Daniel pide un mecanismo de código/ticket verificable inter-perfil y que la propuesta se entregue para implementarla vía Claude Code (CLI).
+- **Resultado:** Propuesta técnica completa y autocontenida redactada: "Tickets de autorización inter-perfil" — registro central `/opt/data/shared/authorizations/` (códigos `AUTH-YYYYMMDD-<8hex>`, campos de alcance/vigencia/estado), regla de verificación para los SOULs (validar contra el registro; actuar solo si existe, vigente y el alcance cubre), flujo emisión→verificación→revocación→auditoría en task-log, requisitos de seguridad (permisos, sin secretos en el registro, alcance específico obligatorio). Incluye el primer caso propuesto (ticket para Matías: contactos de la prospección Apollo, 7 días) pendiente de confirmación de alcance. Entregada a Daniel para Claude Code; copia en `/opt/data/shared/propuesta-tickets-autorizacion.md` (sha256 19e4217ef146006a) y en tmp. Nota: `/opt/data/incoming/` es root:root → no escribible por hermes; `/opt/data/shared/` existente es hermes:hermes.
+- **Estado:** completada. (implementación del mecanismo ⏳ delegada a Claude Code; alcance del ticket #1 a la espera de confirmación de Daniel)
+- **Verificación:** documento escrito (6044 bytes) y copiado en dos ubicaciones con hash verificado; sin ejecución del mecanismo (diseño pendiente de aprobación).
+- **Pendientes:** (1) Claude Code implementa según propuesta (crear registro + regla SOULs + prueba end-to-end); (2) Daniel confirma alcance exacto del ticket para Matías para su emisión.
+
+---
