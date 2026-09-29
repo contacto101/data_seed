@@ -1,31 +1,37 @@
 // Demo de auditoría continua para clientes del portal.
 //
-// La maqueta vive en un proyecto privado de Vercel con la protección activada.
-// Esta función la trae con un secreto de bypass propio y la sirve sólo a quien
-// tenga sesión del portal (__Host-ds_*) en una organización habilitada
-// (api/_lib/demo-auditoria.js). La página llama a /api/agente y /api/voz; esas
-// rutas llegan acá por vercel.json y se reenvían a las funciones de la maqueta
-// con el mismo secreto, así que tampoco se usan sin sesión.
+// La demo corre en un servidor de Dataseed (el motor, en el VPS): el navegador
+// recibe sólo la pantalla y cada clic vuelve al motor, que calcula y responde.
+// Esta función exige la sesión del portal (__Host-ds_*) en una organización
+// habilitada (api/_lib/demo-auditoria.js) y reenvía al motor firmando cada
+// pedido con la identidad de quien entró (api/_lib/puente-demo.js).
 //
-// Ni el artefacto ni la dirección del proyecto entran a este repositorio, que
-// es público: DEMO_AC_ORIGIN y DEMO_AC_BYPASS viven en el proyecto de Vercel.
+// Rutas del sitio → rutas del motor:
+//   /auditoria-continua              GET  → /
+//   /api/demo-auditoria/cascara.js   GET  → /cascara.js
+//   /api/demo-auditoria/inicio       POST → /inicio
+//   /api/demo-auditoria/evento       POST → /evento
+//   /api/demo-auditoria/voz          POST → /voz
+//
+// Ni la demo ni la dirección del motor ni la clave entran a este repositorio,
+// que es público: DEMO_AC_ORIGIN y DEMO_PUENTE_CLAVE viven en el proyecto de Vercel.
 import { AuthorizationError } from './auth/_lib/authorization.js';
 import { clearSessionCookies } from './auth/_lib/cookies.js';
 import { authenticateRequest } from './auth/_lib/session.js';
 import { tieneDemo } from './_lib/demo-auditoria.js';
+import { firmarPedido } from './_lib/puente-demo.js';
 
 export const config = { runtime: 'nodejs', maxDuration: 60 };
 
 const RECURSOS = {
-  pagina: { ruta: '/', metodos: ['GET'], plazoMs: 20000 },
-  agente: { ruta: '/api/agente', metodos: ['GET', 'POST'], plazoMs: 58000 },
-  voz: { ruta: '/api/voz', metodos: ['GET', 'POST'], plazoMs: 58000 },
+  pagina: { ruta: '/', metodo: 'GET', plazoMs: 20000, tipo: 'text/html; charset=utf-8' },
+  cascara: { ruta: '/cascara.js', metodo: 'GET', plazoMs: 10000, tipo: 'text/javascript; charset=utf-8' },
+  inicio: { ruta: '/inicio', metodo: 'POST', plazoMs: 30000, tope: 3 * 1024 * 1024, entra: 'application/json' },
+  evento: { ruta: '/evento', metodo: 'POST', plazoMs: 58000, tope: 3 * 1024 * 1024, entra: 'application/json' },
+  voz: { ruta: '/voz', metodo: 'POST', plazoMs: 58000, tope: 4 * 1024 * 1024, entra: 'application/octet-stream' },
 };
-
-// Los mismos topes que aplican las funciones de la maqueta; acá cortan antes
-// de mandar el cuerpo a otra función.
-const MAX_AGENTE_BYTES = 256 * 1024;
-const MAX_VOZ_BYTES = 4 * 1024 * 1024;
+// estados del motor que el navegador tiene que ver tal cual: la pantalla reacciona a cada uno
+const DEL_MOTOR = new Set([200, 400, 404, 409, 413, 429]);
 
 function conEstado(status, message) {
   return Object.assign(new Error(message), { status });
@@ -43,26 +49,17 @@ function noDisponible(res, esPagina) {
   return res.status(503).json({ error: 'La demo no responde en este momento.' });
 }
 
-function cuerpoAgente(req) {
-  const cuerpo = req.body;
-  if (!cuerpo || typeof cuerpo !== 'object') throw conEstado(400, 'Se esperaba un cuerpo JSON.');
-  const texto = JSON.stringify(cuerpo);
-  if (Buffer.byteLength(texto) > MAX_AGENTE_BYTES) throw conEstado(413, 'La conversación es demasiado larga.');
-  return texto;
-}
-
-// El audio se lee del stream sin tocar req.body, para que Vercel no intente
-// interpretarlo. Pasado el tope se sigue leyendo sin guardar: cortar la
-// conexión a mitad puede impedir que el 413 llegue al navegador.
-async function leerAudio(req) {
+// El cuerpo se lee del stream sin tocar req.body: lo que se firma son los mismos
+// bytes que llegan al motor. Pasado el tope se sigue leyendo sin guardar, para
+// que el 413 llegue al navegador.
+async function leerCuerpo(req, tope) {
   const partes = [];
   let bytes = 0;
   for await (const parte of req) {
     bytes += parte.length;
-    if (bytes <= MAX_VOZ_BYTES) partes.push(parte);
+    if (bytes <= tope) partes.push(parte);
   }
-  if (bytes > MAX_VOZ_BYTES) throw conEstado(413, 'El audio pesa más de 4 MB.');
-  if (!bytes) throw conEstado(400, 'No llegó audio.');
+  if (bytes > tope) throw conEstado(413, 'El pedido es demasiado grande.');
   return Buffer.concat(partes);
 }
 
@@ -81,8 +78,8 @@ export function createDemoAuditoriaHandler({
     const nombre = String(req.query?.recurso || '');
     const recurso = Object.hasOwn(RECURSOS, nombre) ? RECURSOS[nombre] : null;
     if (!recurso) return res.status(404).json({ error: 'No encontrado.' });
-    if (!recurso.metodos.includes(req.method)) {
-      res.setHeader('Allow', recurso.metodos.join(', '));
+    if (req.method !== recurso.metodo) {
+      res.setHeader('Allow', recurso.metodo);
       return res.status(405).json({ error: 'Método no permitido.' });
     }
     const esPagina = nombre === 'pagina';
@@ -108,32 +105,29 @@ export function createDemoAuditoriaHandler({
       return res.status(403).json({ error: 'Tu organización no tiene habilitada esta demo.' });
     }
 
-    const origen = String(env.DEMO_AC_ORIGIN || '');
-    const secreto = env.DEMO_AC_BYPASS;
-    if (!origen.startsWith('https://') || !secreto) return noDisponible(res, esPagina);
+    const origen = String(env.DEMO_AC_ORIGIN || '').replace(/\/+$/, '');
+    const clave = String(env.DEMO_PUENTE_CLAVE || '');
+    const usuario = String(session.identity?.user?.id || '');
+    const org = String(session.identity?.organization?.id || '');
+    if (!origen.startsWith('https://') || clave.length < 32 || !usuario || !org) return noDisponible(res, esPagina);
 
-    const headers = { 'x-vercel-protection-bypass': secreto };
-    let body;
-    if (req.method === 'POST') {
+    let cuerpo = Buffer.alloc(0);
+    if (recurso.metodo === 'POST') {
       try {
-        if (nombre === 'voz') {
-          body = await leerAudio(req);
-          headers['Content-Type'] = 'application/octet-stream';
-        } else {
-          body = cuerpoAgente(req);
-          headers['Content-Type'] = 'application/json';
-        }
+        cuerpo = await leerCuerpo(req, recurso.tope);
       } catch (error) {
         return res.status(error.status || 400).json({ error: error.message });
       }
     }
+    const headers = firmarPedido({ clave, metodo: recurso.metodo, ruta: recurso.ruta, usuario, org, cuerpo });
+    if (recurso.entra) headers['Content-Type'] = recurso.entra;
 
     let upstream;
     try {
-      upstream = await fetchImpl(new URL(recurso.ruta, origen), {
-        method: req.method,
+      upstream = await fetchImpl(origen + recurso.ruta, {
+        method: recurso.metodo,
         headers,
-        body,
+        body: recurso.metodo === 'POST' ? cuerpo : undefined,
         redirect: 'manual',
         signal: AbortSignal.timeout(recurso.plazoMs),
       });
@@ -141,10 +135,10 @@ export function createDemoAuditoriaHandler({
       return noDisponible(res, esPagina);
     }
 
-    // Una redirección es la protección de Vercel rechazando el secreto: no se
-    // reenvía, porque llevaría al navegador al login de Vercel.
-    if (upstream.status >= 300 && upstream.status < 400) return noDisponible(res, esPagina);
-    if (esPagina && upstream.status !== 200) return noDisponible(res, true);
+    // Un 401 del motor es una firma rechazada (clave distinta en los dos lados):
+    // no se reenvía, porque la pantalla lo leería como sesión vencida y
+    // recargaría sin fin. Tampoco se reenvían redirecciones ni errores del motor.
+    if (!DEL_MOTOR.has(upstream.status) || (esPagina && upstream.status !== 200)) return noDisponible(res, esPagina);
 
     let texto;
     try {
@@ -152,7 +146,7 @@ export function createDemoAuditoriaHandler({
     } catch (_error) {
       return noDisponible(res, esPagina);
     }
-    res.setHeader('Content-Type', esPagina ? 'text/html; charset=utf-8' : 'application/json; charset=utf-8');
+    res.setHeader('Content-Type', recurso.tipo || 'application/json; charset=utf-8');
     if (esPagina) res.setHeader('X-Frame-Options', 'SAMEORIGIN');
     return res.status(upstream.status).send(texto);
   };

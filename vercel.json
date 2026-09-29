@@ -66,11 +66,19 @@
       "destination": "/api/demo-auditoria?recurso=pagina"
     },
     {
-      "source": "/api/agente",
-      "destination": "/api/demo-auditoria?recurso=agente"
+      "source": "/api/demo-auditoria/cascara.js",
+      "destination": "/api/demo-auditoria?recurso=cascara"
     },
     {
-      "source": "/api/voz",
+      "source": "/api/demo-auditoria/inicio",
+      "destination": "/api/demo-auditoria?recurso=inicio"
+    },
+    {
+      "source": "/api/demo-auditoria/evento",
+      "destination": "/api/demo-auditoria?recurso=evento"
+    },
+    {
+      "source": "/api/demo-auditoria/voz",
       "destination": "/api/demo-auditoria?recurso=voz"
     },
     {
