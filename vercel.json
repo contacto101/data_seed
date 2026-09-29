@@ -62,6 +62,18 @@
       "destination": "/api/licitacion?codigo=$1"
     },
     {
+      "source": "/auditoria-continua",
+      "destination": "/api/demo-auditoria?recurso=pagina"
+    },
+    {
+      "source": "/api/agente",
+      "destination": "/api/demo-auditoria?recurso=agente"
+    },
+    {
+      "source": "/api/voz",
+      "destination": "/api/demo-auditoria?recurso=voz"
+    },
+    {
       "source": "/robots.txt",
       "destination": "/site/robots.txt"
     },

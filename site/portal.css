@@ -68,6 +68,11 @@ svg { display: block; fill: none; stroke: currentColor; stroke-linecap: round; s
 .module-grid h2 { margin: auto 0 0.7rem; font-family: 'Syne', sans-serif; font-size: 1.25rem; line-height: 1.15; }
 .module-grid p { margin: 0 0 1rem; color: var(--sub); font-size: 0.84rem; line-height: 1.6; }
 .module-grid article > strong { color: var(--muted); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.portal-demo { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; background: var(--panel); }
+.portal-demo h2 { margin: 0 0 0.4rem; font-family: 'Syne', sans-serif; font-size: 1.25rem; line-height: 1.15; }
+.portal-demo p { margin: 0; color: var(--sub); font-size: 0.84rem; line-height: 1.6; }
+.demo-link { display: inline-flex; min-height: 44px; flex-shrink: 0; align-items: center; border: 1px solid var(--g2); border-radius: 999px; padding: 0.65rem 1.1rem; color: var(--g2); font-size: 0.8rem; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+.demo-link:hover { background: var(--card); }
 .portal-message { min-height: 1.4em; margin: 1rem 0 0; color: var(--sub); font-size: 0.82rem; text-align: right; }
 .portal-message[data-state="error"] { color: #ff8585; }
 
@@ -83,6 +88,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--g); outline-off
   .portal-identity { display: none; }
   .portal-main { width: min(100% - 1.5rem, 1180px); padding: 2rem 0; }
   .portal-welcome { border-radius: 18px; padding: 1.5rem 1rem; }
+  .portal-demo { flex-direction: column; align-items: flex-start; }
   .module-grid { grid-template-columns: 1fr; }
   .module-grid article, .module-grid article:last-child { grid-column: auto; min-height: 210px; }
   .portal-message { text-align: left; }
