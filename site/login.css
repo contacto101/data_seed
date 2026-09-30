@@ -201,7 +201,9 @@ html[data-theme="light"] .theme-sun { display: block; }
 .login-status[data-state="success"] { border-color: color-mix(in srgb, var(--success) 34%, transparent); color: var(--success); background: var(--success-bg); }
 .login-status[data-state="loading"] { color: var(--text); }
 
-#login-form { display: grid; gap: 0.8rem; }
+#login-form, #reset-form { display: grid; gap: 0.8rem; }
+#login-form[hidden], #reset-form[hidden] { display: none; }
+.field-hint { margin: 0; color: var(--muted); font-size: 0.72rem; line-height: 1.4; }
 .field { display: grid; gap: 0.45rem; }
 .field label { color: var(--text); font-size: 0.82rem; font-weight: 600; }
 .label-row { display: flex; min-height: 28px; align-items: center; justify-content: space-between; gap: 1rem; }
