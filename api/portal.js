@@ -1,4 +1,4 @@
-import { AuthorizationError } from './auth/_lib/authorization.js';
+import { esFalloDeSesion } from './auth/_lib/authorization.js';
 import { clearSessionCookies } from './auth/_lib/cookies.js';
 import { authenticateRequest } from './auth/_lib/session.js';
 import { RUTA_DEMO, tieneDemo } from './_lib/demo-auditoria.js';
@@ -102,7 +102,7 @@ export function createPortalHandler({
       return res.status(200).send(portalHtml(session.identity, { demo: tieneDemo(session.identity, env) }));
     } catch (error) {
       res.setHeader('Set-Cookie', clearCookies());
-      if (error instanceof AuthorizationError || error?.status === 401 || error?.status === 403) {
+      if (esFalloDeSesion(error)) {
         res.setHeader('Location', '/site/login.html?reason=session');
         return res.status(303).end();
       }

@@ -24,10 +24,11 @@ function request(recurso, overrides = {}) {
   return { method: 'GET', url: '/', headers: {}, query: { recurso }, ...overrides };
 }
 
-// un POST como lo manda la cáscara: el cuerpo llega por el stream
-function post(recurso, cuerpo) {
+// un POST como lo manda la cáscara: el cuerpo llega por el stream, desde el mismo origen
+const MISMO_ORIGEN = { origin: 'https://dataseed.cl', host: 'dataseed.cl' };
+function post(recurso, cuerpo, headers = MISMO_ORIGEN) {
   const datos = Buffer.isBuffer(cuerpo) ? cuerpo : Buffer.from(typeof cuerpo === 'string' ? cuerpo : JSON.stringify(cuerpo));
-  return Object.assign(Readable.from([datos]), { method: 'POST', url: '/', headers: {}, query: { recurso } });
+  return Object.assign(Readable.from([datos]), { method: 'POST', url: '/', headers, query: { recurso } });
 }
 
 function response() {
@@ -119,6 +120,20 @@ test('con acceso, la página se pide al motor firmada con la identidad y la clav
   assert.ok(Math.abs(Number(cab['X-Demo-Momento']) - Date.now() / 1000) < 5);
   assert.equal(llamadas[0].init.redirect, 'manual');
   assert.doesNotMatch(JSON.stringify(res.headers) + res.body, new RegExp(CLAVE));
+  assert.match(res.headers['Content-Security-Policy'], /connect-src 'self'/);
+  assert.match(res.headers['Content-Security-Policy'], /frame-ancestors 'self'/);
+});
+
+test('un POST sin Origin o desde otro origen no llega al motor ni autentica', async () => {
+  for (const headers of [{}, { origin: 'https://api.dataseed.cl', host: 'dataseed.cl' }]) {
+    let autenticado = false;
+    const { h, llamadas } = handler({ auth: async () => { autenticado = true; return { identity: identidad('org-demo') }; } });
+    const res = response();
+    await h(post('evento', '{}', headers), res);
+    assert.equal(res.statusCode, 403, JSON.stringify(headers));
+    assert.equal(autenticado, false);
+    assert.equal(llamadas.length, 0);
+  }
 });
 
 test('un evento viaja con los mismos bytes que se firmaron, y la respuesta del motor vuelve tal cual', async () => {
