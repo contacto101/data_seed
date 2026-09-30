@@ -1,3 +1,4 @@
+import { destinoTrasLogin } from '../_lib/demo-auditoria.js';
 import { buildSessionCookies } from './_lib/cookies.js';
 import { AuthorizationError, resolveIdentity } from './_lib/authorization.js';
 import { logAuthFailure } from './_lib/diagnostics.js';
@@ -74,7 +75,7 @@ export function createLoginHandler({
     res.setHeader('Set-Cookie', cookies);
     return sendJson(res, 200, {
       ok: true,
-      redirectTo: '/portal',
+      redirectTo: destinoTrasLogin(identity, env),
       user: {
         email: identity.user.email,
         name: identity.profile.full_name || identity.user.email,

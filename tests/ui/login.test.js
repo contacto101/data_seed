@@ -28,7 +28,10 @@ test('login client talks only to same-origin server APIs and never stores creden
   assert.match(js, /fetch\('\/api\/auth\/forgot-password'/);
   assert.match(js, /fetch\('\/api\/auth\/session'/);
   assert.match(js, /credentials: 'same-origin'/);
-  assert.match(js, /window\.location\.(?:assign|replace)\('\/portal'\)/);
+  // sin redirección abierta: el destino sale de una lista fija (el portal o la demo), nunca de la respuesta tal cual
+  assert.match(js, /const DESTINOS = \['\/portal', '\/auditoria-continua'\];/);
+  assert.match(js, /DESTINOS\.includes\(payload\?\.redirectTo\) \? payload\.redirectTo : '\/portal'/);
+  assert.doesNotMatch(js, /window\.location\.(?:assign|replace)\((?!destino\(payload\))/);
   assert.doesNotMatch(js, /supabase|anonkey|service_role|tenant_id|organization_id/i);
   assert.doesNotMatch(js, /sessionStorage/);
   assert.doesNotMatch(js, /localStorage\.(?:setItem|getItem)\((?!'dataseed-theme')/);

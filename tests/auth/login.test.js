@@ -109,6 +109,16 @@ test('login resolves organization server-side, ignores tenant input and sets Htt
   assert.doesNotMatch(JSON.stringify(res.body), /access|refresh|org-a|org-b/);
 });
 
+test('login lleva directo a la demo sólo a una organización que la tiene habilitada', async () => {
+  for (const [orgs, destino] of [['org-a', '/auditoria-continua'], ['org-b', '/portal'], ['', '/portal']]) {
+    const handler = createLoginHandler(dependencies({ env: { APP_ORIGIN: 'https://dataseed.cl', DEMO_AC_ORGS: orgs } }));
+    const res = response();
+    await handler(request({ email: 'client@example.com', password: 'correct-password' }), res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.body.redirectTo, destino, `DEMO_AC_ORGS="${orgs}"`);
+  }
+});
+
 test('login fails closed and revokes the provider session when membership resolution fails', async () => {
   let revoked = false;
   const handler = createLoginHandler(dependencies({

@@ -1,3 +1,4 @@
+import { destinoTrasLogin } from '../_lib/demo-auditoria.js';
 import { AuthorizationError } from './_lib/authorization.js';
 import { clearSessionCookies } from './_lib/cookies.js';
 import { logAuthFailure } from './_lib/diagnostics.js';
@@ -19,6 +20,7 @@ export function createSessionHandler({
       if (session.setCookies) res.setHeader('Set-Cookie', session.setCookies);
       return sendJson(res, 200, {
         authenticated: true,
+        redirectTo: destinoTrasLogin(session.identity, env),
         user: {
           email: session.identity.user.email,
           name: session.identity.profile.full_name || session.identity.user.email,

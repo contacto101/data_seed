@@ -11,6 +11,9 @@
   const passwordToggle = document.getElementById('password-toggle');
   const forgotButton = document.getElementById('forgot-password');
   const themeToggle = document.getElementById('theme-toggle');
+  // los únicos destinos que el servidor puede pedir (api/_lib/demo-auditoria.js, destinoTrasLogin)
+  const DESTINOS = ['/portal', '/auditoria-continua'];
+  const destino = (payload) => (DESTINOS.includes(payload?.redirectTo) ? payload.redirectTo : '/portal');
 
   function applySavedTheme() {
     let theme = 'dark';
@@ -136,8 +139,7 @@
 
       setStatus('Acceso correcto. Abriendo tu entorno…', 'success');
       setLoading(true, 'Acceso correcto');
-      const destination = payload.redirectTo === '/portal' ? '/portal' : '/portal';
-      window.setTimeout(() => window.location.assign(destination), 350);
+      window.setTimeout(() => window.location.assign(destino(payload)), 350);
     } catch {
       setStatus('No pudimos conectar con el servidor. Intenta nuevamente.', 'error');
     } finally {
@@ -193,7 +195,7 @@
       });
       if (!response.ok) return;
       const payload = await parseResponse(response);
-      if (payload.authenticated === true) window.location.replace('/portal');
+      if (payload.authenticated === true) window.location.replace(destino(payload));
     } catch {
       // The login form remains available when the session check is unavailable.
     }
