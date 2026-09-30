@@ -102,6 +102,18 @@ test('una organización fuera de la lista recibe 403, y una lista vacía no deja
   }
 });
 
+test('un acceso con vencimiento deja entrar hasta la fecha y después responde 403; una fecha ilegible no abre', async () => {
+  const futuro = new Date(Date.now() + 3600_000).toISOString(), pasado = new Date(Date.now() - 1000).toISOString();
+  const casos = [[`org-demo@${futuro}`, 200], [`org-demo@${pasado}`, 403], ['org-demo@el-lunes', 403], [`org-otra@${futuro}, org-demo`, 200]];
+  for (const [lista, esperado] of casos) {
+    const { h, llamadas } = handler({ orgId: 'org-demo', entorno: { ...env, DEMO_AC_ORGS: lista } });
+    const res = response();
+    await h(request('pagina'), res);
+    assert.equal(res.statusCode, esperado, `DEMO_AC_ORGS=${lista}`);
+    assert.equal(llamadas.length, esperado === 200 ? 1 : 0, `DEMO_AC_ORGS=${lista}`);
+  }
+});
+
 test('con acceso, la página se pide al motor firmada con la identidad y la clave no vuelve al navegador', async () => {
   const { h, llamadas } = handler();
   const res = response();
