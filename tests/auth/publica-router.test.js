@@ -37,6 +37,13 @@ test('router: rutea /login, /session y /google/start a su handler', async () => 
   assert.notEqual(googleRes.statusCode, 404);
 });
 
+test('router: rutea /reset-password a su handler', async () => {
+  const res = response();
+  await router({ method: 'GET', query: { path: 'reset-password' }, headers: {} }, res);
+  // GET -> 405 del handler, no 404 del router.
+  assert.equal(res.statusCode, 405);
+});
+
 test('router: rutea /search-profile a su handler', async () => {
   const res = response();
   await router({ method: 'GET', query: { path: 'search-profile' }, headers: {} }, res);

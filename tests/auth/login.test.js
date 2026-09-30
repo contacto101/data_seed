@@ -113,7 +113,7 @@ test('login lleva directo a la demo sólo a una organización que la tiene habil
   for (const [orgs, destino] of [['org-a', '/auditoria-continua'], ['org-b', '/portal'], ['', '/portal']]) {
     const handler = createLoginHandler(dependencies({ env: { APP_ORIGIN: 'https://dataseed.cl', DEMO_AC_ORGS: orgs } }));
     const res = response();
-    await handler(request({ email: 'client@example.com', password: 'correct-password' }), res);
+    await handler(request({ email: 'client@example.com', password: 'clave-prueba' }), res);
     assert.equal(res.statusCode, 200);
     assert.equal(res.body.redirectTo, destino, `DEMO_AC_ORGS="${orgs}"`);
   }

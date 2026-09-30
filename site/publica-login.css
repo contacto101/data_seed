@@ -13,4 +13,4 @@
 .auth-divider{display:flex;align-items:center;gap:.8rem;margin:1.1rem 0;color:var(--muted);font-size:.75rem;}
 .auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--card-b);}
 #signup-form[hidden],#login-form[hidden]{display:none;}
-.field-hint{margin:0;color:var(--muted);font-size:.72rem;line-height:1.4;}
+.auth-tabs[hidden],.google-button[hidden],.auth-divider[hidden]{display:none;}

@@ -141,6 +141,18 @@ export function sendPasswordRecovery(email, redirectTo, options = {}) {
   });
 }
 
+// Cambia la contraseña del dueño del token. En la recuperación, el token es
+// el de la sesión de tipo recovery que Supabase entrega al abrir el enlace del
+// correo (ver api/auth/_lib/password-reset.js).
+export function updateUserPassword(accessToken, password, options = {}) {
+  return request('/auth/v1/user', {
+    ...options,
+    method: 'PUT',
+    accessToken,
+    body: { password },
+  });
+}
+
 export function signOut(accessToken, options = {}) {
   return request('/auth/v1/logout', {
     ...options,
