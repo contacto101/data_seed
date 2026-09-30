@@ -94,6 +94,18 @@ test('session endpoint returns safe tenant context and never returns tokens or t
   assert.doesNotMatch(JSON.stringify(res.body), /access|refresh|org-a|user-1/);
 });
 
+test('con la sesión abierta, la página de login manda a la demo a quien la tiene', async () => {
+  for (const [orgs, destino] of [['org-a', '/auditoria-continua'], ['', '/portal']]) {
+    const handler = createSessionHandler({
+      authenticate: async () => ({ identity }),
+      env: { DEMO_AC_ORGS: orgs },
+    });
+    const res = response();
+    await handler(request(), res);
+    assert.equal(res.body.redirectTo, destino, `DEMO_AC_ORGS="${orgs}"`);
+  }
+});
+
 test('session endpoint clears cookies and returns 401 for an invalid session', async () => {
   const handler = createSessionHandler({
     authenticate: async () => {

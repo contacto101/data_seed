@@ -13,6 +13,12 @@ export class AuthorizationError extends Error {
   }
 }
 
+// La sesión no vale (vencida, sin membresía, rechazada): se vuelve a pedir el login.
+// Cualquier otro error es del proveedor y la página responde «no disponible».
+export function esFalloDeSesion(error) {
+  return error instanceof AuthorizationError || error?.status === 401 || error?.status === 403;
+}
+
 const defaultProvider = { getUser, getProfile, getMemberships };
 
 export async function resolveIdentity(accessToken, {

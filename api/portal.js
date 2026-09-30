@@ -1,6 +1,7 @@
-import { AuthorizationError } from './auth/_lib/authorization.js';
+import { esFalloDeSesion } from './auth/_lib/authorization.js';
 import { clearSessionCookies } from './auth/_lib/cookies.js';
 import { authenticateRequest } from './auth/_lib/session.js';
+import { RUTA_DEMO, tieneDemo } from './_lib/demo-auditoria.js';
 
 export const config = { runtime: 'nodejs' };
 
@@ -22,7 +23,16 @@ function setSecurityHeaders(res) {
   res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'");
 }
 
-function portalHtml(identity) {
+const DEMO_HTML = `
+      <section class="portal-demo" aria-labelledby="demo-title">
+        <div>
+          <h2 id="demo-title">Auditoría continua</h2>
+          <p>Maqueta del panel de compras y de su agente conversacional, con datos de ejemplo.</p>
+        </div>
+        <a class="demo-link" href="${RUTA_DEMO}">Abrir la demo</a>
+      </section>`;
+
+function portalHtml(identity, { demo = false } = {}) {
   const name = escapeHtml(identity.profile.full_name || identity.user.email);
   const email = escapeHtml(identity.user.email);
   const organization = escapeHtml(identity.organization.name);
@@ -60,7 +70,7 @@ function portalHtml(identity) {
         <h1 id="portal-title">${organization}</h1>
         <p>Este espacio está aislado y autorizado para tu organización. Los módulos se habilitarán según el plan contratado.</p>
         <span class="plan-badge">Plan ${plan}</span>
-      </section>
+      </section>${demo ? DEMO_HTML : ''}
       <section class="module-grid" aria-label="Módulos del portal">
         <article><span>01</span><h2>Datos y reportes</h2><p>Indicadores, entregables y fuentes aprobadas para la organización.</p><strong>Próximamente</strong></article>
         <article><span>02</span><h2>Agentes y conversaciones</h2><p>Automatizaciones y trazabilidad del trabajo asistido por IA.</p><strong>Próximamente</strong></article>
@@ -89,10 +99,10 @@ export function createPortalHandler({
       const session = await authenticate(req, { env });
       if (session.setCookies) res.setHeader('Set-Cookie', session.setCookies);
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
-      return res.status(200).send(portalHtml(session.identity));
+      return res.status(200).send(portalHtml(session.identity, { demo: tieneDemo(session.identity, env) }));
     } catch (error) {
       res.setHeader('Set-Cookie', clearCookies());
-      if (error instanceof AuthorizationError || error?.status === 401 || error?.status === 403) {
+      if (esFalloDeSesion(error)) {
         res.setHeader('Location', '/site/login.html?reason=session');
         return res.status(303).end();
       }
