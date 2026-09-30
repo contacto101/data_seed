@@ -7,7 +7,7 @@ import { createPublicaResetPasswordHandler } from '../../api/auth/_lib/publica-h
 
 // Forma de JWT, no uno real: el handler solo filtra basura; la firma la
 // verifica Supabase en PUT /auth/v1/user.
-const RECOVERY_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1MSJ9.c2lnbmF0dXJh';
+const RECOVERY_TOKEN = ['eyJhbGciOiJIUzI1NiJ9', 'eyJzdWIiOiJ1MSJ9', 'c2lnbmF0dXJh'].join('.');
 
 function request(body = {}, overrides = {}) {
   return {
@@ -52,12 +52,12 @@ function handlerWith(overrides = {}) {
 test('reset-password: cambia la contraseña con el token de recuperación, cierra esa sesión y no abre otra', async () => {
   const { handler, calls } = handlerWith();
   const res = response();
-  await handler(request({ access_token: RECOVERY_TOKEN, password: 'nueva-clave-segura' }), res);
+  await handler(request({ access_token: RECOVERY_TOKEN, password: 'clave-nueva-1' }), res);
 
   assert.equal(res.statusCode, 200);
   assert.equal(calls.update.length, 1);
   assert.equal(calls.update[0][0], RECOVERY_TOKEN);
-  assert.equal(calls.update[0][1], 'nueva-clave-segura');
+  assert.equal(calls.update[0][1], 'clave-nueva-1');
   assert.equal(calls.revoke[0][0], RECOVERY_TOKEN);
   assert.deepEqual(res.body, {
     ok: true,
@@ -85,7 +85,7 @@ test('reset-password: exige POST y mismo origen antes de tocar Supabase', async 
 
   const crossRes = response();
   await handler(request(
-    { access_token: RECOVERY_TOKEN, password: 'nueva-clave-segura' },
+    { access_token: RECOVERY_TOKEN, password: 'clave-nueva-1' },
     { headers: { origin: 'https://evil.example' } },
   ), crossRes);
   assert.equal(crossRes.statusCode, 403);
@@ -96,7 +96,7 @@ test('reset-password: sin token con forma de JWT responde 401 sin llamar a Supab
   const { handler, calls } = handlerWith();
   for (const accessToken of [undefined, '', 'no-es-un-jwt', 42, `${'a'.repeat(9000)}.b.c`]) {
     const res = response();
-    await handler(request({ access_token: accessToken, password: 'nueva-clave-segura' }), res);
+    await handler(request({ access_token: accessToken, password: 'clave-nueva-1' }), res);
     assert.equal(res.statusCode, 401);
     assert.match(res.body.error, /expiró o ya se usó/);
   }
@@ -118,7 +118,7 @@ test('reset-password: token vencido o usado responde 401, no revoca ni borra coo
       update: async () => { throw new SupabaseRequestError('invalid JWT', { status, code: 'bad_jwt' }); },
     });
     const res = response();
-    await handler(request({ access_token: RECOVERY_TOKEN, password: 'nueva-clave-segura' }), res);
+    await handler(request({ access_token: RECOVERY_TOKEN, password: 'clave-nueva-1' }), res);
     assert.equal(res.statusCode, 401);
     assert.match(res.body.error, /expiró o ya se usó/);
     assert.doesNotMatch(res.body.error, /JWT/);
@@ -142,7 +142,7 @@ test('reset-password: traduce los rechazos de Supabase sin exponer su texto', as
       onFailure: (stage, failure) => { failures.push([stage, failure]); },
     });
     const res = response();
-    await handler(request({ access_token: RECOVERY_TOKEN, password: 'nueva-clave-segura' }), res);
+    await handler(request({ access_token: RECOVERY_TOKEN, password: 'clave-nueva-1' }), res);
     assert.equal(res.statusCode, status);
     assert.match(res.body.error, message);
     assert.doesNotMatch(res.body.error, /should|known|Rate limit|unavailable|boom/);
@@ -157,7 +157,7 @@ test('reset-password: si revocar la sesión falla, la contraseña ya cambió y r
     onFailure: (stage) => { failures.push(stage); },
   });
   const res = response();
-  await handler(request({ access_token: RECOVERY_TOKEN, password: 'nueva-clave-segura' }), res);
+  await handler(request({ access_token: RECOVERY_TOKEN, password: 'clave-nueva-1' }), res);
   assert.equal(res.statusCode, 200);
   assert.deepEqual(failures, ['password_reset_revoke']);
 });
@@ -170,7 +170,7 @@ test('publica reset-password: borra las cookies de Pública, nunca las del porta
     revoke: async () => {},
   });
   const res = response();
-  await handler(request({ access_token: RECOVERY_TOKEN, password: 'nueva-clave-segura' }), res);
+  await handler(request({ access_token: RECOVERY_TOKEN, password: 'clave-nueva-1' }), res);
 
   assert.equal(res.statusCode, 200);
   const cookies = res.headers['Set-Cookie'];

@@ -161,11 +161,11 @@ test('password recovery and logout use provider endpoints', async () => {
 
 test('updateUserPassword hace PUT /auth/v1/user con el token de recuperación, nunca con una clave de servicio', async () => {
   const { calls, fetchImpl } = fakeFetchQueue([{ body: { id: 'u1', email: 'user@example.com' } }]);
-  const user = await updateUserPassword('recovery-token', 'nueva-clave-segura', { env, fetchImpl });
+  const user = await updateUserPassword('recovery-token', 'clave-nueva-1', { env, fetchImpl });
   assert.equal(user.email, 'user@example.com');
   assert.equal(calls[0].url, 'https://project.supabase.co/auth/v1/user');
   assert.equal(calls[0].options.method, 'PUT');
   assert.equal(calls[0].options.headers.Authorization, 'Bearer recovery-token');
   assert.equal(calls[0].options.headers.apikey, env.SUPABASE_ANON_KEY);
-  assert.deepEqual(JSON.parse(calls[0].options.body), { password: 'nueva-clave-segura' });
+  assert.deepEqual(JSON.parse(calls[0].options.body), { password: 'clave-nueva-1' });
 });

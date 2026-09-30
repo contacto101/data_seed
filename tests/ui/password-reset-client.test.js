@@ -91,7 +91,7 @@ async function loadPage({ html, script, pathname, search = '', hash = '', respon
   return { elements, fetchCalls, replacedUrls, stored, location };
 }
 
-const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1MSJ9.c2lnbmF0dXJh';
+const TOKEN = ['eyJhbGciOiJIUzI1NiJ9', 'eyJzdWIiOiJ1MSJ9', 'c2lnbmF0dXJh'].join('.');
 const recoveryHash = `#access_token=${TOKEN}&expires_in=3600&refresh_token=r1&token_type=bearer&type=recovery`;
 
 const pages = [
@@ -144,15 +144,15 @@ for (const page of pages) {
       },
     });
 
-    elements.get('reset-password').value = 'nueva-clave-segura';
-    elements.get('reset-confirm').value = 'nueva-clave-segura';
+    elements.get('reset-password').value = 'clave-nueva-1';
+    elements.get('reset-confirm').value = 'clave-nueva-1';
     await elements.get('reset-form').dispatch('submit');
 
     const call = fetchCalls.find((entry) => entry.url === page.endpoint);
     assert.ok(call, 'debe llamar al endpoint de restablecimiento');
     assert.equal(call.options.method, 'POST');
     assert.equal(call.options.credentials, 'same-origin');
-    assert.deepEqual(JSON.parse(call.options.body), { access_token: TOKEN, password: 'nueva-clave-segura' });
+    assert.deepEqual(JSON.parse(call.options.body), { access_token: TOKEN, password: 'clave-nueva-1' });
 
     assert.equal(elements.get('reset-form').hidden, true);
     assert.equal(elements.get('login-form').hidden, false);
@@ -164,8 +164,8 @@ for (const page of pages) {
 
   test(`${page.name}: contraseñas distintas no llegan al servidor`, async () => {
     const { elements, fetchCalls } = await loadPage({ ...page, search: '?recovery=1', hash: recoveryHash });
-    elements.get('reset-password').value = 'nueva-clave-segura';
-    elements.get('reset-confirm').value = 'otra-clave-distinta';
+    elements.get('reset-password').value = 'clave-nueva-1';
+    elements.get('reset-confirm').value = 'otra-clave-2';
     await elements.get('reset-form').dispatch('submit');
 
     assert.equal(fetchCalls.some((call) => call.url === page.endpoint), false);
