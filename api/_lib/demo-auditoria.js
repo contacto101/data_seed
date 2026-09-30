@@ -7,22 +7,25 @@
 // de organización no tienen por qué serlo. Vacía o ausente, nadie la ve.
 //
 // Un acceso de evaluación vence: `id@2026-10-05T23:59:59-03:00` deja entrar a esa
-// organización hasta ese momento y después no. Una fecha que no se entiende cierra
+// organización hasta ese momento y después no. La fecha va siempre completa y con
+// zona horaria; cualquier otra forma (una fecha sola, sin zona, mal escrita) cierra
 // el acceso: no se abre por un error de escritura.
 export const RUTA_DEMO = '/auditoria-continua';
+
+const FECHA_CON_ZONA = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/;
+
+// El id de una entrada `id` o `id@fecha`, o vacío si venció o la fecha no vale.
+function idVigente(entrada, ahora) {
+  const [id, ...resto] = entrada.split('@');
+  if (!resto.length) return id.trim();
+  const fecha = resto.join('@').trim();
+  return FECHA_CON_ZONA.test(fecha) && ahora <= Date.parse(fecha) ? id.trim() : '';
+}
 
 export function organizacionesConDemo(env = process.env, ahora = Date.now()) {
   return String(env.DEMO_AC_ORGS || '')
     .split(',')
-    .map((entrada) => entrada.trim())
-    .filter(Boolean)
-    .filter((entrada) => {
-      const arroba = entrada.indexOf('@');
-      if (arroba < 0) return true;
-      const vence = Date.parse(entrada.slice(arroba + 1));
-      return Number.isFinite(vence) && ahora <= vence;
-    })
-    .map((entrada) => entrada.split('@')[0].trim())
+    .map((entrada) => idVigente(entrada, ahora))
     .filter(Boolean);
 }
 

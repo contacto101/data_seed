@@ -6,6 +6,7 @@ import { createHash, createHmac } from 'node:crypto';
 import { AuthorizationError } from '../api/auth/_lib/authorization.js';
 import { createDemoAuditoriaHandler } from '../api/demo-auditoria.js';
 import { createPortalHandler } from '../api/portal.js';
+import { organizacionesConDemo } from '../api/_lib/demo-auditoria.js';
 
 const ORIGEN = 'https://motor.example.test/demo-ac';
 const CLAVE = 'clave-del-puente-de-prueba-0123456789abcdef';
@@ -112,6 +113,16 @@ test('un acceso con vencimiento deja entrar hasta la fecha y después responde 4
     assert.equal(res.statusCode, esperado, `DEMO_AC_ORGS=${lista}`);
     assert.equal(llamadas.length, esperado === 200 ? 1 : 0, `DEMO_AC_ORGS=${lista}`);
   }
+});
+
+test('el vencimiento se mide con la hora dada: vale hasta el segundo exacto, y sin zona horaria no vale', () => {
+  const vence = '2026-10-05T23:59:59-03:00', t = Date.parse(vence);
+  const lista = (s) => organizacionesConDemo({ DEMO_AC_ORGS: s }, t);
+  assert.deepEqual(organizacionesConDemo({ DEMO_AC_ORGS: `org-a@${vence}` }, t), ['org-a']);
+  assert.deepEqual(organizacionesConDemo({ DEMO_AC_ORGS: `org-a@${vence}` }, t + 1), []);
+  for (const mala of ['org-a@2026-10-05', 'org-a@2026-10-05T23:59:59', 'org-a@10/5/2062', 'org-a@', '@' + vence])
+    assert.deepEqual(lista(mala), [], mala);
+  assert.deepEqual(lista(` org-a @ ${vence} , org-b`), ['org-a', 'org-b']);
 });
 
 test('con acceso, la página se pide al motor firmada con la identidad y la clave no vuelve al navegador', async () => {
