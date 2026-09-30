@@ -40,7 +40,7 @@ export function configuracionPuente(env) {
 // los dos lados): no se reenvía, porque la pantalla lo leería como sesión
 // vencida y recargaría sin fin. Tampoco se reenvían redirecciones, cabeceras ni
 // errores del motor.
-export async function pedirAlMotor({ puente, fetchImpl, recurso, identity, cuerpo }) {
+export async function pedirAlMotor({ puente, fetchImpl, recurso, plazoMs, identity, cuerpo }) {
   const headers = firmarPedido({
     clave: puente.clave,
     metodo: recurso.metodo,
@@ -58,7 +58,7 @@ export async function pedirAlMotor({ puente, fetchImpl, recurso, identity, cuerp
       headers,
       body: recurso.metodo === 'POST' ? cuerpo : undefined,
       redirect: 'manual',
-      signal: AbortSignal.timeout(recurso.plazoMs),
+      signal: AbortSignal.timeout(plazoMs),
     });
   } catch {
     throw new MotorNoDisponible();

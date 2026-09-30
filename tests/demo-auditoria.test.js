@@ -136,6 +136,24 @@ test('un POST sin Origin o desde otro origen no llega al motor ni autentica', as
   }
 });
 
+test('el plazo del motor descuenta lo que tardó la sesión, y sin margen no se llama al motor', async () => {
+  for (const [demoraSesion, llegaAlMotor] of [[10000, true], [56000, false]]) {
+    let reloj = 0;
+    const llamadas = [];
+    const h = createDemoAuditoriaHandler({
+      env,
+      ahora: () => reloj,
+      authenticate: async () => { reloj += demoraSesion; return { identity: identidad('org-demo') }; },
+      clearCookies: () => [],
+      fetchImpl: async (url, init) => { llamadas.push(init); return upstream(200, '{}'); },
+    });
+    const res = response();
+    await h(post('evento', '{}'), res);
+    assert.equal(res.statusCode, llegaAlMotor ? 200 : 503);
+    assert.equal(llamadas.length, llegaAlMotor ? 1 : 0);
+  }
+});
+
 test('un evento viaja con los mismos bytes que se firmaron, y la respuesta del motor vuelve tal cual', async () => {
   const cuerpo = '{"sobre":"abc","ev":{"h":"x1"}}';
   const { h, llamadas } = handler({ fetchImpl: async () => upstream(409, '{"reiniciar":true}') });

@@ -28,7 +28,9 @@ export const config = { runtime: 'nodejs', maxDuration: 60 };
 const HTML = 'text/html; charset=utf-8';
 const JSON_UTF8 = 'application/json; charset=utf-8';
 const MB = 1024 * 1024;
-// los plazos quedan bajo maxDuration: el 503 propio tiene que llegar antes que el corte de Vercel
+// El pedido completo (sesión, cuerpo y motor) termina antes de maxDuration: el 503
+// propio tiene que llegar antes que el corte de Vercel. plazoMs es el tope del motor.
+const LIMITE_MS = 55000;
 const RECURSOS = {
   pagina: { ruta: '/', metodo: 'GET', plazoMs: 20000, salida: HTML, pagina: true },
   cascara: { ruta: '/cascara.js', metodo: 'GET', plazoMs: 10000, salida: 'text/javascript; charset=utf-8' },
@@ -80,8 +82,10 @@ export function createDemoAuditoriaHandler({
   clearCookies = clearSessionCookies,
   fetchImpl = globalThis.fetch,
   env = process.env,
+  ahora = Date.now,
 } = {}) {
   return async function demoAuditoriaHandler(req, res) {
+    const inicio = ahora();
     setNoStore(res);
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Referrer-Policy', 'no-referrer');
@@ -118,9 +122,11 @@ export function createDemoAuditoriaHandler({
       if (!cuerpo) return sendJson(res, 413, { error: 'El pedido es demasiado grande.' });
     }
 
+    const plazoMs = Math.min(recurso.plazoMs, LIMITE_MS - (ahora() - inicio));
+    if (plazoMs <= 0) return responder.noDisponible(res);
     let respuesta;
     try {
-      respuesta = await pedirAlMotor({ puente, fetchImpl, recurso, identity: session.identity, cuerpo });
+      respuesta = await pedirAlMotor({ puente, fetchImpl, recurso, plazoMs, identity: session.identity, cuerpo });
     } catch (error) {
       if (error instanceof MotorNoDisponible) return responder.noDisponible(res);
       throw error;
