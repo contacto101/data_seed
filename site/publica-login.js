@@ -270,14 +270,131 @@
     }
   }
 
-  // --- Estado inicial: errores del callback de Google, mensaje post-recuperación ---
+  // --- Contraseña nueva, al volver del enlace de recuperación ---
+  // El enlace del correo vuelve a esta página con la sesión de recuperación en el
+  // fragmento (#access_token=…&type=recovery), o con #error=… si el enlace ya
+  // no sirve. El token vive solo en esta variable: se borra de la barra de
+  // direcciones al leerlo y no se guarda en el navegador.
+  const loginTitle = document.getElementById('login-title');
+  const loginIntro = document.getElementById('login-intro');
+  const authTabs = document.getElementById('auth-tabs');
+  const googleButton = document.getElementById('google-button');
+  const authDivider = document.getElementById('auth-divider');
+  const resetForm = document.getElementById('reset-form');
+  const resetPasswordInput = document.getElementById('reset-password');
+  const resetConfirmInput = document.getElementById('reset-confirm');
+  const resetSubmit = document.getElementById('reset-submit');
+  const resetButtonLabel = resetSubmit?.querySelector('.button-label');
+  const LOGIN_TITLE = loginTitle?.textContent || 'Portal de Pública';
+  const LOGIN_INTRO = loginIntro?.textContent || '';
+  const MIN_PASSWORD_LENGTH = 8;
+  const INVALID_LINK = 'El enlace de recuperación no es válido o ya se usó. Pide uno nuevo con «¿Olvidaste tu contraseña?».';
+  let recoveryToken = null;
+
+  function readRecoveryLink() {
+    const query = new URLSearchParams(window.location.search);
+    const fragment = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+    const fromRecoveryEmail = query.get('recovery') === '1';
+    const token = fragment.get('type') === 'recovery' ? fragment.get('access_token') : null;
+    const failed = fromRecoveryEmail && Boolean(fragment.get('error_code') || fragment.get('error'));
+    if (!fromRecoveryEmail && !token) return null;
+    window.history.replaceState(null, '', window.location.pathname);
+    return token && !failed ? { token } : { invalid: true };
+  }
+
+  function setAccessOptionsHidden(hidden) {
+    for (const element of [authTabs, googleButton, authDivider, loginForm, signupForm]) {
+      if (element) element.hidden = hidden;
+    }
+  }
+
+  function showResetForm() {
+    setAccessOptionsHidden(true);
+    if (resetForm) resetForm.hidden = false;
+    if (loginTitle) loginTitle.textContent = 'Define tu contraseña nueva';
+    if (loginIntro) loginIntro.textContent = 'Elige la contraseña con la que vas a entrar a Pública.';
+    resetPasswordInput?.focus();
+  }
+
+  function showLoginForm(email) {
+    if (resetForm) resetForm.hidden = true;
+    setAccessOptionsHidden(false);
+    selectTab('login');
+    if (loginTitle) loginTitle.textContent = LOGIN_TITLE;
+    if (loginIntro) loginIntro.textContent = LOGIN_INTRO;
+    if (email && loginEmail) loginEmail.value = email;
+    (email ? loginPassword : loginEmail)?.focus();
+  }
+
+  function validateReset() {
+    const password = String(resetPasswordInput?.value || '');
+    const confirm = String(resetConfirmInput?.value || '');
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      setFieldError('reset-password', `Usa al menos ${MIN_PASSWORD_LENGTH} caracteres.`);
+    } else {
+      setFieldError('reset-password');
+    }
+    if (confirm !== password) setFieldError('reset-confirm', 'Las contraseñas no coinciden.');
+    else setFieldError('reset-confirm');
+
+    if (password.length < MIN_PASSWORD_LENGTH) resetPasswordInput?.focus();
+    else if (confirm !== password) resetConfirmInput?.focus();
+    return password.length >= MIN_PASSWORD_LENGTH && confirm === password ? password : null;
+  }
+
+  function setResetLoading(isLoading) {
+    if (!resetSubmit || !resetButtonLabel) return;
+    resetSubmit.disabled = isLoading;
+    resetSubmit.dataset.loading = String(isLoading);
+    resetButtonLabel.textContent = isLoading ? 'Guardando…' : 'Guardar contraseña';
+  }
+
+  async function submitReset(event) {
+    event.preventDefault();
+    setStatus();
+    const password = validateReset();
+    if (!password) {
+      setStatus('Revisa los campos indicados para continuar.', 'error');
+      return;
+    }
+    if (!recoveryToken) {
+      showLoginForm();
+      setStatus(INVALID_LINK, 'error');
+      return;
+    }
+
+    setResetLoading(true);
+    setStatus('Guardando tu contraseña nueva…', 'loading');
+    try {
+      const response = await fetch('/api/auth/publica/reset-password', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ access_token: recoveryToken, password }),
+      });
+      const payload = await parseResponse(response);
+      if (response.ok || response.status === 401) {
+        recoveryToken = null;
+        if (resetPasswordInput) resetPasswordInput.value = '';
+        if (resetConfirmInput) resetConfirmInput.value = '';
+        showLoginForm(response.ok ? payload.email : null);
+      }
+      if (!response.ok) {
+        setStatus(payload.error || 'No pudimos cambiar tu contraseña. Intenta nuevamente.', 'error');
+        return;
+      }
+      setStatus(payload.message || 'Tu contraseña quedó actualizada. Ya puedes iniciar sesión con ella.', 'success');
+    } catch {
+      setStatus('No pudimos conectar con el servidor. Intenta nuevamente.', 'error');
+    } finally {
+      setResetLoading(false);
+    }
+  }
+
+  // --- Estado inicial: errores del callback de Google, correo confirmado ---
   function readQueryError() {
     const params = new URLSearchParams(window.location.search);
     const error = params.get('error');
-    if (params.get('recovery') === '1') {
-      setStatus('Si el enlace es válido, ya puedes definir tu nueva contraseña iniciando sesión.', 'success');
-      return;
-    }
     if (params.get('confirmado') === '1') {
       setStatus('Tu correo quedó confirmado. Ya puedes iniciar sesión.', 'success');
       return;
@@ -321,9 +438,21 @@
   signupForm?.addEventListener('submit', submitSignup);
 
   themeToggle?.addEventListener('click', toggleTheme);
+  resetForm?.addEventListener('submit', submitReset);
+  resetPasswordInput?.addEventListener('input', () => setFieldError('reset-password'));
+  resetConfirmInput?.addEventListener('input', () => setFieldError('reset-confirm'));
 
   applySavedTheme();
   selectTab('login');
-  readQueryError();
-  redirectExistingSession();
+  const recoveryLink = readRecoveryLink();
+  if (recoveryLink?.token) {
+    // Sin redirectExistingSession: con una sesión abierta en este navegador,
+    // mandaría al buscador antes de que el usuario defina la contraseña.
+    recoveryToken = recoveryLink.token;
+    showResetForm();
+  } else {
+    if (recoveryLink?.invalid) setStatus(INVALID_LINK, 'error');
+    else readQueryError();
+    redirectExistingSession();
+  }
 })();

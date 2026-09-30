@@ -26,6 +26,7 @@ import signupHandler from './_lib/publica-handlers/signup.js';
 import logoutHandler from './_lib/publica-handlers/logout.js';
 import sessionHandler from './_lib/publica-handlers/session.js';
 import forgotPasswordHandler from './_lib/publica-handlers/forgot-password.js';
+import resetPasswordHandler from './_lib/publica-handlers/reset-password.js';
 import googleStartHandler from './_lib/publica-handlers/google-start.js';
 import googleCallbackHandler from './_lib/publica-handlers/google-callback.js';
 import searchProfileHandler from './_lib/publica-handlers/search-profile.js';
@@ -41,6 +42,7 @@ const routes = {
   logout: logoutHandler,
   session: sessionHandler,
   'forgot-password': forgotPasswordHandler,
+  'reset-password': resetPasswordHandler,
   'google/start': googleStartHandler,
   'google/callback': googleCallbackHandler,
   'search-profile': searchProfileHandler,
