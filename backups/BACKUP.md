@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-10-06 08:00:47 UTC
-- Generado America/Santiago: 2026-10-06 05:00:47 -03
+- Generado UTC: 2026-10-07 08:00:31 UTC
+- Generado America/Santiago: 2026-10-07 05:00:31 -03
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -14,7 +14,7 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - El `daily-summary.md` conserva el resumen diario y debe consultarse para tareas diarias, pendientes y bloqueos.
 - El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
-- Repo/branch de tracking: `/tmp/tmp.bLjNDqWeLv/tracking-workspace` / `feat/task-tracking-system`.
+- Repo/branch de tracking: `/tmp/tmp.pnRrKlnHv5/tracking-workspace` / `feat/task-tracking-system`.
 - Daily summary: `daily-summary.md` (256.6 KB, sha256 51ce6e77f8463de7).
 - Task log actual: `task-log.md` (213.0 B, sha256 1512ddaa0df19af1).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (missing, sha256 missing).
@@ -39,7 +39,7 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 - Hermes binary: `/opt/hermes/.venv/bin/hermes`
 - Disk snapshot:
   `Filesystem      Size  Used Avail Use% Mounted on`
-  `/dev/sda1        96G   47G   50G  49% /opt/data`
+  `/dev/sda1        96G   48G   49G  50% /opt/data`
 
 ## Configuración Hermes sanitizada
 
@@ -73,8 +73,8 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `2073a6cc3d6e` [active]
   - Nombre: Demeter Daily Operations (5:00 AM Chile)
   - Schedule: 0 8,9 * * *
-  - Next run UTC: 2026-10-06T09:00:00+00:00
-  - Last run UTC/status: 2026-10-05T09:00:15.381533+00:00 / ok
+  - Next run UTC: 2026-10-07T09:00:00+00:00
+  - Last run UTC/status: 2026-10-06T09:00:52.112959+00:00 / ok
   - Mode: no-agent
   - Script: daily-operations-wrapper.sh
 - `89e2d5c6bd6b` [paused]
@@ -87,8 +87,8 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `3d3a4d137152` [active]
   - Nombre: Auto-provision perfiles aislados (chats WhatsApp nuevos)
   - Schedule: */10 * * * *
-  - Next run UTC: 2026-10-06T08:10:00+00:00
-  - Last run UTC/status: 2026-10-06T08:00:38.242975+00:00 / ok
+  - Next run UTC: 2026-10-07T08:10:00+00:00
+  - Last run UTC/status: 2026-10-07T08:00:22.557020+00:00 / ok
   - Mode: no-agent
   - Script: provision_new_chats_wrapper.sh
 
@@ -97,9 +97,11 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `airtable` (.archive/airtable) — Airtable REST API via curl. Records CRUD, filters, upserts.
 - `apple-notes` (.archive/apple-notes) — Manage Apple Notes via memo CLI: create, search, edit.
 - `apple-reminders` (.archive/apple-reminders) — Apple Reminders via remindctl: add, list, complete.
+- `apple-reminders` (.archive/apple-reminders-20261007032516) — Apple Reminders via remindctl: add, list, complete.
 - `architecture-diagram` (.archive/architecture-diagram) — Dark-themed SVG architecture/cloud/infra diagrams as HTML.
 - `arxiv` (.archive/arxiv) — Search arXiv papers by keyword, author, category, or ID.
 - `ascii-art` (.archive/ascii-art) — ASCII art: pyfiglet, cowsay, boxes, image-to-ascii.
+- `ascii-art` (.archive/ascii-art-20261007032516) — ASCII art: pyfiglet, cowsay, boxes, image-to-ascii.
 - `ascii-video` (.archive/ascii-video) — ASCII video: convert video/audio to colored ASCII MP4/GIF.
 - `baoyu-infographic` (.archive/baoyu-infographic) — Infographics: 21 layouts x 21 styles (信息图, 可视化).
 - `blogwatcher` (.archive/blogwatcher) — Monitor blogs and RSS/Atom feeds via blogwatcher-cli tool.
@@ -109,11 +111,14 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `evaluating-llms-harness` (.archive/evaluating-llms-harness) — lm-eval-harness: benchmark LLMs (MMLU, GSM8K, etc.).
 - `excalidraw` (.archive/excalidraw) — Hand-drawn Excalidraw JSON diagrams (arch, flow, seq).
 - `findmy` (.archive/findmy) — Track Apple devices/AirTags via FindMy.app on macOS.
+- `findmy` (.archive/findmy-20261007032516) — Track Apple devices/AirTags via FindMy.app on macOS.
 - `gif-search` (.archive/gif-search) — Search/download GIFs from Tenor via curl + jq.
+- `gif-search` (.archive/gif-search-20261007032516) — Search/download GIFs from Tenor via curl + jq.
 - `github-issues` (.archive/github-issues) — Create, triage, label, assign GitHub issues via gh or REST.
 - `hermes-agent-skill-authoring` (.archive/hermes-agent-skill-authoring) — Author in-repo SKILL.md files: frontmatter and structure.
 - `huggingface-hub` (.archive/huggingface-hub) — HuggingFace hf CLI: search/download/upload models, datasets.
 - `imessage` (.archive/imessage) — Send and receive iMessages/SMS via the imsg CLI on macOS.
+- `imessage` (.archive/imessage-20261007032516) — Send and receive iMessages/SMS via the imsg CLI on macOS.
 - `live-documentation-mcp` (.archive/live-documentation-mcp) — Configure and use live documentation sources such as Context7 for coding agents via MCP or CLI fallback.
 - `llama-cpp` (.archive/llama-cpp) — llama.cpp local GGUF inference + HF Hub model discovery.
 - `llm-wiki` (.archive/llm-wiki) — Karpathy
@@ -125,6 +130,7 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `obsidian` (.archive/obsidian) — Read, search, create, and edit notes in the Obsidian vault.
 - `ocr-and-documents` (.archive/ocr-and-documents) — Extract text from PDFs/scans (pymupdf, marker-pdf).
 - `opencode` (.archive/opencode) — Delegate coding to OpenCode CLI (features, PR review).
+- `opencode` (.archive/opencode-20261007032516) — Delegate coding to OpenCode CLI (features, PR review).
 - `openhue` (.archive/openhue) — Control Philips Hue lights, scenes, rooms via OpenHue CLI.
 - `powerpoint` (.archive/powerpoint) — Create, read, edit .pptx decks with python-pptx.
 - `pretext` (.archive/pretext) — Build creative browser demos with DOM-free text layout.
@@ -134,6 +140,7 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `simplify-code` (.archive/simplify-code) — Parallel 4-agent cleanup of recent code changes.
 - `sketch` (.archive/sketch) — Throwaway HTML mockups: 2-3 design variants to compare.
 - `songsee` (.archive/songsee) — Audio spectrograms/features (mel, chroma, MFCC) via CLI.
+- `songsee` (.archive/songsee-20261007032516) — Audio spectrograms/features (mel, chroma, MFCC) via CLI.
 - `songwriting-and-ai-music` (.archive/songwriting-and-ai-music) — Songwriting craft and Suno AI music prompts.
 - `touchdesigner-mcp` (.archive/touchdesigner-mcp) — Control TouchDesigner via twozero MCP.
 - `weights-and-biases` (.archive/weights-and-biases) — W&B: log ML experiments, sweeps, model registry, dashboards.
@@ -232,9 +239,9 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 - `config.yaml`: 19.0 KB, sha256 8c17885a87b390b5
 - `memories/MEMORY.md`: 7.2 KB, sha256 a7a95067ed82a9b0
 - `memories/USER.md`: 2.0 KB, sha256 a3b1e2cef2c04d62
-- `channel_directory.json`: 648.0 B, sha256 071913db3ee17e87
+- `channel_directory.json`: 648.0 B, sha256 c905b352971b055a
 - `gateway_state.json`: 731.0 B, sha256 430eaf99f9e1acb2
-- `cron/jobs.json`: 5.6 KB, sha256 a3af9719ac174bae
+- `cron/jobs.json`: 5.6 KB, sha256 bf808e73f298592b
 
 ## Grafo de conocimiento del proyecto (Graphify)
 
