@@ -1,7 +1,7 @@
 # Backup operativo no sensible — DataSeed / Demeter
 
-- Generado UTC: 2026-10-07 08:00:31 UTC
-- Generado America/Santiago: 2026-10-07 05:00:31 -03
+- Generado UTC: 2026-10-08 08:01:32 UTC
+- Generado America/Santiago: 2026-10-08 05:01:32 -03
 - Alcance: estado operativo no sensible para recuperación crítica.
 - Política: no se respaldan credenciales, tokens, secretos OAuth, contraseñas, sesiones de mensajería, bases de datos runtime, logs completos, caches ni adjuntos. Scripts/documentos adicionales requieren aprobación explícita; ante duda se omiten.
 - Rama objetivo: `main` en `https://github.com/contacto101/data_seed.git`.
@@ -14,8 +14,8 @@ Los datos respaldados son semillas operativas: identidad, configuración resumid
 - El `daily-summary.md` conserva el resumen diario y debe consultarse para tareas diarias, pendientes y bloqueos.
 - El backup diario de las 05:00 AM NO copia `task-log.md` ni `daily-summary.md`; solo deja esta referencia para consultarlos en el repo de tracking.
 - Este backup sí copia `backups/COMPLETED_CYCLES.md`, que contiene únicamente ciclos grandes completados.
-- Repo/branch de tracking: `/tmp/tmp.pnRrKlnHv5/tracking-workspace` / `feat/task-tracking-system`.
-- Daily summary: `daily-summary.md` (256.6 KB, sha256 51ce6e77f8463de7).
+- Repo/branch de tracking: `/tmp/tmp.GBBetOSvOH/tracking-workspace` / `feat/task-tracking-system`.
+- Daily summary: `daily-summary.md` (258.1 KB, sha256 c755dab4e3a8dc06).
 - Task log actual: `task-log.md` (213.0 B, sha256 1512ddaa0df19af1).
 - Ciclos grandes completados fuente: `backups/COMPLETED_CYCLES.md` (missing, sha256 missing).
 
@@ -39,7 +39,7 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 - Hermes binary: `/opt/hermes/.venv/bin/hermes`
 - Disk snapshot:
   `Filesystem      Size  Used Avail Use% Mounted on`
-  `/dev/sda1        96G   48G   49G  50% /opt/data`
+  `/dev/sda1        96G   47G   50G  49% /opt/data`
 
 ## Configuración Hermes sanitizada
 
@@ -56,7 +56,7 @@ Regla operativa: el log diario registra detalles; el resumen diario consolida ta
 
 ## Cron jobs configurados y estado
 
-Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
+Total jobs: 8. Sensitive fields excluded: prompt, deliver, delivery targets.
 
 - `0fffb87e5be9` [paused]
   - Nombre: DataSeed Agent Factory Funnel Revenue Builder/Tester
@@ -73,8 +73,8 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `2073a6cc3d6e` [active]
   - Nombre: Demeter Daily Operations (5:00 AM Chile)
   - Schedule: 0 8,9 * * *
-  - Next run UTC: 2026-10-07T09:00:00+00:00
-  - Last run UTC/status: 2026-10-06T09:00:52.112959+00:00 / ok
+  - Next run UTC: 2026-10-08T09:00:00+00:00
+  - Last run UTC/status: 2026-10-07T09:00:34.430626+00:00 / ok
   - Mode: no-agent
   - Script: daily-operations-wrapper.sh
 - `89e2d5c6bd6b` [paused]
@@ -87,10 +87,31 @@ Total jobs: 5. Sensitive fields excluded: prompt, deliver, delivery targets.
 - `3d3a4d137152` [active]
   - Nombre: Auto-provision perfiles aislados (chats WhatsApp nuevos)
   - Schedule: */10 * * * *
-  - Next run UTC: 2026-10-07T08:10:00+00:00
-  - Last run UTC/status: 2026-10-07T08:00:22.557020+00:00 / ok
+  - Next run UTC: 2026-10-08T08:10:00+00:00
+  - Last run UTC/status: 2026-10-08T08:00:58.736946+00:00 / ok
   - Mode: no-agent
   - Script: provision_new_chats_wrapper.sh
+- `3193a3c5d1e9` [active]
+  - Nombre: Leads ICP semanales a Matias (lunes 08:00 Chile)
+  - Schedule: 0 11,12 * * 1
+  - Next run UTC: 2026-10-12T11:00:00+00:00
+  - Last run UTC/status: None / None
+  - Mode: no-agent
+  - Script: weekly-icp-leads-wrapper.sh
+- `46f6fa4868f1` [paused]
+  - Nombre: PRUEBA leads ICP a Matias (unica)
+  - Schedule: once in 1m
+  - Next run UTC: None
+  - Last run UTC/status: 2026-10-07T15:20:08.379393+00:00 / ok
+  - Mode: no-agent
+  - Script: weekly-icp-leads-test-now.sh
+- `08b60d3f03cd` [paused]
+  - Nombre: PRUEBA 2 leads ICP a Matias (unica)
+  - Schedule: once in 1m
+  - Next run UTC: None
+  - Last run UTC/status: 2026-10-07T15:23:10.638041+00:00 / ok
+  - Mode: no-agent
+  - Script: weekly-icp-leads-test-now.sh
 
 ## Skills instalados
 
@@ -239,9 +260,9 @@ No se copia el contenido de estos archivos; solo tamaño y huella para validaci�
 - `config.yaml`: 19.0 KB, sha256 8c17885a87b390b5
 - `memories/MEMORY.md`: 7.2 KB, sha256 a7a95067ed82a9b0
 - `memories/USER.md`: 2.0 KB, sha256 a3b1e2cef2c04d62
-- `channel_directory.json`: 648.0 B, sha256 c905b352971b055a
-- `gateway_state.json`: 731.0 B, sha256 430eaf99f9e1acb2
-- `cron/jobs.json`: 5.6 KB, sha256 bf808e73f298592b
+- `channel_directory.json`: 648.0 B, sha256 2d6b8530ac392a84
+- `gateway_state.json`: 731.0 B, sha256 bf6db45d18486a97
+- `cron/jobs.json`: 9.4 KB, sha256 8c6cfb671070f2e1
 
 ## Grafo de conocimiento del proyecto (Graphify)
 
@@ -327,6 +348,8 @@ Se genera con `scripts/generate-multibranch-graph.py`, que crea un snapshot temp
 - `daily-operations-wrapper.sh`: pendiente; existe pero NO se copia como copia dura sin aprobación explícita en `/opt/data/backup_hardcopy_allowlist.txt`.
 - `electrored-monitor-cron.py`: pendiente; existe pero NO se copia como copia dura sin aprobación explícita en `/opt/data/backup_hardcopy_allowlist.txt`.
 - `provision_new_chats_wrapper.sh`: pendiente; existe pero NO se copia como copia dura sin aprobación explícita en `/opt/data/backup_hardcopy_allowlist.txt`.
+- `weekly-icp-leads-wrapper.sh`: pendiente; existe pero NO se copia como copia dura sin aprobación explícita en `/opt/data/backup_hardcopy_allowlist.txt`.
+- `weekly-icp-leads-test-now.sh`: no copiado; archivo no encontrado en runtime.
 
 ## Exclusiones estrictas
 

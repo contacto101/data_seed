@@ -1,11 +1,11 @@
-# Graph Report - dataseed-multibranch-snapshot-lj_jw3g6  (2026-10-07)
+# Graph Report - dataseed-multibranch-snapshot-zgex6v8g  (2026-10-08)
 
 ## Corpus Check
-- 372 files · ~359,335 words
+- 372 files · ~359,610 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 3124 nodes · 4348 edges · 330 communities (246 shown, 84 thin omitted)
+- 3125 nodes · 4349 edges · 330 communities (246 shown, 84 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 97 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
@@ -261,13 +261,13 @@
 - [[_COMMUNITY_Community 249|Community 249]]
 - [[_COMMUNITY_Community 250|Community 250]]
 - [[_COMMUNITY_Community 251|Community 251]]
-- [[_COMMUNITY_Community 253|Community 253]]
-- [[_COMMUNITY_Community 255|Community 255]]
+- [[_COMMUNITY_Community 252|Community 252]]
+- [[_COMMUNITY_Community 254|Community 254]]
 - [[_COMMUNITY_Community 256|Community 256]]
-- [[_COMMUNITY_Community 258|Community 258]]
+- [[_COMMUNITY_Community 257|Community 257]]
 - [[_COMMUNITY_Community 259|Community 259]]
 - [[_COMMUNITY_Community 260|Community 260]]
-- [[_COMMUNITY_Community 262|Community 262]]
+- [[_COMMUNITY_Community 261|Community 261]]
 - [[_COMMUNITY_Community 263|Community 263]]
 - [[_COMMUNITY_Community 264|Community 264]]
 - [[_COMMUNITY_Community 265|Community 265]]
@@ -289,7 +289,7 @@
 - [[_COMMUNITY_Community 281|Community 281]]
 - [[_COMMUNITY_Community 282|Community 282]]
 - [[_COMMUNITY_Community 283|Community 283]]
-- [[_COMMUNITY_Community 285|Community 285]]
+- [[_COMMUNITY_Community 284|Community 284]]
 - [[_COMMUNITY_Community 286|Community 286]]
 - [[_COMMUNITY_Community 287|Community 287]]
 - [[_COMMUNITY_Community 288|Community 288]]
@@ -1238,7 +1238,7 @@ Nodes (3): 2026-06-25 11:47 - Daniel Caignet, Detalle de tareas, Resumen 2026-06
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Daily Summary - Demeter` connect `Community 0` to `Community 285`, `Community 286`, `Community 287`, `Community 288`, `Community 289`, `Community 34`, `Community 290`, `Community 291`, `Community 292`, `Community 293`, `Community 294`, `Community 295`, `Community 296`, `Community 297`, `Community 298`, `Community 299`, `Community 300`, `Community 301`, `Community 47`, `Community 303`, `Community 304`, `Community 305`, `Community 306`, `Community 307`, `Community 308`, `Community 309`, `Community 302`, `Community 81`, `Community 82`, `Community 218`, `Community 102`, `Community 238`, `Community 239`, `Community 240`, `Community 241`?**
+- **Why does `Daily Summary - Demeter` connect `Community 0` to `Community 286`, `Community 287`, `Community 288`, `Community 289`, `Community 34`, `Community 290`, `Community 291`, `Community 292`, `Community 293`, `Community 294`, `Community 295`, `Community 296`, `Community 297`, `Community 298`, `Community 299`, `Community 300`, `Community 301`, `Community 47`, `Community 304`, `Community 305`, `Community 306`, `Community 307`, `Community 308`, `Community 309`, `Community 310`, `Community 302`, `Community 303`, `Community 81`, `Community 82`, `Community 218`, `Community 102`, `Community 238`, `Community 239`, `Community 240`, `Community 241`?**
   _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **Why does `AuthorizationError` connect `Community 8` to `Community 7`, `Community 10`, `Community 49`, `Community 22`, `Community 23`, `Community 25`, `Community 29`?**
   _High betweenness centrality (0.003) - this node is a cross-community bridge._
