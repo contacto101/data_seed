@@ -48,6 +48,12 @@ test('the area rail can be collapsed and remembers it', async () => {
   assert.match(html, /if\(localStorage\.getItem\('dataseed-rail'\)==='closed'\)root\.classList\.add\('rail-collapsed'\);/);
 });
 
+test('chat bubble hides while the phone menu is open', async () => {
+  const html = await readLanding();
+
+  assert.match(html, /body\.menu-open #n8n-chat\{display:none;\}/);
+});
+
 test('narrow phone layout collapses dense grids and product actions to one column', async () => {
   const html = await readLanding();
 

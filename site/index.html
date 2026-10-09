@@ -258,6 +258,8 @@ html.rail-collapsed .area-rail ul{display:none;}
   /* El ticker salía a 100vw; junto al lateral se limita al ancho del hero para no desbordar la columna. */
   .area-shell #hero .ticker-wrap{width:auto;margin:0 -3rem 2rem;}
 }
+/* Con el menú ☰ abierto, la burbuja del chat tapaba "Agendar demo"; el menú ya deja inerte todo lo de fondo. */
+body.menu-open #n8n-chat{display:none;}
 #prod-demo{padding:0 0 5rem;}
 /* Mostrada sola, la demo ya no continúa a Productos y necesita su propio aire arriba. */
 html.areas-on #prod-demo{padding-top:5rem;}
