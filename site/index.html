@@ -1407,7 +1407,7 @@ html:not([data-theme="light"]) .gc:hover{background:linear-gradient(var(--card-h
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.8rem;flex-wrap:wrap;gap:1rem;">
       <div>
         <div class="pill" style="margin-bottom:.8rem;">● Demo interactiva — Producto 01</div>
-        <h2 class="sec-title" style="margin-bottom:.4rem;">Probalo ahora mismo.</h2>
+        <h2 class="sec-title" style="margin-bottom:.4rem;">Pruébalo ahora mismo.</h2>
         <p style="font-size:.85rem;color:var(--sub);">Datos reales de ejemplo. Respuestas generadas por IA. Sin registro, sin instalación.</p>
       </div>
       <a href="#contacto" class="btn-p" style="white-space:nowrap;">Implementar en mi empresa →</a>
@@ -1448,11 +1448,11 @@ html:not([data-theme="light"]) .gc:hover{background:linear-gradient(var(--card-h
             <div class="demo-empty" id="dempty">
               <div class="demo-empty-icon">◈</div>
               <div class="demo-empty-t">Demo interactiva — DataSeed Agent Engine</div>
-              <div class="demo-empty-s">Elegí una consulta de finanzas, logística o ventas. La demo muestra cómo operaría el producto con datos simulados y seguros.</div>
+              <div class="demo-empty-s">Elige una consulta de finanzas, logística o ventas. La demo muestra cómo operaría el producto con datos simulados y seguros.</div>
             </div>
           </div>
           <div class="demo-input-row">
-            <input class="demo-input" id="dinp" type="text" placeholder="Escribí tu consulta..." onkeydown="if(event.key==='Enter')dSend()"/>
+            <input class="demo-input" id="dinp" type="text" placeholder="Escribe tu consulta..." onkeydown="if(event.key==='Enter')dSend()"/>
             <button class="demo-send" onclick="dSend()" aria-label="Enviar">→</button>
           </div>
         </div>
@@ -2072,7 +2072,7 @@ function pickQ(el){document.querySelectorAll('.demo-q').forEach(q=>q.classList.r
 function dSend(){if(dBusy)return;const inp=document.getElementById('dinp');const q=inp.value.trim();if(!q)return;inp.value='';document.getElementById('dempty')?.remove();dAppend('u',q,true);dHist.push({role:'user',content:q});dTyping();dBusy=true;dAsk();}
 function dAppend(role,html,plain){const box=document.getElementById('dmsgs');const d=document.createElement('div');d.className='demo-msg';d.innerHTML=`<div class="demo-lbl ${role}">${role==='u'?'Tú':'Asistente DataSeed'}</div><div class="demo-bubble ${role}">${plain?html.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):html}</div>`;box.appendChild(d);box.scrollTop=box.scrollHeight;}
 function dTyping(){const box=document.getElementById('dmsgs');const d=document.createElement('div');d.className='demo-msg';d.id='dtyping';d.innerHTML='<div class="demo-lbl a">Asistente DataSeed</div><div class="demo-typing"><span></span><span></span><span></span></div>';box.appendChild(d);box.scrollTop=box.scrollHeight;}
-const DEMO_API_URL='/api/demo-chat';async function dAsk(){try{const r=await fetch(DEMO_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:dHist})});if(!r.ok)throw new Error('HTTP '+r.status);const data=await r.json();const reply=data.choices?.[0]?.message?.content||data.content?.find(b=>b.type==='text')?.text||'Sin respuesta.';dHist.push({role:'assistant',content:reply});document.getElementById('dtyping')?.remove();dAppend('a',reply,false);}catch(e){document.getElementById('dtyping')?.remove();dAppend('a','<span style="color:#1e4a1e">Error de conexión. Intentá de nuevo en unos segundos.</span>',false);}dBusy=false;}
+const DEMO_API_URL='/api/demo-chat';async function dAsk(){try{const r=await fetch(DEMO_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:dHist})});if(!r.ok)throw new Error('HTTP '+r.status);const data=await r.json();const reply=data.choices?.[0]?.message?.content||data.content?.find(b=>b.type==='text')?.text||'Sin respuesta.';dHist.push({role:'assistant',content:reply});document.getElementById('dtyping')?.remove();dAppend('a',reply,false);}catch(e){document.getElementById('dtyping')?.remove();dAppend('a','<span style="color:#1e4a1e">Error de conexión. Intenta de nuevo en unos segundos.</span>',false);}dBusy=false;}
 </script>
 </body>
 </html>
