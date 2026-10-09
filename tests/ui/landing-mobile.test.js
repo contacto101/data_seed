@@ -15,7 +15,7 @@ test('phone navigation uses an accessible hamburger drawer and compact hero', as
   assert.match(html, /<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Navegación móvil" hidden>/);
   assert.doesNotMatch(html, /desktop-nav/);
   assert.match(html, /\.menu-toggle\{display:inline-flex;/);
-  assert.match(html, /\.area-rail\{display:none;\}/);
+  assert.match(html, /\.area-nav\{display:none;\}/);
   assert.match(html, /#hero \.ticker-wrap\{width:auto;margin:0 -1\.5rem 2rem;\}/);
   assert.doesNotMatch(html, /\.logo>div\{display:none;\}/);
   assert.match(html, /menuToggle\.setAttribute\('aria-expanded',String\(open\)\)/);
@@ -25,27 +25,27 @@ test('phone navigation uses an accessible hamburger drawer and compact hero', as
   assert.match(html, /returnFocus\?\.focus\(\)/);
 });
 
-test('area rail and phone menu list the same areas, and each one exists in the page', async () => {
+test('header and phone menu list the same areas, and each one exists in the page', async () => {
   const html = await readLanding();
-  const rail = html.match(/<div class="area-rail"[^>]*>([\s\S]*?)<\/div>/)?.[1] ?? '';
+  const header = html.match(/<ul class="area-nav"[^>]*>([\s\S]*?)<\/ul>/)?.[1] ?? '';
   const phone = html.match(/<div class="mobile-menu"[^>]*>([\s\S]*?)<\/ul>/)?.[1] ?? '';
   const linksIn = (block) => [...block.matchAll(/href="#([^"]+)" data-area-link="([^"]+)"/g)].map(([, id, area]) => ({ id, area }));
-  const railLinks = linksIn(rail);
+  const headerLinks = linksIn(header);
 
-  assert.equal(railLinks.length, 9);
-  assert.deepEqual(linksIn(phone), railLinks);
-  for (const { id, area } of railLinks) {
+  assert.equal(headerLinks.length, 9);
+  assert.deepEqual(linksIn(phone), headerLinks);
+  for (const { id, area } of headerLinks) {
     assert.match(html, new RegExp(`id="${id}" data-area="${area}"`), `falta el área ${area}`);
   }
   assert.match(html, /\[data-area\]\[hidden\]\{display:none!important;\}/);
   assert.match(html, /window\.addEventListener\('hashchange',\(\)=>show\(true\)\)/);
 });
 
-test('the area rail can be collapsed and remembers it', async () => {
+test('area links live in the header, not in a side rail', async () => {
   const html = await readLanding();
 
-  assert.match(html, /<button class="rail-toggle" type="button" id="railToggle" aria-controls="areaList" aria-expanded="true"/);
-  assert.match(html, /if\(localStorage\.getItem\('dataseed-rail'\)==='closed'\)root\.classList\.add\('rail-collapsed'\);/);
+  assert.match(html, /<\/a>\n  <ul class="area-nav" aria-label="Áreas de la página">/);
+  assert.doesNotMatch(html, /area-rail|rail-toggle|dataseed-rail/);
 });
 
 test('chat bubble hides while the phone menu is open', async () => {
