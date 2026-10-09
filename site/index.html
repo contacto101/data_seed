@@ -199,12 +199,16 @@ body{
    en canvas y a los dos orbes, que duplicaban lo que la imagen ya dibuja. */
 .site-bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:var(--bg);}
 /* Encuadre 62% 100%: en pantallas angostas el recorte conserva la cresta brillante de la derecha y las ondas de abajo.
-   inset -3% deja margen para el desplazamiento lento sin que asomen los bordes. */
-.site-bg::before{content:'';position:absolute;inset:-3%;background:url(assets/fondo-dataseed.webp) 62% 100%/cover no-repeat;animation:bg-drift 45s ease-in-out infinite alternate;}
+   Esta capa es la imagen quieta: se ve mientras carga el oleaje, si el navegador no tiene WebGL o si se pidió
+   reducir el movimiento. */
+.site-bg::before{content:'';position:absolute;inset:0;background:url(assets/fondo-dataseed.webp) 62% 100%/cover no-repeat;}
+/* Oleaje: el mismo encuadre dibujado en WebGL con las ondas en movimiento. Aparece con un fundido cuando el primer
+   cuadro está listo, así el cambio desde la imagen quieta no se nota. */
+.site-bg-waves{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.6s ease;}
+.site-bg-waves.is-ready{opacity:1;}
 /* Velo: --bg-dim va de .15 en Inicio, para ver el paisaje completo, a .8 al bajar, donde el texto pasa sobre las ondas.
    Con .8, --sub sobre el 1 % más brillante de la imagen da 5.6:1. Sin JavaScript queda en .8. */
 .site-bg::after{content:'';position:absolute;inset:0;background:rgba(5,14,6,var(--bg-dim,.8));}
-@keyframes bg-drift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.04) translate(-1%,-1%)}}
 /* En tema claro el paisaje queda como marca de agua bajo un velo claro; --sub sobre él da 6:1 o más. */
 html[data-theme="light"] .site-bg::after{background:rgba(244,251,245,.88);}
 
@@ -1213,7 +1217,7 @@ html:not([data-theme="light"]) .gc:hover{background:linear-gradient(var(--card-h
 </style>
 </head>
 <body>
-<div class="site-bg" aria-hidden="true"></div>
+<div class="site-bg" aria-hidden="true"><canvas class="site-bg-waves"></canvas></div>
 <script>
 /* Velo del fondo: casi transparente arriba y oscuro tras bajar 60 % de una pantalla. Va antes del contenido para que
    la primera pintura ya tenga el valor correcto. */
@@ -1785,6 +1789,86 @@ html:not([data-theme="light"]) .gc:hover{background:linear-gradient(var(--card-h
   </div>
 </footer>
 </main>
+<script>
+/* OLEAJE DEL FONDO — mueve las ondas del paisaje como un mar en calma. Es independiente del resto de la landing:
+   no escucha clics, scroll, teclado ni el tema; su reloj es propio y solo avanza. Corre en la GPU (un shader que
+   desplaza la imagen), así una página ocupada no lo frena. Si no hay WebGL o se pidió reducir el movimiento, queda
+   la imagen quieta de .site-bg::before. */
+(function(){
+  const canvas=document.querySelector('.site-bg-waves');
+  if(!canvas)return;
+  const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const gl=canvas.getContext('webgl',{alpha:false,antialias:false,premultipliedAlpha:false,powerPreference:'low-power'});
+  if(!gl||reduce)return;
+
+  const vert='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+  /* Encuadre igual al CSS (cover, 62% 100%). Las ondas solo existen de la mitad hacia abajo (w crece con la altura),
+     con tres frecuencias lentas (períodos de 14 a 28 s) y un brillo que recorre las crestas. */
+  const frag=[
+    'precision mediump float;',
+    'uniform sampler2D img;uniform vec2 res;uniform vec2 size;uniform vec2 off;uniform float t;',
+    'void main(){',
+    '  vec2 px=vec2(gl_FragCoord.x,res.y-gl_FragCoord.y);',
+    '  vec2 uv=(px-off)/size;',
+    '  float w=smoothstep(.36,.86,uv.y);',
+    '  float dy=w*(.014*sin(uv.x*5.5+t*.30)+.007*sin(uv.x*11.-t*.45+uv.y*6.));',
+    '  float dx=w*.004*sin(uv.y*8.+t*.22);',
+    '  vec3 c=texture2D(img,clamp(uv+vec2(dx,dy),0.,1.)).rgb;',
+    '  float crest=w*(.5+.5*sin(uv.x*4.-t*.35+uv.y*3.));',
+    '  c+=c*crest*.22;',
+    '  float ray=smoothstep(.5,1.,uv.x)*smoothstep(.6,0.,uv.y);',
+    '  c*=1.+ray*.06*sin(t*.18);',
+    '  gl_FragColor=vec4(c,1.);',
+    '}'
+  ].join('\n');
+  function shader(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return gl.getShaderParameter(s,gl.COMPILE_STATUS)?s:null;}
+  const vs=shader(gl.VERTEX_SHADER,vert),fs=shader(gl.FRAGMENT_SHADER,frag);
+  if(!vs||!fs)return;
+  const prog=gl.createProgram();gl.attachShader(prog,vs);gl.attachShader(prog,fs);gl.linkProgram(prog);
+  if(!gl.getProgramParameter(prog,gl.LINK_STATUS))return;
+  gl.useProgram(prog);
+  gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(prog,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  const u={res:gl.getUniformLocation(prog,'res'),size:gl.getUniformLocation(prog,'size'),off:gl.getUniformLocation(prog,'off'),t:gl.getUniformLocation(prog,'t')};
+
+  const image=new Image();
+  let ready=false,lost=false,time=0,last=0;
+  function fit(){
+    /* Resolución tope 1.5x: la imagen mide 1672 px de ancho y más píxeles no agregan detalle, solo trabajo. */
+    const ratio=Math.min(window.devicePixelRatio||1,1.5);
+    const w=Math.round(canvas.clientWidth*ratio),h=Math.round(canvas.clientHeight*ratio);
+    if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+    gl.viewport(0,0,w,h);
+    const scale=Math.max(w/image.naturalWidth,h/image.naturalHeight);
+    const dw=image.naturalWidth*scale,dh=image.naturalHeight*scale;
+    gl.uniform2f(u.res,w,h);gl.uniform2f(u.size,dw,dh);gl.uniform2f(u.off,(w-dw)*.62,h-dh);
+  }
+  function frame(now){
+    if(lost)return;
+    /* Reloj propio: avanza con el tiempo real, con saltos de 100 ms como máximo para que al volver a la pestaña
+       las olas sigan donde estaban en vez de saltar. */
+    const dt=last?Math.min((now-last)/1000,.1):0;last=now;time+=dt;
+    gl.uniform1f(u.t,time);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    if(!ready){ready=true;canvas.classList.add('is-ready');}
+    requestAnimationFrame(frame);
+  }
+  image.onload=function(){
+    gl.bindTexture(gl.TEXTURE_2D,gl.createTexture());
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,image);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    fit();
+    addEventListener('resize',fit);
+    requestAnimationFrame(frame);
+  };
+  canvas.addEventListener('webglcontextlost',(event)=>{event.preventDefault();lost=true;canvas.classList.remove('is-ready');});
+  image.src='assets/fondo-dataseed.webp';
+})();
+</script>
 <script>
 /* Áreas: todas en una sola página. El encabezado marca el área que se está leyendo, y el enlace de idioma
    apunta a esa misma área en la otra página (las dos comparten los mismos id). */

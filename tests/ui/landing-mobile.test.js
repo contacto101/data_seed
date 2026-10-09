@@ -75,10 +75,11 @@ test('brand landscape is the page background, dimmed under the content', async (
   const image = await readFile(new URL('../../site/assets/fondo-dataseed.webp', import.meta.url));
 
   assert.ok(image.length > 10_000);
-  assert.match(html, /<div class="site-bg" aria-hidden="true"><\/div>/);
   assert.match(html, /url\(assets\/fondo-dataseed\.webp\)/);
   assert.match(html, /root\.style\.setProperty\('--bg-dim',/);
   assert.doesNotMatch(html, /id="bgc"|class="orb /);
+  assert.match(html, /<div class="site-bg" aria-hidden="true"><canvas class="site-bg-waves"><\/canvas><\/div>/);
+  assert.match(html, /if\(!gl\|\|reduce\)return;/);
 });
 
 test('narrow phone layout collapses dense grids and product actions to one column', async () => {
