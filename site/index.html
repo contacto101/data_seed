@@ -48,6 +48,7 @@
     root.dataset.platform=isIOS?'ios':(isAndroid?'android':'desktop');
     var saved=localStorage.getItem('dataseed-theme');
     root.dataset.theme=saved||'dark';
+    if(localStorage.getItem('dataseed-rail')==='closed')root.classList.add('rail-collapsed');
   }catch(e){document.documentElement.dataset.theme='dark';}
 })();
 </script>
@@ -94,6 +95,10 @@
   --text-card-title:1.375rem;
   --heading-section:clamp(2rem,3.5vw,3rem);
   --heading-hero:clamp(2.75rem,5.5vw,4.75rem);
+  /* Lateral de áreas: 15rem deja "Preguntas frecuentes", la etiqueta más larga, en una línea a --text-sm. */
+  --rail-w:15rem;
+  /* Alto del encabezado fijo; el script de áreas lo mide y lo reescribe. 80px es su alto en escritorio. */
+  --nav-h:80px;
   --chat--color-primary:var(--g);
   --chat--color-primary-shade-50:#00ea3c;
   --chat--color-primary-shade-100:#00cc33;
@@ -194,9 +199,6 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .logo img{height:40px;filter:drop-shadow(0 0 10px rgba(0,255,65,.4));}
 .logo-t{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;color:var(--text);letter-spacing:-.01em;}
 .logo-s{display:block;font-size:.5rem;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
-.desktop-nav{display:flex;gap:2.2rem;list-style:none;}
-.desktop-nav a{color:var(--sub);text-decoration:none;font-size:.84rem;font-weight:400;letter-spacing:.01em;transition:color .2s;}
-.desktop-nav a:hover{color:var(--g);}
 .nav-actions{display:flex;align-items:center;justify-content:flex-end;gap:.65rem;}
 .nav-login,.nav-cta{display:inline-flex;align-items:center;justify-content:center;min-height:44px;white-space:nowrap;}
 .nav-login{background:rgba(0,255,65,.035);color:var(--text);border:1px solid rgba(0,255,65,.2);padding:.56rem 1.15rem;border-radius:100px;font-size:.82rem;font-weight:500;text-decoration:none;transition:background .2s,border-color .2s,color .2s,transform .2s;}
@@ -222,6 +224,43 @@ html[data-theme="light"] .theme-toggle .sun{display:inline;}
 body.menu-open{overflow:hidden;}
 html[data-theme="light"] .mobile-menu{background:rgba(247,252,248,.98);border-color:rgba(0,143,44,.16);}
 html[data-theme="light"] .menu-toggle{background:rgba(0,143,44,.07);border-color:rgba(0,143,44,.24);}
+
+/* ÁREAS — lateral izquierdo fijo. Con JS muestra un área a la vez; sin JS la página queda completa y los enlaces bajan a cada sección. */
+.area-rail{display:none;}
+.area-rail ul{list-style:none;display:flex;flex-direction:column;gap:.25rem;}
+.area-rail a{display:flex;align-items:center;min-height:44px;padding:.5rem 1rem;border-radius:var(--r-sm);color:var(--sub);text-decoration:none;font-family:var(--font-body);font-size:var(--text-sm);font-weight:500;box-shadow:inset 2px 0 0 transparent;transition:color .2s,background .2s,box-shadow .2s;touch-action:manipulation;}
+.area-rail a:hover{color:var(--text);background:var(--card-h);}
+.area-rail a:active{background:var(--card-b);}
+/* Activa: --g sobre --gdim da 12.5:1 en oscuro; en claro --g baja a 3.6:1, por eso usa --g2 (4.7:1). */
+.area-rail a[aria-current="page"]{color:var(--g);background:var(--gdim);box-shadow:inset 2px 0 0 var(--g);font-weight:600;}
+.area-rail a:focus-visible{outline:2px solid var(--g);outline-offset:-2px;}
+html[data-theme="light"] .area-rail{background:rgba(247,252,248,.86);border-right-color:rgba(0,143,44,.16);}
+html[data-theme="light"] .area-rail a[aria-current="page"]{color:var(--g2);}
+.mobile-menu ul a[aria-current="page"]{color:var(--g);border-color:var(--g);}
+html[data-theme="light"] .mobile-menu ul a[aria-current="page"]{color:var(--g2);border-color:var(--g2);}
+[data-area][hidden]{display:none!important;}
+#contenido:focus{outline:none;}
+.rail-toggle{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0 0 1rem auto;border:1px solid var(--card-b);border-radius:var(--r-sm);background:transparent;color:var(--sub);cursor:pointer;touch-action:manipulation;transition:color .2s,background .2s,border-color .2s;}
+.rail-toggle:hover{color:var(--g);background:var(--card-h);}
+.rail-toggle:active{background:var(--card-b);}
+.rail-toggle:focus-visible{outline:2px solid var(--g);outline-offset:2px;}
+.rail-toggle svg{transition:transform .2s;}
+html.rail-collapsed .rail-toggle svg{transform:rotate(180deg);}
+html.rail-collapsed .area-rail ul{display:none;}
+/* 1025px es el mismo corte donde el sitio cambia al menú ☰; por debajo, las áreas viven en ese menú. */
+@media(min-width:1025px){
+  .area-shell{display:grid;grid-template-columns:var(--rail-w) minmax(0,1fr);position:relative;z-index:2;transition:grid-template-columns .25s;}
+  /* Cerrado queda solo el botón: 44px más .75rem a cada lado. */
+  html.rail-collapsed .area-shell{grid-template-columns:calc(44px + 1.5rem) minmax(0,1fr);}
+  /* z-index 3: las secciones van en z-index 2 y no deben pintar sobre el lateral. */
+  .area-rail{display:block;position:sticky;z-index:3;top:var(--nav-h);height:calc(100vh - var(--nav-h));overflow-y:auto;padding:1rem 1rem 2rem;background:rgba(5,14,6,.85);backdrop-filter:blur(24px);border-right:1px solid rgba(0,255,65,.09);}
+  html.rail-collapsed .area-rail{padding:1rem .75rem;overflow:hidden;}
+  /* El ticker salía a 100vw; junto al lateral se limita al ancho del hero para no desbordar la columna. */
+  .area-shell #hero .ticker-wrap{width:auto;margin:0 -3rem 2rem;}
+}
+#prod-demo{padding:0 0 5rem;}
+/* Mostrada sola, la demo ya no continúa a Productos y necesita su propio aire arriba. */
+html.areas-on #prod-demo{padding-top:5rem;}
 
 section,div.ticker-wrap,div.stats-row{position:relative;z-index:2;}
 @supports(content-visibility:auto){
@@ -867,17 +906,24 @@ html[data-platform="android"] .demo-input,html[data-platform="android"] .contact
 
 @media(max-width:1100px) and (min-width:1025px){
   nav{padding-left:1.5rem;padding-right:1.5rem;}
-  .desktop-nav{gap:.45rem;}
-  .desktop-nav a{font-size:.76rem;}
   .nav-actions{gap:.4rem;}
   .nav-login{padding:.5rem .8rem;font-size:.72rem;}
   .nav-cta{padding:.52rem .9rem;font-size:.72rem;}
   .nav-login-full,.nav-cta-full{display:none;}
   .nav-login-short,.nav-cta-short{display:inline;}
 }
+/* Portátiles chicos: el lateral deja 690–940px de contenido, donde tres o cuatro columnas aprietan las tarjetas.
+   1280px es donde vuelven a caber tres tarjetas de ~300px junto al lateral. */
+/* Con el lateral cerrado vuelve el espacio, así que estas reglas solo aplican con el lateral abierto. */
+@media(min-width:1025px) and (max-width:1279px){
+  html:not(.rail-collapsed) :is(.hero-strip,.srv-grid,.testimonials-grid,.types-grid,.stats-row){grid-template-columns:1fr 1fr;}
+  /* Con tres tarjetas en dos columnas, la tercera ocupa el ancho completo en vez de quedar huérfana. */
+  html:not(.rail-collapsed) :is(.hero-strip,.srv-grid,.testimonials-grid)>:last-child:nth-child(odd){grid-column:1/-1;}
+  html:not(.rail-collapsed) .how-grid{grid-template-columns:1fr;gap:3rem;}
+  html:not(.rail-collapsed) .prod-grid{grid-template-columns:1fr;}
+}
 @media(max-width:1024px){
   nav{padding-top:calc(1rem + env(safe-area-inset-top));padding-right:calc(1.5rem + env(safe-area-inset-right));padding-bottom:1rem;padding-left:calc(1.5rem + env(safe-area-inset-left));}
-  .desktop-nav{display:none;}
   .nav-actions>.nav-login,.nav-actions>.nav-cta{display:none;}
   .menu-toggle{display:inline-flex;flex:0 0 48px;}
   .theme-toggle{width:44px;height:44px;flex:0 0 44px;}
@@ -1038,7 +1084,6 @@ h1{
   line-height:1.65;
 }
 
-.desktop-nav a,
 .nav-login,
 .nav-cta,
 .btn-p,
@@ -1159,17 +1204,10 @@ h1{
 <canvas id="bgc"></canvas>
 
 <nav>
-  <a href="#" class="logo">
+  <a href="#hero" class="logo">
     <img src="assets/dataseed-icon.png" alt="Dataseed" width="40" height="40" decoding="async" fetchpriority="high">
     <div><span class="logo-t">Dataseed</span><span class="logo-s">Data Driven</span></div>
   </a>
-  <ul class="desktop-nav">
-    <li><a href="#services">Servicios</a></li>
-    <li><a href="#how">Cómo funciona</a></li>
-    <li><a href="#products" class="nav-active">Productos</a></li>
-    <li><a href="#types">Analítica</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
   <div class="nav-actions">
     <a href="login.html" class="nav-login" data-track="nav_login"><span class="nav-login-full">Iniciar sesión</span><span class="nav-login-short">Ingresar</span></a>
     <a href="#contacto" class="nav-cta"><span class="nav-cta-full">Agendar demo</span><span class="nav-cta-short">Demo</span></a>
@@ -1180,11 +1218,15 @@ h1{
 
 <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Navegación móvil" hidden>
   <ul>
-    <li><a href="#services">Servicios</a></li>
-    <li><a href="#how">Cómo funciona</a></li>
-    <li><a href="#products">Productos</a></li>
-    <li><a href="#types">Analítica</a></li>
-    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#hero" data-area-link="inicio">Inicio</a></li>
+    <li><a href="#services" data-area-link="services">Servicios</a></li>
+    <li><a href="#how" data-area-link="how">Cómo trabajamos</a></li>
+    <li><a href="#testimonials" data-area-link="testimonials">Resultados reales</a></li>
+    <li><a href="#types" data-area-link="types">Tipos de analítica</a></li>
+    <li><a href="#products" data-area-link="products">Productos</a></li>
+    <li><a href="#prod-demo" data-area-link="prod-demo">Demo</a></li>
+    <li><a href="#faq" data-area-link="faq">Preguntas frecuentes</a></li>
+    <li><a href="#contacto" data-area-link="contacto">Contacto</a></li>
   </ul>
   <div class="mobile-menu-actions">
     <a href="login.html" class="mobile-menu-login" data-track="mobile_nav_login">Iniciar sesión</a>
@@ -1192,8 +1234,25 @@ h1{
   </div>
 </div>
 
+<div class="area-shell">
+<div class="area-rail" role="navigation" aria-label="Áreas de la página">
+  <button class="rail-toggle" type="button" id="railToggle" aria-controls="areaList" aria-expanded="true" aria-label="Ocultar áreas" title="Ocultar áreas" data-label-open="Ocultar áreas" data-label-closed="Mostrar áreas"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <ul id="areaList">
+    <li><a href="#hero" data-area-link="inicio">Inicio</a></li>
+    <li><a href="#services" data-area-link="services">Servicios</a></li>
+    <li><a href="#how" data-area-link="how">Cómo trabajamos</a></li>
+    <li><a href="#testimonials" data-area-link="testimonials">Resultados reales</a></li>
+    <li><a href="#types" data-area-link="types">Tipos de analítica</a></li>
+    <li><a href="#products" data-area-link="products">Productos</a></li>
+    <li><a href="#prod-demo" data-area-link="prod-demo">Demo</a></li>
+    <li><a href="#faq" data-area-link="faq">Preguntas frecuentes</a></li>
+    <li><a href="#contacto" data-area-link="contacto">Contacto</a></li>
+  </ul>
+</div>
+<main id="contenido" tabindex="-1">
+
 <!-- HERO -->
-<section id="hero">
+<section id="hero" data-area="inicio">
   <div class="ticker-wrap">
     <div class="ticker">
       <span>Consultoría BI</span><span>Procesamiento de Datos</span><span>Analítica Predictiva</span><span>Tableros Ejecutivos</span><span>KPI Management</span><span>Machine Learning</span><span>Estudios de Mercado</span><span>Analítica Cognitiva</span><span>Data Pipelines</span><span>Power BI</span><span>Visualización de Datos</span><span>Agent Engine</span><span>Automatización</span>
@@ -1215,7 +1274,7 @@ h1{
 </section>
 
 <!-- STATS -->
-<div class="stats-row">
+<div class="stats-row" data-area="inicio">
   <div class="stt gc"><div class="stt-n">360°</div><div class="stt-l">Visión integral del negocio y sus principales indicadores.</div></div>
   <div class="stt gc"><div class="stt-n">BI + IA</div><div class="stt-l">Business Intelligence combinado con analítica inteligente.</div></div>
   <div class="stt gc"><div class="stt-n">5x</div><div class="stt-l">Mayor velocidad en la toma de decisiones estratégicas.</div></div>
@@ -1223,7 +1282,7 @@ h1{
 </div>
 
 <!-- SERVICES -->
-<section id="services">
+<section id="services" data-area="services">
   <div class="inner">
     <div class="pill" style="margin-bottom:1.4rem;">● Servicios</div>
     <h2 class="sec-title">Todo lo que necesitas<br>para explotar tus datos.</h2>
@@ -1255,7 +1314,7 @@ h1{
 </section>
 
 <!-- HOW + DASHBOARD -->
-<section id="how">
+<section id="how" data-area="how">
   <div class="inner">
     <div class="how-grid">
       <div>
@@ -1363,7 +1422,7 @@ h1{
 </section>
 
 <!-- TESTIMONIOS -->
-<section id="testimonials">
+<section id="testimonials" data-area="testimonials">
   <div class="inner">
     <div class="testimonials-head">
       <div>
@@ -1393,7 +1452,7 @@ h1{
 </section>
 
 <!-- TYPES -->
-<section id="types">
+<section id="types" data-area="types">
   <div class="inner">
     <div class="pill" style="margin-bottom:1.4rem;">● Tipos de analítica</div>
     <h2 class="sec-title">Toda la cadena analítica,<br>en un solo partner.</h2>
@@ -1407,7 +1466,7 @@ h1{
 </section>
 
 <!-- PRODUCTOS -->
-<section id="products" style="padding:5rem 0;border-top:1px solid rgba(0,255,65,.08);">
+<section id="products" data-area="products" style="padding:5rem 0;border-top:1px solid rgba(0,255,65,.08);">
   <div class="inner">
     <div class="prod-header">
       <div class="prod-header-left">
@@ -1475,7 +1534,7 @@ h1{
 </section>
 
 <!-- DEMO INLINE -->
-<section id="prod-demo" style="padding:0 0 5rem;position:relative;z-index:2;">
+<section id="prod-demo" data-area="prod-demo">
   <div class="inner">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.8rem;flex-wrap:wrap;gap:1rem;">
       <div>
@@ -1535,7 +1594,7 @@ h1{
 </section>
 
 <!-- FAQ -->
-<section id="faq">
+<section id="faq" data-area="faq">
   <div class="inner">
     <div class="faq-head">
       <div class="faq-kicker">Preguntas frecuentes</div>
@@ -1613,7 +1672,7 @@ h1{
 </section>
 
 <!-- CTA -->
-<section id="contacto">
+<section id="contacto" data-area="contacto">
   <div class="inner">
     <div class="contact-wrap">
       <div>
@@ -1709,6 +1768,62 @@ h1{
     </div>
   </div>
 </footer>
+</main>
+</div>
+<script>
+/* Áreas: muestra una sola a la vez según el #hash, así el botón Atrás y los enlaces compartidos funcionan.
+   Cualquier enlace a un id de la página abre el área que lo contiene. */
+(function(){
+  const areas=[...document.querySelectorAll('[data-area]')];
+  const links=document.querySelectorAll('[data-area-link]');
+  const main=document.getElementById('contenido');
+  const nav=document.querySelector('body>nav');
+  if(!areas.length||!main)return;
+  const root=document.documentElement;
+  if(nav&&'ResizeObserver' in window){
+    new ResizeObserver(()=>root.style.setProperty('--nav-h',nav.offsetHeight+'px')).observe(nav);
+  }
+  function show(moveFocus){
+    const id=decodeURIComponent(location.hash.slice(1));
+    const target=id?document.getElementById(id):null;
+    const name=target?.closest('[data-area]')?.dataset.area||areas[0].dataset.area;
+    areas.forEach((area)=>{area.hidden=area.dataset.area!==name;});
+    links.forEach((link)=>{
+      if(link.dataset.areaLink===name)link.setAttribute('aria-current','page');
+      else link.removeAttribute('aria-current');
+    });
+    if(target&&!target.hasAttribute('data-area'))target.scrollIntoView({behavior:'instant'});
+    else window.scrollTo({top:0,behavior:'instant'});
+    /* Tras el cierre del menú ☰, que devuelve el foco a su botón; el foco debe quedar en el área nueva. */
+    if(moveFocus)requestAnimationFrame(()=>main.focus({preventScroll:true}));
+  }
+  const railToggle=document.getElementById('railToggle');
+  if(railToggle){
+    const labels={open:railToggle.dataset.labelOpen,closed:railToggle.dataset.labelClosed};
+    function syncRail(){
+      const closed=root.classList.contains('rail-collapsed');
+      const label=closed?labels.closed:labels.open;
+      railToggle.setAttribute('aria-expanded',String(!closed));
+      railToggle.setAttribute('aria-label',label);
+      railToggle.title=label;
+    }
+    railToggle.addEventListener('click',()=>{
+      const closed=root.classList.toggle('rail-collapsed');
+      try{localStorage.setItem('dataseed-rail',closed?'closed':'open');}catch(e){}
+      syncRail();
+    });
+    syncRail();
+  }
+  root.classList.add('areas-on');
+  show(false);
+  window.addEventListener('hashchange',()=>show(true));
+  /* Un enlace al área que ya está abierta no dispara hashchange; vuelve al inicio del área igual. */
+  document.addEventListener('click',(event)=>{
+    const link=event.target.closest('a[href^="#"]');
+    if(link&&link.getAttribute('href')===location.hash)show(true);
+  });
+})();
+</script>
 
 <div id="n8n-chat"></div>
 
@@ -1768,7 +1883,6 @@ document.querySelectorAll('.faq-trigger').forEach((trigger) => {
   const backgroundElements=[
     ...[...document.body.children].filter((element)=>element!==mobileMenu&&element.tagName!=='NAV'&&element.tagName!=='SCRIPT'),
     document.querySelector('nav>.logo'),
-    document.querySelector('nav>.desktop-nav'),
     ...document.querySelectorAll('.nav-actions>:not(#menuToggle)')
   ].filter(Boolean);
   let returnFocus=null;

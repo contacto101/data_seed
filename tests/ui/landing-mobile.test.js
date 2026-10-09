@@ -13,9 +13,9 @@ test('phone navigation uses an accessible hamburger drawer and compact hero', as
     /<button class="menu-toggle" type="button" id="menuToggle" aria-label="Abrir menú" aria-controls="mobileMenu" aria-expanded="false">/,
   );
   assert.match(html, /<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Navegación móvil" hidden>/);
-  assert.match(html, /<ul class="desktop-nav">/);
+  assert.doesNotMatch(html, /desktop-nav/);
   assert.match(html, /\.menu-toggle\{display:inline-flex;/);
-  assert.match(html, /\.desktop-nav\{display:none;\}/);
+  assert.match(html, /\.area-rail\{display:none;\}/);
   assert.match(html, /html\[data-platform="android"\] #hero\{min-height:auto;\}\n  #hero \.ticker-wrap\{width:auto;margin:0 -1\.5rem 2rem;\}/);
   assert.doesNotMatch(html, /\.logo>div\{display:none;\}/);
   assert.match(html, /menuToggle\.setAttribute\('aria-expanded',String\(open\)\)/);
@@ -23,6 +23,29 @@ test('phone navigation uses an accessible hamburger drawer and compact hero', as
   assert.match(html, /backgroundElements\.forEach\(\(element\)=>\{element\.inert=open;\}\)/);
   assert.match(html, /if\(event\.key==='Tab'&&menuToggle\.getAttribute\('aria-expanded'\)==='true'\)/);
   assert.match(html, /returnFocus\?\.focus\(\)/);
+});
+
+test('area rail and phone menu list the same areas, and each one exists in the page', async () => {
+  const html = await readLanding();
+  const rail = html.match(/<div class="area-rail"[^>]*>([\s\S]*?)<\/div>/)?.[1] ?? '';
+  const phone = html.match(/<div class="mobile-menu"[^>]*>([\s\S]*?)<\/ul>/)?.[1] ?? '';
+  const linksIn = (block) => [...block.matchAll(/href="#([^"]+)" data-area-link="([^"]+)"/g)].map(([, id, area]) => ({ id, area }));
+  const railLinks = linksIn(rail);
+
+  assert.equal(railLinks.length, 9);
+  assert.deepEqual(linksIn(phone), railLinks);
+  for (const { id, area } of railLinks) {
+    assert.match(html, new RegExp(`id="${id}" data-area="${area}"`), `falta el área ${area}`);
+  }
+  assert.match(html, /\[data-area\]\[hidden\]\{display:none!important;\}/);
+  assert.match(html, /window\.addEventListener\('hashchange',\(\)=>show\(true\)\)/);
+});
+
+test('the area rail can be collapsed and remembers it', async () => {
+  const html = await readLanding();
+
+  assert.match(html, /<button class="rail-toggle" type="button" id="railToggle" aria-controls="areaList" aria-expanded="true"/);
+  assert.match(html, /if\(localStorage\.getItem\('dataseed-rail'\)==='closed'\)root\.classList\.add\('rail-collapsed'\);/);
 });
 
 test('narrow phone layout collapses dense grids and product actions to one column', async () => {
