@@ -70,10 +70,21 @@ test('areas are delimited by a glowing gradient line, without background bands',
   assert.doesNotMatch(html, /--band/);
 });
 
+test('brand landscape is the page background, dimmed under the content', async () => {
+  const html = await readLanding();
+  const image = await readFile(new URL('../../site/assets/fondo-dataseed.webp', import.meta.url));
+
+  assert.ok(image.length > 10_000);
+  assert.match(html, /<div class="site-bg" aria-hidden="true"><\/div>/);
+  assert.match(html, /url\(assets\/fondo-dataseed\.webp\)/);
+  assert.match(html, /root\.style\.setProperty\('--bg-dim',/);
+  assert.doesNotMatch(html, /id="bgc"|class="orb /);
+});
+
 test('narrow phone layout collapses dense grids and product actions to one column', async () => {
   const html = await readLanding();
 
-  assert.match(html, /#bgc\{position:fixed;inset:0;z-index:0;width:100%;height:100%;\}/);
+  assert.match(html, /\.site-bg\{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:var\(--bg\);\}/);
   assert.match(
     html,
     /\.hero-strip,\.srv-grid,\.types-grid,\.kpi-row,\.stats-row\{grid-template-columns:1fr;\}/,

@@ -194,10 +194,19 @@ body{
   text-rendering:optimizeLegibility;
 }
 
-#bgc{position:fixed;inset:0;z-index:0;width:100%;height:100%;}
-.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(100px);}
-.orb1{width:600px;height:600px;background:radial-gradient(circle,rgba(0,255,65,.1),transparent 70%);top:-150px;right:-150px;}
-.orb2{width:450px;height:450px;background:radial-gradient(circle,rgba(0,180,40,.07),transparent 70%);bottom:5%;left:-100px;}
+/* FONDO — paisaje de datos (ondas de puntos, rayos de luz, barras y grilla) fijo detrás de toda la página. Es la imagen
+   de marca sin el logo ni la etiqueta que traía, para que no compitan con el contenido. Reemplaza a la grilla animada
+   en canvas y a los dos orbes, que duplicaban lo que la imagen ya dibuja. */
+.site-bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:var(--bg);}
+/* Encuadre 62% 100%: en pantallas angostas el recorte conserva la cresta brillante de la derecha y las ondas de abajo.
+   inset -3% deja margen para el desplazamiento lento sin que asomen los bordes. */
+.site-bg::before{content:'';position:absolute;inset:-3%;background:url(assets/fondo-dataseed.webp) 62% 100%/cover no-repeat;animation:bg-drift 45s ease-in-out infinite alternate;}
+/* Velo: --bg-dim va de .15 en Inicio, para ver el paisaje completo, a .8 al bajar, donde el texto pasa sobre las ondas.
+   Con .8, --sub sobre el 1 % más brillante de la imagen da 5.6:1. Sin JavaScript queda en .8. */
+.site-bg::after{content:'';position:absolute;inset:0;background:rgba(5,14,6,var(--bg-dim,.8));}
+@keyframes bg-drift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.04) translate(-1%,-1%)}}
+/* En tema claro el paisaje queda como marca de agua bajo un velo claro; --sub sobre él da 6:1 o más. */
+html[data-theme="light"] .site-bg::after{background:rgba(244,251,245,.88);}
 
 /* NAV */
 nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3rem;background:rgba(5,14,6,.85);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,255,65,.09);}
@@ -866,9 +875,6 @@ html[data-theme="light"] .nav-login:hover{background:rgba(0,143,44,.08);border-c
 html[data-theme="light"] .nav-cta{color:#f7fff8;box-shadow:0 0 24px rgba(0,143,44,.18);}
 html[data-theme="light"] .nav-cta:hover{box-shadow:0 0 38px rgba(0,143,44,.28);}
 html[data-theme="light"] .theme-toggle{background:rgba(0,143,44,.07);border-color:rgba(0,143,44,.24);box-shadow:0 0 18px rgba(0,143,44,.10);}
-html[data-theme="light"] .orb1{background:radial-gradient(circle,rgba(0,143,44,.10),transparent 70%);}
-html[data-theme="light"] .orb2{background:radial-gradient(circle,rgba(0,110,35,.08),transparent 70%);}
-html[data-theme="light"] #bgc{opacity:.48;}
 html[data-theme="light"] .ticker-wrap{background:rgba(0,143,44,.04);border-color:rgba(0,143,44,.13);}
 html[data-theme="light"] .dash-topbar,html[data-theme="light"] .prod-demo-head,html[data-theme="light"] .demo-sources{background:rgba(0,143,44,.055);border-color:rgba(0,143,44,.14);}
 html[data-theme="light"] .kpi,html[data-theme="light"] .chart-box,html[data-theme="light"] .table-mini,html[data-theme="light"] .prod-card,html[data-theme="light"] .demo-shell,html[data-theme="light"] .demo-sidebar,html[data-theme="light"] .faq-list{background:rgba(255,255,255,.58);border-color:rgba(0,143,44,.16);}
@@ -1199,12 +1205,26 @@ h1{
 @media(max-width:1024px){
   :root{--area-pad:3.5rem;}
 }
+
+/* Tarjetas de Inicio y del resto sobre el paisaje: en oscuro, el vidrio verde se apoya en una base casi opaca para que el
+   texto no dependa de lo que pase detrás. Con el velo en .15, --sub sobre la tarjeta y una onda brillante da 5.9:1. */
+html:not([data-theme="light"]) .gc{background:linear-gradient(var(--card),var(--card)),rgba(5,14,6,.78);}
+html:not([data-theme="light"]) .gc:hover{background:linear-gradient(var(--card-h),var(--card-h)),rgba(5,14,6,.78);}
 </style>
 </head>
 <body>
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-<canvas id="bgc"></canvas>
+<div class="site-bg" aria-hidden="true"></div>
+<script>
+/* Velo del fondo: casi transparente arriba y oscuro tras bajar 60 % de una pantalla. Va antes del contenido para que
+   la primera pintura ya tenga el valor correcto. */
+(function(){
+  const root=document.documentElement;
+  function dim(){const t=Math.min(1,scrollY/(innerHeight*.6));root.style.setProperty('--bg-dim',(.15+.65*t).toFixed(3));}
+  addEventListener('scroll',dim,{passive:true});
+  addEventListener('resize',dim);
+  dim();
+})();
+</script>
 
 <nav>
   <a href="#hero" class="logo">
@@ -1800,36 +1820,6 @@ h1{
 
 <div id="n8n-chat"></div>
 
-<script>
-const cv=document.getElementById('bgc'),cx=cv.getContext('2d');
-function rs(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
-rs();window.addEventListener('resize',rs);
-const C=26,R=15,pts=[];
-for(let i=0;i<=C;i++)for(let j=0;j<=R;j++)pts.push({x:i/C,y:j/R,ph:Math.random()*Math.PI*2,sp:.4+Math.random()*.6});
-let t=0,rafId=null;
-const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-function draw(){
-  if(document.hidden||reduceMotion){rafId=null;return;}
-  cx.clearRect(0,0,cv.width,cv.height);
-  const W=cv.width,H=cv.height;
-  cx.strokeStyle='rgba(0,255,65,.042)';cx.lineWidth=.5;
-  for(let i=0;i<=C;i++){cx.beginPath();cx.moveTo(i/C*W,0);cx.lineTo(i/C*W,H);cx.stroke();}
-  for(let j=0;j<=R;j++){cx.beginPath();cx.moveTo(0,j/R*H);cx.lineTo(W,j/R*H);cx.stroke();}
-  pts.forEach(p=>{
-    const pulse=Math.sin(t*p.sp+p.ph);
-    cx.beginPath();cx.arc(p.x*W,p.y*H,.9+pulse*.45,0,Math.PI*2);
-    cx.fillStyle=`rgba(0,255,65,${.03+.08*(.5+.5*pulse)})`;cx.fill();
-  });
-  const sy=(t*.016%1)*H;
-  const g=cx.createLinearGradient(0,sy-70,0,sy+70);
-  g.addColorStop(0,'transparent');g.addColorStop(.5,'rgba(0,255,65,0.018)');g.addColorStop(1,'transparent');
-  cx.fillStyle=g;cx.fillRect(0,sy-70,W,140);
-  t+=1/60;rafId=requestAnimationFrame(draw);
-}
-function startBg(){if(!rafId&&!reduceMotion){rafId=requestAnimationFrame(draw);}}
-document.addEventListener('visibilitychange',startBg);
-startBg();
-</script>
 <script>
 document.querySelectorAll('.faq-trigger').forEach((trigger) => {
   trigger.addEventListener('click', () => {
