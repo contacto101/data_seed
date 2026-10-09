@@ -54,6 +54,12 @@ test('chat bubble hides while the phone menu is open', async () => {
   assert.match(html, /body\.menu-open #n8n-chat\{display:none;\}/);
 });
 
+test('footer belongs to the Contacto area', async () => {
+  const html = await readLanding();
+
+  assert.match(html, /<footer data-area="contacto">/);
+});
+
 test('narrow phone layout collapses dense grids and product actions to one column', async () => {
   const html = await readLanding();
 
