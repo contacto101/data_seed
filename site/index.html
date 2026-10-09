@@ -210,7 +210,6 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .nav-login{background:rgba(0,255,65,.035);color:var(--text);border:1px solid rgba(0,255,65,.2);padding:.56rem 1.15rem;border-radius:100px;font-size:.82rem;font-weight:500;text-decoration:none;transition:background .2s,border-color .2s,color .2s,transform .2s;}
 .nav-login:hover{background:rgba(0,255,65,.085);border-color:rgba(0,255,65,.38);color:var(--g);transform:translateY(-1px);}
 .nav-login:focus-visible,.nav-cta:focus-visible{outline:2px solid var(--g);outline-offset:3px;}
-.nav-login-short,.nav-cta-short{display:none;}
 .nav-cta{background:var(--g);color:#030a03;padding:.56rem 1.5rem;border-radius:100px;font-size:.82rem;font-weight:600;text-decoration:none;box-shadow:0 0 24px rgba(0,255,65,.28);transition:box-shadow .2s,opacity .2s;}
 .nav-cta:hover{opacity:.87;box-shadow:0 0 44px rgba(0,255,65,.48);}
 .theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:1px solid rgba(0,255,65,.22);background:rgba(0,255,65,.055);color:var(--g);font-size:1rem;cursor:pointer;box-shadow:0 0 18px rgba(0,255,65,.12);transition:background .2s,border-color .2s,box-shadow .2s,transform .2s;color-scheme:inherit;}
@@ -902,14 +901,14 @@ html[data-platform="android"] .demo-input,html[data-platform="android"] .contact
 
 @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
-/* Hasta 1499px las acciones usan su etiqueta corta para dejar sitio a las áreas del encabezado. */
+/* Hasta 1499px el encabezado se compacta (márgenes, separación y relleno de los botones) para que las áreas,
+   "Iniciar sesión" y "Agendar demo" quepan en una fila sin acortar ningún texto. */
 @media(max-width:1499px) and (min-width:1025px){
   nav{padding-left:1.5rem;padding-right:1.5rem;}
   .nav-actions{gap:.4rem;}
-  .nav-login{padding:.5rem .8rem;font-size:.72rem;}
-  .nav-cta{padding:.52rem .9rem;font-size:.72rem;}
-  .nav-login-full,.nav-cta-full{display:none;}
-  .nav-login-short,.nav-cta-short{display:inline;}
+  .nav-login{padding:.5rem .85rem;}
+  .nav-cta{padding:.52rem .95rem;}
+  .area-nav{gap:.95rem;margin-left:1.5rem;}
 }
 @media(max-width:1024px){
   nav{padding-top:calc(1rem + env(safe-area-inset-top));padding-right:calc(1.5rem + env(safe-area-inset-right));padding-bottom:1rem;padding-left:calc(1.5rem + env(safe-area-inset-left));}
@@ -960,8 +959,6 @@ html[data-platform="android"] .demo-input,html[data-platform="android"] .contact
   .nav-actions{gap:.4rem;}
   .nav-login{padding:.5rem .8rem;font-size:.72rem;}
   .nav-cta{padding:.52rem .9rem;font-size:.72rem;}
-  .nav-login-full,.nav-cta-full{display:none;}
-  .nav-login-short,.nav-cta-short{display:inline;}
   #hero{padding-top:calc(1.5rem + env(safe-area-inset-top));}
   .btn-p,.btn-o{width:100%;text-align:center;}
   .hero-strip,.srv-grid,.types-grid,.kpi-row,.stats-row{grid-template-columns:1fr;}
@@ -1226,8 +1223,8 @@ h1{
     <li><a href="#contacto" data-area-link="contacto">Contacto</a></li>
   </ul>
   <div class="nav-actions">
-    <a href="login.html" class="nav-login" data-track="nav_login"><span class="nav-login-full">Iniciar sesión</span><span class="nav-login-short">Ingresar</span></a>
-    <a href="#contacto" class="nav-cta"><span class="nav-cta-full">Agendar demo</span><span class="nav-cta-short">Demo</span></a>
+    <a href="login.html" class="nav-login" data-track="nav_login">Iniciar sesión</a>
+    <a href="#contacto" class="nav-cta">Agendar demo</a>
     <div class="lang-switch" role="group" aria-label="Idioma"><a href="index.html" hreflang="es" lang="es" aria-current="true" aria-label="Español">ES</a><a href="en.html" hreflang="en" lang="en" aria-label="English">EN</a></div>
     <button class="theme-toggle" type="button" id="themeToggle" aria-label="Cambiar a tema claro" aria-pressed="false"><span class="moon">☾</span><span class="sun">☀</span></button>
     <button class="menu-toggle" type="button" id="menuToggle" aria-label="Abrir menú" aria-controls="mobileMenu" aria-expanded="false"><span></span><span></span><span></span></button>

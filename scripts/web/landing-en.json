@@ -7,8 +7,6 @@
   ["<meta property=\"og:url\" content=\"https://dataseed.cl/site/index.html\">", "<meta property=\"og:url\" content=\"https://dataseed.cl/site/en.html\">"],
   ["DataSeed ofrece Business Intelligence, integración de datos, analítica avanzada, tableros ejecutivos y automatización para organizaciones de Chile y Latinoamérica.", "DataSeed provides Business Intelligence, data integration, advanced analytics, executive dashboards and automation for organizations in Chile and Latin America."],
   ["\"inLanguage\": \"es-CL\"", "\"inLanguage\": \"en\""],
-  ["<span class=\"nav-login-full\">Iniciar sesión</span><span class=\"nav-login-short\">Ingresar</span>", "<span class=\"nav-login-full\">Log in</span><span class=\"nav-login-short\">Log in</span>"],
-  ["<span class=\"nav-cta-full\">Agendar demo</span>", "<span class=\"nav-cta-full\">Book a demo</span>"],
   ["<div class=\"lang-switch\" role=\"group\" aria-label=\"Idioma\"><a href=\"index.html\" hreflang=\"es\" lang=\"es\" aria-current=\"true\" aria-label=\"Español\">ES</a><a href=\"en.html\" hreflang=\"en\" lang=\"en\" aria-label=\"English\">EN</a></div>", "<div class=\"lang-switch\" role=\"group\" aria-label=\"Language\"><a href=\"index.html\" hreflang=\"es\" lang=\"es\" aria-label=\"Español\">ES</a><a href=\"en.html\" hreflang=\"en\" lang=\"en\" aria-current=\"true\" aria-label=\"English\">EN</a></div>"],
   ["Cambiar a tema oscuro", "Switch to dark theme"],
   ["Cambiar a tema claro", "Switch to light theme"],
