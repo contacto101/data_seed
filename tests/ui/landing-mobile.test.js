@@ -37,8 +37,9 @@ test('header and phone menu list the same areas, and each one exists in the page
   for (const { id, area } of headerLinks) {
     assert.match(html, new RegExp(`id="${id}" data-area="${area}"`), `falta el área ${area}`);
   }
-  assert.match(html, /\[data-area\]\[hidden\]\{display:none!important;\}/);
-  assert.match(html, /window\.addEventListener\('hashchange',\(\)=>show\(true\)\)/);
+  assert.doesNotMatch(html, /\[data-area\]\[hidden\]/);
+  assert.match(html, /addEventListener\('scroll',update,\{passive:true\}\)/);
+  assert.match(html, /link\.setAttribute\('aria-current','location'\)/);
 });
 
 test('area links live in the header, not in a side rail', async () => {
