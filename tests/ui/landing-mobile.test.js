@@ -16,7 +16,7 @@ test('phone navigation uses an accessible hamburger drawer and compact hero', as
   assert.doesNotMatch(html, /desktop-nav/);
   assert.match(html, /\.menu-toggle\{display:inline-flex;/);
   assert.match(html, /\.area-rail\{display:none;\}/);
-  assert.match(html, /html\[data-platform="android"\] #hero\{min-height:auto;\}\n  #hero \.ticker-wrap\{width:auto;margin:0 -1\.5rem 2rem;\}/);
+  assert.match(html, /#hero \.ticker-wrap\{width:auto;margin:0 -1\.5rem 2rem;\}/);
   assert.doesNotMatch(html, /\.logo>div\{display:none;\}/);
   assert.match(html, /menuToggle\.setAttribute\('aria-expanded',String\(open\)\)/);
   assert.match(html, /if\(event\.key==='Escape'\)setMenu\(false\)/);
@@ -54,10 +54,11 @@ test('chat bubble hides while the phone menu is open', async () => {
   assert.match(html, /body\.menu-open #n8n-chat\{display:none;\}/);
 });
 
-test('footer belongs to the Contacto area', async () => {
+test('footer belongs to the Contacto area and Inicio has no call-to-action buttons', async () => {
   const html = await readLanding();
 
   assert.match(html, /<footer data-area="contacto">/);
+  assert.doesNotMatch(html, /class="hero-btns"/);
 });
 
 test('narrow phone layout collapses dense grids and product actions to one column', async () => {
@@ -115,9 +116,9 @@ test('large-phone landscape and desktop-mode viewports keep mobile behavior thro
   );
   assert.match(
     html,
-    /@media\(max-width:600px\)\{[\s\S]*?#hero\{padding-top:calc\(7\.4rem \+ env\(safe-area-inset-top\)\);\}/,
+    /@media\(max-width:600px\)\{[\s\S]*?#hero\{padding-top:calc\(1\.5rem \+ env\(safe-area-inset-top\)\);\}/,
   );
-  assert.match(html, /@supports\(min-height:100dvh\)\{@media\(min-width:1025px\)\{#hero\{min-height:100dvh;\}\}\}/);
+  assert.doesNotMatch(html, /#hero\{min-height:100d?vh;/);
   assert.match(html, /window\.innerWidth>1024/);
   assert.doesNotMatch(html, /max-width:900px|min-width:901px|innerWidth>900/);
 });
@@ -130,7 +131,7 @@ test('iOS and Android layout respects safe areas, dynamic viewport and reduced m
     /nav\{padding-top:calc\(\.9rem \+ env\(safe-area-inset-top\)\);padding-right:calc\(1rem \+ env\(safe-area-inset-right\)\);padding-left:calc\(1rem \+ env\(safe-area-inset-left\)\);\}/,
   );
   assert.match(html, /section\[id\]\{scroll-margin-top:calc\(6rem \+ env\(safe-area-inset-top\)\);\}/);
-  assert.match(html, /@supports\(min-height:100dvh\)\{@media\(min-width:1025px\)\{#hero\{min-height:100dvh;\}\}\}/);
+  assert.doesNotMatch(html, /#hero\{min-height:100d?vh;/);
   assert.match(html, /#hero \.ticker-wrap\{width:auto;margin:0 -1\.5rem 2rem;\}/);
   assert.match(html, /@media\(prefers-reduced-motion:reduce\)/);
   assert.match(html, /\.ticker\{animation:none!important;transform:none!important;\}/);
