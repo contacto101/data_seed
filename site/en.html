@@ -98,6 +98,10 @@
   --heading-section:clamp(2rem,3.5vw,3rem);
   /* Antes clamp(2.75rem,5.5vw,4.75rem); reducido ~20% con el resto del área Inicio. */
   --heading-hero:clamp(2.25rem,4.4vw,3.75rem);
+  /* Separador entre áreas: una línea que nace transparente en los bordes, se enciende en el centro con --g y
+     proyecta un halo difuso hacia abajo. --divider-core es el tramo brillante y --divider-glow el resplandor. */
+  --divider-core:rgba(0,255,65,.7);
+  --divider-glow:rgba(0,255,65,.16);
   --area-pad:5.5rem;
   --chat--color-primary:var(--g);
   --chat--color-primary-shade-50:#00ea3c;
@@ -151,6 +155,8 @@ html[data-theme="light"]{
   --text:#08240d;
   --sub:#315c39;
   --muted:#66856c;
+  --divider-core:rgba(0,143,44,.55);
+  --divider-glow:rgba(0,143,44,.1);
   --chat--color-primary:var(--g);
   --chat--color-primary-shade-50:#008f2c;
   --chat--color-primary-shade-100:#007a25;
@@ -1181,8 +1187,14 @@ h1{
 
 /* DELIMITACIÓN DE ÁREAS — va al final porque unifica el alto y el borde que cada sección declaraba distinto
    (4rem, 5rem, 100px, 2rem arriba en Preguntas, nada en Demo). Todas las áreas después de Inicio abren con el
-   mismo aire. */
+   mismo separador y el mismo aire; el fondo queda libre para que la grilla animada corra continua. */
 #services,#how,#testimonials,#types,#products,#prod-demo,#faq,#contacto{padding:var(--area-pad) 0;border-top:0;background:transparent;}
+/* Línea: 2px, del ancho del contenido, con degradado transparente → --divider-core → transparente y un brillo
+   del mismo color alrededor; va en top:0 porque content-visibility recorta lo que asoma fuera de la sección. Halo: una elipse difuminada bajo la línea que se apaga a los 7rem. */
+:is(#services,#how,#testimonials,#types,#products,#prod-demo,#faq,#contacto)::before,
+:is(#services,#how,#testimonials,#types,#products,#prod-demo,#faq,#contacto)::after{content:'';position:absolute;left:50%;transform:translateX(-50%);pointer-events:none;}
+:is(#services,#how,#testimonials,#types,#products,#prod-demo,#faq,#contacto)::before{top:0;width:min(1160px,calc(100% - 3rem));height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--divider-core) 30%,var(--divider-core) 70%,transparent);box-shadow:0 0 14px 1px var(--divider-glow),0 0 2px var(--divider-core);}
+:is(#services,#how,#testimonials,#types,#products,#prod-demo,#faq,#contacto)::after{top:0;width:min(900px,calc(100% - 3rem));height:7rem;background:radial-gradient(ellipse 50% 100% at 50% 0,var(--divider-glow),transparent 72%);filter:blur(6px);}
 @media(min-width:1025px) and (max-width:1365px){
   /* Aquí el encabezado tiene dos filas: el salto desde el menú deja el título del área a la vista. */
   section[id]{scroll-margin-top:calc(8.5rem + env(safe-area-inset-top));}

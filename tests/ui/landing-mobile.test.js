@@ -62,6 +62,14 @@ test('footer belongs to the Contacto area and Inicio has no call-to-action butto
   assert.doesNotMatch(html, /class="hero-btns"/);
 });
 
+test('areas are delimited by a glowing gradient line, without background bands', async () => {
+  const html = await readLanding();
+
+  assert.match(html, /#services,#how,#testimonials,#types,#products,#prod-demo,#faq,#contacto\{padding:var\(--area-pad\) 0;border-top:0;background:transparent;\}/);
+  assert.match(html, /::before\{top:0;width:min\(1160px,calc\(100% - 3rem\)\);height:2px;[^}]*linear-gradient\(90deg,transparent,var\(--divider-core\)/);
+  assert.doesNotMatch(html, /--band/);
+});
+
 test('narrow phone layout collapses dense grids and product actions to one column', async () => {
   const html = await readLanding();
 
