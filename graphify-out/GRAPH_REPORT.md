@@ -1,4 +1,4 @@
-# Graph Report - dataseed-multibranch-snapshot-urgc30w9  (2026-10-09)
+# Graph Report - dataseed-multibranch-snapshot-0zz5ibz1  (2026-10-10)
 
 ## Corpus Check
 - 380 files · ~377,778 words
@@ -335,16 +335,16 @@
 10. `main()` - 20 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `createGoogleCallbackHandler()` --calls--> `parseCookies()`  [INFERRED]
+  branches/fix/publica-function-count/api/auth/_lib/publica-handlers/google-callback.js → _shared/api/auth/_lib/cookies.js
+- `createPublicaLogoutHandler()` --calls--> `parseCookies()`  [INFERRED]
+  branches/fix/publica-function-count/api/auth/_lib/publica-handlers/logout.js → _shared/api/auth/_lib/cookies.js
+- `createGoogleCallbackHandler()` --calls--> `parseCookies()`  [INFERRED]
+  branches/fix/publica-router-rewrite/api/auth/_lib/publica-handlers/google-callback.js → _shared/api/auth/_lib/cookies.js
+- `createGoogleCallbackHandler()` --calls--> `getHeader()`  [INFERRED]
+  branches/fix/publica-function-count/api/auth/_lib/publica-handlers/google-callback.js → _shared/api/auth/_lib/http.js
 - `resolveOrigin()` --calls--> `getHeader()`  [INFERRED]
   branches/fix/publica-function-count/api/auth/_lib/publica-handlers/google-start.js → _shared/api/auth/_lib/http.js
-- `resolveOrigin()` --calls--> `getHeader()`  [INFERRED]
-  branches/fix/publica-signup-confirm-redirect/api/auth/_lib/publica-handlers/google-start.js → _shared/api/auth/_lib/http.js
-- `createGoogleStartHandler()` --calls--> `methodNotAllowed()`  [INFERRED]
-  branches/fix/publica-function-count/api/auth/_lib/publica-handlers/google-start.js → _shared/api/auth/_lib/http.js
-- `createPublicaLogoutHandler()` --calls--> `methodNotAllowed()`  [INFERRED]
-  branches/fix/publica-function-count/api/auth/_lib/publica-handlers/logout.js → _shared/api/auth/_lib/http.js
-- `createPublicaSessionHandler()` --calls--> `methodNotAllowed()`  [INFERRED]
-  branches/fix/publica-function-count/api/auth/_lib/publica-handlers/session.js → _shared/api/auth/_lib/http.js
 
 ## Import Cycles
 - 1-file cycle: `_shared/scripts/ops/demeter_daily_backup.py -> _shared/scripts/ops/demeter_daily_backup.py`
@@ -365,8 +365,8 @@ Cohesion: 0.05
 Nodes (66): ALLOWED_RECIPIENTS, AREAS, buildEmail(), buildReport(), bulletsUnderHeading(), cellXml(), chileParts(), classifyTask() (+58 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.08
-Nodes (39): Almacen, _armar_ref(), _as_of(), _autorizado(), buscar(), _buscar_con_indice(), _buscar_sin_indice(), Busqueda (+31 more)
+Cohesion: 0.05
+Nodes (17): config, config, createLicitacionHandler(), membershipA, membershipB, identity, identity, favoritoValido (+9 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.08
@@ -374,43 +374,43 @@ Nodes (39): Almacen, _armar_ref(), _as_of(), _autorizado(), buscar(), _buscar_co
 
 ### Community 5 - "Community 5"
 Cohesion: 0.08
-Nodes (39): Aplica la regla del umbral del SDD 5.1 a metricas.competencia.      [BUG 2026-09, Filtros que no son de texto, sobre licitacion_texto., Las tres capas, en union. Devuelve (cte_sql, params).      UNION y no intersecci, Arma el WHERE. Devuelve (sql, params, tokens).      La busqueda es DETERMINISTA, Relevancia sin modelo: lo que coincide en el NOMBRE va primero.      Una licitac, Una sola pasada de las tres capas, materializada en una tabla temporal.      [ME, Capa 1 sola, sobre el almacen. Es el camino de degradacion cuando el     indice, Historia de precio del mismo rubro. rubro = unspsc_commodity (SDD 4.1b).      In (+31 more)
+Nodes (39): Almacen, _armar_ref(), _as_of(), _autorizado(), buscar(), _buscar_con_indice(), _buscar_sin_indice(), Busqueda (+31 more)
 
 ### Community 6 - "Community 6"
+Cohesion: 0.08
+Nodes (39): Aplica la regla del umbral del SDD 5.1 a metricas.competencia.      [BUG 2026-09, Filtros que no son de texto, sobre licitacion_texto., Las tres capas, en union. Devuelve (cte_sql, params).      UNION y no intersecci, Arma el WHERE. Devuelve (sql, params, tokens).      La busqueda es DETERMINISTA, Relevancia sin modelo: lo que coincide en el NOMBRE va primero.      Una licitac, Una sola pasada de las tres capas, materializada en una tabla temporal.      [ME, Capa 1 sola, sobre el almacen. Es el camino de degradacion cuando el     indice, Historia de precio del mismo rubro. rubro = unspsc_commodity (SDD 4.1b).      In (+31 more)
+
+### Community 7 - "Community 7"
 Cohesion: 0.11
 Nodes (47): Any, datetime, Path, assert_no_secret_values(), backup_outputs_summary(), build_backup_md(), build_completed_cycles_md(), build_restore_guide() (+39 more)
 
-### Community 7 - "Community 7"
-Cohesion: 0.17
-Nodes (31): config, createLoginHandler(), createPublicaSignupHandler(), normalizeEmpresa(), createPublicaLoginHandler(), createPublicaSignupHandler(), normalizeEmpresa(), createPublicaLoginHandler() (+23 more)
-
 ### Community 8 - "Community 8"
-Cohesion: 0.06
-Nodes (15): config, config, createLicitacionHandler(), membershipA, membershipB, env, identity, identity (+7 more)
-
-### Community 9 - "Community 9"
 Cohesion: 0.08
 Nodes (31): buildAlerts(), { filterOpportunities }, { buildAgentAnswer, getTenderById }, buildComparablePriceSeries(), buildSummary(), fetchJson(), fetchLiveTenders(), formatDateForChileCompra() (+23 more)
 
-### Community 10 - "Community 10"
-Cohesion: 0.06
-Nodes (20): COMO_API, COMO_PAGINA, config, createDemoAuditoriaHandler(), leerCuerpo(), RECURSOS, env, handler() (+12 more)
-
-### Community 11 - "Community 11"
+### Community 9 - "Community 9"
 Cohesion: 0.09
 Nodes (26): ACRONIMOS, BuscadorPublicaApp, buscarLicitacionesBackend(), ENLACES_ESPANOL, evaluarCierre(), filtrarResultados(), formatearActualizacion(), formatearContadorResultados() (+18 more)
+
+### Community 10 - "Community 10"
+Cohesion: 0.09
+Nodes (26): ACRONIMOS, BuscadorPublicaApp, buscarLicitacionesBackend(), ENLACES_ESPANOL, evaluarCierre(), filtrarResultados(), formatearActualizacion(), formatearContadorResultados() (+18 more)
+
+### Community 11 - "Community 11"
+Cohesion: 0.06
+Nodes (19): COMO_API, COMO_PAGINA, config, createDemoAuditoriaHandler(), leerCuerpo(), RECURSOS, env, handler() (+11 more)
 
 ### Community 12 - "Community 12"
 Cohesion: 0.09
 Nodes (26): ACRONIMOS, BuscadorPublicaApp, buscarLicitacionesBackend(), ENLACES_ESPANOL, evaluarCierre(), filtrarResultados(), formatearActualizacion(), formatearContadorResultados() (+18 more)
 
 ### Community 13 - "Community 13"
-Cohesion: 0.09
-Nodes (26): ACRONIMOS, BuscadorPublicaApp, buscarLicitacionesBackend(), ENLACES_ESPANOL, evaluarCierre(), filtrarResultados(), formatearActualizacion(), formatearContadorResultados() (+18 more)
-
-### Community 14 - "Community 14"
 Cohesion: 0.05
 Nodes (40): 10. Anti-Patterns (prohibido), 11. Checklist pre-entrega, 1. Identidad de Marca, 2. Paleta de Colores, 3. Tipografías, 4. Espaciado y Grid, 5. Componentes, 6. Iconografía (+32 more)
+
+### Community 14 - "Community 14"
+Cohesion: 0.19
+Nodes (28): config, createLoginHandler(), createPublicaSignupHandler(), normalizeEmpresa(), createPublicaLoginHandler(), createPublicaSignupHandler(), normalizeEmpresa(), createPublicaLoginHandler() (+20 more)
 
 ### Community 15 - "Community 15"
 Cohesion: 0.09
@@ -421,44 +421,44 @@ Cohesion: 0.10
 Nodes (23): ACRONIMOS, BuscadorPublicaApp, ENLACES_ESPANOL, evaluarCierre(), filtrarResultados(), formatearContadorResultados(), formatearFechaCorta(), formatearFechaLarga() (+15 more)
 
 ### Community 17 - "Community 17"
+Cohesion: 0.13
+Nodes (23): createSessionHandler(), createPublicaLogoutHandler(), createPublicaSessionHandler(), authenticate(), getHeader(), sendJson(), setNoStore(), clearSessionCookies() (+15 more)
+
+### Community 18 - "Community 18"
 Cohesion: 0.10
 Nodes (28): app, html, proxy, required, service, sessionStore, walk(), apiPlatforms() (+20 more)
 
-### Community 18 - "Community 18"
+### Community 19 - "Community 19"
 Cohesion: 0.13
 Nodes (27): bindChatEvents(), countByEnabled(), demeter, ensureSession(), escapeHtml(), formatTime(), loadOpsInventory(), metricCard() (+19 more)
 
-### Community 19 - "Community 19"
+### Community 20 - "Community 20"
+Cohesion: 0.11
+Nodes (15): env, env, config, createLogoutHandler(), env, config, identity, buildSessionCookies() (+7 more)
+
+### Community 21 - "Community 21"
 Cohesion: 0.06
 Nodes (30): Alcance revisado, Alto — El reporte contiene metadata operativa sensible, Alto — Validación de dominio solo en cliente, Cambio cliente en `reports.html`, Checks de deploy Firebase, Checks de repo/build, Checks Firebase Rules si se usa Firestore/Storage, Checks HTTP obligatorios (+22 more)
 
-### Community 20 - "Community 20"
+### Community 22 - "Community 22"
 Cohesion: 0.07
 Nodes (27): 10. Resumen ejecutivo, 1. Opción seleccionada, 2. Archivos implementados, 3. Cómo activar auth real, 4. Flujos implementados, 5. Eventos analytics implementados, 6. Modelo futuro recomendado en GCP, 7. Modelo de datos recomendado (+19 more)
 
-### Community 21 - "Community 21"
+### Community 23 - "Community 23"
 Cohesion: 0.07
 Nodes (27): Benchmark resumido, Cliente ideal inicial, Contra AI Analytics / ThoughtSpot / Copilot, Contra BI tradicional, Contra Mercado Público oficial, Contra portales de licitaciones, CTA, Decisión estratégica (+19 more)
-
-### Community 22 - "Community 22"
-Cohesion: 0.12
-Nodes (13): env, config, env, config, createSessionHandler(), identity, buildSessionCookies(), clearSessionCookies() (+5 more)
-
-### Community 23 - "Community 23"
-Cohesion: 0.13
-Nodes (13): favoritoValido, identity, createPublicaSessionHandler(), clearSessionCookies(), serializeCookie(), authenticatePublicaRequest(), authenticationRequired(), isInvalidSession() (+5 more)
 
 ### Community 24 - "Community 24"
 Cohesion: 0.20
 Nodes (23): NoReturn, api(), commit_files(), create_blob(), fail(), get_head(), get_remote_file(), github_path() (+15 more)
 
 ### Community 25 - "Community 25"
-Cohesion: 0.20
-Nodes (18): createLogoutHandler(), createGoogleCallbackHandler(), redirect(), createPublicaLogoutHandler(), createGoogleCallbackHandler(), redirect(), authenticate(), config (+10 more)
-
-### Community 26 - "Community 26"
 Cohesion: 0.17
 Nodes (18): exchangeOAuthCode(), getConfig(), getMemberships(), getProfile(), getUser(), provisionSelfServeOrg(), refreshSession(), request() (+10 more)
+
+### Community 26 - "Community 26"
+Cohesion: 0.14
+Nodes (14): identity, createGoogleStartHandler(), resolveOrigin(), createGoogleStartHandler(), resolveOrigin(), config, createGoogleCallbackHandler(), redirect() (+6 more)
 
 ### Community 27 - "Community 27"
 Cohesion: 0.09
@@ -469,60 +469,60 @@ Cohesion: 0.10
 Nodes (20): 1. Los cuatro archivos, 2.1 El hueco se declara, no se rellena, 2.2 Ningún número absoluto va escrito en el código, 2.3 El frontend NO decide si un dato alcanza para llamarse "mediana", 2.4 `as_of` y `actualizado_en` son cosas distintas, 2.5 Compra Ágil y el texto de cobertura, 2.6 Fuera de alcance de esta pantalla, 2. Reglas de contenido que no son negociables (+12 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.14
-Nodes (13): identity, createGoogleStartHandler(), resolveOrigin(), createGoogleStartHandler(), resolveOrigin(), config, createGoogleStartHandler(), resolveOrigin() (+5 more)
-
-### Community 30 - "Community 30"
 Cohesion: 0.21
 Nodes (11): Path, _completion_payload(), _cors_headers(), DemoProxy, _deterministic_guardrail_reply(), _rate_limit_check(), _sanitize_demo_payload(), StreamReader (+3 more)
 
-### Community 31 - "Community 31"
+### Community 30 - "Community 30"
 Cohesion: 0.19
 Nodes (17): applySavedTheme(), parseResponse(), publicLoginError(), redirectExistingSession(), requestRecovery(), setFieldError(), setLoading(), setResetLoading() (+9 more)
 
-### Community 32 - "Community 32"
+### Community 31 - "Community 31"
 Cohesion: 0.10
 Nodes (19): 4.1-quater Frescura: `as_of` y `actualizado_en` son dos cosas distintas, Cadencia elegida, y por qué no es de madrugada, Con qué frecuencia se actualiza la fuente, medido, 1. Qué es y qué no es, 2. Regla de la casa: el hueco se dice, no se rellena, 3. Campos disponibles, 4.1-bis Cómo se calcula `meta.as_of`, y por qué no se le pregunta a la ingesta, 4.1 Las tres definiciones que el contrato anterior daba por obvias (+11 more)
 
-### Community 33 - "Community 33"
+### Community 32 - "Community 32"
 Cohesion: 0.10
 Nodes (19): 1. Los cuatro archivos, 2.1 El hueco se declara, no se rellena, 2.2 Ningún número absoluto va escrito en el código, 2.3 El frontend NO decide si un dato alcanza para llamarse "mediana", 2.4 `as_of` y `actualizado_en` son cosas distintas, 2.5 Compra Ágil y el texto de cobertura, 2.6 Fuera de alcance de esta pantalla, 2. Reglas de contenido que no son negociables (+11 more)
 
-### Community 34 - "Community 34"
+### Community 33 - "Community 33"
 Cohesion: 0.10
 Nodes (20): 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet, 2026-06-14 | Daniel Caignet (+12 more)
 
-### Community 35 - "Community 35"
+### Community 34 - "Community 34"
 Cohesion: 0.11
 Nodes (18): 1. Enviar 20 DMs a ICP B2B → [ ] Hecho, 2. Calificar respuestas con fit check → [ ] Hecho, 3. Proponer diagnóstico a los que pasen fit → [ ] Hecho, 📎 Assets complementarios (detalle en secciones abajo), 🔧 Checklist de Proceso Candidato a Agente L2 (Ciclo 004), 📝 Cómo usar este briefing, DataSeed Agent Factory — Briefing Semanal Quick-Start, DETALLE COMPLETO (referencia, no lectura obligatoria) (+10 more)
 
-### Community 36 - "Community 36"
+### Community 35 - "Community 35"
 Cohesion: 0.11
 Nodes (18): 1) Crear `firebase.json`, 2) Crear `.firebaserc` opcional, 3) Crear `functions/package.json`, 4) Crear `functions/index.js`, 5) Crear `functions/data/demeter-daily-report.json`, 6) Modificar `scripts/export-demeter-daily-report.py`, 7) Modificar `reports.html`, Archivos exactos involucrados (+10 more)
 
-### Community 37 - "Community 37"
+### Community 36 - "Community 36"
 Cohesion: 0.21
 Nodes (10): StreamReader, StreamWriter, _completion_payload(), _cors_headers(), DemoProxy, _deterministic_guardrail_reply(), _rate_limit_check(), Return a safe canned reply for clearly out-of-scope or risky prompts. (+2 more)
 
-### Community 38 - "Community 38"
+### Community 37 - "Community 37"
 Cohesion: 0.24
 Nodes (16): applySavedTheme(), loginErrorMessage(), parseResponse(), readQueryError(), redirectExistingSession(), requestRecovery(), selectTab(), setFieldError() (+8 more)
 
-### Community 39 - "Community 39"
+### Community 38 - "Community 38"
 Cohesion: 0.11
 Nodes (17): Alternativa descartada: página de registro público, Corrección: `organizations` NO estaba vacía, Trabajo en paralelo — pedido de `SUPABASE_SERVICE_ROLE_KEY`, Verificación de punta a punta, en dry-run, Antes y después, medido, Avisos de seguridad que quedan, y por qué se dejan, Diagnóstico de fallos, Dónde está parado esto (+9 more)
 
-### Community 40 - "Community 40"
+### Community 39 - "Community 39"
 Cohesion: 0.21
 Nodes (10): Return a safe canned reply for clearly out-of-scope or risky prompts., Guarantee public-demo guardrails even if the upstream model drifts., _completion_payload(), _cors_headers(), DemoProxy, _deterministic_guardrail_reply(), _rate_limit_check(), _sanitize_demo_payload() (+2 more)
 
-### Community 41 - "Community 41"
+### Community 40 - "Community 40"
 Cohesion: 0.21
 Nodes (10): StreamReader, StreamWriter, _completion_payload(), _cors_headers(), DemoProxy, _deterministic_guardrail_reply(), _rate_limit_check(), Return a safe canned reply for clearly out-of-scope or risky prompts. (+2 more)
 
-### Community 42 - "Community 42"
+### Community 41 - "Community 41"
 Cohesion: 0.24
 Nodes (16): applySavedTheme(), loginErrorMessage(), parseResponse(), readQueryError(), redirectExistingSession(), requestRecovery(), selectTab(), setFieldError() (+8 more)
+
+### Community 43 - "Community 43"
+Cohesion: 0.12
+Nodes (16): 1. Qué es y qué no es, 2. Regla de la casa: el hueco se dice, no se rellena, 3. Campos disponibles, 4.1-bis Cómo se calcula `meta.as_of`, y por qué no se le pregunta a la ingesta, 4.1 Las tres definiciones que el contrato anterior daba por obvias, 4.1-ter El filtro `region` no puede compararse por igualdad exacta, 4.2 `metricas` — dentro de la misma respuesta, 4. `POST /api/buscar` (+8 more)
 
 ### Community 44 - "Community 44"
 Cohesion: 0.12
@@ -530,95 +530,95 @@ Nodes (16): 1. Qué es y qué no es, 2. Regla de la casa: el hueco se dice, no s
 
 ### Community 45 - "Community 45"
 Cohesion: 0.12
-Nodes (16): 1. Qué es y qué no es, 2. Regla de la casa: el hueco se dice, no se rellena, 3. Campos disponibles, 4.1-bis Cómo se calcula `meta.as_of`, y por qué no se le pregunta a la ingesta, 4.1 Las tres definiciones que el contrato anterior daba por obvias, 4.1-ter El filtro `region` no puede compararse por igualdad exacta, 4.2 `metricas` — dentro de la misma respuesta, 4. `POST /api/buscar` (+8 more)
+Nodes (16): author, bugs, url, dependencies, @vercel/speed-insights, description, homepage, keywords (+8 more)
 
 ### Community 46 - "Community 46"
 Cohesion: 0.12
-Nodes (16): author, bugs, url, dependencies, @vercel/speed-insights, description, homepage, keywords (+8 more)
+Nodes (17): 2026-06-11 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet (+9 more)
 
 ### Community 47 - "Community 47"
 Cohesion: 0.12
-Nodes (17): 2026-06-11 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet, 2026-06-12 | Daniel Caignet (+9 more)
-
-### Community 48 - "Community 48"
-Cohesion: 0.12
 Nodes (15): 3a. Providers, 3b. URL Configuration, 3c. Rate Limits, 3d. Security, Checklist de seguridad pre-producción, Guía de configuración Supabase — DataSeed Auth Production, Paso 1: Crear proyecto en Supabase, Paso 2: Ejecutar migración SQL (+7 more)
 
-### Community 49 - "Community 49"
+### Community 48 - "Community 48"
 Cohesion: 0.19
 Nodes (8): config, createPortalHandler(), escapeHtml(), portalHtml(), setSecurityHeaders(), identity, esFalloDeSesion(), identity
 
-### Community 50 - "Community 50"
+### Community 49 - "Community 49"
 Cohesion: 0.13
 Nodes (14): Archivos actualizados por este backup, Archivos operativos clave observados, Backup operativo no sensible — DataSeed / Demeter, Configuración Hermes sanitizada, Cron jobs configurados y estado, Estado técnico, Exclusiones estrictas, Grafo de conocimiento del proyecto (Graphify) (+6 more)
 
-### Community 51 - "Community 51"
+### Community 50 - "Community 50"
 Cohesion: 0.24
 Nodes (13): exchangeOAuthCode(), getConfig(), getMemberships(), getProfile(), getUser(), provisionSelfServeOrg(), refreshSession(), request() (+5 more)
 
-### Community 52 - "Community 52"
+### Community 51 - "Community 51"
 Cohesion: 0.25
 Nodes (7): _cors_headers(), DemoProxy, _rate_limit_check(), StreamReader, StreamWriter, Forward the demo chat request to the Hermes API server., Return True if the request is allowed, False if rate-limited.
 
-### Community 53 - "Community 53"
+### Community 52 - "Community 52"
 Cohesion: 0.13
 Nodes (14): Arquitectura recomendada, Código base sugerido, Datos requeridos para implementar, Formulario HubSpot sugerido, Implementación frontend sugerida, Objetivo, Opción recomendada: HubSpot Forms API, Pasos (+6 more)
 
-### Community 54 - "Community 54"
+### Community 53 - "Community 53"
 Cohesion: 0.13
 Nodes (14): Bug medido que bloquea el "login funcional", El camino de escritura, sin la clave (respuesta al punto 2), La decisión de producto (respuesta al punto 1), Puntos 3 y 4: no aplican, Resolución al 2026-09-08: no se agrega la clave. Decisión de producto cerrada, Trabajo pendiente, en orden, Contrapropuesta: el self-serve no necesita esta clave, El hueco es real: el self-serve necesita un camino de escritura (+6 more)
 
-### Community 55 - "Community 55"
+### Community 54 - "Community 54"
 Cohesion: 0.24
 Nodes (13): exchangeOAuthCode(), getConfig(), getMemberships(), getProfile(), getUser(), provisionSelfServeOrg(), refreshSession(), request() (+5 more)
 
-### Community 56 - "Community 56"
+### Community 55 - "Community 55"
 Cohesion: 0.13
 Nodes (14): 1. Qué es y qué no es, 2. Regla de la casa: el hueco se dice, no se rellena, 3. Campos disponibles, 4.1 Las tres definiciones que el contrato anterior daba por obvias, 4.2 `metricas` — dentro de la misma respuesta, 4. `POST /api/buscar`, 5.1 La regla del umbral — no negociable, 5.2 El rango va por percentiles, nunca por mínimo y máximo (+6 more)
 
-### Community 57 - "Community 57"
+### Community 56 - "Community 56"
 Cohesion: 0.14
 Nodes (13): 8. Decisiones abiertas, 1.1 Corrección a un supuesto de partida, 1. El problema, en una línea, 2. Qué ya existe y no se estaba usando, 3. Lo que ya está en producción (capa 1), 4.1 FTS — stemming español y ranking BM25, 4.2 Grafo UNSPSC — el único que resuelve sinónimos, 4. Evidencia de las dos capas propuestas (+5 more)
 
-### Community 58 - "Community 58"
+### Community 57 - "Community 57"
 Cohesion: 0.14
 Nodes (13): 8. Decisiones — estado real `[2026-09-06]`, 1.1 Corrección a un supuesto de partida, 1. El problema, en una línea, 2. Qué ya existe y no se estaba usando, 3. Lo que ya está en producción (capa 1), 4.1 FTS — stemming español y ranking BM25, 4.2 Grafo UNSPSC — el único que resuelve sinónimos, 4. Evidencia de las dos capas propuestas (+5 more)
 
-### Community 59 - "Community 59"
+### Community 58 - "Community 58"
 Cohesion: 0.29
 Nodes (13): Path, main(), build_payload(), classify_health(), classify_path(), extract_bullets(), extract_code_block(), extract_meta() (+5 more)
 
-### Community 60 - "Community 60"
+### Community 59 - "Community 59"
 Cohesion: 0.14
 Nodes (13): Antes y después, medido, Avisos de seguridad que quedan, y por qué se dejan, Diagnóstico de fallos, Dónde está parado esto, El bug que casi hizo fracasar la aplicación, El canal para ejecutar, Historial de PRs, Invariante de diseño que no hay que "arreglar" (+5 more)
 
-### Community 61 - "Community 61"
+### Community 60 - "Community 60"
 Cohesion: 0.14
 Nodes (13): 1 · Verificar el dominio en Resend — **lo hace Daniel**, 2 · DMARC — **lo hace Daniel, junto con el paso 1**, 3 · SMTP en Supabase — **lo hace Daniel**, 4 · Subir el límite de correos — **lo hace Daniel, y es el paso que resuelve el bug**, El acoplamiento que define el orden, Estado medido del DNS de `dataseed.cl`, Lo que este documento no resuelve, Pasos (+5 more)
 
-### Community 62 - "Community 62"
+### Community 61 - "Community 61"
 Cohesion: 0.14
 Nodes (13): dependencies, firebase-admin, firebase-functions, engines, node, main, name, overrides (+5 more)
 
-### Community 63 - "Community 63"
+### Community 62 - "Community 62"
 Cohesion: 0.14
 Nodes (13): 5 · Plantilla del correo de confirmación — **rescatada**, 1 · Verificar el dominio en Resend — **lo hace Daniel**, 2 · DMARC — **lo hace Daniel, junto con el paso 1**, 3 · SMTP en Supabase — **lo hace Daniel**, 4 · Subir el límite de correos — **lo hace Daniel, y es el paso que resuelve el bug**, El acoplamiento que define el orden, Estado medido del DNS de `dataseed.cl`, Lo que este documento no resuelve (+5 more)
 
-### Community 64 - "Community 64"
+### Community 63 - "Community 63"
 Cohesion: 0.18
 Nodes (10): allowedEmails(), asObject(), extractToken(), { getAuth }, { getFirestore }, { initializeApp, getApps }, { logger }, { onRequest } (+2 more)
 
-### Community 65 - "Community 65"
+### Community 64 - "Community 64"
 Cohesion: 0.19
 Nodes (6): RateLimiter, emailDomain(), enforceAllowedDomain(), options, status(), track()
 
-### Community 66 - "Community 66"
+### Community 65 - "Community 65"
 Cohesion: 0.15
 Nodes (12): Commits realizados, Correcciones post-primera-validación, Definition of Done — Cumplido, Estructura final en main, Graphify resultado final, Lecciones aprendidas, Objetivo, Push realizados (+4 more)
 
-### Community 67 - "Community 67"
+### Community 66 - "Community 66"
 Cohesion: 0.15
 Nodes (12): 10. Enlaces y fuentes, 11. Registro de cambios, 1. Resumen ejecutivo, 2. Salud general, 3. KPI ejecutivos, 4. Logros y evidencia, 5. Hitos y próximos compromisos, 6. Riesgos e incidencias (+4 more)
+
+### Community 67 - "Community 67"
+Cohesion: 0.17
+Nodes (11): 1. Resumen ejecutivo, 2. Salud general, 3. KPI ejecutivos, 4. Logros y evidencia, 5. Hitos próximos, 6. Riesgos, 7. Dependencias interárea, 8. Decisiones requeridas (+3 more)
 
 ### Community 68 - "Community 68"
 Cohesion: 0.17
@@ -662,47 +662,47 @@ Nodes (11): 1. Resumen ejecutivo, 2. Salud general, 3. KPI ejecutivos, 4. Logros
 
 ### Community 78 - "Community 78"
 Cohesion: 0.17
-Nodes (11): 1. Resumen ejecutivo, 2. Salud general, 3. KPI ejecutivos, 4. Logros y evidencia, 5. Hitos próximos, 6. Riesgos, 7. Dependencias interárea, 8. Decisiones requeridas (+3 more)
+Nodes (11): Automatización diaria de reportes por área — DataSeed, Comunicación, Contrato de artefactos, Cronjob unificado y orden transaccional, Fuente y periodo, Fuentes metodológicas, Generación solicitada directamente, Idempotencia y seguridad (+3 more)
 
 ### Community 79 - "Community 79"
 Cohesion: 0.17
-Nodes (11): Automatización diaria de reportes por área — DataSeed, Comunicación, Contrato de artefactos, Cronjob unificado y orden transaccional, Fuente y periodo, Fuentes metodológicas, Generación solicitada directamente, Idempotencia y seguridad (+3 more)
+Nodes (5): alertasFase2, C, cubicaciones, estudios, licitaciones
 
 ### Community 80 - "Community 80"
 Cohesion: 0.17
-Nodes (5): alertasFase2, C, cubicaciones, estudios, licitaciones
+Nodes (12): 2026-06-21 07:47 - Arturo Barea, 2026-06-21 08:36 - Arturo Barea, 2026-06-22 01:34 - Daniel Caignet, 2026-06-22 04:51 - Daniel Caignet, 2026-06-22 06:04 - Daniel Caignet, 2026-06-22 06:08 - Daniel Caignet, 2026-06-22 06:19 - Daniel Caignet, 2026-06-22 06:35 - Daniel Caignet (+4 more)
 
 ### Community 81 - "Community 81"
 Cohesion: 0.17
-Nodes (12): 2026-06-21 07:47 - Arturo Barea, 2026-06-21 08:36 - Arturo Barea, 2026-06-22 01:34 - Daniel Caignet, 2026-06-22 04:51 - Daniel Caignet, 2026-06-22 06:04 - Daniel Caignet, 2026-06-22 06:08 - Daniel Caignet, 2026-06-22 06:19 - Daniel Caignet, 2026-06-22 06:35 - Daniel Caignet (+4 more)
-
-### Community 82 - "Community 82"
-Cohesion: 0.17
 Nodes (12): 2026-06-23 00:07 - Daniel Caignet, 2026-06-23 00:52 - Daniel Caignet, 2026-06-23 02:19 - Daniel Caignet, 2026-06-23 02:55 - Daniel Caignet, 2026-06-23 03:15 - Daniel Caignet, 2026-06-23 03:19 - Daniel Caignet, 2026-06-23 03:45 - Daniel Caignet, 2026-06-23 03:55 - Daniel Caignet (+4 more)
 
-### Community 83 - "Community 83"
+### Community 82 - "Community 82"
 Cohesion: 0.18
 Nodes (10): Invariante de diseño que no hay que "arreglar", Traspaso — login de dataseed.cl sobre Supabase, Cómo ejecutar — tres caminos, ninguno intentado todavía, El bloqueo, en una línea, Estado real de la base — preflight Bloque A, Lo que el Bloque A NO permite afirmar, Lo que ya está hecho en el repo, Orden completo pendiente (+2 more)
 
-### Community 84 - "Community 84"
+### Community 83 - "Community 83"
 Cohesion: 0.18
 Nodes (10): Archivos principales del cambio, Controles de seguridad implementados, Decisión solicitada, Pendientes antes de aprobar deploy, Pruebas de aceptación en producción, Qué cambia para el equipo, Resumen ejecutivo, Riesgo residual (+2 more)
 
-### Community 85 - "Community 85"
+### Community 84 - "Community 84"
 Cohesion: 0.18
 Nodes (10): engines, node, name, private, scripts, build:en, check, test (+2 more)
 
-### Community 86 - "Community 86"
+### Community 85 - "Community 85"
 Cohesion: 0.18
 Nodes (10): Cadencia recomendada, Convención de nombres, DataSeed — Sistema estandarizado de reportes por área, Estructura en Drive, Flujo de elaboración, Fuentes consultadas, Hallazgos de la investigación, Objetivo (+2 more)
 
-### Community 87 - "Community 87"
+### Community 86 - "Community 86"
 Cohesion: 0.20
 Nodes (9): Catálogo de tipos soportados, Chart Harness — Arquitectura y hallazgos (PoC 2026-08-10), Decisión de arquitectura (validada en PoC), Entregables (PoC desplegada), Frameworks evaluados online (evidencia, 2026-08-10), Integración backend/frontend (decisión final), Latencia / siguiente paso, Problema (+1 more)
 
-### Community 88 - "Community 88"
+### Community 87 - "Community 87"
 Cohesion: 0.20
 Nodes (9): Contrapropuesta: el self-serve no necesita esta clave, El hueco es real: el self-serve necesita un camino de escritura, Lo que el repo ya decidió sobre esta clave, Pero el self-serve revierte el invariante que se acaba de aplicar, Por qué el env de Vercel es el peor lugar, Qué es esa clave, medido, Referencias, ¿Va `SUPABASE_SERVICE_ROLE_KEY` en el env de Vercel? (+1 more)
+
+### Community 88 - "Community 88"
+Cohesion: 0.33
+Nodes (7): createGoogleCallbackHandler(), redirect(), createGoogleCallbackHandler(), redirect(), clearOAuthVerifierCookie(), createGoogleCallbackHandler(), redirect()
 
 ### Community 89 - "Community 89"
 Cohesion: 0.20
@@ -1260,11 +1260,11 @@ Nodes (3): 2026-06-25 11:47 - Daniel Caignet, Detalle de tareas, Resumen 2026-06
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Daily Summary - Demeter` connect `Community 0` to `Community 34`, `Community 291`, `Community 292`, `Community 293`, `Community 294`, `Community 295`, `Community 296`, `Community 297`, `Community 298`, `Community 299`, `Community 300`, `Community 301`, `Community 302`, `Community 47`, `Community 303`, `Community 304`, `Community 305`, `Community 306`, `Community 307`, `Community 308`, `Community 310`, `Community 311`, `Community 312`, `Community 313`, `Community 314`, `Community 315`, `Community 316`, `Community 309`, `Community 81`, `Community 82`, `Community 222`, `Community 103`, `Community 243`, `Community 244`, `Community 245`, `Community 246`?**
+- **Why does `Daily Summary - Demeter` connect `Community 0` to `Community 33`, `Community 291`, `Community 292`, `Community 293`, `Community 294`, `Community 295`, `Community 296`, `Community 297`, `Community 298`, `Community 299`, `Community 300`, `Community 301`, `Community 46`, `Community 302`, `Community 303`, `Community 304`, `Community 305`, `Community 306`, `Community 307`, `Community 308`, `Community 310`, `Community 311`, `Community 312`, `Community 313`, `Community 314`, `Community 315`, `Community 316`, `Community 309`, `Community 80`, `Community 81`, `Community 222`, `Community 103`, `Community 243`, `Community 244`, `Community 245`, `Community 246`?**
   _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Why does `AuthorizationError` connect `Community 8` to `Community 7`, `Community 10`, `Community 49`, `Community 22`, `Community 23`, `Community 25`, `Community 29`?**
+- **Why does `AuthorizationError` connect `Community 3` to `Community 11`, `Community 14`, `Community 48`, `Community 17`, `Community 20`, `Community 88`, `Community 26`?**
   _High betweenness centrality (0.003) - this node is a cross-community bridge._
-- **Why does `sendJson()` connect `Community 7` to `Community 8`, `Community 10`, `Community 138`, `Community 173`, `Community 175`, `Community 22`, `Community 23`, `Community 25`, `Community 29`?**
+- **Why does `sendJson()` connect `Community 17` to `Community 3`, `Community 138`, `Community 11`, `Community 173`, `Community 14`, `Community 175`, `Community 20`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **Are the 14 inferred relationships involving `methodNotAllowed()` (e.g. with `createPublicaSignupHandler()` and `createGoogleStartHandler()`) actually correct?**
   _`methodNotAllowed()` has 14 INFERRED edges - model-reasoned connections that need verification._
