@@ -13,10 +13,10 @@ test('phone navigation uses an accessible hamburger drawer and compact hero', as
     /<button class="menu-toggle" type="button" id="menuToggle" aria-label="Abrir menú" aria-controls="mobileMenu" aria-expanded="false">/,
   );
   assert.match(html, /<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Navegación móvil" hidden>/);
-  assert.match(html, /<ul class="desktop-nav">/);
+  assert.doesNotMatch(html, /desktop-nav/);
   assert.match(html, /\.menu-toggle\{display:inline-flex;/);
-  assert.match(html, /\.desktop-nav\{display:none;\}/);
-  assert.match(html, /html\[data-platform="android"\] #hero\{min-height:auto;\}\n  #hero \.ticker-wrap\{width:auto;margin:0 -1\.5rem 2rem;\}/);
+  assert.match(html, /\.area-nav\{display:none;\}/);
+  assert.match(html, /#hero \.ticker-wrap\{width:auto;margin:0 -1\.5rem 2rem;\}/);
   assert.doesNotMatch(html, /\.logo>div\{display:none;\}/);
   assert.match(html, /menuToggle\.setAttribute\('aria-expanded',String\(open\)\)/);
   assert.match(html, /if\(event\.key==='Escape'\)setMenu\(false\)/);
@@ -25,10 +25,67 @@ test('phone navigation uses an accessible hamburger drawer and compact hero', as
   assert.match(html, /returnFocus\?\.focus\(\)/);
 });
 
+test('header and phone menu list the same areas, and each one exists in the page', async () => {
+  const html = await readLanding();
+  const header = html.match(/<ul class="area-nav"[^>]*>([\s\S]*?)<\/ul>/)?.[1] ?? '';
+  const phone = html.match(/<div class="mobile-menu"[^>]*>([\s\S]*?)<\/ul>/)?.[1] ?? '';
+  const linksIn = (block) => [...block.matchAll(/href="#([^"]+)" data-area-link="([^"]+)"/g)].map(([, id, area]) => ({ id, area }));
+  const headerLinks = linksIn(header);
+
+  assert.equal(headerLinks.length, 9);
+  assert.deepEqual(linksIn(phone), headerLinks);
+  for (const { id, area } of headerLinks) {
+    assert.match(html, new RegExp(`id="${id}" data-area="${area}"`), `falta el área ${area}`);
+  }
+  assert.doesNotMatch(html, /\[data-area\]\[hidden\]/);
+  assert.match(html, /addEventListener\('scroll',update,\{passive:true\}\)/);
+  assert.match(html, /link\.setAttribute\('aria-current','location'\)/);
+});
+
+test('area links live in the header, not in a side rail', async () => {
+  const html = await readLanding();
+
+  assert.match(html, /<\/a>\n  <ul class="area-nav" aria-label="Áreas de la página">/);
+  assert.doesNotMatch(html, /area-rail|rail-toggle|dataseed-rail/);
+});
+
+test('chat bubble hides while the phone menu is open', async () => {
+  const html = await readLanding();
+
+  assert.match(html, /body\.menu-open #n8n-chat\{display:none;\}/);
+});
+
+test('footer belongs to the Contacto area and Inicio has no call-to-action buttons', async () => {
+  const html = await readLanding();
+
+  assert.match(html, /<footer data-area="contacto">/);
+  assert.doesNotMatch(html, /class="hero-btns"/);
+});
+
+test('areas are delimited by a glowing gradient line, without background bands', async () => {
+  const html = await readLanding();
+
+  assert.match(html, /#services,#how,#testimonials,#types,#products,#prod-demo,#faq,#contacto\{padding:var\(--area-pad\) 0;border-top:0;background:transparent;\}/);
+  assert.match(html, /::before\{top:0;width:min\(1160px,calc\(100% - 3rem\)\);height:2px;[^}]*linear-gradient\(90deg,transparent,var\(--divider-core\)/);
+  assert.doesNotMatch(html, /--band/);
+});
+
+test('brand landscape is the page background, dimmed under the content', async () => {
+  const html = await readLanding();
+  const image = await readFile(new URL('../../site/assets/fondo-dataseed.webp', import.meta.url));
+
+  assert.ok(image.length > 10_000);
+  assert.match(html, /url\(assets\/fondo-dataseed\.webp\)/);
+  assert.match(html, /root\.style\.setProperty\('--bg-dim',/);
+  assert.doesNotMatch(html, /id="bgc"|class="orb /);
+  assert.match(html, /<div class="site-bg" aria-hidden="true"><canvas class="site-bg-waves"><\/canvas><\/div>/);
+  assert.match(html, /if\(!gl\|\|reduce\)return;/);
+});
+
 test('narrow phone layout collapses dense grids and product actions to one column', async () => {
   const html = await readLanding();
 
-  assert.match(html, /#bgc\{position:fixed;inset:0;z-index:0;width:100%;height:100%;\}/);
+  assert.match(html, /\.site-bg\{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:var\(--bg\);\}/);
   assert.match(
     html,
     /\.hero-strip,\.srv-grid,\.types-grid,\.kpi-row,\.stats-row\{grid-template-columns:1fr;\}/,
@@ -80,9 +137,9 @@ test('large-phone landscape and desktop-mode viewports keep mobile behavior thro
   );
   assert.match(
     html,
-    /@media\(max-width:600px\)\{[\s\S]*?#hero\{padding-top:calc\(7\.4rem \+ env\(safe-area-inset-top\)\);\}/,
+    /@media\(max-width:600px\)\{[\s\S]*?#hero\{padding-top:calc\(1\.5rem \+ env\(safe-area-inset-top\)\);\}/,
   );
-  assert.match(html, /@supports\(min-height:100dvh\)\{@media\(min-width:1025px\)\{#hero\{min-height:100dvh;\}\}\}/);
+  assert.doesNotMatch(html, /#hero\{min-height:100d?vh;/);
   assert.match(html, /window\.innerWidth>1024/);
   assert.doesNotMatch(html, /max-width:900px|min-width:901px|innerWidth>900/);
 });
@@ -95,7 +152,7 @@ test('iOS and Android layout respects safe areas, dynamic viewport and reduced m
     /nav\{padding-top:calc\(\.9rem \+ env\(safe-area-inset-top\)\);padding-right:calc\(1rem \+ env\(safe-area-inset-right\)\);padding-left:calc\(1rem \+ env\(safe-area-inset-left\)\);\}/,
   );
   assert.match(html, /section\[id\]\{scroll-margin-top:calc\(6rem \+ env\(safe-area-inset-top\)\);\}/);
-  assert.match(html, /@supports\(min-height:100dvh\)\{@media\(min-width:1025px\)\{#hero\{min-height:100dvh;\}\}\}/);
+  assert.doesNotMatch(html, /#hero\{min-height:100d?vh;/);
   assert.match(html, /#hero \.ticker-wrap\{width:auto;margin:0 -1\.5rem 2rem;\}/);
   assert.match(html, /@media\(prefers-reduced-motion:reduce\)/);
   assert.match(html, /\.ticker\{animation:none!important;transform:none!important;\}/);
